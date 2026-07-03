@@ -1,4 +1,4 @@
-import { clamp } from "./units";
+import { clamp, roundToStep } from "./units";
 import type { BrewMethod } from "./units";
 
 /**
@@ -64,7 +64,7 @@ const METHOD_DEFAULT_FRACTION: Record<BrewMethod, number> = {
 
 function scaleMidpoint(scale: GrindScale, fraction: number): number {
   const raw = scale.min + (scale.max - scale.min) * fraction;
-  return Math.round(raw / scale.step) * scale.step;
+  return roundToStep(raw, scale.step);
 }
 
 /**
@@ -160,7 +160,7 @@ export function nextGrindSuggestion(input: CompassInput): CompassSuggestion {
   const totalSteps = stepsFiner + fractionalFiner;
   const delta = totalSteps * grindScale.finerDirection * grindScale.step;
   const grindSetting = clamp(
-    Math.round((lastBrew.grindSetting + delta) / grindScale.step) * grindScale.step,
+    roundToStep(lastBrew.grindSetting + delta, grindScale.step),
     grindScale.min,
     grindScale.max,
   );

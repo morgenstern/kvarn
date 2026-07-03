@@ -20,8 +20,10 @@ export function ParamStepper({
   formatValue,
 }: ParamStepperProps) {
   const clampRound = (raw: number) => {
-    const rounded = Math.round(raw / step) * step;
-    return Math.min(max, Math.max(min, rounded));
+    // Snap to the step grid, then strip binary floating-point noise
+    // (e.g. 2.5 - 0.1 -> 2.4000000000000004).
+    const snapped = Math.round((Math.round(raw / step) * step) * 1e8) / 1e8;
+    return Math.min(max, Math.max(min, snapped));
   };
 
   return (

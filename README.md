@@ -4,20 +4,22 @@ Kaffee-Companion für Web, iOS & Android. Siehe `docs/` für Markenkern, UX-Konz
 
 ## Status
 
-**M0 (Fundament) + M1 (Brüh-Loop, Web)** — lokal lauffähig als Vite-Dev-Server bzw. installierbare PWA. Kein
-Cloudflare-Deploy nötig, um die App zu benutzen: Setups, Bohnen und Bezüge werden lokal in IndexedDB gehalten.
+**M0 (Fundament) + M1 (Brüh-Loop, Web) + M2 (Wetter + Kompass P1)** — lokal lauffähig als Vite-Dev-Server bzw.
+installierbare PWA. Für den vollen Funktionsumfang (inkl. Wetter) muss zusätzlich der Worker lokal laufen —
+beides funktioniert komplett ohne Cloudflare-Account (Miniflare simuliert D1/R2/KV lokal). Setups, Bohnen und
+Bezüge werden lokal in IndexedDB gehalten.
 
 ## Struktur
 
 ```
 apps/
   web/      React + Vite PWA — die eigentliche App
-  worker/   Cloudflare Worker (Hono) — API + Static-Assets-Hosting, für späteres Deploy
+  worker/   Cloudflare Worker (Hono) — API (Wetter-Proxy mit KV-Cache) + Static-Assets-Hosting
 packages/
-  core/     Domänen-Logik (Ratio-Mathe, Kompass-Regelwerk) — framework-frei, mit Golden-Tests
+  core/     Domänen-Logik (Ratio-Mathe, Kompass-Regelwerk mit "Warum") — framework-frei, mit Golden-Tests
   db/       Ein Drizzle-SQLite-Schema für lokale DB und D1
   ui/       Design-Tokens (Tailwind-Theme) + geteilte Komponenten
-  api-client/  Platzhalter für Worker-/Wetter-/BLE-Clients (ab M2)
+  api-client/  Wetter-Client (Open-Meteo via Worker-Proxy) + Geolocation-Helper; BLE-Scale-Client ab M2/Phase 2
 ```
 
 ## Setup
@@ -29,9 +31,20 @@ pnpm install
 pnpm dev:web       # startet die Web-App auf http://localhost:5173
 ```
 
+Für Wetter-Snapshots zusätzlich den Worker lokal starten (in einem zweiten Terminal, kein Cloudflare-Account
+nötig — Miniflare simuliert die Bindings):
+
+```bash
+pnpm dev:worker    # startet den Worker auf http://localhost:8787
+```
+
+Vite proxied `/api/*` im Dev-Modus automatisch an `localhost:8787` (siehe `apps/web/vite.config.ts`). Ohne
+laufenden Worker funktioniert die App weiterhin — Wetter wird dann einfach übersprungen (nie ein Blocker).
+
 Erststart legt automatisch eine Setup- und Bohnen-Anleitung nahe: unter **Setup** eine Mühle suchen (56 Geräte
 kuratiert aus der Seed-DB) oder ein eigenes Gerät anlegen, dann ein Setup speichern; unter **Regal** eine Bohne
-anlegen. Danach ist **Brühen** nutzbar: Parameter → Timer → Bewertung → Logbuch (**Kompass**).
+anlegen. Danach ist **Brühen** nutzbar: Parameter (mit Kompass-Vorschlag + "Warum") → Timer → Bewertung →
+Logbuch & beste Rezepte (**Kompass**).
 
 ## Tests, Typecheck, Lint
 

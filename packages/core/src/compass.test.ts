@@ -81,6 +81,19 @@ describe("nextGrindSuggestion — golden tests", () => {
     expect(result.reasons[0]?.effect).toContain("gröber");
   });
 
+  it("stepless scale (0.1 step) never produces floating-point noise in the result", () => {
+    const steplessScale: GrindScale = { min: 0, max: 10, step: 0.1, unit: "turns", finerDirection: -1 };
+    const result = nextGrindSuggestion({
+      method: "espresso",
+      grindScale: steplessScale,
+      lastBrew: { grindSetting: 2.5, timeTotalS: 20, balance: 0 },
+      beanAgeDays: 6,
+    });
+    // Regression test: 2.5 + (-0.1 finer steps) used to yield 2.4000000000000004.
+    expect(result.grindSetting.toString()).not.toContain("00000");
+    expect(result.grindSetting).toBe(2.4);
+  });
+
   it("clamps to scale bounds", () => {
     const result = nextGrindSuggestion({
       method: "espresso",

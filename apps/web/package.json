@@ -12,6 +12,7 @@
     "test": "vitest run"
   },
   "dependencies": {
+    "@kvarn/api-client": "workspace:*",
     "@kvarn/core": "workspace:*",
     "@kvarn/db": "workspace:*",
     "@kvarn/ui": "workspace:*",

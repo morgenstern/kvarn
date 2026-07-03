@@ -33,6 +33,8 @@ export const product = sqliteTable("product", {
     step: number;
     unit: string;
     label: string;
+    /** Sign added to the raw value to move one step finer — see packages/core/src/compass.ts. */
+    finerDirection: -1 | 1;
   } | null>(),
   specs: text("specs", { mode: "json" }).$type<Record<string, unknown> | null>(),
   status: text("status", { enum: ["seed", "community", "verified"] })

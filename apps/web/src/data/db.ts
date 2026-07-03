@@ -1,5 +1,5 @@
 import Dexie, { type EntityTable } from "dexie";
-import type { Bean, Brew, Equipment, Product, Setup } from "@kvarn/db";
+import type { Bean, Brew, Equipment, Product, Recipe, Setup, WeatherSnapshot } from "@kvarn/db";
 import seedProducts from "./seed-products.json";
 
 /**
@@ -14,6 +14,8 @@ export class KvarnDB extends Dexie {
   setups!: EntityTable<Setup, "id">;
   beans!: EntityTable<Bean, "id">;
   brews!: EntityTable<Brew, "id">;
+  weatherSnapshots!: EntityTable<WeatherSnapshot, "id">;
+  recipes!: EntityTable<Recipe, "id">;
 
   constructor() {
     super("kvarn");
@@ -23,6 +25,8 @@ export class KvarnDB extends Dexie {
       setups: "id, userId, method",
       beans: "id, userId",
       brews: "id, userId, setupId, beanId, brewedAt",
+      weatherSnapshots: "id, geoCell, takenAt",
+      recipes: "id, userId, setupId, beanId",
     });
   }
 }

@@ -1,8 +1,16 @@
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
-import { Button, Card, Chip, ParamStepper, RatingSlider, TimerRing } from "@kvarn/ui";
-import { computeRatio } from "@kvarn/core";
-import { activeBean, activeSetup, equipmentProduct, useKvarnStore } from "../state/store";
+import { Button, Card, Chip, Hint, ParamStepper, RatingSlider, TimerRing } from "@kvarn/ui";
+import { computeRatio, nextGrindSuggestion } from "@kvarn/core";
+import type { WeatherSnapshot } from "@kvarn/db";
+import {
+  activeBean,
+  activeSetup,
+  equipmentProduct,
+  lastBrewFor,
+  useKvarnStore,
+  weatherSnapshotFor,
+} from "../state/store";
 import { useStopwatch } from "../hooks/useStopwatch";
 
 type Step = "params" | "timer" | "rating";
@@ -10,19 +18,64 @@ type Step = "params" | "timer" | "rating";
 const VISUAL_TAG_OPTIONS = ["Channeling", "Spritzer", "zu schnell", "zu langsam", "tot/tropfend"];
 const FLAVOR_TAG_OPTIONS = ["Beere", "Nuss", "Schoko", "floral", "Karamell", "Zitrus"];
 
+function beanAgeDaysFor(roastDate: string | null): number | null {
+  if (!roastDate) return null;
+  return Math.max(0, Math.round((Date.now() - new Date(roastDate).getTime()) / 86_400_000));
+}
+
 export function Bruehen() {
   const state = useKvarnStore();
   const setup = activeSetup(state);
   const bean = activeBean(state);
   const grinder = equipmentProduct(state, setup?.grinderEquipmentId ?? null);
   const commitBrew = useKvarnStore((s) => s.commitBrew);
+  const captureWeatherSnapshot = useKvarnStore((s) => s.captureWeatherSnapshot);
   const navigate = useNavigate();
   const stopwatch = useStopwatch();
 
-  const grindScale = grinder?.grindScale ?? { min: 0, max: 40, step: 0.5, unit: "clicks", label: "Mahlgrad" };
+  const grindScale = grinder?.grindScale ?? {
+    min: 0,
+    max: 40,
+    step: 0.5,
+    unit: "clicks",
+    label: "Mahlgrad",
+    finerDirection: -1 as const,
+  };
+
+  const [weatherSnapshot, setWeatherSnapshot] = useState<WeatherSnapshot | null>(null);
+
+  useEffect(() => {
+    captureWeatherSnapshot().then(setWeatherSnapshot);
+    // Capture once per brew session, on entering the screen — not on every re-render.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const suggestion = useMemo(() => {
+    if (!setup || !bean) return null;
+    const lastBrew = lastBrewFor(state, setup.id, bean.id);
+    const lastWeather = lastBrew ? weatherSnapshotFor(state, lastBrew.weatherId) : undefined;
+    const humidityDeltaPct =
+      weatherSnapshot?.humidityPct != null && lastWeather?.humidityPct != null
+        ? weatherSnapshot.humidityPct - lastWeather.humidityPct
+        : undefined;
+    return nextGrindSuggestion({
+      method: setup.method,
+      grindScale,
+      lastBrew: lastBrew
+        ? { grindSetting: lastBrew.grindSetting, timeTotalS: lastBrew.timeTotalS, balance: lastBrew.balance ?? 0 }
+        : null,
+      beanAgeDays: beanAgeDaysFor(bean.roastDate) ?? undefined,
+      humidityDeltaPct,
+    });
+    // Only recompute when the underlying combination or the weather snapshot changes,
+    // not on every render — this is a one-shot default, not a live recalculation.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [setup?.id, bean?.id, weatherSnapshot?.id]);
 
   const [step, setStep] = useState<Step>("params");
-  const [grindSetting, setGrindSetting] = useState(Math.round(((grindScale.min + grindScale.max) / 2) / grindScale.step) * grindScale.step);
+  const [grindSetting, setGrindSetting] = useState(
+    () => suggestion?.grindSetting ?? Math.round(((grindScale.min + grindScale.max) / 2) / grindScale.step) * grindScale.step,
+  );
   const [doseG, setDoseG] = useState(18);
   const [targetYieldG, setTargetYieldG] = useState(36);
   const [actualYieldG, setActualYieldG] = useState(36);
@@ -51,7 +104,7 @@ export function Bruehen() {
     await commitBrew({
       setupId: setup!.id,
       beanId: bean!.id,
-      weatherId: null,
+      weatherId: weatherSnapshot?.id ?? null,
       brewedAt: new Date().toISOString(),
       grindSetting,
       doseG,
@@ -59,9 +112,7 @@ export function Bruehen() {
       waterTempC: null,
       preinfusionS: null,
       puckPrep: null,
-      beanAgeDays: bean!.roastDate
-        ? Math.max(0, Math.round((Date.now() - new Date(bean!.roastDate).getTime()) / 86_400_000))
-        : null,
+      beanAgeDays: beanAgeDaysFor(bean!.roastDate),
       timeTotalS: Math.round(stopwatch.elapsedS * 10) / 10,
       timeFirstDropS: null,
       pressureAvgBar: null,
@@ -101,6 +152,11 @@ export function Bruehen() {
     <div>
       <h1 className="font-display text-[28px] mt-3.5 mb-0.5">Brühen</h1>
       <p className="text-sm text-muted">{setup.name} · {bean.roaster} — {bean.name}</p>
+      {weatherSnapshot?.humidityPct != null ? (
+        <p className="text-xs text-muted mt-1">
+          {weatherSnapshot.tempC}°C · {weatherSnapshot.humidityPct}% Luftfeuchte
+        </p>
+      ) : null}
 
       {step === "params" ? (
         <Card>
@@ -126,6 +182,14 @@ export function Bruehen() {
             <span>Ratio</span>
             <span className="num">1:{computeRatio({ doseG, yieldG: targetYieldG })}</span>
           </div>
+          {suggestion && suggestion.reasons.length > 0 ? (
+            <Hint>
+              <span>
+                Kompass-Vorschlag: Mahlgrad {suggestion.grindSetting} {grindScale.unit}.{" "}
+                {suggestion.reasons.map((r) => r.effect).join(" ")}
+              </span>
+            </Hint>
+          ) : null}
           <Button
             onClick={() => {
               setStep("timer");

@@ -29,5 +29,13 @@ export default defineConfig({
   ],
   server: {
     port: 5173,
+    // Proxies to a locally running `wrangler dev` (apps/worker), same-origin so
+    // no CORS setup is needed. Start it with `pnpm dev:worker` in another terminal.
+    proxy: {
+      "/api": {
+        target: "http://127.0.0.1:8787",
+        changeOrigin: true,
+      },
+    },
   },
 });

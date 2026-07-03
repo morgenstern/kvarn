@@ -9,6 +9,8 @@ describe("useKvarnStore", () => {
     await db.setups.clear();
     await db.beans.clear();
     await db.brews.clear();
+    await db.weatherSnapshots.clear();
+    await db.recipes.clear();
     useKvarnStore.setState({
       hydrated: false,
       products: [],
@@ -16,6 +18,8 @@ describe("useKvarnStore", () => {
       setups: [],
       beans: [],
       brews: [],
+      weatherSnapshots: [],
+      recipes: [],
       activeSetupId: null,
       activeBeanId: null,
     });
@@ -76,5 +80,57 @@ describe("useKvarnStore", () => {
     expect(brew.id).toBeTruthy();
     expect(useKvarnStore.getState().brews[0]?.id).toBe(brew.id);
     expect(await db.brews.count()).toBe(1);
+  });
+
+  it("upserts one recipe per setup+bean combination across repeated brews", async () => {
+    await useKvarnStore.getState().hydrate();
+    const grinder = useKvarnStore.getState().products.find((p) => p.kind === "grinder")!;
+    const equipment = await useKvarnStore.getState().addEquipmentFromProduct(grinder.id);
+    const setup = await useKvarnStore.getState().addSetup({
+      name: "Test Setup",
+      method: "espresso",
+      grinderEquipmentId: equipment.id,
+    });
+    const bean = await useKvarnStore.getState().addBean({ roaster: "Test Rösterei", name: "Test Blend" });
+
+    const baseBrew = {
+      setupId: setup.id,
+      beanId: bean.id,
+      weatherId: null,
+      brewedAt: new Date().toISOString(),
+      grindSetting: 10,
+      doseG: 18,
+      targetYieldG: 36,
+      waterTempC: null,
+      preinfusionS: null,
+      puckPrep: null,
+      beanAgeDays: null,
+      timeTotalS: 28,
+      timeFirstDropS: null,
+      pressureAvgBar: null,
+      pressurePeakBar: null,
+      actualYieldG: 36,
+      flowGs: 1.3,
+      balance: 0,
+      sweetness: null,
+      body: null,
+      crema: null,
+      visualTags: [],
+      flavorTags: [],
+      tdsPct: null,
+      note: null,
+      photoUrl: null,
+      isDialIn: false,
+      recipeId: null,
+    };
+
+    await useKvarnStore.getState().commitBrew({ ...baseBrew, ratingTotal: 6 });
+    await useKvarnStore.getState().commitBrew({ ...baseBrew, ratingTotal: 8 });
+
+    const recipes = useKvarnStore.getState().recipes;
+    expect(recipes).toHaveLength(1);
+    expect(recipes[0]?.brewCount).toBe(2);
+    expect(recipes[0]?.avgRating).toBe(7);
+    expect(await db.recipes.count()).toBe(1);
   });
 });

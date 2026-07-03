@@ -9,7 +9,8 @@
       "max": 10,
       "step": 0.1,
       "unit": "turns",
-      "label": "Umdrehungen"
+      "label": "Umdrehungen",
+      "finerDirection": -1
     },
     "specs": {
       "antrieb": "electric",
@@ -32,7 +33,8 @@
       "max": 10,
       "step": 0.1,
       "unit": "turns",
-      "label": "Umdrehungen"
+      "label": "Umdrehungen",
+      "finerDirection": -1
     },
     "specs": {
       "antrieb": "electric",
@@ -55,7 +57,8 @@
       "max": 10,
       "step": 0.1,
       "unit": "turns",
-      "label": "Umdrehungen"
+      "label": "Umdrehungen",
+      "finerDirection": -1
     },
     "specs": {
       "antrieb": "electric",
@@ -78,7 +81,8 @@
       "max": 10,
       "step": 0.1,
       "unit": "turns",
-      "label": "Umdrehungen"
+      "label": "Umdrehungen",
+      "finerDirection": -1
     },
     "specs": {
       "antrieb": "electric",
@@ -101,7 +105,8 @@
       "max": 10,
       "step": 0.1,
       "unit": "turns",
-      "label": "Umdrehungen"
+      "label": "Umdrehungen",
+      "finerDirection": -1
     },
     "specs": {
       "antrieb": "electric",
@@ -124,7 +129,8 @@
       "max": 10,
       "step": 0.1,
       "unit": "turns",
-      "label": "Umdrehungen"
+      "label": "Umdrehungen",
+      "finerDirection": -1
     },
     "specs": {
       "antrieb": "electric",
@@ -147,7 +153,8 @@
       "max": 10,
       "step": 0.1,
       "unit": "turns",
-      "label": "Umdrehungen"
+      "label": "Umdrehungen",
+      "finerDirection": -1
     },
     "specs": {
       "antrieb": "electric",
@@ -170,7 +177,8 @@
       "max": 10,
       "step": 0.1,
       "unit": "turns",
-      "label": "Umdrehungen"
+      "label": "Umdrehungen",
+      "finerDirection": -1
     },
     "specs": {
       "antrieb": "electric",
@@ -193,7 +201,8 @@
       "max": 10,
       "step": 0.1,
       "unit": "turns",
-      "label": "Umdrehungen"
+      "label": "Umdrehungen",
+      "finerDirection": -1
     },
     "specs": {
       "antrieb": "electric",
@@ -216,7 +225,8 @@
       "max": 10,
       "step": 0.1,
       "unit": "turns",
-      "label": "Umdrehungen"
+      "label": "Umdrehungen",
+      "finerDirection": -1
     },
     "specs": {
       "antrieb": "electric",
@@ -239,7 +249,8 @@
       "max": 10,
       "step": 0.1,
       "unit": "turns",
-      "label": "Umdrehungen"
+      "label": "Umdrehungen",
+      "finerDirection": -1
     },
     "specs": {
       "antrieb": "electric",
@@ -262,7 +273,8 @@
       "max": 10,
       "step": 0.1,
       "unit": "turns",
-      "label": "Umdrehungen"
+      "label": "Umdrehungen",
+      "finerDirection": -1
     },
     "specs": {
       "antrieb": "electric",
@@ -285,7 +297,8 @@
       "max": 10,
       "step": 0.1,
       "unit": "turns",
-      "label": "Umdrehungen"
+      "label": "Umdrehungen",
+      "finerDirection": -1
     },
     "specs": {
       "antrieb": "electric",
@@ -308,7 +321,8 @@
       "max": 10,
       "step": 0.1,
       "unit": "turns",
-      "label": "Umdrehungen"
+      "label": "Umdrehungen",
+      "finerDirection": -1
     },
     "specs": {
       "antrieb": "electric",
@@ -331,7 +345,8 @@
       "max": 10,
       "step": 0.1,
       "unit": "turns",
-      "label": "Umdrehungen"
+      "label": "Umdrehungen",
+      "finerDirection": -1
     },
     "specs": {
       "antrieb": "electric",
@@ -354,7 +369,8 @@
       "max": 10,
       "step": 0.1,
       "unit": "turns",
-      "label": "Umdrehungen"
+      "label": "Umdrehungen",
+      "finerDirection": -1
     },
     "specs": {
       "antrieb": "electric",
@@ -377,7 +393,8 @@
       "max": 10,
       "step": 0.1,
       "unit": "turns",
-      "label": "Umdrehungen"
+      "label": "Umdrehungen",
+      "finerDirection": -1
     },
     "specs": {
       "antrieb": "electric",
@@ -400,7 +417,8 @@
       "max": 10,
       "step": 0.1,
       "unit": "turns",
-      "label": "Umdrehungen"
+      "label": "Umdrehungen",
+      "finerDirection": -1
     },
     "specs": {
       "antrieb": "electric",
@@ -423,7 +441,8 @@
       "max": 10,
       "step": 0.1,
       "unit": "turns",
-      "label": "Umdrehungen"
+      "label": "Umdrehungen",
+      "finerDirection": -1
     },
     "specs": {
       "antrieb": "electric",
@@ -446,7 +465,8 @@
       "max": 10,
       "step": 0.1,
       "unit": "turns",
-      "label": "Umdrehungen"
+      "label": "Umdrehungen",
+      "finerDirection": -1
     },
     "specs": {
       "antrieb": "electric",
@@ -469,7 +489,8 @@
       "max": 10,
       "step": 0.1,
       "unit": "turns",
-      "label": "Umdrehungen"
+      "label": "Umdrehungen",
+      "finerDirection": -1
     },
     "specs": {
       "antrieb": "electric",
@@ -492,7 +513,8 @@
       "max": 10,
       "step": 0.1,
       "unit": "turns",
-      "label": "Umdrehungen"
+      "label": "Umdrehungen",
+      "finerDirection": -1
     },
     "specs": {
       "antrieb": "electric",
@@ -515,7 +537,8 @@
       "max": 10,
       "step": 0.1,
       "unit": "turns",
-      "label": "Umdrehungen"
+      "label": "Umdrehungen",
+      "finerDirection": -1
     },
     "specs": {
       "antrieb": "electric",
@@ -538,7 +561,8 @@
       "max": 10,
       "step": 0.1,
       "unit": "turns",
-      "label": "Umdrehungen"
+      "label": "Umdrehungen",
+      "finerDirection": -1
     },
     "specs": {
       "antrieb": "electric",
@@ -561,7 +585,8 @@
       "max": 10,
       "step": 0.1,
       "unit": "turns",
-      "label": "Umdrehungen"
+      "label": "Umdrehungen",
+      "finerDirection": -1
     },
     "specs": {
       "antrieb": "electric",
@@ -584,7 +609,8 @@
       "max": 10,
       "step": 0.1,
       "unit": "turns",
-      "label": "Umdrehungen"
+      "label": "Umdrehungen",
+      "finerDirection": -1
     },
     "specs": {
       "antrieb": "electric",
@@ -607,7 +633,8 @@
       "max": 10,
       "step": 0.1,
       "unit": "turns",
-      "label": "Umdrehungen"
+      "label": "Umdrehungen",
+      "finerDirection": -1
     },
     "specs": {
       "antrieb": "electric",
@@ -630,7 +657,8 @@
       "max": 40,
       "step": 1,
       "unit": "clicks",
-      "label": "Klicks"
+      "label": "Klicks",
+      "finerDirection": -1
     },
     "specs": {
       "antrieb": "hand",
@@ -653,7 +681,8 @@
       "max": 10,
       "step": 0.1,
       "unit": "turns",
-      "label": "Umdrehungen"
+      "label": "Umdrehungen",
+      "finerDirection": -1
     },
     "specs": {
       "antrieb": "electric",
@@ -676,7 +705,8 @@
       "max": 10,
       "step": 0.1,
       "unit": "turns",
-      "label": "Umdrehungen"
+      "label": "Umdrehungen",
+      "finerDirection": -1
     },
     "specs": {
       "antrieb": "electric",
