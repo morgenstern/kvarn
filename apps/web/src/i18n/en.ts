@@ -67,6 +67,8 @@ export const en: Dictionary = {
     title: "Brew",
     needsSetupAndBean: "Add a setup and a bean first, then you can brew.",
     humidityLine: "{temp}°C · {humidity}% humidity",
+    pickGrinder: "Grinder",
+    pickBean: "Bean",
     grindLabel: "Grind",
     doseLabel: "Dose",
     doseUnit: "g (in)",

@@ -132,7 +132,7 @@ export function Onboarding() {
               className="w-full text-left text-base py-2 border-b border-linen last:border-b-0 flex items-center gap-3"
               onClick={() => pickEquipmentFromProduct(p.id)}
             >
-              <EntityImage src={p.imageUrl} kind="grinder" className="w-10 h-10 rounded-control flex-none" />
+              <EntityImage src={p.imageUrl} kind="grinder" className="w-14 h-14 rounded-control flex-none" />
               {p.brand} {p.model}
             </button>
           ))}

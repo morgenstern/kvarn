@@ -1,8 +1,8 @@
 import { useMemo, useState } from "react";
-import { Button, Card, Chip, EntityImage, SectionLabel } from "@kvarn/ui";
+import { Button, Card, EntityImage, ProductCard, SectionLabel } from "@kvarn/ui";
 import { submitProduct } from "@kvarn/api-client";
 import type { Setup as SetupType } from "@kvarn/db";
-import { CheckCircle2, Plus, Search, SlidersHorizontal, Users } from "lucide-react";
+import { Plus, Search, SlidersHorizontal, Users } from "lucide-react";
 import { useKvarnStore } from "../state/store";
 import { useT } from "../i18n";
 
@@ -73,13 +73,13 @@ export function Setup() {
           <button
             key={p.id}
             type="button"
-            className="w-full text-left text-base py-2 border-b border-linen last:border-b-0 flex items-center gap-3"
+            className="w-full text-left text-base py-2.5 border-b border-linen last:border-b-0 flex items-center gap-3"
             onClick={async () => {
               await addEquipmentFromProduct(p.id);
               setQuery("");
             }}
           >
-            <EntityImage src={p.imageUrl} kind={p.kind === "grinder" ? "grinder" : "machine"} className="w-10 h-10 rounded-control flex-none" />
+            <EntityImage src={p.imageUrl} kind={p.kind === "grinder" ? "grinder" : "machine"} className="w-14 h-14 rounded-control flex-none" />
             {p.brand} {p.model}
           </button>
         ))}
@@ -149,17 +149,16 @@ export function Setup() {
       </Card>
 
       {equipment.length > 0 ? (
-        <Card>
-          <SectionLabel>{t("yourEquipment")}</SectionLabel>
-          <div className="flex flex-wrap gap-2">
+        <>
+          <SectionLabel className="mt-6">{t("yourEquipment")}</SectionLabel>
+          <div className="grid grid-cols-2 gap-3">
             {equipment.map((eq) => (
-              <Chip key={eq.id} className="!pl-1">
-                <EntityImage src={equipmentImage(eq.id)} kind="grinder" className="w-6 h-6 rounded-full" />
-                {equipmentLabel(eq.id)}
-              </Chip>
+              <ProductCard key={eq.id} image={<EntityImage src={equipmentImage(eq.id)} kind="grinder" className="w-full h-full" />}>
+                <div className="text-[15px] font-medium leading-tight">{equipmentLabel(eq.id)}</div>
+              </ProductCard>
             ))}
           </div>
-        </Card>
+        </>
       ) : null}
 
       <div className="mt-6 flex items-center justify-between">
@@ -219,27 +218,19 @@ export function Setup() {
         </Card>
       ) : null}
 
-      {setups.map((s) => (
-        <Card
-          key={s.id}
-          className={`cursor-pointer flex items-center gap-3 ${activeSetupId === s.id ? "border-copper" : ""}`}
-          onClick={() => setActiveSetup(s.id)}
-        >
-          <EntityImage src={equipmentImage(s.grinderEquipmentId)} kind="grinder" className="w-12 h-12 rounded-control flex-none" />
-          <div className="flex-1 flex items-center justify-between">
-            <div>
-              <div className="text-base font-medium">{s.name}</div>
-              <div className="text-sm text-muted">{s.method} · {equipmentLabel(s.grinderEquipmentId)}</div>
-            </div>
-            {activeSetupId === s.id ? (
-              <span className="flex items-center gap-1 text-[13px] text-copper font-medium">
-                <CheckCircle2 size={15} strokeWidth={1.5} />
-                {tCommon("active")}
-              </span>
-            ) : null}
-          </div>
-        </Card>
-      ))}
+      <div className="grid grid-cols-2 gap-3 mt-3">
+        {setups.map((s) => (
+          <ProductCard
+            key={s.id}
+            active={activeSetupId === s.id}
+            onClick={() => setActiveSetup(s.id)}
+            image={<EntityImage src={equipmentImage(s.grinderEquipmentId)} kind="grinder" className="w-full h-full" />}
+          >
+            <div className="text-[15px] font-medium leading-tight">{s.name}</div>
+            <div className="text-[13px] text-muted mt-0.5">{s.method} · {equipmentLabel(s.grinderEquipmentId)}</div>
+          </ProductCard>
+        ))}
+      </div>
     </div>
   );
 }

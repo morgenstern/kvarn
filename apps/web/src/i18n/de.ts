@@ -65,6 +65,8 @@ export const de = {
     title: "Brühen",
     needsSetupAndBean: "Erst Setup und Bohne anlegen, dann geht's hier weiter.",
     humidityLine: "{temp}°C · {humidity}% Luftfeuchte",
+    pickGrinder: "Mühle",
+    pickBean: "Bohne",
     grindLabel: "Mahlgrad",
     doseLabel: "Dosis",
     doseUnit: "g (In)",

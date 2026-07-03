@@ -24,26 +24,33 @@ function Badge({ children, className = "" }: { children: React.ReactNode; classN
   );
 }
 
+// A stylized millstone/mill wheel — grinders are literally "Mühlen" (mills),
+// so this doubles as a small brand nod to the Kvarn name.
 export function GrinderPlaceholder({ className }: PlaceholderProps) {
   return (
     <Badge className={className}>
-      <path d="M22 14 L42 14 L38 26 L26 26 Z" />
-      <rect x="24" y="26" width="16" height="28" rx="3" />
-      <line x1="24" y1="36" x2="40" y2="36" />
-      <circle cx="32" cy="46" r="3" />
+      <circle cx="32" cy="32" r="21" />
+      <circle cx="32" cy="32" r="6" />
+      <line x1="32" y1="11" x2="32" y2="26" />
+      <line x1="32" y1="38" x2="32" y2="53" />
+      <line x1="13.8" y1="21" x2="27" y2="28.5" />
+      <line x1="37" y1="35.5" x2="50.2" y2="43" />
+      <line x1="50.2" y1="21" x2="37" y2="28.5" />
+      <line x1="27" y1="35.5" x2="13.8" y2="43" />
     </Badge>
   );
 }
 
+// A stylized portafilter: basket with two locking-lug "ears" and a handle
+// ending in a knob.
 export function MachinePlaceholder({ className }: PlaceholderProps) {
   return (
     <Badge className={className}>
-      <rect x="14" y="16" width="36" height="30" rx="3" />
-      <circle cx="24" cy="27" r="5" />
-      <line x1="38" y1="24" x2="46" y2="24" />
-      <line x1="38" y1="30" x2="46" y2="30" />
-      <path d="M26 46 L26 52 L20 58" />
-      <rect x="16" y="50" width="32" height="6" rx="1.5" />
+      <circle cx="24" cy="34" r="13" />
+      <path d="M13 24 L9 19" />
+      <path d="M35 24 L39 19" />
+      <line x1="37" y1="34" x2="53" y2="34" />
+      <circle cx="56" cy="34" r="3" />
     </Badge>
   );
 }
@@ -79,15 +86,18 @@ export function ProductPlaceholder({ kind, className }: PlaceholderProps & { kin
   return <Component className={className} />;
 }
 
-/** Fallback for beans without a label photo. */
+/** Fallback for beans without a label photo — two overlapping coffee beans. */
 export function BeanBagPlaceholder({ className }: PlaceholderProps) {
   return (
     <Badge className={className}>
-      <path d="M24 12 C24 8, 40 8, 40 12 L40 18 L24 18 Z" />
-      <path d="M22 18 C16 26, 16 50, 24 56 L40 56 C48 50, 48 26, 42 18 Z" />
-      <circle cx="29" cy="34" r="2.4" />
-      <circle cx="35" cy="40" r="2.4" />
-      <circle cx="30" cy="45" r="2.4" />
+      <g transform="rotate(-24 24 37)">
+        <path d="M24 20 C33 20, 37 28, 37 37 C37 46, 33 54, 24 54 C15 54, 11 46, 11 37 C11 28, 15 20, 24 20 Z" />
+        <path d="M24 22 C19 28, 19 46, 24 52" />
+      </g>
+      <g transform="rotate(18 42 27)">
+        <path d="M42 14 C48 14, 51 20, 51 27 C51 34, 48 40, 42 40 C36 40, 33 34, 33 27 C33 20, 36 14, 42 14 Z" />
+        <path d="M42 16 C38 20, 38 34, 42 38" />
+      </g>
     </Badge>
   );
 }

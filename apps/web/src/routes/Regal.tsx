@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
-import { Button, Card, EntityImage } from "@kvarn/ui";
+import { Button, Card, EntityImage, ProductCard } from "@kvarn/ui";
 import { uploadPhoto } from "@kvarn/api-client";
 import { computeBeanAgeDays, freshnessPct } from "@kvarn/core";
-import { Archive, Camera, CheckCircle2, Plus } from "lucide-react";
+import { Archive, Camera, Plus } from "lucide-react";
 import { useKvarnStore } from "../state/store";
 import { useT } from "../i18n";
 
@@ -106,26 +106,26 @@ export function Regal() {
         </Button>
       )}
 
-      {beans.map((bean) => {
-        const fresh = beanFreshnessPct(bean.roastDate);
-        return (
-          <Card
-            key={bean.id}
-            className={`cursor-pointer flex gap-3 ${activeBeanId === bean.id ? "border-copper" : ""}`}
-            onClick={() => navigate({ to: "/regal/$beanId", params: { beanId: bean.id } })}
-          >
-            <EntityImage src={bean.photoUrl} kind="bean" className="w-16 h-16 rounded-control flex-none" />
-            <div className="flex-1">
-              <div className="flex items-center justify-between">
-                <div>
-                  <div className="text-base font-medium">{bean.roaster}</div>
-                  <div className="text-sm text-muted">{bean.name}{bean.origin ? ` · ${bean.origin}` : ""}</div>
+      <div className="grid grid-cols-2 gap-3">
+        {beans.map((bean) => {
+          const fresh = beanFreshnessPct(bean.roastDate);
+          return (
+            <ProductCard
+              key={bean.id}
+              active={activeBeanId === bean.id}
+              onClick={() => navigate({ to: "/regal/$beanId", params: { beanId: bean.id } })}
+              image={<EntityImage src={bean.photoUrl} kind="bean" className="w-full h-full" />}
+            >
+              <div className="text-[15px] font-medium leading-tight">{bean.roaster}</div>
+              <div className="text-[13px] text-muted truncate">{bean.name}{bean.origin ? ` · ${bean.origin}` : ""}</div>
+              {fresh !== null ? (
+                <div className="h-[5px] rounded-full bg-linen mt-2 overflow-hidden">
+                  <div className="h-full rounded-full bg-sage" style={{ width: `${fresh}%` }} />
                 </div>
+              ) : null}
+              <div className="flex items-center justify-between mt-2">
                 {activeBeanId === bean.id ? (
-                  <span className="flex items-center gap-1 text-[13px] text-copper font-medium">
-                    <CheckCircle2 size={15} strokeWidth={1.5} />
-                    {tCommon("active")}
-                  </span>
+                  <span className="text-[13px] text-copper font-medium">{tCommon("active")}</span>
                 ) : (
                   <button
                     type="button"
@@ -138,27 +138,22 @@ export function Regal() {
                     {tCommon("setActive")}
                   </button>
                 )}
+                <button
+                  type="button"
+                  className="flex items-center gap-1 text-[13px] text-muted underline"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    archiveBean(bean.id);
+                  }}
+                >
+                  <Archive size={13} strokeWidth={1.5} />
+                  {tCommon("archive")}
+                </button>
               </div>
-              {fresh !== null ? (
-                <div className="h-[5px] rounded-full bg-linen mt-2 overflow-hidden">
-                  <div className="h-full rounded-full bg-sage" style={{ width: `${fresh}%` }} />
-                </div>
-              ) : null}
-              <button
-                type="button"
-                className="flex items-center gap-1 text-[13px] text-muted mt-2 underline"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  archiveBean(bean.id);
-                }}
-              >
-                <Archive size={13} strokeWidth={1.5} />
-                {tCommon("archive")}
-              </button>
-            </div>
-          </Card>
-        );
-      })}
+            </ProductCard>
+          );
+        })}
+      </div>
     </div>
   );
 }

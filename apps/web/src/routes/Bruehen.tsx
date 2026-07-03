@@ -1,9 +1,9 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
-import { Button, Card, Chip, Hint, ParamStepper, RatingSlider, TimerRing } from "@kvarn/ui";
+import { Button, Card, Chip, EntityImage, Hint, ParamStepper, ProductCard, RatingSlider, SectionLabel, TimerRing } from "@kvarn/ui";
 import { computeRatio, nextGrindSuggestion } from "@kvarn/core";
 import type { WeatherSnapshot } from "@kvarn/db";
-import { BarChart3, CheckCircle2, Droplets, Home } from "lucide-react";
+import { BarChart3, CheckCircle2, Droplets, Home, Package, SlidersHorizontal } from "lucide-react";
 import {
   activeBean,
   activeSetup,
@@ -24,6 +24,7 @@ function beanAgeDaysFor(roastDate: string | null): number | null {
 
 export function Bruehen() {
   const state = useKvarnStore();
+  const { setups, beans, activeSetupId, activeBeanId, setActiveSetup, setActiveBean } = state;
   const setup = activeSetup(state);
   const bean = activeBean(state);
   const grinder = equipmentProduct(state, setup?.grinderEquipmentId ?? null);
@@ -34,6 +35,10 @@ export function Bruehen() {
   const t = useT("bruehen");
   const visualTagOptions = useTags("bruehen", "visualTags");
   const flavorTagOptions = useTags("bruehen", "flavorTags");
+
+  function setupImage(s: (typeof setups)[number]): string | null {
+    return equipmentProduct(state, s.grinderEquipmentId)?.imageUrl ?? null;
+  }
 
   const grindScale = grinder?.grindScale ?? {
     min: 0,
@@ -78,6 +83,14 @@ export function Bruehen() {
   const [grindSetting, setGrindSetting] = useState(
     () => suggestion?.grindSetting ?? Math.round(((grindScale.min + grindScale.max) / 2) / grindScale.step) * grindScale.step,
   );
+
+  // Users can switch setup/bean via the pickers below while still on the
+  // params step — re-sync the grind default to match whatever is now active
+  // instead of leaving it stuck on the first pick's suggestion.
+  useEffect(() => {
+    if (suggestion) setGrindSetting(suggestion.grindSetting);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [setup?.id, bean?.id]);
   const [doseG, setDoseG] = useState(18);
   const [targetYieldG, setTargetYieldG] = useState(36);
   const [actualYieldG, setActualYieldG] = useState(36);
@@ -166,6 +179,40 @@ export function Bruehen() {
           <Droplets size={14} strokeWidth={1.5} />
           {t("humidityLine", { temp: weatherSnapshot.tempC ?? "—", humidity: weatherSnapshot.humidityPct })}
         </p>
+      ) : null}
+
+      {step === "params" ? (
+        <>
+          <SectionLabel icon={SlidersHorizontal} className="mt-5">{t("pickGrinder")}</SectionLabel>
+          <div className="flex gap-3 overflow-x-auto pb-1 -mx-5 px-5">
+            {setups.map((s) => (
+              <ProductCard
+                key={s.id}
+                className="w-28 flex-none"
+                active={activeSetupId === s.id}
+                onClick={() => setActiveSetup(s.id)}
+                image={<EntityImage src={setupImage(s)} kind="grinder" className="w-full h-full" />}
+              >
+                <div className="text-[13px] font-medium leading-tight truncate">{s.name}</div>
+              </ProductCard>
+            ))}
+          </div>
+
+          <SectionLabel icon={Package} className="mt-4">{t("pickBean")}</SectionLabel>
+          <div className="flex gap-3 overflow-x-auto pb-1 -mx-5 px-5">
+            {beans.map((b) => (
+              <ProductCard
+                key={b.id}
+                className="w-28 flex-none"
+                active={activeBeanId === b.id}
+                onClick={() => setActiveBean(b.id)}
+                image={<EntityImage src={b.photoUrl} kind="bean" className="w-full h-full" />}
+              >
+                <div className="text-[13px] font-medium leading-tight truncate">{b.roaster}</div>
+              </ProductCard>
+            ))}
+          </div>
+        </>
       ) : null}
 
       {step === "params" ? (

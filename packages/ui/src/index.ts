@@ -4,6 +4,7 @@ export * from "./components/Chart";
 export * from "./components/Chip";
 export * from "./components/EntityImage";
 export * from "./components/Hint";
+export * from "./components/ProductCard";
 export * from "./components/ProductPlaceholder";
 export * from "./components/ParamStepper";
 export * from "./components/RatingSlider";

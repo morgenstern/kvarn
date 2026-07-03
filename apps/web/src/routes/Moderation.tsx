@@ -117,7 +117,7 @@ export function Moderation() {
             <Card key={p.id}>
               <div className="flex items-center justify-between gap-3">
                 <div className="flex items-center gap-3">
-                  <EntityImage kind={submissionKind(p.kind)} className="w-10 h-10 flex-none" />
+                  <EntityImage kind={submissionKind(p.kind)} className="w-14 h-14 flex-none" />
                   <div>
                     <div className="text-base font-medium">
                       {p.brand} {p.model}
@@ -163,7 +163,7 @@ export function Moderation() {
                   <Card key={p.id}>
                     <div className="flex items-center justify-between gap-3">
                       <div className="flex items-center gap-3">
-                        <EntityImage kind={submissionKind(p.kind)} className="w-10 h-10 flex-none" />
+                        <EntityImage kind={submissionKind(p.kind)} className="w-14 h-14 flex-none" />
                         <div className="text-base font-medium">
                           {p.brand} {p.model}
                         </div>
