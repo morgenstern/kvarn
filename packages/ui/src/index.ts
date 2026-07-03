@@ -1,5 +1,6 @@
 export * from "./components/Card";
 export * from "./components/Button";
+export * from "./components/Chart";
 export * from "./components/Chip";
 export * from "./components/Hint";
 export * from "./components/ParamStepper";

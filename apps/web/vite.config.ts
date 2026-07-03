@@ -23,7 +23,10 @@ export default defineConfig({
         ],
       },
       workbox: {
-        globPatterns: ["**/*.{js,css,html,svg,woff2}"],
+        // Includes the seed product catalog (public/data/seed-products.json)
+        // so Setup search works offline on first load too, not just after
+        // ensureSeeded() has already populated IndexedDB once.
+        globPatterns: ["**/*.{js,css,html,svg,woff2,json}"],
       },
     }),
   ],

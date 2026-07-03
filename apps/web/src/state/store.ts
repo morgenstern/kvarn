@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { fetchWeatherSnapshot, getRoughLocation } from "@kvarn/api-client";
 import type { Bean, Brew, Equipment, Product, Recipe, Setup, WeatherSnapshot } from "@kvarn/db";
-import { db, ensureSeeded, LOCAL_USER_ID, newId, nowIso } from "../data/db";
+import { db, ensureSeeded, LOCAL_USER_ID, newId, nowIso, syncApprovedProducts } from "../data/db";
 
 interface KvarnState {
   hydrated: boolean;
@@ -24,6 +24,7 @@ interface KvarnState {
     name: string;
     origin?: string;
     roastDate?: string;
+    photoUrl?: string;
   }) => Promise<Bean>;
   archiveBean: (beanId: string) => Promise<void>;
   setActiveSetup: (setupId: string | null) => void;
@@ -48,6 +49,7 @@ export const useKvarnStore = create<KvarnState>((set, get) => ({
 
   hydrate: async () => {
     await ensureSeeded();
+    await syncApprovedProducts();
     const [products, equipment, setups, beans, brews, weatherSnapshots, recipes] = await Promise.all([
       db.products.toArray(),
       db.equipment.toArray(),
@@ -123,7 +125,7 @@ export const useKvarnStore = create<KvarnState>((set, get) => ({
     return setup;
   },
 
-  addBean: async ({ roaster, name, origin, roastDate }) => {
+  addBean: async ({ roaster, name, origin, roastDate, photoUrl }) => {
     const bean: Bean = {
       id: newId("bean"),
       userId: LOCAL_USER_ID,
@@ -135,7 +137,7 @@ export const useKvarnStore = create<KvarnState>((set, get) => ({
       roastLevel: null,
       roastDate: roastDate ?? null,
       openedAt: null,
-      photoUrl: null,
+      photoUrl: photoUrl ?? null,
       barcode: null,
       archived: false,
       updatedAt: nowIso(),

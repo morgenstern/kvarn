@@ -1,13 +1,25 @@
-import { Card } from "@kvarn/ui";
-import { useKvarnStore } from "../state/store";
+import { Card, Chart } from "@kvarn/ui";
+import { useKvarnStore, weatherSnapshotFor } from "../state/store";
 
 export function Kompass() {
-  const { brews, setups, beans, recipes } = useKvarnStore();
+  const state = useKvarnStore();
+  const { brews, setups, beans, recipes } = state;
+
+  const humidityTimePoints = brews
+    .map((b) => {
+      const weather = weatherSnapshotFor(state, b.weatherId);
+      return weather?.humidityPct != null ? { x: weather.humidityPct, y: b.timeTotalS } : null;
+    })
+    .filter((p): p is { x: number; y: number } => p !== null);
+
+  const beanAgeRatingPoints = brews
+    .filter((b) => b.beanAgeDays != null)
+    .map((b) => ({ x: b.beanAgeDays as number, y: b.ratingTotal }));
 
   return (
     <div>
       <h1 className="font-display text-[28px] mt-3.5 mb-0.5">Kompass</h1>
-      <p className="text-sm text-muted">Deine besten Rezepte und das Logbuch aller Bezüge.</p>
+      <p className="text-sm text-muted">Deine besten Rezepte, Insights und das Logbuch aller Bezüge.</p>
 
       {recipes.length > 0 ? (
         <>
@@ -35,6 +47,26 @@ export function Kompass() {
           })}
         </>
       ) : null}
+
+      <div className="text-[11px] uppercase tracking-wider text-muted font-medium mt-5 mb-1">Insights</div>
+      <Card>
+        <div className="text-sm font-medium mb-1">Luftfeuchte × Brühzeit</div>
+        {humidityTimePoints.length > 0 ? (
+          <Chart points={humidityTimePoints} mode="scatter" xAxisLabel={(x) => `${x}%`} />
+        ) : (
+          <p className="text-xs text-muted">
+            Noch keine Bezüge mit Wetter-Snapshot. Standort-Freigabe beim Brühen erlauben, um hier Muster zu sehen.
+          </p>
+        )}
+      </Card>
+      <Card>
+        <div className="text-sm font-medium mb-1">Bohnenalter × Rating</div>
+        {beanAgeRatingPoints.length > 0 ? (
+          <Chart points={beanAgeRatingPoints} mode="scatter" yDomain={[1, 10]} xAxisLabel={(x) => `Tag ${x}`} />
+        ) : (
+          <p className="text-xs text-muted">Noch keine Bezüge mit bekanntem Röstdatum.</p>
+        )}
+      </Card>
 
       <div className="text-[11px] uppercase tracking-wider text-muted font-medium mt-5 mb-1">Logbuch</div>
       {brews.length === 0 ? (

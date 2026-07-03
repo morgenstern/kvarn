@@ -4,22 +4,27 @@ Kaffee-Companion für Web, iOS & Android. Siehe `docs/` für Markenkern, UX-Konz
 
 ## Status
 
-**M0 (Fundament) + M1 (Brüh-Loop, Web) + M2 (Wetter + Kompass P1)** — lokal lauffähig als Vite-Dev-Server bzw.
-installierbare PWA. Für den vollen Funktionsumfang (inkl. Wetter) muss zusätzlich der Worker lokal laufen —
-beides funktioniert komplett ohne Cloudflare-Account (Miniflare simuliert D1/R2/KV lokal). Setups, Bohnen und
-Bezüge werden lokal in IndexedDB gehalten.
+**M0 (Fundament) + M1 (Brüh-Loop) + M2 (Wetter + Kompass P1) + M3 (Regal & Insights)** — lokal lauffähig als
+Vite-Dev-Server bzw. installierbare PWA. Für den vollen Funktionsumfang (Wetter, Fotos, Community-Vorschläge)
+muss zusätzlich der Worker lokal laufen — beides funktioniert komplett ohne Cloudflare-Account (Miniflare
+simuliert D1/R2/KV lokal). Setups, Bohnen und Bezüge werden lokal in IndexedDB gehalten.
+
+M3 ergänzt: Bohnen-Detail-Screen (Frische-Kurve, Rating-Verlauf, Rezepte), Bohnen-Fotos (R2-Upload),
+vollständiger ~390-Geräte-Katalog, Community-Gerätevorschläge mit Moderations-Queue (`/moderation`, aktuell
+**ohne Zugriffsschutz** — better-auth fehlt noch, siehe unten), sowie Insight-Charts auf dem Kompass-Screen
+(Luftfeuchte×Brühzeit, Bohnenalter×Rating).
 
 ## Struktur
 
 ```
 apps/
   web/      React + Vite PWA — die eigentliche App
-  worker/   Cloudflare Worker (Hono) — API (Wetter-Proxy mit KV-Cache) + Static-Assets-Hosting
+  worker/   Cloudflare Worker (Hono) — API (Wetter-Proxy, Produkt-Moderation, Foto-Upload) + Static-Assets-Hosting
 packages/
-  core/     Domänen-Logik (Ratio-Mathe, Kompass-Regelwerk mit "Warum") — framework-frei, mit Golden-Tests
-  db/       Ein Drizzle-SQLite-Schema für lokale DB und D1
-  ui/       Design-Tokens (Tailwind-Theme) + geteilte Komponenten
-  api-client/  Wetter-Client (Open-Meteo via Worker-Proxy) + Geolocation-Helper; BLE-Scale-Client ab M2/Phase 2
+  core/     Domänen-Logik (Ratio-Mathe, Kompass-Regelwerk mit "Warum", Frische-Kurve) — framework-frei, Golden-Tests
+  db/       Ein Drizzle-SQLite-Schema für lokale DB und D1, Migrationen in packages/db/migrations
+  ui/       Design-Tokens (Tailwind-Theme) + geteilte Komponenten (inkl. Chart)
+  api-client/  Wetter-, Produkt-Moderation- und Foto-Upload-Clients; BLE-Scale-Client folgt ab M2/Phase 2
 ```
 
 ## Setup
@@ -31,18 +36,20 @@ pnpm install
 pnpm dev:web       # startet die Web-App auf http://localhost:5173
 ```
 
-Für Wetter-Snapshots zusätzlich den Worker lokal starten (in einem zweiten Terminal, kein Cloudflare-Account
-nötig — Miniflare simuliert die Bindings):
+Für Wetter, Foto-Upload und Community-Vorschläge zusätzlich den Worker lokal starten (in einem zweiten
+Terminal, kein Cloudflare-Account nötig — Miniflare simuliert die Bindings). Beim allerersten Mal die
+D1-Migration auf die lokale Datenbank anwenden:
 
 ```bash
-pnpm dev:worker    # startet den Worker auf http://localhost:8787
+pnpm --filter @kvarn/worker db:migrate:local   # einmalig, legt die Tabellen in der lokalen D1 an
+pnpm dev:worker                                # startet den Worker auf http://localhost:8787
 ```
 
 Vite proxied `/api/*` im Dev-Modus automatisch an `localhost:8787` (siehe `apps/web/vite.config.ts`). Ohne
 laufenden Worker funktioniert die App weiterhin — Wetter wird dann einfach übersprungen (nie ein Blocker).
 
-Erststart legt automatisch eine Setup- und Bohnen-Anleitung nahe: unter **Setup** eine Mühle suchen (56 Geräte
-kuratiert aus der Seed-DB) oder ein eigenes Gerät anlegen, dann ein Setup speichern; unter **Regal** eine Bohne
+Erststart legt automatisch eine Setup- und Bohnen-Anleitung nahe: unter **Setup** eine Mühle suchen (~390 Geräte
+aus der Seed-DB) oder ein eigenes Gerät anlegen, dann ein Setup speichern; unter **Regal** eine Bohne
 anlegen. Danach ist **Brühen** nutzbar: Parameter (mit Kompass-Vorschlag + "Warum") → Timer → Bewertung →
 Logbuch & beste Rezepte (**Kompass**).
 

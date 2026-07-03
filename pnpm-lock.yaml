@@ -108,6 +108,9 @@ importers:
       '@kvarn/db':
         specifier: workspace:*
         version: link:../../packages/db
+      drizzle-orm:
+        specifier: ^0.36.0
+        version: 0.36.4(@cloudflare/workers-types@4.20260702.1)(@types/react@18.3.31)(react@18.3.1)
       hono:
         specifier: ^4.6.0
         version: 4.12.27
@@ -171,6 +174,9 @@ importers:
       typescript:
         specifier: ^5.6.0
         version: 5.9.3
+      vitest:
+        specifier: ^2.1.0
+        version: 2.1.9(@types/node@22.20.0)(jsdom@25.0.1)(lightningcss@1.32.0)(terser@5.48.0)
 
 packages:
 

@@ -1,6 +1,5 @@
 import Dexie, { type EntityTable } from "dexie";
 import type { Bean, Brew, Equipment, Product, Recipe, Setup, WeatherSnapshot } from "@kvarn/db";
-import seedProducts from "./seed-products.json";
 
 /**
  * Local-first store for the web app, backed by IndexedDB via Dexie.
@@ -36,22 +35,59 @@ export const db = new KvarnDB();
 const LOCAL_USER_ID = "local";
 export { LOCAL_USER_ID };
 
+type SeedProduct = Omit<Product, "updatedAt" | "deletedAt" | "clientId">;
+
+// Bump when public/data/seed-products.json changes meaningfully (e.g. catalog
+// size grows) so existing installs re-sync instead of keeping whatever they
+// first seeded. bulkPut is an idempotent upsert, so re-running this is safe.
+const SEED_CATALOG_VERSION = 2;
+const SEED_VERSION_KEY = "kvarn:seedCatalogVersion";
+
 /**
- * Uses bulkPut (idempotent upsert) rather than bulkAdd so concurrent calls
- * (e.g. React StrictMode double-invoking effects in dev) never race on a
- * count-then-insert check and throw a duplicate-key BulkError.
+ * Fetched from public/data/seed-products.json rather than bundled via static
+ * import — at ~390 curated devices the JSON is too big to ship in the main
+ * JS chunk (violates the <2s app-start budget in docs/03_TECH_KONZEPT.md §9).
  */
 export async function ensureSeeded(): Promise<void> {
+  const storedVersion = Number(localStorage.getItem(SEED_VERSION_KEY) ?? "0");
   const count = await db.products.count();
-  if (count > 0) return;
+  if (count > 0 && storedVersion === SEED_CATALOG_VERSION) return;
+
+  const res = await fetch("/data/seed-products.json");
+  const seedProducts = (await res.json()) as SeedProduct[];
   await db.products.bulkPut(
-    (seedProducts as Array<Omit<Product, "updatedAt" | "deletedAt" | "clientId">>).map((p) => ({
+    seedProducts.map((p) => ({
       ...p,
       updatedAt: new Date().toISOString(),
       deletedAt: null,
       clientId: p.id,
     })),
   );
+  localStorage.setItem(SEED_VERSION_KEY, String(SEED_CATALOG_VERSION));
+}
+
+/**
+ * Merges server-approved community products (see apps/worker's
+ * /api/products) into the local catalog. Best-effort and non-blocking —
+ * same pattern as weather: if the worker isn't reachable, just skip it.
+ */
+export async function syncApprovedProducts(): Promise<void> {
+  try {
+    const res = await fetch("/api/products");
+    if (!res.ok) return;
+    const approved = (await res.json()) as SeedProduct[];
+    if (approved.length === 0) return;
+    await db.products.bulkPut(
+      approved.map((p) => ({
+        ...p,
+        updatedAt: new Date().toISOString(),
+        deletedAt: null,
+        clientId: p.id,
+      })),
+    );
+  } catch {
+    // Offline or worker not running locally — the static seed catalog still works.
+  }
 }
 
 export function newId(prefix: string): string {

@@ -1,0 +1,7792 @@
+[
+  {
+    "id": "grinder-eureka-mignon-crono",
+    "kind": "grinder",
+    "brand": "Eureka",
+    "model": "Mignon Crono",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": 50,
+      "einsatz": "filter",
+      "segment": "mid",
+      "preisEurCa": 200,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-eureka-mignon-facile",
+    "kind": "grinder",
+    "brand": "Eureka",
+    "model": "Mignon Facile",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": 50,
+      "einsatz": "espresso",
+      "segment": "mid",
+      "preisEurCa": 250,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-eureka-mignon-manuale",
+    "kind": "grinder",
+    "brand": "Eureka",
+    "model": "Mignon Manuale",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": 50,
+      "einsatz": "espresso",
+      "segment": "mid",
+      "preisEurCa": 280,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-eureka-mignon-notte",
+    "kind": "grinder",
+    "brand": "Eureka",
+    "model": "Mignon Notte",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": 50,
+      "einsatz": "espresso",
+      "segment": "mid",
+      "preisEurCa": 300,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-eureka-mignon-silenzio",
+    "kind": "grinder",
+    "brand": "Eureka",
+    "model": "Mignon Silenzio",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": 50,
+      "einsatz": "espresso",
+      "segment": "mid",
+      "preisEurCa": 380,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-eureka-mignon-specialita",
+    "kind": "grinder",
+    "brand": "Eureka",
+    "model": "Mignon Specialita",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": 55,
+      "einsatz": "espresso",
+      "segment": "mid",
+      "preisEurCa": 450,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-eureka-mignon-perfetto",
+    "kind": "grinder",
+    "brand": "Eureka",
+    "model": "Mignon Perfetto",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": 55,
+      "einsatz": "allround",
+      "segment": "mid",
+      "preisEurCa": 430,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-eureka-mignon-xl",
+    "kind": "grinder",
+    "brand": "Eureka",
+    "model": "Mignon XL",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": 65,
+      "einsatz": "espresso",
+      "segment": "high",
+      "preisEurCa": 600,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-eureka-mignon-magnifico",
+    "kind": "grinder",
+    "brand": "Eureka",
+    "model": "Mignon Magnifico",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": 65,
+      "einsatz": "espresso",
+      "segment": "high",
+      "preisEurCa": 550,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-eureka-mignon-zero",
+    "kind": "grinder",
+    "brand": "Eureka",
+    "model": "Mignon Zero",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": 65,
+      "einsatz": "espresso",
+      "segment": "high",
+      "preisEurCa": 600,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-eureka-mignon-single-dose",
+    "kind": "grinder",
+    "brand": "Eureka",
+    "model": "Mignon Single Dose",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": 65,
+      "einsatz": "espresso",
+      "segment": "high",
+      "preisEurCa": 650,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-eureka-mignon-libra",
+    "kind": "grinder",
+    "brand": "Eureka",
+    "model": "Mignon Libra",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": 65,
+      "einsatz": "espresso",
+      "segment": "high",
+      "preisEurCa": 800,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-eureka-oro-mignon-single-dose",
+    "kind": "grinder",
+    "brand": "Eureka",
+    "model": "ORO Mignon Single Dose",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": 65,
+      "einsatz": "espresso",
+      "segment": "high",
+      "preisEurCa": 700,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-eureka-mignon-filtro",
+    "kind": "grinder",
+    "brand": "Eureka",
+    "model": "Mignon Filtro",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": 50,
+      "einsatz": "filter",
+      "segment": "mid",
+      "preisEurCa": 190,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-eureka-atom-65",
+    "kind": "grinder",
+    "brand": "Eureka",
+    "model": "Atom 65",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": 65,
+      "einsatz": "espresso",
+      "segment": "high",
+      "preisEurCa": 900,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-eureka-atom-w-65",
+    "kind": "grinder",
+    "brand": "Eureka",
+    "model": "Atom W 65",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": 65,
+      "einsatz": "espresso",
+      "segment": "pro",
+      "preisEurCa": 1400,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-eureka-atom-75",
+    "kind": "grinder",
+    "brand": "Eureka",
+    "model": "Atom 75",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": 75,
+      "einsatz": "espresso",
+      "segment": "pro",
+      "preisEurCa": 1300,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-eureka-helios-65",
+    "kind": "grinder",
+    "brand": "Eureka",
+    "model": "Helios 65",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": 65,
+      "einsatz": "espresso",
+      "segment": "high",
+      "preisEurCa": 800,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-eureka-helios-80",
+    "kind": "grinder",
+    "brand": "Eureka",
+    "model": "Helios 80",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": 80,
+      "einsatz": "espresso",
+      "segment": "pro",
+      "preisEurCa": 1300,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-eureka-zenith-65-e",
+    "kind": "grinder",
+    "brand": "Eureka",
+    "model": "Zenith 65 E",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": 65,
+      "einsatz": "espresso",
+      "segment": "high",
+      "preisEurCa": 700,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-eureka-prometheus",
+    "kind": "grinder",
+    "brand": "Eureka",
+    "model": "Prometheus",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": null,
+      "einsatz": "espresso",
+      "segment": "pro",
+      "preisEurCa": 2600,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-mazzer-mini",
+    "kind": "grinder",
+    "brand": "Mazzer",
+    "model": "Mini",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": 58,
+      "einsatz": "espresso",
+      "segment": "high",
+      "preisEurCa": 700,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-mazzer-super-jolly",
+    "kind": "grinder",
+    "brand": "Mazzer",
+    "model": "Super Jolly",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": 64,
+      "einsatz": "espresso",
+      "segment": "high",
+      "preisEurCa": 900,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-mazzer-super-jolly-v-pro",
+    "kind": "grinder",
+    "brand": "Mazzer",
+    "model": "Super Jolly V Pro",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": 64,
+      "einsatz": "espresso",
+      "segment": "pro",
+      "preisEurCa": 1400,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-mazzer-philos",
+    "kind": "grinder",
+    "brand": "Mazzer",
+    "model": "Philos",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "conical",
+      "scheibenMm": 68,
+      "einsatz": "espresso",
+      "segment": "pro",
+      "preisEurCa": 1900,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-mazzer-major-v",
+    "kind": "grinder",
+    "brand": "Mazzer",
+    "model": "Major V",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": 83,
+      "einsatz": "espresso",
+      "segment": "pro",
+      "preisEurCa": 1800,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-mazzer-kony-s",
+    "kind": "grinder",
+    "brand": "Mazzer",
+    "model": "Kony S",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "conical",
+      "scheibenMm": 63,
+      "einsatz": "espresso",
+      "segment": "pro",
+      "preisEurCa": 1600,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-mazzer-omega",
+    "kind": "grinder",
+    "brand": "Mazzer",
+    "model": "Omega",
+    "grindScale": {
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "clicks",
+      "label": "Klicks",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "hand",
+      "mahlwerk": "conical",
+      "scheibenMm": null,
+      "einsatz": "espresso",
+      "segment": "mid",
+      "preisEurCa": 300,
+      "verstellung": "clicks"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-mahlkonig-x54",
+    "kind": "grinder",
+    "brand": "Mahlkönig",
+    "model": "X54",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": 54,
+      "einsatz": "allround",
+      "segment": "high",
+      "preisEurCa": 600,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-mahlkonig-x64",
+    "kind": "grinder",
+    "brand": "Mahlkönig",
+    "model": "X64",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": 64,
+      "einsatz": "espresso",
+      "segment": "pro",
+      "preisEurCa": 1500,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-mahlkonig-e65s",
+    "kind": "grinder",
+    "brand": "Mahlkönig",
+    "model": "E65S",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": 65,
+      "einsatz": "espresso",
+      "segment": "pro",
+      "preisEurCa": 2200,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-mahlkonig-e65s-gbw",
+    "kind": "grinder",
+    "brand": "Mahlkönig",
+    "model": "E65S GbW",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": 65,
+      "einsatz": "espresso",
+      "segment": "pro",
+      "preisEurCa": 2900,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-mahlkonig-e80s",
+    "kind": "grinder",
+    "brand": "Mahlkönig",
+    "model": "E80S",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": 80,
+      "einsatz": "espresso",
+      "segment": "pro",
+      "preisEurCa": 3200,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-mahlkonig-ek43",
+    "kind": "grinder",
+    "brand": "Mahlkönig",
+    "model": "EK43",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": 98,
+      "einsatz": "allround",
+      "segment": "pro",
+      "preisEurCa": 2900,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-mahlkonig-ek43-s",
+    "kind": "grinder",
+    "brand": "Mahlkönig",
+    "model": "EK43 S",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": 98,
+      "einsatz": "allround",
+      "segment": "pro",
+      "preisEurCa": 2700,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-mahlkonig-ek-omnia",
+    "kind": "grinder",
+    "brand": "Mahlkönig",
+    "model": "EK Omnia",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": 98,
+      "einsatz": "allround",
+      "segment": "pro",
+      "preisEurCa": 3900,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-niche-zero",
+    "kind": "grinder",
+    "brand": "Niche",
+    "model": "Zero",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "conical",
+      "scheibenMm": 63,
+      "einsatz": "espresso",
+      "segment": "high",
+      "preisEurCa": 700,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-niche-duo",
+    "kind": "grinder",
+    "brand": "Niche",
+    "model": "Duo",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": 83,
+      "einsatz": "allround",
+      "segment": "high",
+      "preisEurCa": 1050,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-ceado-e37s",
+    "kind": "grinder",
+    "brand": "Ceado",
+    "model": "E37S",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": 83,
+      "einsatz": "espresso",
+      "segment": "pro",
+      "preisEurCa": 2100,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-ceado-e37j",
+    "kind": "grinder",
+    "brand": "Ceado",
+    "model": "E37J",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": 64,
+      "einsatz": "espresso",
+      "segment": "pro",
+      "preisEurCa": 1400,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-ceado-e5p",
+    "kind": "grinder",
+    "brand": "Ceado",
+    "model": "E5P",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": 64,
+      "einsatz": "espresso",
+      "segment": "high",
+      "preisEurCa": 900,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-ceado-e37z-hero",
+    "kind": "grinder",
+    "brand": "Ceado",
+    "model": "E37Z Hero",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": 83,
+      "einsatz": "filter",
+      "segment": "pro",
+      "preisEurCa": 2500,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-baratza-encore",
+    "kind": "grinder",
+    "brand": "Baratza",
+    "model": "Encore",
+    "grindScale": {
+      "min": 1,
+      "max": 30,
+      "step": 1,
+      "unit": "step",
+      "label": "Stufe",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "conical",
+      "scheibenMm": 40,
+      "einsatz": "filter",
+      "segment": "mid",
+      "preisEurCa": 170,
+      "verstellung": "stepped"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-baratza-encore-esp",
+    "kind": "grinder",
+    "brand": "Baratza",
+    "model": "Encore ESP",
+    "grindScale": {
+      "min": 1,
+      "max": 30,
+      "step": 1,
+      "unit": "step",
+      "label": "Stufe",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "conical",
+      "scheibenMm": 40,
+      "einsatz": "allround",
+      "segment": "mid",
+      "preisEurCa": 220,
+      "verstellung": "stepped"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-baratza-virtuoso",
+    "kind": "grinder",
+    "brand": "Baratza",
+    "model": "Virtuoso+",
+    "grindScale": {
+      "min": 1,
+      "max": 30,
+      "step": 1,
+      "unit": "step",
+      "label": "Stufe",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "conical",
+      "scheibenMm": 40,
+      "einsatz": "filter",
+      "segment": "mid",
+      "preisEurCa": 280,
+      "verstellung": "stepped"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-baratza-vario",
+    "kind": "grinder",
+    "brand": "Baratza",
+    "model": "Vario+",
+    "grindScale": {
+      "min": 1,
+      "max": 30,
+      "step": 1,
+      "unit": "step",
+      "label": "Stufe",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": 54,
+      "einsatz": "allround",
+      "segment": "high",
+      "preisEurCa": 600,
+      "verstellung": "stepped"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-baratza-vario-w",
+    "kind": "grinder",
+    "brand": "Baratza",
+    "model": "Vario W+",
+    "grindScale": {
+      "min": 1,
+      "max": 30,
+      "step": 1,
+      "unit": "step",
+      "label": "Stufe",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": 54,
+      "einsatz": "allround",
+      "segment": "high",
+      "preisEurCa": 750,
+      "verstellung": "stepped"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-baratza-sette-270",
+    "kind": "grinder",
+    "brand": "Baratza",
+    "model": "Sette 270",
+    "grindScale": {
+      "min": 1,
+      "max": 30,
+      "step": 1,
+      "unit": "step",
+      "label": "Stufe",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "conical",
+      "scheibenMm": 40,
+      "einsatz": "espresso",
+      "segment": "mid",
+      "preisEurCa": 450,
+      "verstellung": "stepped"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-baratza-sette-270wi",
+    "kind": "grinder",
+    "brand": "Baratza",
+    "model": "Sette 270Wi",
+    "grindScale": {
+      "min": 1,
+      "max": 30,
+      "step": 1,
+      "unit": "step",
+      "label": "Stufe",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "conical",
+      "scheibenMm": 40,
+      "einsatz": "espresso",
+      "segment": "high",
+      "preisEurCa": 600,
+      "verstellung": "stepped"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-baratza-forte-ap",
+    "kind": "grinder",
+    "brand": "Baratza",
+    "model": "Forte AP",
+    "grindScale": {
+      "min": 1,
+      "max": 30,
+      "step": 1,
+      "unit": "step",
+      "label": "Stufe",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": 54,
+      "einsatz": "allround",
+      "segment": "high",
+      "preisEurCa": 950,
+      "verstellung": "stepped"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-baratza-forte-bg",
+    "kind": "grinder",
+    "brand": "Baratza",
+    "model": "Forte BG",
+    "grindScale": {
+      "min": 1,
+      "max": 30,
+      "step": 1,
+      "unit": "step",
+      "label": "Stufe",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": 54,
+      "einsatz": "filter",
+      "segment": "high",
+      "preisEurCa": 950,
+      "verstellung": "stepped"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-fellow-ode-gen-2",
+    "kind": "grinder",
+    "brand": "Fellow",
+    "model": "Ode Gen 2",
+    "grindScale": {
+      "min": 1,
+      "max": 30,
+      "step": 1,
+      "unit": "step",
+      "label": "Stufe",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": 64,
+      "einsatz": "filter",
+      "segment": "mid",
+      "preisEurCa": 380,
+      "verstellung": "stepped"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-fellow-opus",
+    "kind": "grinder",
+    "brand": "Fellow",
+    "model": "Opus",
+    "grindScale": {
+      "min": 1,
+      "max": 30,
+      "step": 1,
+      "unit": "step",
+      "label": "Stufe",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "conical",
+      "scheibenMm": 40,
+      "einsatz": "allround",
+      "segment": "mid",
+      "preisEurCa": 230,
+      "verstellung": "stepped"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-varia-vs3-gen-2",
+    "kind": "grinder",
+    "brand": "Varia",
+    "model": "VS3 Gen 2",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "conical",
+      "scheibenMm": 38,
+      "einsatz": "allround",
+      "segment": "mid",
+      "preisEurCa": 350,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-varia-vs6",
+    "kind": "grinder",
+    "brand": "Varia",
+    "model": "VS6",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": 64,
+      "einsatz": "allround",
+      "segment": "high",
+      "preisEurCa": 600,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-varia-evo-hybrid",
+    "kind": "grinder",
+    "brand": "Varia",
+    "model": "EVO Hybrid",
+    "grindScale": {
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "clicks",
+      "label": "Klicks",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "hand",
+      "mahlwerk": "conical",
+      "scheibenMm": 38,
+      "einsatz": "allround",
+      "segment": "mid",
+      "preisEurCa": 200,
+      "verstellung": "clicks"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-option-o-lagom-p64",
+    "kind": "grinder",
+    "brand": "Option-O",
+    "model": "Lagom P64",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": 64,
+      "einsatz": "espresso",
+      "segment": "pro",
+      "preisEurCa": 2000,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-option-o-lagom-p100",
+    "kind": "grinder",
+    "brand": "Option-O",
+    "model": "Lagom P100",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": 98,
+      "einsatz": "allround",
+      "segment": "pro",
+      "preisEurCa": 3000,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-option-o-lagom-mini",
+    "kind": "grinder",
+    "brand": "Option-O",
+    "model": "Lagom Mini",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "conical",
+      "scheibenMm": 48,
+      "einsatz": "allround",
+      "segment": "high",
+      "preisEurCa": 700,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-option-o-lagom-casa",
+    "kind": "grinder",
+    "brand": "Option-O",
+    "model": "Lagom Casa",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": null,
+      "einsatz": "allround",
+      "segment": "high",
+      "preisEurCa": 600,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-option-o-remi",
+    "kind": "grinder",
+    "brand": "Option-O",
+    "model": "Remi",
+    "grindScale": {
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "clicks",
+      "label": "Klicks",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "hand",
+      "mahlwerk": "conical",
+      "scheibenMm": null,
+      "einsatz": "allround",
+      "segment": "mid",
+      "preisEurCa": 300,
+      "verstellung": "clicks"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-weber-workshops-eg-1",
+    "kind": "grinder",
+    "brand": "Weber Workshops",
+    "model": "EG-1",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": 80,
+      "einsatz": "espresso",
+      "segment": "pro",
+      "preisEurCa": 3600,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-weber-workshops-key-mk2",
+    "kind": "grinder",
+    "brand": "Weber Workshops",
+    "model": "Key Mk2",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "conical",
+      "scheibenMm": 83,
+      "einsatz": "allround",
+      "segment": "pro",
+      "preisEurCa": 2200,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-weber-workshops-hg-2",
+    "kind": "grinder",
+    "brand": "Weber Workshops",
+    "model": "HG-2",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "hand",
+      "mahlwerk": "conical",
+      "scheibenMm": 83,
+      "einsatz": "espresso",
+      "segment": "pro",
+      "preisEurCa": 1600,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-kafatek-monolith-flat",
+    "kind": "grinder",
+    "brand": "Kafatek",
+    "model": "Monolith Flat",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": 75,
+      "einsatz": "espresso",
+      "segment": "pro",
+      "preisEurCa": 2800,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-kafatek-monolith-conical",
+    "kind": "grinder",
+    "brand": "Kafatek",
+    "model": "Monolith Conical",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "conical",
+      "scheibenMm": 71,
+      "einsatz": "espresso",
+      "segment": "pro",
+      "preisEurCa": 2500,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-kafatek-monolith-max",
+    "kind": "grinder",
+    "brand": "Kafatek",
+    "model": "Monolith Max",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": 98,
+      "einsatz": "espresso",
+      "segment": "pro",
+      "preisEurCa": 3800,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-zerno-z1",
+    "kind": "grinder",
+    "brand": "Zerno",
+    "model": "Z1",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": 83,
+      "einsatz": "allround",
+      "segment": "pro",
+      "preisEurCa": 1600,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-bentwood-vertical-63",
+    "kind": "grinder",
+    "brand": "Bentwood",
+    "model": "Vertical 63",
+    "grindScale": {
+      "min": 1,
+      "max": 30,
+      "step": 1,
+      "unit": "step",
+      "label": "Stufe",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": 63,
+      "einsatz": "espresso",
+      "segment": "pro",
+      "preisEurCa": 2900,
+      "verstellung": "stepped"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-acaia-orbit",
+    "kind": "grinder",
+    "brand": "Acaia",
+    "model": "Orbit",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": 64,
+      "einsatz": "allround",
+      "segment": "pro",
+      "preisEurCa": 1500,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-turin-df54",
+    "kind": "grinder",
+    "brand": "Turin",
+    "model": "DF54",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": 54,
+      "einsatz": "allround",
+      "segment": "mid",
+      "preisEurCa": 300,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-turin-df64-gen-2",
+    "kind": "grinder",
+    "brand": "Turin",
+    "model": "DF64 Gen 2",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": 64,
+      "einsatz": "allround",
+      "segment": "mid",
+      "preisEurCa": 450,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-turin-df64v",
+    "kind": "grinder",
+    "brand": "Turin",
+    "model": "DF64V",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": 64,
+      "einsatz": "espresso",
+      "segment": "high",
+      "preisEurCa": 600,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-turin-df83-v2",
+    "kind": "grinder",
+    "brand": "Turin",
+    "model": "DF83 V2",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": 83,
+      "einsatz": "allround",
+      "segment": "high",
+      "preisEurCa": 700,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-turin-df83v",
+    "kind": "grinder",
+    "brand": "Turin",
+    "model": "DF83V",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": 83,
+      "einsatz": "allround",
+      "segment": "high",
+      "preisEurCa": 850,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-turin-sd40",
+    "kind": "grinder",
+    "brand": "Turin",
+    "model": "SD40",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "conical",
+      "scheibenMm": 40,
+      "einsatz": "allround",
+      "segment": "mid",
+      "preisEurCa": 250,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-timemore-sculptor-064",
+    "kind": "grinder",
+    "brand": "Timemore",
+    "model": "Sculptor 064",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": 64,
+      "einsatz": "filter",
+      "segment": "high",
+      "preisEurCa": 600,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-timemore-sculptor-064s",
+    "kind": "grinder",
+    "brand": "Timemore",
+    "model": "Sculptor 064S",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": 64,
+      "einsatz": "espresso",
+      "segment": "high",
+      "preisEurCa": 750,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-timemore-sculptor-078",
+    "kind": "grinder",
+    "brand": "Timemore",
+    "model": "Sculptor 078",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": 78,
+      "einsatz": "filter",
+      "segment": "high",
+      "preisEurCa": 800,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-timemore-sculptor-078s",
+    "kind": "grinder",
+    "brand": "Timemore",
+    "model": "Sculptor 078S",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": 78,
+      "einsatz": "espresso",
+      "segment": "high",
+      "preisEurCa": 900,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-timemore-grinder-go",
+    "kind": "grinder",
+    "brand": "Timemore",
+    "model": "Grinder Go",
+    "grindScale": {
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "clicks",
+      "label": "Klicks",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "conical",
+      "scheibenMm": null,
+      "einsatz": "allround",
+      "segment": "entry",
+      "preisEurCa": 100,
+      "verstellung": "clicks"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-lelit-fred-pl044",
+    "kind": "grinder",
+    "brand": "Lelit",
+    "model": "Fred PL044",
+    "grindScale": {
+      "min": 1,
+      "max": 30,
+      "step": 1,
+      "unit": "step",
+      "label": "Stufe",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "conical",
+      "scheibenMm": 38,
+      "einsatz": "espresso",
+      "segment": "mid",
+      "preisEurCa": 250,
+      "verstellung": "stepped"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-lelit-william-pl72",
+    "kind": "grinder",
+    "brand": "Lelit",
+    "model": "William PL72",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": 64,
+      "einsatz": "espresso",
+      "segment": "high",
+      "preisEurCa": 550,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-rocket-faustino-3-1",
+    "kind": "grinder",
+    "brand": "Rocket",
+    "model": "Faustino 3.1",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": 50,
+      "einsatz": "espresso",
+      "segment": "high",
+      "preisEurCa": 600,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-rocket-fausto-2-1",
+    "kind": "grinder",
+    "brand": "Rocket",
+    "model": "Fausto 2.1",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": 50,
+      "einsatz": "espresso",
+      "segment": "high",
+      "preisEurCa": 550,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-rocket-super-fausto",
+    "kind": "grinder",
+    "brand": "Rocket",
+    "model": "Super Fausto",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": 64,
+      "einsatz": "espresso",
+      "segment": "pro",
+      "preisEurCa": 1400,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-ecm-s-automatik-64",
+    "kind": "grinder",
+    "brand": "ECM",
+    "model": "S-Automatik 64",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": 64,
+      "einsatz": "espresso",
+      "segment": "high",
+      "preisEurCa": 800,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-ecm-s-manuale-64",
+    "kind": "grinder",
+    "brand": "ECM",
+    "model": "S-Manuale 64",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": 64,
+      "einsatz": "espresso",
+      "segment": "high",
+      "preisEurCa": 650,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-ecm-c-manuale-54",
+    "kind": "grinder",
+    "brand": "ECM",
+    "model": "C-Manuale 54",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "conical",
+      "scheibenMm": 54,
+      "einsatz": "espresso",
+      "segment": "mid",
+      "preisEurCa": 450,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-ecm-v-titan-64",
+    "kind": "grinder",
+    "brand": "ECM",
+    "model": "V-Titan 64",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": 64,
+      "einsatz": "espresso",
+      "segment": "pro",
+      "preisEurCa": 1400,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-profitec-pro-t64",
+    "kind": "grinder",
+    "brand": "Profitec",
+    "model": "Pro T64",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": 64,
+      "einsatz": "espresso",
+      "segment": "high",
+      "preisEurCa": 700,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-profitec-twist-a54",
+    "kind": "grinder",
+    "brand": "Profitec",
+    "model": "Twist A54",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": 54,
+      "einsatz": "espresso",
+      "segment": "high",
+      "preisEurCa": 600,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-rancilio-rocky",
+    "kind": "grinder",
+    "brand": "Rancilio",
+    "model": "Rocky",
+    "grindScale": {
+      "min": 1,
+      "max": 30,
+      "step": 1,
+      "unit": "step",
+      "label": "Stufe",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": 50,
+      "einsatz": "espresso",
+      "segment": "mid",
+      "preisEurCa": 400,
+      "verstellung": "stepped"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-rancilio-rocky-sd",
+    "kind": "grinder",
+    "brand": "Rancilio",
+    "model": "Rocky SD",
+    "grindScale": {
+      "min": 1,
+      "max": 30,
+      "step": 1,
+      "unit": "step",
+      "label": "Stufe",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": 50,
+      "einsatz": "espresso",
+      "segment": "mid",
+      "preisEurCa": 380,
+      "verstellung": "stepped"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-sage-smart-grinder-pro",
+    "kind": "grinder",
+    "brand": "Sage",
+    "model": "Smart Grinder Pro",
+    "grindScale": {
+      "min": 1,
+      "max": 30,
+      "step": 1,
+      "unit": "step",
+      "label": "Stufe",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "conical",
+      "scheibenMm": 40,
+      "einsatz": "allround",
+      "segment": "mid",
+      "preisEurCa": 200,
+      "verstellung": "stepped"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-sage-dose-control-pro",
+    "kind": "grinder",
+    "brand": "Sage",
+    "model": "Dose Control Pro",
+    "grindScale": {
+      "min": 1,
+      "max": 30,
+      "step": 1,
+      "unit": "step",
+      "label": "Stufe",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "conical",
+      "scheibenMm": 40,
+      "einsatz": "allround",
+      "segment": "mid",
+      "preisEurCa": 180,
+      "verstellung": "stepped"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-wilfa-svart-aroma",
+    "kind": "grinder",
+    "brand": "Wilfa",
+    "model": "Svart Aroma",
+    "grindScale": {
+      "min": 1,
+      "max": 30,
+      "step": 1,
+      "unit": "step",
+      "label": "Stufe",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "conical",
+      "scheibenMm": null,
+      "einsatz": "filter",
+      "segment": "entry",
+      "preisEurCa": 130,
+      "verstellung": "stepped"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-wilfa-uniform",
+    "kind": "grinder",
+    "brand": "Wilfa",
+    "model": "Uniform+",
+    "grindScale": {
+      "min": 1,
+      "max": 30,
+      "step": 1,
+      "unit": "step",
+      "label": "Stufe",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": 58,
+      "einsatz": "allround",
+      "segment": "mid",
+      "preisEurCa": 330,
+      "verstellung": "stepped"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-graef-cm800",
+    "kind": "grinder",
+    "brand": "Graef",
+    "model": "CM800",
+    "grindScale": {
+      "min": 1,
+      "max": 30,
+      "step": 1,
+      "unit": "step",
+      "label": "Stufe",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "conical",
+      "scheibenMm": null,
+      "einsatz": "allround",
+      "segment": "entry",
+      "preisEurCa": 150,
+      "verstellung": "stepped"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-graef-cm702",
+    "kind": "grinder",
+    "brand": "Graef",
+    "model": "CM702",
+    "grindScale": {
+      "min": 1,
+      "max": 30,
+      "step": 1,
+      "unit": "step",
+      "label": "Stufe",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "conical",
+      "scheibenMm": null,
+      "einsatz": "allround",
+      "segment": "entry",
+      "preisEurCa": 120,
+      "verstellung": "stepped"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-graef-cm500",
+    "kind": "grinder",
+    "brand": "Graef",
+    "model": "CM500",
+    "grindScale": {
+      "min": 1,
+      "max": 30,
+      "step": 1,
+      "unit": "step",
+      "label": "Stufe",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "conical",
+      "scheibenMm": null,
+      "einsatz": "filter",
+      "segment": "entry",
+      "preisEurCa": 90,
+      "verstellung": "stepped"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-graef-cm850",
+    "kind": "grinder",
+    "brand": "Graef",
+    "model": "CM850",
+    "grindScale": {
+      "min": 1,
+      "max": 30,
+      "step": 1,
+      "unit": "step",
+      "label": "Stufe",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "conical",
+      "scheibenMm": null,
+      "einsatz": "allround",
+      "segment": "mid",
+      "preisEurCa": 180,
+      "verstellung": "stepped"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-melitta-calibra",
+    "kind": "grinder",
+    "brand": "Melitta",
+    "model": "Calibra",
+    "grindScale": {
+      "min": 1,
+      "max": 30,
+      "step": 1,
+      "unit": "step",
+      "label": "Stufe",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": null,
+      "einsatz": "filter",
+      "segment": "entry",
+      "preisEurCa": 100,
+      "verstellung": "stepped"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-melitta-molino",
+    "kind": "grinder",
+    "brand": "Melitta",
+    "model": "Molino",
+    "grindScale": {
+      "min": 1,
+      "max": 30,
+      "step": 1,
+      "unit": "step",
+      "label": "Stufe",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": null,
+      "einsatz": "filter",
+      "segment": "entry",
+      "preisEurCa": 60,
+      "verstellung": "stepped"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-bodum-bistro-burr-grinder",
+    "kind": "grinder",
+    "brand": "Bodum",
+    "model": "Bistro Burr Grinder",
+    "grindScale": {
+      "min": 1,
+      "max": 30,
+      "step": 1,
+      "unit": "step",
+      "label": "Stufe",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "conical",
+      "scheibenMm": null,
+      "einsatz": "filter",
+      "segment": "entry",
+      "preisEurCa": 120,
+      "verstellung": "stepped"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-krups-gvx242",
+    "kind": "grinder",
+    "brand": "Krups",
+    "model": "GVX242",
+    "grindScale": {
+      "min": 1,
+      "max": 30,
+      "step": 1,
+      "unit": "step",
+      "label": "Stufe",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": null,
+      "einsatz": "filter",
+      "segment": "entry",
+      "preisEurCa": 70,
+      "verstellung": "stepped"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-delonghi-kg79",
+    "kind": "grinder",
+    "brand": "DeLonghi",
+    "model": "KG79",
+    "grindScale": {
+      "min": 1,
+      "max": 30,
+      "step": 1,
+      "unit": "step",
+      "label": "Stufe",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": null,
+      "einsatz": "filter",
+      "segment": "entry",
+      "preisEurCa": 50,
+      "verstellung": "stepped"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-delonghi-kg89",
+    "kind": "grinder",
+    "brand": "DeLonghi",
+    "model": "KG89",
+    "grindScale": {
+      "min": 1,
+      "max": 30,
+      "step": 1,
+      "unit": "step",
+      "label": "Stufe",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": null,
+      "einsatz": "filter",
+      "segment": "entry",
+      "preisEurCa": 60,
+      "verstellung": "stepped"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-delonghi-dedica-kg521-m",
+    "kind": "grinder",
+    "brand": "DeLonghi",
+    "model": "Dedica KG521.M",
+    "grindScale": {
+      "min": 1,
+      "max": 30,
+      "step": 1,
+      "unit": "step",
+      "label": "Stufe",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "conical",
+      "scheibenMm": null,
+      "einsatz": "allround",
+      "segment": "mid",
+      "preisEurCa": 180,
+      "verstellung": "stepped"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-fiorenzato-f4-nano",
+    "kind": "grinder",
+    "brand": "Fiorenzato",
+    "model": "F4 Nano",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": 58,
+      "einsatz": "espresso",
+      "segment": "high",
+      "preisEurCa": 600,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-fiorenzato-f64-evo",
+    "kind": "grinder",
+    "brand": "Fiorenzato",
+    "model": "F64 Evo",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": 64,
+      "einsatz": "espresso",
+      "segment": "high",
+      "preisEurCa": 850,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-fiorenzato-f83-e",
+    "kind": "grinder",
+    "brand": "Fiorenzato",
+    "model": "F83 E",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": 83,
+      "einsatz": "espresso",
+      "segment": "high",
+      "preisEurCa": 1000,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-fiorenzato-allground",
+    "kind": "grinder",
+    "brand": "Fiorenzato",
+    "model": "AllGround",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": 64,
+      "einsatz": "allround",
+      "segment": "high",
+      "preisEurCa": 900,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-fiorenzato-allground-sense",
+    "kind": "grinder",
+    "brand": "Fiorenzato",
+    "model": "AllGround Sense",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": 64,
+      "einsatz": "allround",
+      "segment": "pro",
+      "preisEurCa": 1300,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-anfim-caimano-on-demand",
+    "kind": "grinder",
+    "brand": "Anfim",
+    "model": "Caimano On Demand",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": 75,
+      "einsatz": "espresso",
+      "segment": "pro",
+      "preisEurCa": 1300,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-anfim-pratica",
+    "kind": "grinder",
+    "brand": "Anfim",
+    "model": "Pratica",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": null,
+      "einsatz": "espresso",
+      "segment": "high",
+      "preisEurCa": 700,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-compak-e5-od",
+    "kind": "grinder",
+    "brand": "Compak",
+    "model": "E5 OD",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": 58,
+      "einsatz": "espresso",
+      "segment": "high",
+      "preisEurCa": 800,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-macap-m42d",
+    "kind": "grinder",
+    "brand": "Macap",
+    "model": "M42D",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": 58,
+      "einsatz": "espresso",
+      "segment": "high",
+      "preisEurCa": 700,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-quamar-m80e",
+    "kind": "grinder",
+    "brand": "Quamar",
+    "model": "M80E",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": 63,
+      "einsatz": "espresso",
+      "segment": "high",
+      "preisEurCa": 600,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-quamar-q50e",
+    "kind": "grinder",
+    "brand": "Quamar",
+    "model": "Q50E",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": 50,
+      "einsatz": "espresso",
+      "segment": "mid",
+      "preisEurCa": 450,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-la-marzocco-pico",
+    "kind": "grinder",
+    "brand": "La Marzocco",
+    "model": "Pico",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": null,
+      "einsatz": "espresso",
+      "segment": "pro",
+      "preisEurCa": 1400,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-victoria-arduino-mythos-one",
+    "kind": "grinder",
+    "brand": "Victoria Arduino",
+    "model": "Mythos One",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": 75,
+      "einsatz": "espresso",
+      "segment": "pro",
+      "preisEurCa": 2000,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-victoria-arduino-mythos-my75",
+    "kind": "grinder",
+    "brand": "Victoria Arduino",
+    "model": "Mythos MY75",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": 75,
+      "einsatz": "espresso",
+      "segment": "pro",
+      "preisEurCa": 2800,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-nuova-simonelli-mdxs",
+    "kind": "grinder",
+    "brand": "Nuova Simonelli",
+    "model": "MDXS",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": 65,
+      "einsatz": "espresso",
+      "segment": "high",
+      "preisEurCa": 900,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-ditting-807-lab-sweet",
+    "kind": "grinder",
+    "brand": "Ditting",
+    "model": "807 Lab Sweet",
+    "grindScale": {
+      "min": 1,
+      "max": 30,
+      "step": 1,
+      "unit": "step",
+      "label": "Stufe",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": 80,
+      "einsatz": "filter",
+      "segment": "pro",
+      "preisEurCa": 3000,
+      "verstellung": "stepped"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-etzinger-etzmax-plus",
+    "kind": "grinder",
+    "brand": "Etzinger",
+    "model": "etzMAX Plus",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "conical",
+      "scheibenMm": null,
+      "einsatz": "allround",
+      "segment": "pro",
+      "preisEurCa": 1300,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-hibrew-g3",
+    "kind": "grinder",
+    "brand": "HiBrew",
+    "model": "G3",
+    "grindScale": {
+      "min": 1,
+      "max": 30,
+      "step": 1,
+      "unit": "step",
+      "label": "Stufe",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "conical",
+      "scheibenMm": 40,
+      "einsatz": "allround",
+      "segment": "entry",
+      "preisEurCa": 130,
+      "verstellung": "stepped"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-bezzera-bb005",
+    "kind": "grinder",
+    "brand": "Bezzera",
+    "model": "BB005",
+    "grindScale": {
+      "min": 1,
+      "max": 30,
+      "step": 1,
+      "unit": "step",
+      "label": "Stufe",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": null,
+      "einsatz": "espresso",
+      "segment": "mid",
+      "preisEurCa": 350,
+      "verstellung": "stepped"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-ascaso-i-mini-i1",
+    "kind": "grinder",
+    "brand": "Ascaso",
+    "model": "i-Mini i1",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": 54,
+      "einsatz": "espresso",
+      "segment": "mid",
+      "preisEurCa": 400,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-iberital-mc2",
+    "kind": "grinder",
+    "brand": "Iberital",
+    "model": "MC2",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": null,
+      "einsatz": "espresso",
+      "segment": "mid",
+      "preisEurCa": 250,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-gaggia-mdf",
+    "kind": "grinder",
+    "brand": "Gaggia",
+    "model": "MDF",
+    "grindScale": {
+      "min": 1,
+      "max": 30,
+      "step": 1,
+      "unit": "step",
+      "label": "Stufe",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": 50,
+      "einsatz": "espresso",
+      "segment": "mid",
+      "preisEurCa": 300,
+      "verstellung": "stepped"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-smeg-cgf01",
+    "kind": "grinder",
+    "brand": "Smeg",
+    "model": "CGF01",
+    "grindScale": {
+      "min": 1,
+      "max": 30,
+      "step": 1,
+      "unit": "step",
+      "label": "Stufe",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "conical",
+      "scheibenMm": null,
+      "einsatz": "filter",
+      "segment": "mid",
+      "preisEurCa": 200,
+      "verstellung": "stepped"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-kitchenaid-artisan-5kcg8433",
+    "kind": "grinder",
+    "brand": "KitchenAid",
+    "model": "Artisan 5KCG8433",
+    "grindScale": {
+      "min": 1,
+      "max": 30,
+      "step": 1,
+      "unit": "step",
+      "label": "Stufe",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "conical",
+      "scheibenMm": null,
+      "einsatz": "allround",
+      "segment": "mid",
+      "preisEurCa": 250,
+      "verstellung": "stepped"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-oxo-brew-conical-burr",
+    "kind": "grinder",
+    "brand": "OXO",
+    "model": "Brew Conical Burr",
+    "grindScale": {
+      "min": 1,
+      "max": 30,
+      "step": 1,
+      "unit": "step",
+      "label": "Stufe",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "conical",
+      "scheibenMm": 40,
+      "einsatz": "filter",
+      "segment": "entry",
+      "preisEurCa": 110,
+      "verstellung": "stepped"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-moccamaster-km5-burr",
+    "kind": "grinder",
+    "brand": "Moccamaster",
+    "model": "KM5 Burr",
+    "grindScale": {
+      "min": 1,
+      "max": 30,
+      "step": 1,
+      "unit": "step",
+      "label": "Stufe",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": null,
+      "einsatz": "filter",
+      "segment": "mid",
+      "preisEurCa": 250,
+      "verstellung": "stepped"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-rommelsbacher-ekm-300",
+    "kind": "grinder",
+    "brand": "Rommelsbacher",
+    "model": "EKM 300",
+    "grindScale": {
+      "min": 1,
+      "max": 30,
+      "step": 1,
+      "unit": "step",
+      "label": "Stufe",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "conical",
+      "scheibenMm": null,
+      "einsatz": "filter",
+      "segment": "entry",
+      "preisEurCa": 80,
+      "verstellung": "stepped"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-rommelsbacher-ekm-500",
+    "kind": "grinder",
+    "brand": "Rommelsbacher",
+    "model": "EKM 500",
+    "grindScale": {
+      "min": 1,
+      "max": 30,
+      "step": 1,
+      "unit": "step",
+      "label": "Stufe",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "conical",
+      "scheibenMm": null,
+      "einsatz": "allround",
+      "segment": "entry",
+      "preisEurCa": 150,
+      "verstellung": "stepped"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-solis-scala-zero-static",
+    "kind": "grinder",
+    "brand": "Solis",
+    "model": "Scala Zero Static",
+    "grindScale": {
+      "min": 1,
+      "max": 30,
+      "step": 1,
+      "unit": "step",
+      "label": "Stufe",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "conical",
+      "scheibenMm": null,
+      "einsatz": "filter",
+      "segment": "entry",
+      "preisEurCa": 100,
+      "verstellung": "stepped"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-gastroback-design-coffee-grinder-advanced",
+    "kind": "grinder",
+    "brand": "Gastroback",
+    "model": "Design Coffee Grinder Advanced",
+    "grindScale": {
+      "min": 1,
+      "max": 30,
+      "step": 1,
+      "unit": "step",
+      "label": "Stufe",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "conical",
+      "scheibenMm": null,
+      "einsatz": "allround",
+      "segment": "entry",
+      "preisEurCa": 130,
+      "verstellung": "stepped"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-caso-barista-chef-inox",
+    "kind": "grinder",
+    "brand": "Caso",
+    "model": "Barista Chef Inox",
+    "grindScale": {
+      "min": 1,
+      "max": 30,
+      "step": 1,
+      "unit": "step",
+      "label": "Stufe",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "conical",
+      "scheibenMm": null,
+      "einsatz": "allround",
+      "segment": "entry",
+      "preisEurCa": 100,
+      "verstellung": "stepped"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-casadio-enea-on-demand",
+    "kind": "grinder",
+    "brand": "Casadio",
+    "model": "Enea On Demand",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": 64,
+      "einsatz": "espresso",
+      "segment": "high",
+      "preisEurCa": 700,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-cunill-tranquilo-tron",
+    "kind": "grinder",
+    "brand": "Cunill",
+    "model": "Tranquilo Tron",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": 60,
+      "einsatz": "espresso",
+      "segment": "mid",
+      "preisEurCa": 300,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-titus-nautilus",
+    "kind": "grinder",
+    "brand": "Titus",
+    "model": "Nautilus",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": null,
+      "einsatz": "espresso",
+      "segment": "pro",
+      "preisEurCa": 4500,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-quick-mill-060-evo",
+    "kind": "grinder",
+    "brand": "Quick Mill",
+    "model": "060 EVO",
+    "grindScale": {
+      "min": 1,
+      "max": 30,
+      "step": 1,
+      "unit": "step",
+      "label": "Stufe",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": null,
+      "einsatz": "espresso",
+      "segment": "mid",
+      "preisEurCa": 350,
+      "verstellung": "stepped"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-zwilling-enfinigy-kaffeemuhle",
+    "kind": "grinder",
+    "brand": "Zwilling",
+    "model": "Enfinigy Kaffeemühle",
+    "grindScale": {
+      "min": 1,
+      "max": 30,
+      "step": 1,
+      "unit": "step",
+      "label": "Stufe",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "conical",
+      "scheibenMm": null,
+      "einsatz": "filter",
+      "segment": "mid",
+      "preisEurCa": 170,
+      "verstellung": "stepped"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-hario-evcg-8b",
+    "kind": "grinder",
+    "brand": "Hario",
+    "model": "EVCG-8B",
+    "grindScale": {
+      "min": 1,
+      "max": 30,
+      "step": 1,
+      "unit": "step",
+      "label": "Stufe",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "conical",
+      "scheibenMm": null,
+      "einsatz": "filter",
+      "segment": "entry",
+      "preisEurCa": 80,
+      "verstellung": "stepped"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-fuji-royal-mirukko-r-220",
+    "kind": "grinder",
+    "brand": "Fuji Royal",
+    "model": "Mirukko R-220",
+    "grindScale": {
+      "min": 1,
+      "max": 30,
+      "step": 1,
+      "unit": "step",
+      "label": "Stufe",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "ghost",
+      "scheibenMm": null,
+      "einsatz": "filter",
+      "segment": "mid",
+      "preisEurCa": 450,
+      "verstellung": "stepped"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-comandante-c40-mk4",
+    "kind": "grinder",
+    "brand": "Comandante",
+    "model": "C40 MK4",
+    "grindScale": {
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "clicks",
+      "label": "Klicks",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "hand",
+      "mahlwerk": "conical",
+      "scheibenMm": 39,
+      "einsatz": "allround",
+      "segment": "mid",
+      "preisEurCa": 290,
+      "verstellung": "clicks"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-comandante-c60-baracuda",
+    "kind": "grinder",
+    "brand": "Comandante",
+    "model": "C60 Baracuda",
+    "grindScale": {
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "clicks",
+      "label": "Klicks",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "hand",
+      "mahlwerk": "conical",
+      "scheibenMm": null,
+      "einsatz": "allround",
+      "segment": "mid",
+      "preisEurCa": 400,
+      "verstellung": "clicks"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-comandante-x25-trailmaster",
+    "kind": "grinder",
+    "brand": "Comandante",
+    "model": "X25 Trailmaster",
+    "grindScale": {
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "clicks",
+      "label": "Klicks",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "hand",
+      "mahlwerk": "conical",
+      "scheibenMm": 39,
+      "einsatz": "allround",
+      "segment": "mid",
+      "preisEurCa": 330,
+      "verstellung": "clicks"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-kinu-m47-classic",
+    "kind": "grinder",
+    "brand": "Kinu",
+    "model": "M47 Classic",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "hand",
+      "mahlwerk": "conical",
+      "scheibenMm": 47,
+      "einsatz": "espresso",
+      "segment": "mid",
+      "preisEurCa": 350,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-kinu-m47-phoenix",
+    "kind": "grinder",
+    "brand": "Kinu",
+    "model": "M47 Phoenix",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "hand",
+      "mahlwerk": "conical",
+      "scheibenMm": 47,
+      "einsatz": "espresso",
+      "segment": "mid",
+      "preisEurCa": 250,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-kinu-m47-simplicity",
+    "kind": "grinder",
+    "brand": "Kinu",
+    "model": "M47 Simplicity",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "hand",
+      "mahlwerk": "conical",
+      "scheibenMm": 47,
+      "einsatz": "espresso",
+      "segment": "mid",
+      "preisEurCa": 280,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-kinu-m47-traveler",
+    "kind": "grinder",
+    "brand": "Kinu",
+    "model": "M47 Traveler",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "hand",
+      "mahlwerk": "conical",
+      "scheibenMm": 47,
+      "einsatz": "allround",
+      "segment": "mid",
+      "preisEurCa": 300,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-1zpresso-q-air",
+    "kind": "grinder",
+    "brand": "1Zpresso",
+    "model": "Q Air",
+    "grindScale": {
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "clicks",
+      "label": "Klicks",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "hand",
+      "mahlwerk": "conical",
+      "scheibenMm": 38,
+      "einsatz": "filter",
+      "segment": "entry",
+      "preisEurCa": 60,
+      "verstellung": "clicks"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-1zpresso-jx-pro-s",
+    "kind": "grinder",
+    "brand": "1Zpresso",
+    "model": "JX-Pro S",
+    "grindScale": {
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "clicks",
+      "label": "Klicks",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "hand",
+      "mahlwerk": "conical",
+      "scheibenMm": 48,
+      "einsatz": "espresso",
+      "segment": "mid",
+      "preisEurCa": 160,
+      "verstellung": "clicks"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-1zpresso-j-max-s",
+    "kind": "grinder",
+    "brand": "1Zpresso",
+    "model": "J-Max S",
+    "grindScale": {
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "clicks",
+      "label": "Klicks",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "hand",
+      "mahlwerk": "conical",
+      "scheibenMm": 48,
+      "einsatz": "espresso",
+      "segment": "mid",
+      "preisEurCa": 180,
+      "verstellung": "clicks"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-1zpresso-j-ultra",
+    "kind": "grinder",
+    "brand": "1Zpresso",
+    "model": "J-Ultra",
+    "grindScale": {
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "clicks",
+      "label": "Klicks",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "hand",
+      "mahlwerk": "conical",
+      "scheibenMm": 48,
+      "einsatz": "espresso",
+      "segment": "mid",
+      "preisEurCa": 200,
+      "verstellung": "clicks"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-1zpresso-k-plus",
+    "kind": "grinder",
+    "brand": "1Zpresso",
+    "model": "K-Plus",
+    "grindScale": {
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "clicks",
+      "label": "Klicks",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "hand",
+      "mahlwerk": "conical",
+      "scheibenMm": 48,
+      "einsatz": "allround",
+      "segment": "mid",
+      "preisEurCa": 170,
+      "verstellung": "clicks"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-1zpresso-k-max",
+    "kind": "grinder",
+    "brand": "1Zpresso",
+    "model": "K-Max",
+    "grindScale": {
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "clicks",
+      "label": "Klicks",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "hand",
+      "mahlwerk": "conical",
+      "scheibenMm": 48,
+      "einsatz": "allround",
+      "segment": "mid",
+      "preisEurCa": 180,
+      "verstellung": "clicks"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-1zpresso-k-ultra",
+    "kind": "grinder",
+    "brand": "1Zpresso",
+    "model": "K-Ultra",
+    "grindScale": {
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "clicks",
+      "label": "Klicks",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "hand",
+      "mahlwerk": "conical",
+      "scheibenMm": 48,
+      "einsatz": "allround",
+      "segment": "mid",
+      "preisEurCa": 230,
+      "verstellung": "clicks"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-1zpresso-x-ultra",
+    "kind": "grinder",
+    "brand": "1Zpresso",
+    "model": "X-Ultra",
+    "grindScale": {
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "clicks",
+      "label": "Klicks",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "hand",
+      "mahlwerk": "conical",
+      "scheibenMm": 40,
+      "einsatz": "allround",
+      "segment": "mid",
+      "preisEurCa": 150,
+      "verstellung": "clicks"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-1zpresso-zp6-special",
+    "kind": "grinder",
+    "brand": "1Zpresso",
+    "model": "ZP6 Special",
+    "grindScale": {
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "clicks",
+      "label": "Klicks",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "hand",
+      "mahlwerk": "conical",
+      "scheibenMm": 38,
+      "einsatz": "filter",
+      "segment": "mid",
+      "preisEurCa": 190,
+      "verstellung": "clicks"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-kingrinder-k0",
+    "kind": "grinder",
+    "brand": "Kingrinder",
+    "model": "K0",
+    "grindScale": {
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "clicks",
+      "label": "Klicks",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "hand",
+      "mahlwerk": "conical",
+      "scheibenMm": 38,
+      "einsatz": "filter",
+      "segment": "entry",
+      "preisEurCa": 30,
+      "verstellung": "clicks"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-kingrinder-k2",
+    "kind": "grinder",
+    "brand": "Kingrinder",
+    "model": "K2",
+    "grindScale": {
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "clicks",
+      "label": "Klicks",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "hand",
+      "mahlwerk": "conical",
+      "scheibenMm": 38,
+      "einsatz": "allround",
+      "segment": "entry",
+      "preisEurCa": 50,
+      "verstellung": "clicks"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-kingrinder-k4",
+    "kind": "grinder",
+    "brand": "Kingrinder",
+    "model": "K4",
+    "grindScale": {
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "clicks",
+      "label": "Klicks",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "hand",
+      "mahlwerk": "conical",
+      "scheibenMm": 48,
+      "einsatz": "espresso",
+      "segment": "entry",
+      "preisEurCa": 70,
+      "verstellung": "clicks"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-kingrinder-k6",
+    "kind": "grinder",
+    "brand": "Kingrinder",
+    "model": "K6",
+    "grindScale": {
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "clicks",
+      "label": "Klicks",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "hand",
+      "mahlwerk": "conical",
+      "scheibenMm": 48,
+      "einsatz": "allround",
+      "segment": "entry",
+      "preisEurCa": 90,
+      "verstellung": "clicks"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-kingrinder-p2",
+    "kind": "grinder",
+    "brand": "Kingrinder",
+    "model": "P2",
+    "grindScale": {
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "clicks",
+      "label": "Klicks",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "hand",
+      "mahlwerk": "conical",
+      "scheibenMm": 38,
+      "einsatz": "filter",
+      "segment": "entry",
+      "preisEurCa": 40,
+      "verstellung": "clicks"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-timemore-chestnut-c2",
+    "kind": "grinder",
+    "brand": "Timemore",
+    "model": "Chestnut C2",
+    "grindScale": {
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "clicks",
+      "label": "Klicks",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "hand",
+      "mahlwerk": "conical",
+      "scheibenMm": 38,
+      "einsatz": "filter",
+      "segment": "entry",
+      "preisEurCa": 60,
+      "verstellung": "clicks"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-timemore-chestnut-c3",
+    "kind": "grinder",
+    "brand": "Timemore",
+    "model": "Chestnut C3",
+    "grindScale": {
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "clicks",
+      "label": "Klicks",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "hand",
+      "mahlwerk": "conical",
+      "scheibenMm": 38,
+      "einsatz": "filter",
+      "segment": "entry",
+      "preisEurCa": 70,
+      "verstellung": "clicks"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-timemore-c3-esp-pro",
+    "kind": "grinder",
+    "brand": "Timemore",
+    "model": "C3 ESP Pro",
+    "grindScale": {
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "clicks",
+      "label": "Klicks",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "hand",
+      "mahlwerk": "conical",
+      "scheibenMm": 38,
+      "einsatz": "espresso",
+      "segment": "entry",
+      "preisEurCa": 100,
+      "verstellung": "clicks"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-timemore-chestnut-s3",
+    "kind": "grinder",
+    "brand": "Timemore",
+    "model": "Chestnut S3",
+    "grindScale": {
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "clicks",
+      "label": "Klicks",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "hand",
+      "mahlwerk": "conical",
+      "scheibenMm": 39,
+      "einsatz": "allround",
+      "segment": "mid",
+      "preisEurCa": 160,
+      "verstellung": "clicks"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-timemore-chestnut-x",
+    "kind": "grinder",
+    "brand": "Timemore",
+    "model": "Chestnut X",
+    "grindScale": {
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "clicks",
+      "label": "Klicks",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "hand",
+      "mahlwerk": "conical",
+      "scheibenMm": 42,
+      "einsatz": "allround",
+      "segment": "mid",
+      "preisEurCa": 250,
+      "verstellung": "clicks"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-timemore-nano",
+    "kind": "grinder",
+    "brand": "Timemore",
+    "model": "Nano",
+    "grindScale": {
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "clicks",
+      "label": "Klicks",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "hand",
+      "mahlwerk": "conical",
+      "scheibenMm": 38,
+      "einsatz": "filter",
+      "segment": "entry",
+      "preisEurCa": 80,
+      "verstellung": "clicks"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-hario-skerton-pro",
+    "kind": "grinder",
+    "brand": "Hario",
+    "model": "Skerton Pro",
+    "grindScale": {
+      "min": 1,
+      "max": 30,
+      "step": 1,
+      "unit": "step",
+      "label": "Stufe",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "hand",
+      "mahlwerk": "conical",
+      "scheibenMm": null,
+      "einsatz": "filter",
+      "segment": "entry",
+      "preisEurCa": 50,
+      "verstellung": "stepped"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-hario-mini-slim-plus",
+    "kind": "grinder",
+    "brand": "Hario",
+    "model": "Mini-Slim Plus",
+    "grindScale": {
+      "min": 1,
+      "max": 30,
+      "step": 1,
+      "unit": "step",
+      "label": "Stufe",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "hand",
+      "mahlwerk": "conical",
+      "scheibenMm": null,
+      "einsatz": "filter",
+      "segment": "entry",
+      "preisEurCa": 30,
+      "verstellung": "stepped"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-hario-smart-g",
+    "kind": "grinder",
+    "brand": "Hario",
+    "model": "Smart G",
+    "grindScale": {
+      "min": 1,
+      "max": 30,
+      "step": 1,
+      "unit": "step",
+      "label": "Stufe",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "hand",
+      "mahlwerk": "conical",
+      "scheibenMm": null,
+      "einsatz": "filter",
+      "segment": "entry",
+      "preisEurCa": 40,
+      "verstellung": "stepped"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-porlex-mini-ii",
+    "kind": "grinder",
+    "brand": "Porlex",
+    "model": "Mini II",
+    "grindScale": {
+      "min": 1,
+      "max": 30,
+      "step": 1,
+      "unit": "step",
+      "label": "Stufe",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "hand",
+      "mahlwerk": "conical",
+      "scheibenMm": null,
+      "einsatz": "filter",
+      "segment": "entry",
+      "preisEurCa": 70,
+      "verstellung": "stepped"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-porlex-tall-ii",
+    "kind": "grinder",
+    "brand": "Porlex",
+    "model": "Tall II",
+    "grindScale": {
+      "min": 1,
+      "max": 30,
+      "step": 1,
+      "unit": "step",
+      "label": "Stufe",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "hand",
+      "mahlwerk": "conical",
+      "scheibenMm": null,
+      "einsatz": "filter",
+      "segment": "entry",
+      "preisEurCa": 80,
+      "verstellung": "stepped"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-zassenhaus-santiago",
+    "kind": "grinder",
+    "brand": "Zassenhaus",
+    "model": "Santiago",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "hand",
+      "mahlwerk": "conical",
+      "scheibenMm": null,
+      "einsatz": "filter",
+      "segment": "entry",
+      "preisEurCa": 60,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-zassenhaus-panama",
+    "kind": "grinder",
+    "brand": "Zassenhaus",
+    "model": "Panama",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "hand",
+      "mahlwerk": "conical",
+      "scheibenMm": null,
+      "einsatz": "filter",
+      "segment": "entry",
+      "preisEurCa": 50,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-handground-precision",
+    "kind": "grinder",
+    "brand": "Handground",
+    "model": "Precision",
+    "grindScale": {
+      "min": 1,
+      "max": 30,
+      "step": 1,
+      "unit": "step",
+      "label": "Stufe",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "hand",
+      "mahlwerk": "conical",
+      "scheibenMm": 40,
+      "einsatz": "filter",
+      "segment": "entry",
+      "preisEurCa": 90,
+      "verstellung": "stepped"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-vssl-java-g25",
+    "kind": "grinder",
+    "brand": "VSSL",
+    "model": "Java G25",
+    "grindScale": {
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "clicks",
+      "label": "Klicks",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "hand",
+      "mahlwerk": "conical",
+      "scheibenMm": null,
+      "einsatz": "allround",
+      "segment": "mid",
+      "preisEurCa": 170,
+      "verstellung": "clicks"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-made-by-knock-aergrind",
+    "kind": "grinder",
+    "brand": "Made by Knock",
+    "model": "Aergrind",
+    "grindScale": {
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "clicks",
+      "label": "Klicks",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "hand",
+      "mahlwerk": "conical",
+      "scheibenMm": 38,
+      "einsatz": "allround",
+      "segment": "mid",
+      "preisEurCa": 160,
+      "verstellung": "clicks"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-made-by-knock-feldgrind-2",
+    "kind": "grinder",
+    "brand": "Made by Knock",
+    "model": "Feldgrind 2",
+    "grindScale": {
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "clicks",
+      "label": "Klicks",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "hand",
+      "mahlwerk": "conical",
+      "scheibenMm": 38,
+      "einsatz": "allround",
+      "segment": "mid",
+      "preisEurCa": 180,
+      "verstellung": "clicks"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-flair-royal-grinder",
+    "kind": "grinder",
+    "brand": "Flair",
+    "model": "Royal Grinder",
+    "grindScale": {
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "clicks",
+      "label": "Klicks",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "hand",
+      "mahlwerk": "conical",
+      "scheibenMm": 40,
+      "einsatz": "espresso",
+      "segment": "entry",
+      "preisEurCa": 110,
+      "verstellung": "clicks"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-orphan-espresso-lido-3",
+    "kind": "grinder",
+    "brand": "Orphan Espresso",
+    "model": "Lido 3",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "hand",
+      "mahlwerk": "conical",
+      "scheibenMm": 48,
+      "einsatz": "allround",
+      "segment": "mid",
+      "preisEurCa": 200,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-wacaco-exagrind",
+    "kind": "grinder",
+    "brand": "Wacaco",
+    "model": "Exagrind",
+    "grindScale": {
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "clicks",
+      "label": "Klicks",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "hand",
+      "mahlwerk": "conical",
+      "scheibenMm": 38,
+      "einsatz": "espresso",
+      "segment": "entry",
+      "preisEurCa": 100,
+      "verstellung": "clicks"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-mhw-3bomber-blade-r3",
+    "kind": "grinder",
+    "brand": "MHW-3Bomber",
+    "model": "Blade R3",
+    "grindScale": {
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "clicks",
+      "label": "Klicks",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "hand",
+      "mahlwerk": "conical",
+      "scheibenMm": null,
+      "einsatz": "espresso",
+      "segment": "entry",
+      "preisEurCa": 90,
+      "verstellung": "clicks"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-goat-story-arco-2-in-1",
+    "kind": "grinder",
+    "brand": "Goat Story",
+    "model": "Arco 2-in-1",
+    "grindScale": {
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "clicks",
+      "label": "Klicks",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "hand",
+      "mahlwerk": "conical",
+      "scheibenMm": null,
+      "einsatz": "allround",
+      "segment": "mid",
+      "preisEurCa": 400,
+      "verstellung": "clicks"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-pietro-pro",
+    "kind": "grinder",
+    "brand": "Pietro",
+    "model": "Pro",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "hand",
+      "mahlwerk": "flat",
+      "scheibenMm": null,
+      "einsatz": "allround",
+      "segment": "mid",
+      "preisEurCa": 300,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-cafflano-krinder",
+    "kind": "grinder",
+    "brand": "Cafflano",
+    "model": "Krinder",
+    "grindScale": {
+      "min": 1,
+      "max": 30,
+      "step": 1,
+      "unit": "step",
+      "label": "Stufe",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "hand",
+      "mahlwerk": "conical",
+      "scheibenMm": null,
+      "einsatz": "filter",
+      "segment": "entry",
+      "preisEurCa": 50,
+      "verstellung": "stepped"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-rhinowares-hand-grinder",
+    "kind": "grinder",
+    "brand": "Rhinowares",
+    "model": "Hand Grinder",
+    "grindScale": {
+      "min": 1,
+      "max": 30,
+      "step": 1,
+      "unit": "step",
+      "label": "Stufe",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "hand",
+      "mahlwerk": "conical",
+      "scheibenMm": null,
+      "einsatz": "filter",
+      "segment": "entry",
+      "preisEurCa": 40,
+      "verstellung": "stepped"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-silberthal-manuelle-kaffeemuhle",
+    "kind": "grinder",
+    "brand": "Silberthal",
+    "model": "Manuelle Kaffeemühle",
+    "grindScale": {
+      "min": 1,
+      "max": 30,
+      "step": 1,
+      "unit": "step",
+      "label": "Stufe",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "hand",
+      "mahlwerk": "conical",
+      "scheibenMm": null,
+      "einsatz": "filter",
+      "segment": "entry",
+      "preisEurCa": 40,
+      "verstellung": "stepped"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "grinder-eureka-mci-mg50e-mignon-istantaneo",
+    "kind": "grinder",
+    "brand": "Eureka",
+    "model": "MCI MG50e (Mignon Istantaneo)",
+    "grindScale": {
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "turns",
+      "label": "Umdrehungen",
+      "finerDirection": -1
+    },
+    "specs": {
+      "antrieb": "electric",
+      "mahlwerk": "flat",
+      "scheibenMm": 50,
+      "einsatz": "espresso",
+      "segment": "entry",
+      "preisEurCa": 300,
+      "verstellung": "stepless"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-gaggia-classic-evo-pro",
+    "kind": "machine",
+    "brand": "Gaggia",
+    "model": "Classic Evo Pro",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "single_boiler",
+      "kessel": "Einkreiser 0.1L Messing",
+      "pid": "no",
+      "siebtraegerMm": 58,
+      "segment": "entry",
+      "preisEurCa": 449
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-gaggia-carezza-deluxe",
+    "kind": "machine",
+    "brand": "Gaggia",
+    "model": "Carezza Deluxe",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "single_boiler",
+      "kessel": "Kompakter Einkreiser",
+      "pid": "no",
+      "siebtraegerMm": null,
+      "segment": "entry",
+      "preisEurCa": 250
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-gaggia-gran-gaggia-style",
+    "kind": "machine",
+    "brand": "Gaggia",
+    "model": "Gran Gaggia Style",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "thermoblock",
+      "kessel": "Thermoblock",
+      "pid": "no",
+      "siebtraegerMm": null,
+      "segment": "entry",
+      "preisEurCa": 150
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-gaggia-espresso-evolution",
+    "kind": "machine",
+    "brand": "Gaggia",
+    "model": "Espresso Evolution",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "thermoblock",
+      "kessel": "Thermoblock",
+      "pid": "no",
+      "siebtraegerMm": null,
+      "segment": "entry",
+      "preisEurCa": 170
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-sage-bambino",
+    "kind": "machine",
+    "brand": "Sage",
+    "model": "Bambino",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "thermoblock",
+      "kessel": "ThermoJet Heizsystem",
+      "pid": "yes",
+      "siebtraegerMm": 54,
+      "segment": "entry",
+      "preisEurCa": 330
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-sage-bambino-plus",
+    "kind": "machine",
+    "brand": "Sage",
+    "model": "Bambino Plus",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "thermoblock",
+      "kessel": "ThermoJet, Auto-Milchschaum",
+      "pid": "yes",
+      "siebtraegerMm": 54,
+      "segment": "mid",
+      "preisEurCa": 450
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-sage-duo-temp-pro",
+    "kind": "machine",
+    "brand": "Sage",
+    "model": "Duo Temp Pro",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "thermoblock",
+      "kessel": "Thermocoil",
+      "pid": "yes",
+      "siebtraegerMm": 54,
+      "segment": "mid",
+      "preisEurCa": 400
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-sage-barista-express",
+    "kind": "machine",
+    "brand": "Sage",
+    "model": "Barista Express",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "thermoblock",
+      "kessel": "Thermocoil, integriertes Mahlwerk",
+      "pid": "yes",
+      "siebtraegerMm": 54,
+      "segment": "mid",
+      "preisEurCa": 600
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-sage-barista-express-impress",
+    "kind": "machine",
+    "brand": "Sage",
+    "model": "Barista Express Impress",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "thermoblock",
+      "kessel": "Thermocoil, Impress-Tamper",
+      "pid": "yes",
+      "siebtraegerMm": 54,
+      "segment": "mid",
+      "preisEurCa": 750
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-sage-barista-pro",
+    "kind": "machine",
+    "brand": "Sage",
+    "model": "Barista Pro",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "thermoblock",
+      "kessel": "ThermoJet, integriertes Mahlwerk",
+      "pid": "yes",
+      "siebtraegerMm": 54,
+      "segment": "mid",
+      "preisEurCa": 800
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-sage-barista-touch",
+    "kind": "machine",
+    "brand": "Sage",
+    "model": "Barista Touch",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "thermoblock",
+      "kessel": "ThermoJet, Touchscreen",
+      "pid": "yes",
+      "siebtraegerMm": 54,
+      "segment": "mid",
+      "preisEurCa": 1000
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-sage-barista-touch-impress",
+    "kind": "machine",
+    "brand": "Sage",
+    "model": "Barista Touch Impress",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "thermoblock",
+      "kessel": "ThermoJet, Auto-Milch, Touchscreen",
+      "pid": "yes",
+      "siebtraegerMm": 54,
+      "segment": "mid",
+      "preisEurCa": 1400
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-sage-dual-boiler-bes920",
+    "kind": "machine",
+    "brand": "Sage",
+    "model": "Dual Boiler BES920",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "dual_boiler",
+      "kessel": "Dualboiler 0.3+0.95L",
+      "pid": "yes",
+      "siebtraegerMm": 58,
+      "segment": "high",
+      "preisEurCa": 1500
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-sage-oracle-bes980",
+    "kind": "machine",
+    "brand": "Sage",
+    "model": "Oracle BES980",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "dual_boiler",
+      "kessel": "Dualboiler, Auto-Grind und Tamp",
+      "pid": "yes",
+      "siebtraegerMm": 58,
+      "segment": "high",
+      "preisEurCa": 2100
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-sage-oracle-touch-bes990",
+    "kind": "machine",
+    "brand": "Sage",
+    "model": "Oracle Touch BES990",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "dual_boiler",
+      "kessel": "Dualboiler, Touchscreen",
+      "pid": "yes",
+      "siebtraegerMm": 58,
+      "segment": "high",
+      "preisEurCa": 2600
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-sage-oracle-jet-bes985",
+    "kind": "machine",
+    "brand": "Sage",
+    "model": "Oracle Jet BES985",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "thermoblock",
+      "kessel": "ThermoJet + Dampfsystem",
+      "pid": "yes",
+      "siebtraegerMm": 58,
+      "segment": "high",
+      "preisEurCa": 1900
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-delonghi-stilosa-ec235",
+    "kind": "machine",
+    "brand": "DeLonghi",
+    "model": "Stilosa EC235",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "thermoblock",
+      "kessel": "Thermoblock",
+      "pid": "no",
+      "siebtraegerMm": 51,
+      "segment": "entry",
+      "preisEurCa": 100
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-delonghi-ecp-33-21",
+    "kind": "machine",
+    "brand": "DeLonghi",
+    "model": "ECP 33.21",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "thermoblock",
+      "kessel": "Thermoblock",
+      "pid": "no",
+      "siebtraegerMm": 51,
+      "segment": "entry",
+      "preisEurCa": 110
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-delonghi-dedica-ec685",
+    "kind": "machine",
+    "brand": "DeLonghi",
+    "model": "Dedica EC685",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "thermoblock",
+      "kessel": "Thermoblock",
+      "pid": "no",
+      "siebtraegerMm": 51,
+      "segment": "entry",
+      "preisEurCa": 180
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-delonghi-dedica-arte-ec885",
+    "kind": "machine",
+    "brand": "DeLonghi",
+    "model": "Dedica Arte EC885",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "thermoblock",
+      "kessel": "Thermoblock",
+      "pid": "no",
+      "siebtraegerMm": 51,
+      "segment": "entry",
+      "preisEurCa": 250
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-delonghi-la-specialista-arte-ec9155",
+    "kind": "machine",
+    "brand": "DeLonghi",
+    "model": "La Specialista Arte EC9155",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "thermoblock",
+      "kessel": "Thermoblock",
+      "pid": "yes",
+      "siebtraegerMm": 51,
+      "segment": "mid",
+      "preisEurCa": 500
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-delonghi-la-specialista-arte-evo-ec9255",
+    "kind": "machine",
+    "brand": "DeLonghi",
+    "model": "La Specialista Arte Evo EC9255",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "thermoblock",
+      "kessel": "Thermoblock, Cold Brew",
+      "pid": "yes",
+      "siebtraegerMm": 51,
+      "segment": "mid",
+      "preisEurCa": 430
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-delonghi-la-specialista-opera-ec9555",
+    "kind": "machine",
+    "brand": "DeLonghi",
+    "model": "La Specialista Opera EC9555",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "thermoblock",
+      "kessel": "Thermoblock",
+      "pid": "yes",
+      "siebtraegerMm": 51,
+      "segment": "mid",
+      "preisEurCa": 700
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-delonghi-la-specialista-maestro-ec9665",
+    "kind": "machine",
+    "brand": "DeLonghi",
+    "model": "La Specialista Maestro EC9665",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "thermoblock",
+      "kessel": "Thermoblock, Auto-Milch",
+      "pid": "yes",
+      "siebtraegerMm": 51,
+      "segment": "mid",
+      "preisEurCa": 900
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-delonghi-la-specialista-prestigio-ec9355",
+    "kind": "machine",
+    "brand": "DeLonghi",
+    "model": "La Specialista Prestigio EC9355",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "thermoblock",
+      "kessel": "Thermoblock",
+      "pid": "yes",
+      "siebtraegerMm": 51,
+      "segment": "mid",
+      "preisEurCa": 450
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-ecm-casa-v",
+    "kind": "machine",
+    "brand": "ECM",
+    "model": "Casa V",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "single_boiler",
+      "kessel": "Einkreiser 0.4L",
+      "pid": "no",
+      "siebtraegerMm": 58,
+      "segment": "mid",
+      "preisEurCa": 1050
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-ecm-classika-pid",
+    "kind": "machine",
+    "brand": "ECM",
+    "model": "Classika PID",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "single_boiler",
+      "kessel": "Einkreiser 0.75L",
+      "pid": "yes",
+      "siebtraegerMm": 58,
+      "segment": "mid",
+      "preisEurCa": 1350
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-ecm-puristika",
+    "kind": "machine",
+    "brand": "ECM",
+    "model": "Puristika",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "single_boiler",
+      "kessel": "Einkreiser 0.75L, ohne Dampflanze",
+      "pid": "yes",
+      "siebtraegerMm": 58,
+      "segment": "mid",
+      "preisEurCa": 1300
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-ecm-mechanika-vi-slim",
+    "kind": "machine",
+    "brand": "ECM",
+    "model": "Mechanika VI Slim",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "heat_exchanger",
+      "kessel": "Zweikreiser 2.2L",
+      "pid": "no",
+      "siebtraegerMm": 58,
+      "segment": "high",
+      "preisEurCa": 1750
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-ecm-mechanika-max",
+    "kind": "machine",
+    "brand": "ECM",
+    "model": "Mechanika Max",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "heat_exchanger",
+      "kessel": "Zweikreiser 2.8L",
+      "pid": "yes",
+      "siebtraegerMm": 58,
+      "segment": "high",
+      "preisEurCa": 1950
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-ecm-technika-v-profi-pid",
+    "kind": "machine",
+    "brand": "ECM",
+    "model": "Technika V Profi PID",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "heat_exchanger",
+      "kessel": "Zweikreiser 2.1L Rotationspumpe",
+      "pid": "yes",
+      "siebtraegerMm": 58,
+      "segment": "high",
+      "preisEurCa": 2250
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-ecm-barista",
+    "kind": "machine",
+    "brand": "ECM",
+    "model": "Barista",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "heat_exchanger",
+      "kessel": "Zweikreiser 2.1L Rotationspumpe",
+      "pid": "no",
+      "siebtraegerMm": 58,
+      "segment": "high",
+      "preisEurCa": 2500
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-ecm-elektronika-ii-profi",
+    "kind": "machine",
+    "brand": "ECM",
+    "model": "Elektronika II Profi",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "heat_exchanger",
+      "kessel": "Zweikreiser 2.1L Rotationspumpe",
+      "pid": "no",
+      "siebtraegerMm": 58,
+      "segment": "high",
+      "preisEurCa": 2700
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-ecm-synchronika",
+    "kind": "machine",
+    "brand": "ECM",
+    "model": "Synchronika",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "dual_boiler",
+      "kessel": "Dualboiler 0.75+2.0L",
+      "pid": "yes",
+      "siebtraegerMm": 58,
+      "segment": "high",
+      "preisEurCa": 3150
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-ecm-controvento",
+    "kind": "machine",
+    "brand": "ECM",
+    "model": "Controvento",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "dual_boiler",
+      "kessel": "Dualboiler mit Rotationspumpe",
+      "pid": "yes",
+      "siebtraegerMm": 58,
+      "segment": "pro",
+      "preisEurCa": 3700
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-ecm-estetika",
+    "kind": "machine",
+    "brand": "ECM",
+    "model": "Estetika",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "dual_boiler",
+      "kessel": "Dualboiler",
+      "pid": "yes",
+      "siebtraegerMm": 58,
+      "segment": "pro",
+      "preisEurCa": 3900
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-profitec-go",
+    "kind": "machine",
+    "brand": "Profitec",
+    "model": "Go",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "single_boiler",
+      "kessel": "Einkreiser 0.4L",
+      "pid": "yes",
+      "siebtraegerMm": 58,
+      "segment": "mid",
+      "preisEurCa": 850
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-profitec-move",
+    "kind": "machine",
+    "brand": "Profitec",
+    "model": "Move",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "dual_boiler",
+      "kessel": "Kompakter Dualboiler",
+      "pid": "yes",
+      "siebtraegerMm": 58,
+      "segment": "mid",
+      "preisEurCa": 1500
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-profitec-pro-300",
+    "kind": "machine",
+    "brand": "Profitec",
+    "model": "Pro 300",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "dual_boiler",
+      "kessel": "Dualboiler 0.4+0.75L",
+      "pid": "yes",
+      "siebtraegerMm": 58,
+      "segment": "mid",
+      "preisEurCa": 1300
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-profitec-pro-400",
+    "kind": "machine",
+    "brand": "Profitec",
+    "model": "Pro 400",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "heat_exchanger",
+      "kessel": "Zweikreiser 2.0L",
+      "pid": "no",
+      "siebtraegerMm": 58,
+      "segment": "mid",
+      "preisEurCa": 1400
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-profitec-pro-500-pid",
+    "kind": "machine",
+    "brand": "Profitec",
+    "model": "Pro 500 PID",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "heat_exchanger",
+      "kessel": "Zweikreiser 2.0L",
+      "pid": "yes",
+      "siebtraegerMm": 58,
+      "segment": "high",
+      "preisEurCa": 1700
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-profitec-pro-600",
+    "kind": "machine",
+    "brand": "Profitec",
+    "model": "Pro 600",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "dual_boiler",
+      "kessel": "Dualboiler 0.75+1.0L",
+      "pid": "yes",
+      "siebtraegerMm": 58,
+      "segment": "high",
+      "preisEurCa": 2200
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-profitec-pro-700",
+    "kind": "machine",
+    "brand": "Profitec",
+    "model": "Pro 700",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "dual_boiler",
+      "kessel": "Dualboiler 0.75+2.0L Rotationspumpe",
+      "pid": "yes",
+      "siebtraegerMm": 58,
+      "segment": "high",
+      "preisEurCa": 2800
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-profitec-pro-800",
+    "kind": "machine",
+    "brand": "Profitec",
+    "model": "Pro 800",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "lever",
+      "kessel": "Federhebel 1.6L Kessel",
+      "pid": "yes",
+      "siebtraegerMm": 58,
+      "segment": "pro",
+      "preisEurCa": 3300
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-profitec-drive",
+    "kind": "machine",
+    "brand": "Profitec",
+    "model": "Drive",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "dual_boiler",
+      "kessel": "Dualboiler mit Rotationspumpe",
+      "pid": "yes",
+      "siebtraegerMm": 58,
+      "segment": "high",
+      "preisEurCa": 3200
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-rocket-appartamento",
+    "kind": "machine",
+    "brand": "Rocket",
+    "model": "Appartamento",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "heat_exchanger",
+      "kessel": "Zweikreiser 1.8L",
+      "pid": "no",
+      "siebtraegerMm": 58,
+      "segment": "mid",
+      "preisEurCa": 1450
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-rocket-appartamento-tca",
+    "kind": "machine",
+    "brand": "Rocket",
+    "model": "Appartamento TCA",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "heat_exchanger",
+      "kessel": "Zweikreiser 1.8L, Temperaturregelung",
+      "pid": "yes",
+      "siebtraegerMm": 58,
+      "segment": "high",
+      "preisEurCa": 1700
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-rocket-mozzafiato-cronometro-v",
+    "kind": "machine",
+    "brand": "Rocket",
+    "model": "Mozzafiato Cronometro V",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "heat_exchanger",
+      "kessel": "Zweikreiser 1.8L",
+      "pid": "yes",
+      "siebtraegerMm": 58,
+      "segment": "high",
+      "preisEurCa": 1900
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-rocket-mozzafiato-cronometro-r",
+    "kind": "machine",
+    "brand": "Rocket",
+    "model": "Mozzafiato Cronometro R",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "heat_exchanger",
+      "kessel": "Zweikreiser 1.8L Rotationspumpe",
+      "pid": "yes",
+      "siebtraegerMm": 58,
+      "segment": "high",
+      "preisEurCa": 2200
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-rocket-giotto-cronometro-r",
+    "kind": "machine",
+    "brand": "Rocket",
+    "model": "Giotto Cronometro R",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "heat_exchanger",
+      "kessel": "Zweikreiser 1.8L Rotationspumpe",
+      "pid": "yes",
+      "siebtraegerMm": 58,
+      "segment": "high",
+      "preisEurCa": 2300
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-rocket-giotto-timer-evoluzione-v",
+    "kind": "machine",
+    "brand": "Rocket",
+    "model": "Giotto Timer Evoluzione V",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "heat_exchanger",
+      "kessel": "Zweikreiser 1.8L",
+      "pid": "no",
+      "siebtraegerMm": 58,
+      "segment": "high",
+      "preisEurCa": 2000
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-rocket-r58-cinquantotto",
+    "kind": "machine",
+    "brand": "Rocket",
+    "model": "R58 Cinquantotto",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "dual_boiler",
+      "kessel": "Dualboiler 0.58+1.7L",
+      "pid": "yes",
+      "siebtraegerMm": 58,
+      "segment": "pro",
+      "preisEurCa": 3600
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-rocket-r60v",
+    "kind": "machine",
+    "brand": "Rocket",
+    "model": "R60V",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "dual_boiler",
+      "kessel": "Dualboiler mit Druckprofilen",
+      "pid": "yes",
+      "siebtraegerMm": 58,
+      "segment": "pro",
+      "preisEurCa": 4200
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-rocket-r-nine-one",
+    "kind": "machine",
+    "brand": "Rocket",
+    "model": "R Nine One",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "dual_boiler",
+      "kessel": "Dualboiler mit Druckprofilen",
+      "pid": "yes",
+      "siebtraegerMm": 58,
+      "segment": "pro",
+      "preisEurCa": 5900
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-rocket-porta-via",
+    "kind": "machine",
+    "brand": "Rocket",
+    "model": "Porta Via",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "heat_exchanger",
+      "kessel": "Zweikreiser 1.8L",
+      "pid": "yes",
+      "siebtraegerMm": 58,
+      "segment": "high",
+      "preisEurCa": 2100
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-lelit-glenda-pl41plust",
+    "kind": "machine",
+    "brand": "Lelit",
+    "model": "Glenda PL41PLUST",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "single_boiler",
+      "kessel": "Einkreiser 0.25L",
+      "pid": "yes",
+      "siebtraegerMm": 57,
+      "segment": "mid",
+      "preisEurCa": 480
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-lelit-anna-pl41tem",
+    "kind": "machine",
+    "brand": "Lelit",
+    "model": "Anna PL41TEM",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "single_boiler",
+      "kessel": "Einkreiser 0.25L",
+      "pid": "yes",
+      "siebtraegerMm": 57,
+      "segment": "mid",
+      "preisEurCa": 430
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-lelit-victoria-pl91t",
+    "kind": "machine",
+    "brand": "Lelit",
+    "model": "Victoria PL91T",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "single_boiler",
+      "kessel": "Einkreiser 0.25L",
+      "pid": "yes",
+      "siebtraegerMm": 57,
+      "segment": "mid",
+      "preisEurCa": 700
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-lelit-grace-pl81t",
+    "kind": "machine",
+    "brand": "Lelit",
+    "model": "Grace PL81T",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "single_boiler",
+      "kessel": "Einkreiser 0.25L",
+      "pid": "yes",
+      "siebtraegerMm": 57,
+      "segment": "mid",
+      "preisEurCa": 650
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-lelit-kate-pl82t",
+    "kind": "machine",
+    "brand": "Lelit",
+    "model": "Kate PL82T",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "single_boiler",
+      "kessel": "Einkreiser, integriertes Mahlwerk",
+      "pid": "yes",
+      "siebtraegerMm": 57,
+      "segment": "mid",
+      "preisEurCa": 900
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-lelit-anita-pl042temd",
+    "kind": "machine",
+    "brand": "Lelit",
+    "model": "Anita PL042TEMD",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "single_boiler",
+      "kessel": "Einkreiser, integriertes Mahlwerk",
+      "pid": "yes",
+      "siebtraegerMm": 57,
+      "segment": "mid",
+      "preisEurCa": 750
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-lelit-marax-pl62x",
+    "kind": "machine",
+    "brand": "Lelit",
+    "model": "MaraX PL62X",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "heat_exchanger",
+      "kessel": "Zweikreiser 1.8L, Brühtemperatur-Modus",
+      "pid": "yes",
+      "siebtraegerMm": 58,
+      "segment": "mid",
+      "preisEurCa": 1450
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-lelit-elizabeth-pl92t",
+    "kind": "machine",
+    "brand": "Lelit",
+    "model": "Elizabeth PL92T",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "dual_boiler",
+      "kessel": "Dualboiler 0.3+0.6L",
+      "pid": "yes",
+      "siebtraegerMm": 58,
+      "segment": "high",
+      "preisEurCa": 1600
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-lelit-bianca-pl162t-v3",
+    "kind": "machine",
+    "brand": "Lelit",
+    "model": "Bianca PL162T V3",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "dual_boiler",
+      "kessel": "Dualboiler 0.8+1.5L, Flow Control",
+      "pid": "yes",
+      "siebtraegerMm": 58,
+      "segment": "high",
+      "preisEurCa": 3100
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-bezzera-hobby",
+    "kind": "machine",
+    "brand": "Bezzera",
+    "model": "Hobby",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "single_boiler",
+      "kessel": "Einkreiser 0.5L",
+      "pid": "no",
+      "siebtraegerMm": 58,
+      "segment": "mid",
+      "preisEurCa": 800
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-bezzera-unica-pid",
+    "kind": "machine",
+    "brand": "Bezzera",
+    "model": "Unica PID",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "single_boiler",
+      "kessel": "Einkreiser 0.5L",
+      "pid": "yes",
+      "siebtraegerMm": 58,
+      "segment": "mid",
+      "preisEurCa": 1100
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-bezzera-bz10-pid",
+    "kind": "machine",
+    "brand": "Bezzera",
+    "model": "BZ10 PID",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "heat_exchanger",
+      "kessel": "Zweikreiser 1.5L",
+      "pid": "yes",
+      "siebtraegerMm": 58,
+      "segment": "mid",
+      "preisEurCa": 1350
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-bezzera-aria-top-pid",
+    "kind": "machine",
+    "brand": "Bezzera",
+    "model": "Aria Top PID",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "single_boiler",
+      "kessel": "Einkreiser, Flow Control",
+      "pid": "yes",
+      "siebtraegerMm": 58,
+      "segment": "high",
+      "preisEurCa": 1550
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-bezzera-magica-s-pid",
+    "kind": "machine",
+    "brand": "Bezzera",
+    "model": "Magica S PID",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "heat_exchanger",
+      "kessel": "Zweikreiser 2.0L",
+      "pid": "yes",
+      "siebtraegerMm": 58,
+      "segment": "high",
+      "preisEurCa": 1600
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-bezzera-galatea-domus",
+    "kind": "machine",
+    "brand": "Bezzera",
+    "model": "Galatea Domus",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "heat_exchanger",
+      "kessel": "Zweikreiser 1.5L",
+      "pid": "no",
+      "siebtraegerMm": 58,
+      "segment": "high",
+      "preisEurCa": 1650
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-bezzera-mitica-top-pid",
+    "kind": "machine",
+    "brand": "Bezzera",
+    "model": "Mitica Top PID",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "heat_exchanger",
+      "kessel": "Zweikreiser 2.0L",
+      "pid": "yes",
+      "siebtraegerMm": 58,
+      "segment": "high",
+      "preisEurCa": 1850
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-bezzera-matrix-mn",
+    "kind": "machine",
+    "brand": "Bezzera",
+    "model": "Matrix MN",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "dual_boiler",
+      "kessel": "Dualboiler 0.45+1.0L",
+      "pid": "yes",
+      "siebtraegerMm": 58,
+      "segment": "high",
+      "preisEurCa": 2400
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-bezzera-duo-mn",
+    "kind": "machine",
+    "brand": "Bezzera",
+    "model": "Duo MN",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "dual_boiler",
+      "kessel": "Dualboiler 0.45+1.0L",
+      "pid": "yes",
+      "siebtraegerMm": 58,
+      "segment": "high",
+      "preisEurCa": 2900
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-bezzera-strega",
+    "kind": "machine",
+    "brand": "Bezzera",
+    "model": "Strega",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "lever",
+      "kessel": "Federhebel, Zweikreiser 2.0L",
+      "pid": "no",
+      "siebtraegerMm": 58,
+      "segment": "high",
+      "preisEurCa": 2300
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-rancilio-silvia-v6",
+    "kind": "machine",
+    "brand": "Rancilio",
+    "model": "Silvia V6",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "single_boiler",
+      "kessel": "Einkreiser 0.3L Messing",
+      "pid": "no",
+      "siebtraegerMm": 58,
+      "segment": "mid",
+      "preisEurCa": 750
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-rancilio-silvia-pro-x",
+    "kind": "machine",
+    "brand": "Rancilio",
+    "model": "Silvia Pro X",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "dual_boiler",
+      "kessel": "Dualboiler 0.3+1.0L",
+      "pid": "yes",
+      "siebtraegerMm": 58,
+      "segment": "high",
+      "preisEurCa": 1750
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-quick-mill-orione-3000",
+    "kind": "machine",
+    "brand": "Quick Mill",
+    "model": "Orione 3000",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "thermoblock",
+      "kessel": "Thermoblock Alu/Kupfer, 2 Temperaturzonen, 1.5L Tank",
+      "pid": "no",
+      "siebtraegerMm": 58,
+      "segment": "mid",
+      "preisEurCa": 600
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-quick-mill-carola",
+    "kind": "machine",
+    "brand": "Quick Mill",
+    "model": "Carola",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "single_boiler",
+      "kessel": "Einkreiser 0.5L",
+      "pid": "no",
+      "siebtraegerMm": 58,
+      "segment": "mid",
+      "preisEurCa": 950
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-quick-mill-alexia-evo",
+    "kind": "machine",
+    "brand": "Quick Mill",
+    "model": "Alexia Evo",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "single_boiler",
+      "kessel": "Einkreiser 0.5L",
+      "pid": "yes",
+      "siebtraegerMm": 58,
+      "segment": "mid",
+      "preisEurCa": 1100
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-quick-mill-rubino-0981",
+    "kind": "machine",
+    "brand": "Quick Mill",
+    "model": "Rubino 0981",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "heat_exchanger",
+      "kessel": "Zweikreiser 1.8L",
+      "pid": "no",
+      "siebtraegerMm": 58,
+      "segment": "mid",
+      "preisEurCa": 1250
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-quick-mill-silvano-evo",
+    "kind": "machine",
+    "brand": "Quick Mill",
+    "model": "Silvano Evo",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "single_boiler",
+      "kessel": "Einkreiser + separater Dampfkessel",
+      "pid": "yes",
+      "siebtraegerMm": 58,
+      "segment": "mid",
+      "preisEurCa": 1150
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-quick-mill-andreja-premium-evo",
+    "kind": "machine",
+    "brand": "Quick Mill",
+    "model": "Andreja Premium Evo",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "heat_exchanger",
+      "kessel": "Zweikreiser 1.8L",
+      "pid": "no",
+      "siebtraegerMm": 58,
+      "segment": "high",
+      "preisEurCa": 1650
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-quick-mill-qm67",
+    "kind": "machine",
+    "brand": "Quick Mill",
+    "model": "QM67",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "dual_boiler",
+      "kessel": "Dualboiler 0.75+1.4L",
+      "pid": "yes",
+      "siebtraegerMm": 58,
+      "segment": "high",
+      "preisEurCa": 2100
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-quick-mill-vetrano-2b-evo",
+    "kind": "machine",
+    "brand": "Quick Mill",
+    "model": "Vetrano 2B Evo",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "dual_boiler",
+      "kessel": "Dualboiler 0.75+1.4L Rotationspumpe",
+      "pid": "yes",
+      "siebtraegerMm": 58,
+      "segment": "high",
+      "preisEurCa": 2500
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-quick-mill-achille",
+    "kind": "machine",
+    "brand": "Quick Mill",
+    "model": "Achille",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "lever",
+      "kessel": "Federhebel 3.5L",
+      "pid": "no",
+      "siebtraegerMm": 58,
+      "segment": "high",
+      "preisEurCa": 2000
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-vibiemme-domobar-junior-hx",
+    "kind": "machine",
+    "brand": "Vibiemme",
+    "model": "Domobar Junior HX",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "heat_exchanger",
+      "kessel": "Zweikreiser 1.4L",
+      "pid": "no",
+      "siebtraegerMm": 58,
+      "segment": "high",
+      "preisEurCa": 1600
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-vibiemme-domobar-super-hx",
+    "kind": "machine",
+    "brand": "Vibiemme",
+    "model": "Domobar Super HX",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "heat_exchanger",
+      "kessel": "Zweikreiser 2.3L",
+      "pid": "no",
+      "siebtraegerMm": 58,
+      "segment": "high",
+      "preisEurCa": 2000
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-vibiemme-domobar-super-digitale",
+    "kind": "machine",
+    "brand": "Vibiemme",
+    "model": "Domobar Super Digitale",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "dual_boiler",
+      "kessel": "Dualboiler 0.5+2.3L",
+      "pid": "yes",
+      "siebtraegerMm": 58,
+      "segment": "high",
+      "preisEurCa": 2700
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-nuova-simonelli-oscar-ii",
+    "kind": "machine",
+    "brand": "Nuova Simonelli",
+    "model": "Oscar II",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "heat_exchanger",
+      "kessel": "Zweikreiser 2.0L",
+      "pid": "no",
+      "siebtraegerMm": 58,
+      "segment": "mid",
+      "preisEurCa": 1150
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-nuova-simonelli-oscar-mood",
+    "kind": "machine",
+    "brand": "Nuova Simonelli",
+    "model": "Oscar Mood",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "heat_exchanger",
+      "kessel": "Zweikreiser 2.0L",
+      "pid": "yes",
+      "siebtraegerMm": 58,
+      "segment": "mid",
+      "preisEurCa": 1400
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-nuova-simonelli-musica",
+    "kind": "machine",
+    "brand": "Nuova Simonelli",
+    "model": "Musica",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "heat_exchanger",
+      "kessel": "Zweikreiser 2.0L",
+      "pid": "no",
+      "siebtraegerMm": 58,
+      "segment": "high",
+      "preisEurCa": 2000
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-nuova-simonelli-appia-life-compact",
+    "kind": "machine",
+    "brand": "Nuova Simonelli",
+    "model": "Appia Life Compact",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "heat_exchanger",
+      "kessel": "Zweikreiser 5.0L",
+      "pid": "no",
+      "siebtraegerMm": 58,
+      "segment": "high",
+      "preisEurCa": 2900
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-victoria-arduino-eagle-one-prima",
+    "kind": "machine",
+    "brand": "Victoria Arduino",
+    "model": "Eagle One Prima",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "dual_boiler",
+      "kessel": "Dualboiler, NEO-Engine",
+      "pid": "yes",
+      "siebtraegerMm": 58,
+      "segment": "pro",
+      "preisEurCa": 5500
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-victoria-arduino-eagle-one-prima-exp",
+    "kind": "machine",
+    "brand": "Victoria Arduino",
+    "model": "Eagle One Prima EXP",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "dual_boiler",
+      "kessel": "Dualboiler, Druckprofile",
+      "pid": "yes",
+      "siebtraegerMm": 58,
+      "segment": "pro",
+      "preisEurCa": 6900
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-la-marzocco-linea-micra",
+    "kind": "machine",
+    "brand": "La Marzocco",
+    "model": "Linea Micra",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "dual_boiler",
+      "kessel": "Dualboiler 0.28+1.6L",
+      "pid": "yes",
+      "siebtraegerMm": 58,
+      "segment": "pro",
+      "preisEurCa": 3800
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-la-marzocco-linea-mini",
+    "kind": "machine",
+    "brand": "La Marzocco",
+    "model": "Linea Mini",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "dual_boiler",
+      "kessel": "Dualboiler 0.17+3.0L",
+      "pid": "yes",
+      "siebtraegerMm": 58,
+      "segment": "pro",
+      "preisEurCa": 5200
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-la-marzocco-linea-mini-r",
+    "kind": "machine",
+    "brand": "La Marzocco",
+    "model": "Linea Mini R",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "dual_boiler",
+      "kessel": "Dualboiler, Pro-Ausstattung",
+      "pid": "yes",
+      "siebtraegerMm": 58,
+      "segment": "pro",
+      "preisEurCa": 5800
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-la-marzocco-gs3-av",
+    "kind": "machine",
+    "brand": "La Marzocco",
+    "model": "GS3 AV",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "dual_boiler",
+      "kessel": "Dualboiler 1.5+3.5L",
+      "pid": "yes",
+      "siebtraegerMm": 58,
+      "segment": "pro",
+      "preisEurCa": 7900
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-la-marzocco-gs3-mp",
+    "kind": "machine",
+    "brand": "La Marzocco",
+    "model": "GS3 MP",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "dual_boiler",
+      "kessel": "Dualboiler, mechanisches Paddle",
+      "pid": "yes",
+      "siebtraegerMm": 58,
+      "segment": "pro",
+      "preisEurCa": 8500
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-slayer-espresso-single-group",
+    "kind": "machine",
+    "brand": "Slayer",
+    "model": "Espresso Single Group",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "dual_boiler",
+      "kessel": "Dualboiler, Needle-Valve Flowprofiling",
+      "pid": "yes",
+      "siebtraegerMm": 58,
+      "segment": "pro",
+      "preisEurCa": 9500
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-expobar-office-pulser",
+    "kind": "machine",
+    "brand": "Expobar",
+    "model": "Office Pulser",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "heat_exchanger",
+      "kessel": "Zweikreiser 1.5L",
+      "pid": "no",
+      "siebtraegerMm": 58,
+      "segment": "mid",
+      "preisEurCa": 1100
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-expobar-office-leva-dual-boiler",
+    "kind": "machine",
+    "brand": "Expobar",
+    "model": "Office Leva Dual Boiler",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "dual_boiler",
+      "kessel": "Dualboiler 0.75+1.5L",
+      "pid": "yes",
+      "siebtraegerMm": 58,
+      "segment": "mid",
+      "preisEurCa": 1500
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-expobar-brewtus-iv",
+    "kind": "machine",
+    "brand": "Expobar",
+    "model": "Brewtus IV",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "dual_boiler",
+      "kessel": "Dualboiler 0.75+1.5L",
+      "pid": "yes",
+      "siebtraegerMm": 58,
+      "segment": "high",
+      "preisEurCa": 1700
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-crem-one-2b-dual-pid",
+    "kind": "machine",
+    "brand": "Crem",
+    "model": "One 2B Dual PID",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "dual_boiler",
+      "kessel": "Dualboiler mit Profilen",
+      "pid": "yes",
+      "siebtraegerMm": 58,
+      "segment": "high",
+      "preisEurCa": 2100
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-ascaso-dream-one",
+    "kind": "machine",
+    "brand": "Ascaso",
+    "model": "Dream One",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "thermoblock",
+      "kessel": "Thermoblock 58mm",
+      "pid": "yes",
+      "siebtraegerMm": 58,
+      "segment": "mid",
+      "preisEurCa": 800
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-ascaso-steel-uno-pid",
+    "kind": "machine",
+    "brand": "Ascaso",
+    "model": "Steel Uno PID",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "thermoblock",
+      "kessel": "Thermoblock",
+      "pid": "yes",
+      "siebtraegerMm": 58,
+      "segment": "mid",
+      "preisEurCa": 900
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-ascaso-steel-duo-pid",
+    "kind": "machine",
+    "brand": "Ascaso",
+    "model": "Steel Duo PID",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "thermoblock",
+      "kessel": "Zwei Thermoblöcke",
+      "pid": "yes",
+      "siebtraegerMm": 58,
+      "segment": "mid",
+      "preisEurCa": 1100
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-ascaso-baby-t-plus",
+    "kind": "machine",
+    "brand": "Ascaso",
+    "model": "Baby T Plus",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "thermoblock",
+      "kessel": "Zwei Thermoblöcke, Profi-Ausführung",
+      "pid": "yes",
+      "siebtraegerMm": 58,
+      "segment": "high",
+      "preisEurCa": 2400
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-la-pavoni-europiccola-lusso",
+    "kind": "machine",
+    "brand": "La Pavoni",
+    "model": "Europiccola Lusso",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "lever",
+      "kessel": "Handhebel 0.8L",
+      "pid": "no",
+      "siebtraegerMm": 51,
+      "segment": "mid",
+      "preisEurCa": 850
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-la-pavoni-professional-lusso",
+    "kind": "machine",
+    "brand": "La Pavoni",
+    "model": "Professional Lusso",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "lever",
+      "kessel": "Handhebel 1.6L mit Manometer",
+      "pid": "no",
+      "siebtraegerMm": 51,
+      "segment": "mid",
+      "preisEurCa": 1050
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-la-pavoni-stradivari-professional",
+    "kind": "machine",
+    "brand": "La Pavoni",
+    "model": "Stradivari Professional",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "lever",
+      "kessel": "Handhebel 1.6L",
+      "pid": "no",
+      "siebtraegerMm": 51,
+      "segment": "mid",
+      "preisEurCa": 1150
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-olympia-express-cremina-sl",
+    "kind": "machine",
+    "brand": "Olympia Express",
+    "model": "Cremina SL",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "lever",
+      "kessel": "Handhebel 0.65L",
+      "pid": "no",
+      "siebtraegerMm": 49,
+      "segment": "pro",
+      "preisEurCa": 3500
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-olympia-express-maximatic",
+    "kind": "machine",
+    "brand": "Olympia Express",
+    "model": "Maximatic",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "heat_exchanger",
+      "kessel": "Zweikreiser 2.5L",
+      "pid": "no",
+      "siebtraegerMm": 58,
+      "segment": "pro",
+      "preisEurCa": 4000
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-elektra-micro-casa-a-leva",
+    "kind": "machine",
+    "brand": "Elektra",
+    "model": "Micro Casa a Leva",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "lever",
+      "kessel": "Handhebel 1.8L",
+      "pid": "no",
+      "siebtraegerMm": 49,
+      "segment": "high",
+      "preisEurCa": 1900
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-elektra-micro-casa-semiautomatica",
+    "kind": "machine",
+    "brand": "Elektra",
+    "model": "Micro Casa Semiautomatica",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "single_boiler",
+      "kessel": "Einkreiser 1.8L",
+      "pid": "no",
+      "siebtraegerMm": 49,
+      "segment": "high",
+      "preisEurCa": 1700
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-ponte-vecchio-lusso",
+    "kind": "machine",
+    "brand": "Ponte Vecchio",
+    "model": "Lusso",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "lever",
+      "kessel": "Federhebel 1.4L",
+      "pid": "no",
+      "siebtraegerMm": 49,
+      "segment": "mid",
+      "preisEurCa": 900
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-ponte-vecchio-export",
+    "kind": "machine",
+    "brand": "Ponte Vecchio",
+    "model": "Export",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "lever",
+      "kessel": "Federhebel 0.9L",
+      "pid": "no",
+      "siebtraegerMm": 49,
+      "segment": "mid",
+      "preisEurCa": 700
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-londinium-r24",
+    "kind": "machine",
+    "brand": "Londinium",
+    "model": "R24",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "lever",
+      "kessel": "Federhebel, 1.9L Kessel",
+      "pid": "no",
+      "siebtraegerMm": 58,
+      "segment": "pro",
+      "preisEurCa": 3100
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-londinium-vectis",
+    "kind": "machine",
+    "brand": "Londinium",
+    "model": "Vectis",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "lever",
+      "kessel": "Federhebel kompakt",
+      "pid": "no",
+      "siebtraegerMm": 58,
+      "segment": "high",
+      "preisEurCa": 2300
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-izzo-alex-duetto-iv",
+    "kind": "machine",
+    "brand": "Izzo",
+    "model": "Alex Duetto IV",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "dual_boiler",
+      "kessel": "Dualboiler 0.8+1.5L",
+      "pid": "yes",
+      "siebtraegerMm": 58,
+      "segment": "high",
+      "preisEurCa": 2300
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-izzo-vivi-pid",
+    "kind": "machine",
+    "brand": "Izzo",
+    "model": "Vivi PID",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "heat_exchanger",
+      "kessel": "Zweikreiser 1.8L",
+      "pid": "yes",
+      "siebtraegerMm": 58,
+      "segment": "mid",
+      "preisEurCa": 1300
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-izzo-myway-pompei",
+    "kind": "machine",
+    "brand": "Izzo",
+    "model": "MyWay Pompei",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "lever",
+      "kessel": "Federhebel 1.8L",
+      "pid": "no",
+      "siebtraegerMm": 58,
+      "segment": "high",
+      "preisEurCa": 1800
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-isomac-tea-due",
+    "kind": "machine",
+    "brand": "Isomac",
+    "model": "Tea Due",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "heat_exchanger",
+      "kessel": "Zweikreiser 1.4L",
+      "pid": "no",
+      "siebtraegerMm": 58,
+      "segment": "mid",
+      "preisEurCa": 1400
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-wega-mininova-classic",
+    "kind": "machine",
+    "brand": "Wega",
+    "model": "Mininova Classic",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "heat_exchanger",
+      "kessel": "Zweikreiser 2.0L",
+      "pid": "no",
+      "siebtraegerMm": 58,
+      "segment": "mid",
+      "preisEurCa": 1300
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-la-cimbali-m21-junior",
+    "kind": "machine",
+    "brand": "La Cimbali",
+    "model": "M21 Junior",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "heat_exchanger",
+      "kessel": "Zweikreiser 2.5L",
+      "pid": "no",
+      "siebtraegerMm": 58,
+      "segment": "high",
+      "preisEurCa": 2600
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-astoria-greta",
+    "kind": "machine",
+    "brand": "Astoria",
+    "model": "Greta",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "heat_exchanger",
+      "kessel": "Zweikreiser 2.5L",
+      "pid": "no",
+      "siebtraegerMm": 58,
+      "segment": "high",
+      "preisEurCa": 1900
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-bellezza-inizio-r",
+    "kind": "machine",
+    "brand": "Bellezza",
+    "model": "Inizio R",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "heat_exchanger",
+      "kessel": "Zweikreiser 2.0L",
+      "pid": "yes",
+      "siebtraegerMm": 58,
+      "segment": "mid",
+      "preisEurCa": 1400
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-bellezza-chiara",
+    "kind": "machine",
+    "brand": "Bellezza",
+    "model": "Chiara",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "heat_exchanger",
+      "kessel": "Zweikreiser, Shot-Timer",
+      "pid": "yes",
+      "siebtraegerMm": 58,
+      "segment": "high",
+      "preisEurCa": 1600
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-bellezza-valentina",
+    "kind": "machine",
+    "brand": "Bellezza",
+    "model": "Valentina",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "heat_exchanger",
+      "kessel": "Zweikreiser 2.0L",
+      "pid": "yes",
+      "siebtraegerMm": 58,
+      "segment": "high",
+      "preisEurCa": 1750
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-bellezza-bellona",
+    "kind": "machine",
+    "brand": "Bellezza",
+    "model": "Bellona",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "dual_boiler",
+      "kessel": "Dualboiler 0.8+1.4L",
+      "pid": "yes",
+      "siebtraegerMm": 58,
+      "segment": "high",
+      "preisEurCa": 2000
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-fracino-piccino",
+    "kind": "machine",
+    "brand": "Fracino",
+    "model": "Piccino",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "dual_boiler",
+      "kessel": "Zwei kompakte Kessel",
+      "pid": "no",
+      "siebtraegerMm": null,
+      "segment": "mid",
+      "preisEurCa": 650
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-fracino-cherub",
+    "kind": "machine",
+    "brand": "Fracino",
+    "model": "Cherub",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "heat_exchanger",
+      "kessel": "Zweikreiser 2.0L",
+      "pid": "no",
+      "siebtraegerMm": 58,
+      "segment": "mid",
+      "preisEurCa": 850
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-la-nuova-era-cuadra",
+    "kind": "machine",
+    "brand": "La Nuova Era",
+    "model": "Cuadra",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "heat_exchanger",
+      "kessel": "Zweikreiser 1.8L",
+      "pid": "no",
+      "siebtraegerMm": 58,
+      "segment": "mid",
+      "preisEurCa": 1000
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-xenia-xenia",
+    "kind": "machine",
+    "brand": "Xenia",
+    "model": "Xenia",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "single_boiler",
+      "kessel": "Einkreiser 1.1L, schnell aufgeheizt",
+      "pid": "yes",
+      "siebtraegerMm": 58,
+      "segment": "mid",
+      "preisEurCa": 1500
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-acs-minima",
+    "kind": "machine",
+    "brand": "ACS",
+    "model": "Minima",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "dual_boiler",
+      "kessel": "Dualboiler 0.35+0.8L",
+      "pid": "yes",
+      "siebtraegerMm": 58,
+      "segment": "mid",
+      "preisEurCa": 1500
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-acs-vesuvius",
+    "kind": "machine",
+    "brand": "ACS",
+    "model": "Vesuvius",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "dual_boiler",
+      "kessel": "Dualboiler, Druckprofile",
+      "pid": "yes",
+      "siebtraegerMm": 58,
+      "segment": "high",
+      "preisEurCa": 1900
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-acs-vesuvius-evo-leva",
+    "kind": "machine",
+    "brand": "ACS",
+    "model": "Vesuvius Evo Leva",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "lever",
+      "kessel": "Elektronischer Hebel, Profile",
+      "pid": "yes",
+      "siebtraegerMm": 58,
+      "segment": "pro",
+      "preisEurCa": 3600
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-bosco-sorrento-leva",
+    "kind": "machine",
+    "brand": "Bosco",
+    "model": "Sorrento Leva",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "lever",
+      "kessel": "Federhebel 5.0L",
+      "pid": "no",
+      "siebtraegerMm": 58,
+      "segment": "high",
+      "preisEurCa": 2800
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-nurri-leva-s-a",
+    "kind": "machine",
+    "brand": "Nurri",
+    "model": "Leva S.A.",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "lever",
+      "kessel": "Federhebel, Dualboiler-Technik",
+      "pid": "yes",
+      "siebtraegerMm": 58,
+      "segment": "pro",
+      "preisEurCa": 4200
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-odyssey-argos",
+    "kind": "machine",
+    "brand": "Odyssey",
+    "model": "Argos",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "lever",
+      "kessel": "Federhebel mit Elektrokessel",
+      "pid": "no",
+      "siebtraegerMm": 58,
+      "segment": "mid",
+      "preisEurCa": 1300
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-strietman-ct2",
+    "kind": "machine",
+    "brand": "Strietman",
+    "model": "CT2",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "lever",
+      "kessel": "Wandmontierter Handhebel 0.7L",
+      "pid": "no",
+      "siebtraegerMm": 58,
+      "segment": "high",
+      "preisEurCa": 2500
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-flair-neo-flex",
+    "kind": "machine",
+    "brand": "Flair",
+    "model": "Neo Flex",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "manual",
+      "kessel": "Manueller Hebel ungeheizt",
+      "pid": "no",
+      "siebtraegerMm": null,
+      "segment": "entry",
+      "preisEurCa": 99
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-flair-classic",
+    "kind": "machine",
+    "brand": "Flair",
+    "model": "Classic",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "manual",
+      "kessel": "Manueller Hebel ungeheizt",
+      "pid": "no",
+      "siebtraegerMm": null,
+      "segment": "entry",
+      "preisEurCa": 130
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-flair-signature",
+    "kind": "machine",
+    "brand": "Flair",
+    "model": "Signature",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "manual",
+      "kessel": "Manueller Hebel ungeheizt",
+      "pid": "no",
+      "siebtraegerMm": null,
+      "segment": "entry",
+      "preisEurCa": 250
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-flair-pro-2",
+    "kind": "machine",
+    "brand": "Flair",
+    "model": "Pro 2",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "manual",
+      "kessel": "Manueller Hebel mit Manometer",
+      "pid": "no",
+      "siebtraegerMm": null,
+      "segment": "entry",
+      "preisEurCa": 330
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-flair-58",
+    "kind": "machine",
+    "brand": "Flair",
+    "model": "58",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "manual",
+      "kessel": "Handhebel mit beheiztem 58mm-Kopf",
+      "pid": "no",
+      "siebtraegerMm": 58,
+      "segment": "mid",
+      "preisEurCa": 600
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-flair-58x",
+    "kind": "machine",
+    "brand": "Flair",
+    "model": "58x",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "manual",
+      "kessel": "Handhebel 58mm ungeheizt",
+      "pid": "no",
+      "siebtraegerMm": 58,
+      "segment": "mid",
+      "preisEurCa": 500
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-cafelat-robot",
+    "kind": "machine",
+    "brand": "Cafelat",
+    "model": "Robot",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "manual",
+      "kessel": "Handhebel ungeheizt",
+      "pid": "no",
+      "siebtraegerMm": 58,
+      "segment": "mid",
+      "preisEurCa": 400
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-9barista-espresso-machine",
+    "kind": "machine",
+    "brand": "9Barista",
+    "model": "Espresso Machine",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "manual",
+      "kessel": "Herdkanne mit 9-bar-Düsentechnik",
+      "pid": "no",
+      "siebtraegerMm": null,
+      "segment": "mid",
+      "preisEurCa": 450
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-rok-espressogc",
+    "kind": "machine",
+    "brand": "ROK",
+    "model": "EspressoGC",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "manual",
+      "kessel": "Manueller Doppelhebel",
+      "pid": "no",
+      "siebtraegerMm": 49,
+      "segment": "entry",
+      "preisEurCa": 180
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-wacaco-minipresso-gr",
+    "kind": "machine",
+    "brand": "Wacaco",
+    "model": "Minipresso GR",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "manual",
+      "kessel": "Handpumpe portabel",
+      "pid": "no",
+      "siebtraegerMm": null,
+      "segment": "entry",
+      "preisEurCa": 60
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-wacaco-nanopresso",
+    "kind": "machine",
+    "brand": "Wacaco",
+    "model": "Nanopresso",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "manual",
+      "kessel": "Handpumpe portabel",
+      "pid": "no",
+      "siebtraegerMm": null,
+      "segment": "entry",
+      "preisEurCa": 80
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-wacaco-picopresso",
+    "kind": "machine",
+    "brand": "Wacaco",
+    "model": "Picopresso",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "manual",
+      "kessel": "Handpumpe mit 52mm-Sieb",
+      "pid": "no",
+      "siebtraegerMm": null,
+      "segment": "entry",
+      "preisEurCa": 130
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-outin-nano",
+    "kind": "machine",
+    "brand": "Outin",
+    "model": "Nano",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "manual",
+      "kessel": "Akku-betrieben, selbstheizend",
+      "pid": "no",
+      "siebtraegerMm": null,
+      "segment": "entry",
+      "preisEurCa": 150
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-cafflano-kompresso",
+    "kind": "machine",
+    "brand": "Cafflano",
+    "model": "Kompresso",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "manual",
+      "kessel": "Hydraulische Handpresse",
+      "pid": "no",
+      "siebtraegerMm": null,
+      "segment": "entry",
+      "preisEurCa": 90
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-handpresso-pump",
+    "kind": "machine",
+    "brand": "Handpresso",
+    "model": "Pump",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "manual",
+      "kessel": "Handpumpe 16 bar",
+      "pid": "no",
+      "siebtraegerMm": null,
+      "segment": "entry",
+      "preisEurCa": 100
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-bellman-cx25p",
+    "kind": "machine",
+    "brand": "Bellman",
+    "model": "CX25P",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "manual",
+      "kessel": "Herd-Dampfkessel",
+      "pid": "no",
+      "siebtraegerMm": null,
+      "segment": "entry",
+      "preisEurCa": 160
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-superkop-superkop",
+    "kind": "machine",
+    "brand": "Superkop",
+    "model": "Superkop",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "manual",
+      "kessel": "Manueller Hebel ungeheizt",
+      "pid": "no",
+      "siebtraegerMm": null,
+      "segment": "mid",
+      "preisEurCa": 700
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-decent-de1pro",
+    "kind": "machine",
+    "brand": "Decent",
+    "model": "DE1PRO",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "thermoblock",
+      "kessel": "Zwei Thermocoils, volle Profile",
+      "pid": "yes",
+      "siebtraegerMm": 58,
+      "segment": "pro",
+      "preisEurCa": 3900
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-decent-de1xl",
+    "kind": "machine",
+    "brand": "Decent",
+    "model": "DE1XL",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "thermoblock",
+      "kessel": "Zwei Thermocoils, Tablet-Steuerung",
+      "pid": "yes",
+      "siebtraegerMm": 58,
+      "segment": "pro",
+      "preisEurCa": 4400
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-meraki-espresso-machine",
+    "kind": "machine",
+    "brand": "Meraki",
+    "model": "Espresso Machine",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "dual_boiler",
+      "kessel": "Dualboiler, Flow Control",
+      "pid": "yes",
+      "siebtraegerMm": 58,
+      "segment": "high",
+      "preisEurCa": 2900
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-sanremo-you",
+    "kind": "machine",
+    "brand": "Sanremo",
+    "model": "You",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "dual_boiler",
+      "kessel": "Dualboiler, Druckprofile",
+      "pid": "yes",
+      "siebtraegerMm": 58,
+      "segment": "pro",
+      "preisEurCa": 4800
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-sanremo-cube-r",
+    "kind": "machine",
+    "brand": "Sanremo",
+    "model": "Cube R",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "dual_boiler",
+      "kessel": "Dualboiler kompakt",
+      "pid": "yes",
+      "siebtraegerMm": 58,
+      "segment": "pro",
+      "preisEurCa": 3700
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-dalla-corte-mina",
+    "kind": "machine",
+    "brand": "Dalla Corte",
+    "model": "Mina",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "dual_boiler",
+      "kessel": "Multiboiler, digitale Flowkontrolle",
+      "pid": "yes",
+      "siebtraegerMm": 54,
+      "segment": "pro",
+      "preisEurCa": 5900
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-dalla-corte-studio",
+    "kind": "machine",
+    "brand": "Dalla Corte",
+    "model": "Studio",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "dual_boiler",
+      "kessel": "Multiboiler",
+      "pid": "yes",
+      "siebtraegerMm": 54,
+      "segment": "pro",
+      "preisEurCa": 4300
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-synesso-es-1",
+    "kind": "machine",
+    "brand": "Synesso",
+    "model": "ES.1",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "dual_boiler",
+      "kessel": "Dualboiler, handgebaut",
+      "pid": "yes",
+      "siebtraegerMm": 58,
+      "segment": "pro",
+      "preisEurCa": 8000
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-kees-van-der-westen-speedster",
+    "kind": "machine",
+    "brand": "Kees van der Westen",
+    "model": "Speedster",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "dual_boiler",
+      "kessel": "Dualboiler, handgebaut",
+      "pid": "yes",
+      "siebtraegerMm": 58,
+      "segment": "pro",
+      "preisEurCa": 11500
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-faema-faemina",
+    "kind": "machine",
+    "brand": "Faema",
+    "model": "Faemina",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "dual_boiler",
+      "kessel": "Dualboiler, Touchdisplay",
+      "pid": "yes",
+      "siebtraegerMm": 58,
+      "segment": "pro",
+      "preisEurCa": 4900
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-smeg-ecf01",
+    "kind": "machine",
+    "brand": "Smeg",
+    "model": "ECF01",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "thermoblock",
+      "kessel": "Thermoblock",
+      "pid": "no",
+      "siebtraegerMm": 51,
+      "segment": "entry",
+      "preisEurCa": 350
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-smeg-egf03",
+    "kind": "machine",
+    "brand": "Smeg",
+    "model": "EGF03",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "thermoblock",
+      "kessel": "Thermoblock, integriertes Mahlwerk",
+      "pid": "yes",
+      "siebtraegerMm": 58,
+      "segment": "mid",
+      "preisEurCa": 600
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-solis-barista-perfetta-plus",
+    "kind": "machine",
+    "brand": "Solis",
+    "model": "Barista Perfetta Plus",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "thermoblock",
+      "kessel": "Thermoblock",
+      "pid": "yes",
+      "siebtraegerMm": 54,
+      "segment": "entry",
+      "preisEurCa": 350
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-solis-grind-infuse-perfetta",
+    "kind": "machine",
+    "brand": "Solis",
+    "model": "Grind & Infuse Perfetta",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "thermoblock",
+      "kessel": "Thermoblock, integriertes Mahlwerk",
+      "pid": "yes",
+      "siebtraegerMm": 54,
+      "segment": "mid",
+      "preisEurCa": 500
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-solis-barista-gran-gusto",
+    "kind": "machine",
+    "brand": "Solis",
+    "model": "Barista Gran Gusto",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "thermoblock",
+      "kessel": "Thermoblock",
+      "pid": "no",
+      "siebtraegerMm": 58,
+      "segment": "mid",
+      "preisEurCa": 400
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-graef-salita",
+    "kind": "machine",
+    "brand": "Graef",
+    "model": "salita",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "thermoblock",
+      "kessel": "Thermoblock",
+      "pid": "no",
+      "siebtraegerMm": null,
+      "segment": "entry",
+      "preisEurCa": 230
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-graef-pivalla",
+    "kind": "machine",
+    "brand": "Graef",
+    "model": "pivalla",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "thermoblock",
+      "kessel": "Thermoblock",
+      "pid": "no",
+      "siebtraegerMm": null,
+      "segment": "entry",
+      "preisEurCa": 300
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-graef-marchesa",
+    "kind": "machine",
+    "brand": "Graef",
+    "model": "marchesa",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "thermoblock",
+      "kessel": "Thermoblock",
+      "pid": "yes",
+      "siebtraegerMm": 58,
+      "segment": "mid",
+      "preisEurCa": 600
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-graef-baronessa",
+    "kind": "machine",
+    "brand": "Graef",
+    "model": "baronessa",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "thermoblock",
+      "kessel": "Zwei Thermoblöcke",
+      "pid": "yes",
+      "siebtraegerMm": 58,
+      "segment": "mid",
+      "preisEurCa": 800
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-graef-contessa",
+    "kind": "machine",
+    "brand": "Graef",
+    "model": "contessa",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "dual_boiler",
+      "kessel": "Dualboiler",
+      "pid": "yes",
+      "siebtraegerMm": 58,
+      "segment": "mid",
+      "preisEurCa": 1100
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-kitchenaid-artisan-kes6503",
+    "kind": "machine",
+    "brand": "KitchenAid",
+    "model": "Artisan KES6503",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "thermoblock",
+      "kessel": "Zwei Heizsysteme",
+      "pid": "yes",
+      "siebtraegerMm": 58,
+      "segment": "mid",
+      "preisEurCa": 500
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-philips-barista-brew",
+    "kind": "machine",
+    "brand": "Philips",
+    "model": "Barista Brew",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "thermoblock",
+      "kessel": "Thermoblock, integriertes Mahlwerk",
+      "pid": "yes",
+      "siebtraegerMm": 58,
+      "segment": "mid",
+      "preisEurCa": 450
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-krups-virtuoso-xp442",
+    "kind": "machine",
+    "brand": "Krups",
+    "model": "Virtuoso XP442",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "thermoblock",
+      "kessel": "Thermoblock",
+      "pid": "no",
+      "siebtraegerMm": null,
+      "segment": "entry",
+      "preisEurCa": 120
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-cecotec-power-espresso-20-barista-pro",
+    "kind": "machine",
+    "brand": "Cecotec",
+    "model": "Power Espresso 20 Barista Pro",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "thermoblock",
+      "kessel": "Zwei Thermoblöcke",
+      "pid": "no",
+      "siebtraegerMm": null,
+      "segment": "entry",
+      "preisEurCa": 90
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-wmf-lumero",
+    "kind": "machine",
+    "brand": "WMF",
+    "model": "Lumero",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "thermoblock",
+      "kessel": "Thermoblock",
+      "pid": "no",
+      "siebtraegerMm": null,
+      "segment": "entry",
+      "preisEurCa": 230
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-saeco-poemia",
+    "kind": "machine",
+    "brand": "Saeco",
+    "model": "Poemia",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "thermoblock",
+      "kessel": "Thermoblock",
+      "pid": "no",
+      "siebtraegerMm": null,
+      "segment": "entry",
+      "preisEurCa": 110
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-ariete-moderna-1381",
+    "kind": "machine",
+    "brand": "Ariete",
+    "model": "Moderna 1381",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "thermoblock",
+      "kessel": "Thermoblock",
+      "pid": "no",
+      "siebtraegerMm": null,
+      "segment": "entry",
+      "preisEurCa": 140
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-beem-espresso-perfect",
+    "kind": "machine",
+    "brand": "BEEM",
+    "model": "Espresso-Perfect",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "thermoblock",
+      "kessel": "Thermoblock",
+      "pid": "no",
+      "siebtraegerMm": null,
+      "segment": "entry",
+      "preisEurCa": 170
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-klarstein-passionata-rossa",
+    "kind": "machine",
+    "brand": "Klarstein",
+    "model": "Passionata Rossa",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "thermoblock",
+      "kessel": "Thermoblock",
+      "pid": "no",
+      "siebtraegerMm": null,
+      "segment": "entry",
+      "preisEurCa": 100
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-hibrew-h10a",
+    "kind": "machine",
+    "brand": "HiBrew",
+    "model": "H10A",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "thermoblock",
+      "kessel": "Thermoblock",
+      "pid": "yes",
+      "siebtraegerMm": 58,
+      "segment": "entry",
+      "preisEurCa": 180
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-casabrews-5700-pro",
+    "kind": "machine",
+    "brand": "Casabrews",
+    "model": "5700 Pro",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "thermoblock",
+      "kessel": "Thermoblock",
+      "pid": "yes",
+      "siebtraegerMm": 58,
+      "segment": "entry",
+      "preisEurCa": 200
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-la-spaziale-s1-mini-vivaldi-ii",
+    "kind": "machine",
+    "brand": "La Spaziale",
+    "model": "S1 Mini Vivaldi II",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "dual_boiler",
+      "kessel": "Dualboiler 0.45+3.0L",
+      "pid": "yes",
+      "siebtraegerMm": 53,
+      "segment": "high",
+      "preisEurCa": 2000
+    },
+    "status": "seed"
+  },
+  {
+    "id": "machine-la-spaziale-s1-dream-t",
+    "kind": "machine",
+    "brand": "La Spaziale",
+    "model": "S1 Dream T",
+    "grindScale": null,
+    "specs": {
+      "kategorie": "dual_boiler",
+      "kessel": "Dualboiler 0.45+3.0L",
+      "pid": "yes",
+      "siebtraegerMm": 53,
+      "segment": "high",
+      "preisEurCa": 2400
+    },
+    "status": "seed"
+  },
+  {
+    "id": "brewer-hario-v60-02-ceramic",
+    "kind": "brewer",
+    "brand": "Hario",
+    "model": "V60 02 Ceramic",
+    "grindScale": null,
+    "specs": {},
+    "status": "seed"
+  },
+  {
+    "id": "brewer-aeropress-original",
+    "kind": "brewer",
+    "brand": "Aeropress",
+    "model": "Original",
+    "grindScale": null,
+    "specs": {},
+    "status": "seed"
+  },
+  {
+    "id": "brewer-bodum-chambord-french-press",
+    "kind": "brewer",
+    "brand": "Bodum",
+    "model": "Chambord French Press",
+    "grindScale": null,
+    "specs": {},
+    "status": "seed"
+  },
+  {
+    "id": "brewer-bialetti-moka-express",
+    "kind": "brewer",
+    "brand": "Bialetti",
+    "model": "Moka Express",
+    "grindScale": null,
+    "specs": {},
+    "status": "seed"
+  },
+  {
+    "id": "brewer-origami-dripper-s",
+    "kind": "brewer",
+    "brand": "Origami",
+    "model": "Dripper S",
+    "grindScale": null,
+    "specs": {},
+    "status": "seed"
+  },
+  {
+    "id": "brewer-fellow-stagg-x6",
+    "kind": "brewer",
+    "brand": "Fellow",
+    "model": "Stagg X6",
+    "grindScale": null,
+    "specs": {},
+    "status": "seed"
+  }
+]

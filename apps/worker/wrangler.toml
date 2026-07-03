@@ -16,6 +16,7 @@ not_found_handling = "single-page-application"
 binding = "DB"
 database_name = "kvarn"
 database_id = "REPLACE_WITH_D1_DATABASE_ID"
+migrations_dir = "../../packages/db/migrations"
 
 # --- R2 (bean photos, user equipment photos) ---
 #   pnpm wrangler r2 bucket create kvarn-photos

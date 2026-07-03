@@ -1,9 +1,12 @@
 import { useMemo, useState } from "react";
 import { Button, Card, Chip } from "@kvarn/ui";
+import { submitProduct } from "@kvarn/api-client";
 import type { Setup as SetupType } from "@kvarn/db";
 import { useKvarnStore } from "../state/store";
 
 const METHODS: SetupType["method"][] = ["espresso", "v60", "aeropress", "frenchpress", "moka", "auto"];
+
+type SubmissionState = "idle" | "submitting" | "submitted" | "error";
 
 export function Setup() {
   const { products, equipment, setups, addEquipmentFromProduct, addCustomEquipment, addSetup, activeSetupId, setActiveSetup } =
@@ -13,6 +16,10 @@ export function Setup() {
   const [setupName, setSetupName] = useState("");
   const [method, setMethod] = useState<SetupType["method"]>("espresso");
   const [grinderEquipmentId, setGrinderEquipmentId] = useState<string>("");
+  const [showSubmitForm, setShowSubmitForm] = useState(false);
+  const [submitBrand, setSubmitBrand] = useState("");
+  const [submitModel, setSubmitModel] = useState("");
+  const [submissionState, setSubmissionState] = useState<SubmissionState>("idle");
 
   const filteredProducts = useMemo(() => {
     if (!query) return [];
@@ -66,16 +73,72 @@ export function Setup() {
           </button>
         ))}
         {query && filteredProducts.length === 0 ? (
-          <button
-            type="button"
-            className="text-[13px] text-copper underline mt-2"
-            onClick={async () => {
-              await addCustomEquipment(query);
-              setQuery("");
-            }}
-          >
-            „{query}“ als eigenes Gerät anlegen
-          </button>
+          <div className="mt-2 flex flex-col gap-2 items-start">
+            <button
+              type="button"
+              className="text-[13px] text-copper underline"
+              onClick={async () => {
+                await addCustomEquipment(query);
+                setQuery("");
+              }}
+            >
+              „{query}“ als eigenes Gerät anlegen
+            </button>
+            <button
+              type="button"
+              className="text-[13px] text-copper underline"
+              onClick={() => {
+                setSubmitBrand(query.split(" ")[0] ?? query);
+                setSubmitModel(query.split(" ").slice(1).join(" "));
+                setShowSubmitForm(true);
+                setSubmissionState("idle");
+              }}
+            >
+              Für die Community vorschlagen
+            </button>
+          </div>
+        ) : null}
+
+        {showSubmitForm ? (
+          <div className="mt-3 pt-3 border-t border-linen flex flex-col gap-2">
+            <p className="text-xs text-muted">
+              Fehlt in der Datenbank? Schlag es vor — nach Prüfung wird es für alle sichtbar.
+            </p>
+            <input
+              className="border border-linen rounded-control px-3 py-2 text-sm bg-birch"
+              placeholder="Marke"
+              value={submitBrand}
+              onChange={(e) => setSubmitBrand(e.target.value)}
+            />
+            <input
+              className="border border-linen rounded-control px-3 py-2 text-sm bg-birch"
+              placeholder="Modell"
+              value={submitModel}
+              onChange={(e) => setSubmitModel(e.target.value)}
+            />
+            <Button
+              disabled={!submitBrand || !submitModel || submissionState === "submitting"}
+              onClick={async () => {
+                setSubmissionState("submitting");
+                try {
+                  await submitProduct({ kind: "grinder", brand: submitBrand, model: submitModel });
+                  setSubmissionState("submitted");
+                  setSubmitBrand("");
+                  setSubmitModel("");
+                } catch {
+                  setSubmissionState("error");
+                }
+              }}
+            >
+              Vorschlagen
+            </Button>
+            {submissionState === "submitted" ? (
+              <p className="text-xs text-sage">Danke — Vorschlag ist in der Prüfung.</p>
+            ) : null}
+            {submissionState === "error" ? (
+              <p className="text-xs text-clay">Ging gerade nicht (kein Server erreichbar?). Später erneut versuchen.</p>
+            ) : null}
+          </div>
         ) : null}
       </Card>
 
