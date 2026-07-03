@@ -2,6 +2,7 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { RouterProvider } from "@tanstack/react-router";
 import { router } from "./router";
+import { LocaleProvider } from "./i18n";
 import "./styles/main.css";
 
 const rootEl = document.getElementById("root");
@@ -9,6 +10,8 @@ if (!rootEl) throw new Error("#root element missing");
 
 createRoot(rootEl).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <LocaleProvider>
+      <RouterProvider router={router} />
+    </LocaleProvider>
   </StrictMode>,
 );

@@ -4,6 +4,7 @@ import { Button, Card } from "@kvarn/ui";
 import { uploadPhoto } from "@kvarn/api-client";
 import { computeBeanAgeDays, freshnessPct } from "@kvarn/core";
 import { useKvarnStore } from "../state/store";
+import { useT } from "../i18n";
 
 function beanFreshnessPct(roastDate: string | null): number | null {
   if (!roastDate) return null;
@@ -13,6 +14,8 @@ function beanFreshnessPct(roastDate: string | null): number | null {
 export function Regal() {
   const { beans, addBean, archiveBean, activeBeanId, setActiveBean } = useKvarnStore();
   const navigate = useNavigate();
+  const t = useT("regal");
+  const tCommon = useT("common");
   const [showForm, setShowForm] = useState(false);
   const [roaster, setRoaster] = useState("");
   const [name, setName] = useState("");
@@ -49,53 +52,51 @@ export function Regal() {
 
   return (
     <div>
-      <h1 className="font-display text-[28px] mt-3.5 mb-0.5">Regal</h1>
-      <p className="text-sm text-muted">
-        {beans.length === 0 ? "Noch keine Beans im Regal. Zeit für einen Röster-Besuch." : `${beans.length} Bohne(n)`}
-      </p>
+      <h1 className="font-display text-[28px] mt-3.5 mb-0.5">{t("title")}</h1>
+      <p className="text-sm text-muted">{beans.length === 0 ? t("emptyState") : t("beanCount", { count: beans.length })}</p>
 
       {showForm ? (
         <Card>
           <form onSubmit={submit} className="flex flex-col gap-3">
             <input
               className="border border-linen rounded-control px-3 py-2 text-sm bg-birch"
-              placeholder="Röster"
+              placeholder={t("roasterPlaceholder")}
               value={roaster}
               onChange={(e) => setRoaster(e.target.value)}
               required
             />
             <input
               className="border border-linen rounded-control px-3 py-2 text-sm bg-birch"
-              placeholder="Name / Sorte"
+              placeholder={t("namePlaceholder")}
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
             />
             <input
               className="border border-linen rounded-control px-3 py-2 text-sm bg-birch"
-              placeholder="Herkunft (optional)"
+              placeholder={t("originPlaceholder")}
               value={origin}
               onChange={(e) => setOrigin(e.target.value)}
             />
-            <label className="text-xs text-muted -mb-2">Röstdatum</label>
+            <label className="text-xs text-muted -mb-2">{t("roastDateLabel")}</label>
             <input
               type="date"
               className="border border-linen rounded-control px-3 py-2 text-sm bg-birch"
               value={roastDate}
               onChange={(e) => setRoastDate(e.target.value)}
             />
-            <label className="text-xs text-muted -mb-2">Foto vom Etikett (optional)</label>
+            <label className="text-xs text-muted -mb-2">{t("photoLabel")}</label>
             <input type="file" accept="image/jpeg,image/png,image/webp" onChange={handlePhotoChange} className="text-sm" />
-            {photoUploading ? <p className="text-xs text-muted">Lädt hoch …</p> : null}
+            {photoUploading ? <p className="text-xs text-muted">{t("photoUploading")}</p> : null}
             {photoUrl ? <img src={photoUrl} alt="" className="w-20 h-20 object-cover rounded-control" /> : null}
-            <Button type="submit">Bohne speichern</Button>
+            <Button type="submit">{t("saveBean")}</Button>
             <Button type="button" variant="ghost" onClick={() => setShowForm(false)}>
-              Abbrechen
+              {tCommon("cancel")}
             </Button>
           </form>
         </Card>
       ) : (
-        <Button onClick={() => setShowForm(true)}>+ Bohne hinzufügen</Button>
+        <Button onClick={() => setShowForm(true)}>{t("addBean")}</Button>
       )}
 
       {beans.map((bean) => {
@@ -116,7 +117,7 @@ export function Regal() {
                   <div className="text-xs text-muted">{bean.name}{bean.origin ? ` · ${bean.origin}` : ""}</div>
                 </div>
                 {activeBeanId === bean.id ? (
-                  <span className="text-[11px] text-copper font-medium">Aktiv</span>
+                  <span className="text-[11px] text-copper font-medium">{tCommon("active")}</span>
                 ) : (
                   <button
                     type="button"
@@ -126,7 +127,7 @@ export function Regal() {
                       setActiveBean(bean.id);
                     }}
                   >
-                    Aktiv setzen
+                    {tCommon("setActive")}
                   </button>
                 )}
               </div>
@@ -143,7 +144,7 @@ export function Regal() {
                   archiveBean(bean.id);
                 }}
               >
-                Archivieren
+                {tCommon("archive")}
               </button>
             </div>
           </Card>

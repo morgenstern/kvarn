@@ -1,0 +1,6 @@
+
+# Copy to .dev.vars for local development (gitignored).
+# Generate a random value, e.g.: node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
+BETTER_AUTH_SECRET=
+
+# Production: wrangler secret put BETTER_AUTH_SECRET

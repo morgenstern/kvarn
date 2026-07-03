@@ -12,11 +12,9 @@ import {
   weatherSnapshotFor,
 } from "../state/store";
 import { useStopwatch } from "../hooks/useStopwatch";
+import { useT, useTags } from "../i18n";
 
 type Step = "params" | "timer" | "rating";
-
-const VISUAL_TAG_OPTIONS = ["Channeling", "Spritzer", "zu schnell", "zu langsam", "tot/tropfend"];
-const FLAVOR_TAG_OPTIONS = ["Beere", "Nuss", "Schoko", "floral", "Karamell", "Zitrus"];
 
 function beanAgeDaysFor(roastDate: string | null): number | null {
   if (!roastDate) return null;
@@ -32,13 +30,16 @@ export function Bruehen() {
   const captureWeatherSnapshot = useKvarnStore((s) => s.captureWeatherSnapshot);
   const navigate = useNavigate();
   const stopwatch = useStopwatch();
+  const t = useT("bruehen");
+  const visualTagOptions = useTags("bruehen", "visualTags");
+  const flavorTagOptions = useTags("bruehen", "flavorTags");
 
   const grindScale = grinder?.grindScale ?? {
     min: 0,
     max: 40,
     step: 0.5,
     unit: "clicks",
-    label: "Mahlgrad",
+    label: t("grindLabel"),
     finerDirection: -1 as const,
   };
 
@@ -88,9 +89,9 @@ export function Bruehen() {
   if (!setup || !bean) {
     return (
       <div>
-        <h1 className="font-display text-[28px] mt-3.5 mb-0.5">Brühen</h1>
+        <h1 className="font-display text-[28px] mt-3.5 mb-0.5">{t("title")}</h1>
         <Card>
-          <p className="text-sm">Erst Setup und Bohne anlegen, dann geht's hier weiter.</p>
+          <p className="text-sm">{t("needsSetupAndBean")}</p>
         </Card>
       </div>
     );
@@ -138,11 +139,11 @@ export function Bruehen() {
   if (saved) {
     return (
       <div>
-        <h1 className="font-display text-[28px] mt-3.5 mb-0.5">Notiert.</h1>
-        <p className="text-sm text-muted">Dein Kompass wird schärfer.</p>
-        <Button onClick={() => navigate({ to: "/" })}>Zurück zu Heute</Button>
+        <h1 className="font-display text-[28px] mt-3.5 mb-0.5">{t("savedTitle")}</h1>
+        <p className="text-sm text-muted">{t("savedSubtitle")}</p>
+        <Button onClick={() => navigate({ to: "/" })}>{t("backToToday")}</Button>
         <Button variant="ghost" onClick={() => navigate({ to: "/kompass" })}>
-          Logbuch ansehen
+          {t("viewLog")}
         </Button>
       </div>
     );
@@ -150,11 +151,11 @@ export function Bruehen() {
 
   return (
     <div>
-      <h1 className="font-display text-[28px] mt-3.5 mb-0.5">Brühen</h1>
+      <h1 className="font-display text-[28px] mt-3.5 mb-0.5">{t("title")}</h1>
       <p className="text-sm text-muted">{setup.name} · {bean.roaster} — {bean.name}</p>
       {weatherSnapshot?.humidityPct != null ? (
         <p className="text-xs text-muted mt-1">
-          {weatherSnapshot.tempC}°C · {weatherSnapshot.humidityPct}% Luftfeuchte
+          {t("humidityLine", { temp: weatherSnapshot.tempC ?? "—", humidity: weatherSnapshot.humidityPct })}
         </p>
       ) : null}
 
@@ -169,24 +170,27 @@ export function Bruehen() {
             max={grindScale.max}
             onChange={setGrindSetting}
           />
-          <ParamStepper label="Dosis" unit="g (In)" value={doseG} step={0.5} min={1} onChange={setDoseG} />
+          <ParamStepper label={t("doseLabel")} unit={t("doseUnit")} value={doseG} step={0.5} min={1} onChange={setDoseG} />
           <ParamStepper
-            label="Ziel-Ausbeute"
-            unit="g (Out)"
+            label={t("targetYieldLabel")}
+            unit={t("targetYieldUnit")}
             value={targetYieldG}
             step={1}
             min={1}
             onChange={setTargetYieldG}
           />
           <div className="flex justify-between text-xs text-muted pt-3">
-            <span>Ratio</span>
+            <span>{t("ratio")}</span>
             <span className="num">1:{computeRatio({ doseG, yieldG: targetYieldG })}</span>
           </div>
           {suggestion && suggestion.reasons.length > 0 ? (
             <Hint>
               <span>
-                Kompass-Vorschlag: Mahlgrad {suggestion.grindSetting} {grindScale.unit}.{" "}
-                {suggestion.reasons.map((r) => r.effect).join(" ")}
+                {t("compassSuggestion", {
+                  grind: suggestion.grindSetting,
+                  unit: grindScale.unit,
+                  reasons: suggestion.reasons.map((r) => r.effect).join(" "),
+                })}
               </span>
             </Hint>
           ) : null}
@@ -196,14 +200,14 @@ export function Bruehen() {
               stopwatch.start();
             }}
           >
-            Timer starten
+            {t("startTimer")}
           </Button>
         </Card>
       ) : null}
 
       {step === "timer" ? (
         <div className="flex flex-col items-center pt-6">
-          <TimerRing elapsedS={stopwatch.elapsedS} lapLabel={stopwatch.running ? "läuft" : "gestoppt"} />
+          <TimerRing elapsedS={stopwatch.elapsedS} lapLabel={stopwatch.running ? t("running") : t("stopped")} />
           <div className="w-full mt-6">
             {stopwatch.running ? (
               <Button
@@ -211,19 +215,19 @@ export function Bruehen() {
                   stopwatch.stop();
                 }}
               >
-                Stopp
+                {t("stop")}
               </Button>
             ) : (
               <>
                 <ParamStepper
-                  label="Tatsächliche Ausbeute"
-                  unit="g"
+                  label={t("actualYieldLabel")}
+                  unit={t("actualYieldUnit")}
                   value={actualYieldG}
                   step={0.5}
                   min={0}
                   onChange={setActualYieldG}
                 />
-                <Button onClick={() => setStep("rating")}>Weiter zur Bewertung</Button>
+                <Button onClick={() => setStep("rating")}>{t("continueToRating")}</Button>
               </>
             )}
           </div>
@@ -232,19 +236,19 @@ export function Bruehen() {
 
       {step === "rating" ? (
         <Card>
-          <RatingSlider label="Gesamt" value={ratingTotal} min={1} max={10} onChange={setRatingTotal} />
+          <RatingSlider label={t("overall")} value={ratingTotal} min={1} max={10} onChange={setRatingTotal} />
           <RatingSlider
-            label="Balance"
+            label={t("balance")}
             value={balance}
             min={-5}
             max={5}
             onChange={setBalance}
-            bipolarLabels={["sauer", "bitter"]}
+            bipolarLabels={[t("sour"), t("bitter")]}
           />
           <div className="mt-3">
-            <div className="text-xs text-muted mb-2">Visuell</div>
+            <div className="text-xs text-muted mb-2">{t("visual")}</div>
             <div className="flex flex-wrap gap-2">
-              {VISUAL_TAG_OPTIONS.map((tag) => (
+              {visualTagOptions.map((tag) => (
                 <Chip key={tag} active={visualTags.includes(tag)} onClick={() => toggleTag(visualTags, setVisualTags, tag)}>
                   {tag}
                 </Chip>
@@ -252,16 +256,16 @@ export function Bruehen() {
             </div>
           </div>
           <div className="mt-3">
-            <div className="text-xs text-muted mb-2">Aroma</div>
+            <div className="text-xs text-muted mb-2">{t("aroma")}</div>
             <div className="flex flex-wrap gap-2">
-              {FLAVOR_TAG_OPTIONS.map((tag) => (
+              {flavorTagOptions.map((tag) => (
                 <Chip key={tag} active={flavorTags.includes(tag)} onClick={() => toggleTag(flavorTags, setFlavorTags, tag)}>
                   {tag}
                 </Chip>
               ))}
             </div>
           </div>
-          <Button onClick={finish}>Nice, saved.</Button>
+          <Button onClick={finish}>{t("save")}</Button>
         </Card>
       ) : null}
     </div>

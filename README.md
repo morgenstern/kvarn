@@ -4,27 +4,30 @@ Kaffee-Companion für Web, iOS & Android. Siehe `docs/` für Markenkern, UX-Konz
 
 ## Status
 
-**M0 (Fundament) + M1 (Brüh-Loop) + M2 (Wetter + Kompass P1) + M3 (Regal & Insights)** — lokal lauffähig als
-Vite-Dev-Server bzw. installierbare PWA. Für den vollen Funktionsumfang (Wetter, Fotos, Community-Vorschläge)
-muss zusätzlich der Worker lokal laufen — beides funktioniert komplett ohne Cloudflare-Account (Miniflare
-simuliert D1/R2/KV lokal). Setups, Bohnen und Bezüge werden lokal in IndexedDB gehalten.
+**M0–M4 aus `docs/04_DEV_PLAN.md` sind gebaut** — lokal lauffähig als Vite-Dev-Server bzw. installierbare PWA,
+DE/EN-Sprachumschaltung, Onboarding, Konto (E-Mail/Passwort + anonym), Datenexport/-löschung, Feedback-Formular.
+Für den vollen Funktionsumfang (Wetter, Fotos, Community-Vorschläge, Konten) muss zusätzlich der Worker lokal
+laufen — alles funktioniert komplett ohne Cloudflare-Account (Miniflare simuliert D1/R2/KV lokal).
 
-M3 ergänzt: Bohnen-Detail-Screen (Frische-Kurve, Rating-Verlauf, Rezepte), Bohnen-Fotos (R2-Upload),
-vollständiger ~390-Geräte-Katalog, Community-Gerätevorschläge mit Moderations-Queue (`/moderation`, aktuell
-**ohne Zugriffsschutz** — better-auth fehlt noch, siehe unten), sowie Insight-Charts auf dem Kompass-Screen
-(Luftfeuchte×Brühzeit, Bohnenalter×Rating).
+M4 ergänzt: geführtes Onboarding (Methode → Equipment → Bohne → Standort-Opt-in) beim ersten Start;
+vollständige DE/EN-Übersetzung mit Sprachumschalter (**Einstellungen**); Konto-Verwaltung über better-auth
+(E-Mail/Passwort + anonyme Geräte-Sessions, siehe unten für Apple/Google); Datenexport (JSON) und
+-löschung; Feedback-Formular (landet in D1). Die Moderations-Queue (`/moderation`, seit M3) ist jetzt an
+eine echte, nicht-anonyme Anmeldung gebunden statt offen zu sein.
 
 ## Struktur
 
 ```
 apps/
   web/      React + Vite PWA — die eigentliche App
-  worker/   Cloudflare Worker (Hono) — API (Wetter-Proxy, Produkt-Moderation, Foto-Upload) + Static-Assets-Hosting
+  worker/   Cloudflare Worker (Hono) — API (Wetter, Moderation, Fotos, Feedback, better-auth) + Static-Assets
 packages/
   core/     Domänen-Logik (Ratio-Mathe, Kompass-Regelwerk mit "Warum", Frische-Kurve) — framework-frei, Golden-Tests
-  db/       Ein Drizzle-SQLite-Schema für lokale DB und D1, Migrationen in packages/db/migrations
+  db/       Ein Drizzle-SQLite-Schema (App-Daten + better-auth-Tabellen) für lokale DB und D1, Migrationen
   ui/       Design-Tokens (Tailwind-Theme) + geteilte Komponenten (inkl. Chart)
-  api-client/  Wetter-, Produkt-Moderation- und Foto-Upload-Clients; BLE-Scale-Client folgt ab M2/Phase 2
+  api-client/  Wetter-, Produkt-Moderation-, Foto-Upload- und Feedback-Clients; BLE-Scale-Client folgt in Phase 2
+apps/web/src/i18n/   DE/EN-Wörterbücher + React-Context (useT, useLocale)
+apps/web/src/auth/   better-auth React-Client + Session-Bootstrap (useEnsureSession)
 ```
 
 ## Setup
@@ -36,22 +39,27 @@ pnpm install
 pnpm dev:web       # startet die Web-App auf http://localhost:5173
 ```
 
-Für Wetter, Foto-Upload und Community-Vorschläge zusätzlich den Worker lokal starten (in einem zweiten
-Terminal, kein Cloudflare-Account nötig — Miniflare simuliert die Bindings). Beim allerersten Mal die
-D1-Migration auf die lokale Datenbank anwenden:
+Für Wetter, Konten, Foto-Upload, Community-Vorschläge und Feedback zusätzlich den Worker lokal starten (in
+einem zweiten Terminal, kein Cloudflare-Account nötig — Miniflare simuliert die Bindings). Beim allerersten
+Mal die D1-Migration anwenden und ein lokales Auth-Secret anlegen:
 
 ```bash
-pnpm --filter @kvarn/worker db:migrate:local   # einmalig, legt die Tabellen in der lokalen D1 an
+cp apps/worker/.dev.vars.example apps/worker/.dev.vars
+# BETTER_AUTH_SECRET in apps/worker/.dev.vars eintragen, z. B.:
+node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
+
+pnpm --filter @kvarn/worker db:migrate:local   # einmalig, legt alle Tabellen in der lokalen D1 an
 pnpm dev:worker                                # startet den Worker auf http://localhost:8787
 ```
 
 Vite proxied `/api/*` im Dev-Modus automatisch an `localhost:8787` (siehe `apps/web/vite.config.ts`). Ohne
-laufenden Worker funktioniert die App weiterhin — Wetter wird dann einfach übersprungen (nie ein Blocker).
+laufenden Worker funktioniert die App weiterhin lokal — Wetter, Konten, Foto-Upload, Community-Vorschläge
+und Feedback werden dann einfach übersprungen (nie ein Blocker fürs Brühen).
 
-Erststart legt automatisch eine Setup- und Bohnen-Anleitung nahe: unter **Setup** eine Mühle suchen (~390 Geräte
-aus der Seed-DB) oder ein eigenes Gerät anlegen, dann ein Setup speichern; unter **Regal** eine Bohne
-anlegen. Danach ist **Brühen** nutzbar: Parameter (mit Kompass-Vorschlag + "Warum") → Timer → Bewertung →
-Logbuch & beste Rezepte (**Kompass**).
+Der erste Start zeigt automatisch das **Onboarding** (Methode → Equipment-Suche in ~390 Geräten oder eigenes
+Gerät → erste Bohne → Standort-Opt-in), danach ist **Brühen** nutzbar: Parameter (mit Kompass-Vorschlag +
+"Warum") → Timer → Bewertung → Logbuch & beste Rezepte (**Kompass**). Sprache, Konto, Datenexport/-löschung
+und Feedback liegen unter **Einstellungen** (oben rechts in der App).
 
 ## Tests, Typecheck, Lint
 
@@ -62,6 +70,20 @@ pnpm lint
 pnpm build
 ```
 
+## Bekannte Lücken
+
+- **Apple/Google-Sign-in**: better-auth ist vorbereitet, aber es sind keine OAuth-Client-Credentials von
+  Apple/Google hinterlegt (die kann nur der Kontoinhaber der jeweiligen Developer-Programme anlegen). E-Mail/
+  Passwort und anonyme Sessions funktionieren bereits vollständig. Sobald Credentials vorliegen, in
+  `apps/worker/src/auth.ts` als `socialProviders` ergänzen.
+- **Kompass-Begründungen sind noch nicht übersetzt**: `packages/core`s Regelwerk (`nextGrindSuggestion`) baut
+  seine "Warum"-Sätze fest auf Deutsch zusammen. Bei englischer UI-Sprache erscheint der Kompass-Hinweis auf
+  dem Brühen-Screen daher gemischtsprachig. Sauberer Fix: `nextGrindSuggestion` auf strukturierte
+  Begründungscodes umstellen und die Sätze in `apps/web` per i18n formatieren.
+- **Lokale Daten sind nicht an Konten gebunden**: Setups/Bohnen/Bezüge bleiben geräte-lokal in IndexedDB,
+  auch nach Anmeldung. Ein echtes Sync/Merge zwischen Geräten ist ein eigenes Vorhaben (Backlog-Epic E6),
+  bewusst nicht Teil von M4.
+
 ## Deploy (später, sobald gewünscht)
 
 1. Cloudflare-Account anlegen: https://dash.cloudflare.com/sign-up
@@ -69,7 +91,11 @@ pnpm build
 3. `pnpm wrangler d1 create kvarn`, `pnpm wrangler r2 bucket create kvarn-photos`,
    `pnpm wrangler kv namespace create WEATHER_CACHE` — jeweils die zurückgegebene ID in
    `apps/worker/wrangler.toml` eintragen.
-4. In Cloudflare: **Workers & Pages → Create → Import a repository**, das GitHub-Repo `kvarn` verbinden
+4. `pnpm wrangler secret put BETTER_AUTH_SECRET` — eigenen Zufallswert setzen (siehe oben).
+5. `pnpm --filter @kvarn/worker db:migrate:remote` — Migrationen auf die echte D1 anwenden.
+6. In Cloudflare: **Workers & Pages → Create → Import a repository**, das GitHub-Repo `kvarn` verbinden
    (Workers Builds deployt danach bei jedem Push auf `main`).
+7. Sobald eine öffentliche URL/Domain feststeht: in `apps/worker/src/auth.ts` zu `trustedOrigins` hinzufügen
+   (aktuell nur die lokalen Dev-Origins für den Vite-Proxy).
 
 Details siehe `docs/03_TECH_KONZEPT.md` und `docs/04_DEV_PLAN.md`.

@@ -172,3 +172,18 @@ export type Brew = typeof brew.$inferSelect;
 export type NewBrew = typeof brew.$inferInsert;
 export type Recipe = typeof recipe.$inferSelect;
 export type NewRecipe = typeof recipe.$inferInsert;
+
+// User-submitted feedback (M4 "Feedback-Loop"). userId is nullable since
+// anonymous sessions can send feedback too.
+export const feedback = sqliteTable("feedback", {
+  id: text("id").primaryKey(),
+  userId: text("user_id"),
+  message: text("message").notNull(),
+  email: text("email"),
+  createdAt: text("created_at")
+    .notNull()
+    .default(sql`(CURRENT_TIMESTAMP)`),
+});
+
+export type Feedback = typeof feedback.$inferSelect;
+export type NewFeedback = typeof feedback.$inferInsert;

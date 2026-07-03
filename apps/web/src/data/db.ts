@@ -97,3 +97,26 @@ export function newId(prefix: string): string {
 export function nowIso(): string {
   return new Date().toISOString();
 }
+
+/**
+ * DSGVO data export (docs/03_TECH_KONZEPT.md §9): every user-created local
+ * table as one JSON document. Excludes `products` — that's the shared
+ * catalog, not user data.
+ */
+export async function exportAllData() {
+  const [equipment, setups, beans, brews, weatherSnapshots, recipes] = await Promise.all([
+    db.equipment.toArray(),
+    db.setups.toArray(),
+    db.beans.toArray(),
+    db.brews.toArray(),
+    db.weatherSnapshots.toArray(),
+    db.recipes.toArray(),
+  ]);
+  return { exportedAt: nowIso(), equipment, setups, beans, brews, weatherSnapshots, recipes };
+}
+
+/** Deletes every local table's contents, including the seed catalog (re-fetched on next launch). */
+export async function deleteAllLocalData(): Promise<void> {
+  await db.delete();
+  localStorage.removeItem(SEED_VERSION_KEY);
+}

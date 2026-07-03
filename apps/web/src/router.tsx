@@ -7,6 +7,8 @@ import { Setup } from "./routes/Setup";
 import { Bruehen } from "./routes/Bruehen";
 import { Kompass } from "./routes/Kompass";
 import { Moderation } from "./routes/Moderation";
+import { Settings } from "./routes/Settings";
+import { Onboarding } from "./routes/Onboarding";
 
 const rootRoute = createRootRoute({ component: RootLayout });
 
@@ -22,6 +24,8 @@ const bruehenRoute = createRoute({ getParentRoute: () => rootRoute, path: "/brue
 const kompassRoute = createRoute({ getParentRoute: () => rootRoute, path: "/kompass", component: Kompass });
 // Unlisted — reachable only by URL, not in the tab bar. See Moderation.tsx for the auth caveat.
 const moderationRoute = createRoute({ getParentRoute: () => rootRoute, path: "/moderation", component: Moderation });
+const settingsRoute = createRoute({ getParentRoute: () => rootRoute, path: "/settings", component: Settings });
+const onboardingRoute = createRoute({ getParentRoute: () => rootRoute, path: "/onboarding", component: Onboarding });
 
 const routeTree = rootRoute.addChildren([
   indexRoute,
@@ -31,6 +35,8 @@ const routeTree = rootRoute.addChildren([
   bruehenRoute,
   kompassRoute,
   moderationRoute,
+  settingsRoute,
+  onboardingRoute,
 ]);
 
 export const router = createRouter({ routeTree });

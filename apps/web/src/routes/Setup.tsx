@@ -3,6 +3,7 @@ import { Button, Card, Chip } from "@kvarn/ui";
 import { submitProduct } from "@kvarn/api-client";
 import type { Setup as SetupType } from "@kvarn/db";
 import { useKvarnStore } from "../state/store";
+import { useT } from "../i18n";
 
 const METHODS: SetupType["method"][] = ["espresso", "v60", "aeropress", "frenchpress", "moka", "auto"];
 
@@ -11,6 +12,8 @@ type SubmissionState = "idle" | "submitting" | "submitted" | "error";
 export function Setup() {
   const { products, equipment, setups, addEquipmentFromProduct, addCustomEquipment, addSetup, activeSetupId, setActiveSetup } =
     useKvarnStore();
+  const t = useT("setup");
+  const tCommon = useT("common");
   const [query, setQuery] = useState("");
   const [showSetupForm, setShowSetupForm] = useState(false);
   const [setupName, setSetupName] = useState("");
@@ -48,14 +51,14 @@ export function Setup() {
 
   return (
     <div>
-      <h1 className="font-display text-[28px] mt-3.5 mb-0.5">Setup</h1>
-      <p className="text-sm text-muted">Equipment & Zubereitungsarten.</p>
+      <h1 className="font-display text-[28px] mt-3.5 mb-0.5">{t("title")}</h1>
+      <p className="text-sm text-muted">{t("subtitle")}</p>
 
       <Card>
-        <div className="text-[11px] uppercase tracking-wider text-muted font-medium mb-2">Mühle hinzufügen</div>
+        <div className="text-[11px] uppercase tracking-wider text-muted font-medium mb-2">{t("addGrinder")}</div>
         <input
           className="border border-linen rounded-control px-3 py-2 text-sm bg-birch w-full"
-          placeholder="z. B. Niche, Comandante, DF64 …"
+          placeholder={t("searchPlaceholder")}
           value={query}
           onChange={(e) => setQuery(e.target.value)}
         />
@@ -82,7 +85,7 @@ export function Setup() {
                 setQuery("");
               }}
             >
-              „{query}“ als eigenes Gerät anlegen
+              {t("addAsCustom", { query })}
             </button>
             <button
               type="button"
@@ -94,25 +97,23 @@ export function Setup() {
                 setSubmissionState("idle");
               }}
             >
-              Für die Community vorschlagen
+              {t("suggestForCommunity")}
             </button>
           </div>
         ) : null}
 
         {showSubmitForm ? (
           <div className="mt-3 pt-3 border-t border-linen flex flex-col gap-2">
-            <p className="text-xs text-muted">
-              Fehlt in der Datenbank? Schlag es vor — nach Prüfung wird es für alle sichtbar.
-            </p>
+            <p className="text-xs text-muted">{t("submitIntro")}</p>
             <input
               className="border border-linen rounded-control px-3 py-2 text-sm bg-birch"
-              placeholder="Marke"
+              placeholder={t("brandPlaceholder")}
               value={submitBrand}
               onChange={(e) => setSubmitBrand(e.target.value)}
             />
             <input
               className="border border-linen rounded-control px-3 py-2 text-sm bg-birch"
-              placeholder="Modell"
+              placeholder={t("modelPlaceholder")}
               value={submitModel}
               onChange={(e) => setSubmitModel(e.target.value)}
             />
@@ -130,21 +131,17 @@ export function Setup() {
                 }
               }}
             >
-              Vorschlagen
+              {t("submit")}
             </Button>
-            {submissionState === "submitted" ? (
-              <p className="text-xs text-sage">Danke — Vorschlag ist in der Prüfung.</p>
-            ) : null}
-            {submissionState === "error" ? (
-              <p className="text-xs text-clay">Ging gerade nicht (kein Server erreichbar?). Später erneut versuchen.</p>
-            ) : null}
+            {submissionState === "submitted" ? <p className="text-xs text-sage">{t("submitted")}</p> : null}
+            {submissionState === "error" ? <p className="text-xs text-clay">{t("submitError")}</p> : null}
           </div>
         ) : null}
       </Card>
 
       {equipment.length > 0 ? (
         <Card>
-          <div className="text-[11px] uppercase tracking-wider text-muted font-medium mb-2">Dein Equipment</div>
+          <div className="text-[11px] uppercase tracking-wider text-muted font-medium mb-2">{t("yourEquipment")}</div>
           <div className="flex flex-wrap gap-2">
             {equipment.map((eq) => (
               <Chip key={eq.id}>{equipmentLabel(eq.id)}</Chip>
@@ -154,9 +151,9 @@ export function Setup() {
       ) : null}
 
       <div className="mt-6 flex items-center justify-between">
-        <div className="text-[11px] uppercase tracking-wider text-muted font-medium">Setups</div>
+        <div className="text-[11px] uppercase tracking-wider text-muted font-medium">{t("setups")}</div>
         <button type="button" className="text-[13px] text-copper underline" onClick={() => setShowSetupForm((v) => !v)}>
-          {showSetupForm ? "Abbrechen" : "+ Neues Setup"}
+          {showSetupForm ? tCommon("cancel") : t("newSetup")}
         </button>
       </div>
 
@@ -165,7 +162,7 @@ export function Setup() {
           <form onSubmit={submitSetup} className="flex flex-col gap-3">
             <input
               className="border border-linen rounded-control px-3 py-2 text-sm bg-birch"
-              placeholder="Setup-Name, z. B. „Zuhause Espresso“"
+              placeholder={t("setupNamePlaceholder")}
               value={setupName}
               onChange={(e) => setSetupName(e.target.value)}
               required
@@ -188,7 +185,7 @@ export function Setup() {
               required
             >
               <option value="" disabled>
-                Mühle wählen …
+                {t("chooseGrinder")}
               </option>
               {equipment.map((eq) => (
                 <option key={eq.id} value={eq.id}>
@@ -197,7 +194,7 @@ export function Setup() {
               ))}
             </select>
             <Button type="submit" disabled={equipment.length === 0}>
-              Setup speichern
+              {t("saveSetup")}
             </Button>
           </form>
         </Card>
@@ -214,7 +211,7 @@ export function Setup() {
               <div className="text-sm font-medium">{s.name}</div>
               <div className="text-xs text-muted">{s.method} · {equipmentLabel(s.grinderEquipmentId)}</div>
             </div>
-            {activeSetupId === s.id ? <span className="text-[11px] text-copper font-medium">Aktiv</span> : null}
+            {activeSetupId === s.id ? <span className="text-[11px] text-copper font-medium">{tCommon("active")}</span> : null}
           </div>
         </Card>
       ))}
