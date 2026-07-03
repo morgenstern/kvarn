@@ -64,7 +64,7 @@ export function Onboarding() {
   }
 
   async function pickCustomEquipment() {
-    const equipment = await addCustomEquipment(query);
+    const equipment = await addCustomEquipment(query, "grinder");
     if (method) {
       const setup = await addSetup({ name: method, method, grinderEquipmentId: equipment.id });
       setActiveSetup(setup.id);
@@ -86,7 +86,7 @@ export function Onboarding() {
   // finishes onboarding with no way to brew, silently defeating its purpose.
   async function skipEquipment() {
     if (method) {
-      const equipment = await addCustomEquipment(t("genericGrinderName"));
+      const equipment = await addCustomEquipment(t("genericGrinderName"), "grinder");
       const setup = await addSetup({ name: method, method, grinderEquipmentId: equipment.id });
       setActiveSetup(setup.id);
     }

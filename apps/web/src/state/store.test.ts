@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it } from "vitest";
 import { db } from "../data/db";
-import { useKvarnStore } from "./store";
+import { equipmentKind, useKvarnStore } from "./store";
 
 describe("useKvarnStore", () => {
   beforeEach(async () => {
@@ -132,5 +132,52 @@ describe("useKvarnStore", () => {
     expect(recipes[0]?.brewCount).toBe(2);
     expect(recipes[0]?.avgRating).toBe(7);
     expect(await db.recipes.count()).toBe(1);
+  });
+
+  it("findOrCreateSetup reuses an existing grinder+machine+method combo instead of duplicating it", async () => {
+    await useKvarnStore.getState().hydrate();
+    const grinder = useKvarnStore.getState().products.find((p) => p.kind === "grinder")!;
+    const machine = useKvarnStore.getState().products.find((p) => p.kind === "machine")!;
+    const grinderEq = await useKvarnStore.getState().addEquipmentFromProduct(grinder.id);
+    const machineEq = await useKvarnStore.getState().addEquipmentFromProduct(machine.id);
+
+    const first = await useKvarnStore.getState().findOrCreateSetup({
+      method: "espresso",
+      grinderEquipmentId: grinderEq.id,
+      machineEquipmentId: machineEq.id,
+    });
+    const second = await useKvarnStore.getState().findOrCreateSetup({
+      method: "espresso",
+      grinderEquipmentId: grinderEq.id,
+      machineEquipmentId: machineEq.id,
+    });
+    const withoutMachine = await useKvarnStore.getState().findOrCreateSetup({
+      method: "espresso",
+      grinderEquipmentId: grinderEq.id,
+      machineEquipmentId: null,
+    });
+
+    expect(second.id).toBe(first.id);
+    expect(withoutMachine.id).not.toBe(first.id);
+    expect(useKvarnStore.getState().setups).toHaveLength(2);
+  });
+
+  it("equipmentKind falls back to the linked product's kind, then grinder for legacy custom gear", async () => {
+    await useKvarnStore.getState().hydrate();
+    const state = useKvarnStore.getState();
+    const machine = state.products.find((p) => p.kind === "machine")!;
+
+    const linked = await useKvarnStore.getState().addEquipmentFromProduct(machine.id);
+    expect(equipmentKind(useKvarnStore.getState(), linked.id)).toBe("machine");
+
+    const custom = await useKvarnStore.getState().addCustomEquipment("My rig", "machine");
+    expect(equipmentKind(useKvarnStore.getState(), custom.id)).toBe("machine");
+
+    // Simulate a pre-migration row with no kind column populated.
+    await db.equipment.update(custom.id, { kind: null });
+    useKvarnStore.setState((s) => ({
+      equipment: s.equipment.map((e) => (e.id === custom.id ? { ...e, kind: null } : e)),
+    }));
+    expect(equipmentKind(useKvarnStore.getState(), custom.id)).toBe("grinder");
   });
 });

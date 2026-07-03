@@ -42,6 +42,15 @@ const TEST_SEED_PRODUCTS = [
     specs: {},
     status: "seed",
   },
+  {
+    id: "test-machine-1",
+    kind: "machine",
+    brand: "Test",
+    model: "Machine",
+    grindScale: null,
+    specs: {},
+    status: "seed",
+  },
 ];
 
 vi.stubGlobal(

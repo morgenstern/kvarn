@@ -1,7 +1,8 @@
 import { Link } from "@tanstack/react-router";
 import { Button, Card, EntityImage, ProductCard, SectionLabel } from "@kvarn/ui";
 import { Clock, Package, SlidersHorizontal } from "lucide-react";
-import { activeBean, activeSetup, equipmentProduct, useKvarnStore } from "../state/store";
+import { activeBean, activeSetup, useKvarnStore } from "../state/store";
+import { SetupThumbnail } from "../components/SetupThumbnail";
 import { localeCode, useLocale, useT } from "../i18n";
 
 export function Heute() {
@@ -12,10 +13,6 @@ export function Heute() {
   const recentBrews = state.brews.slice(0, 3);
   const t = useT("heute");
   const { locale } = useLocale();
-
-  function setupImage(s: (typeof setups)[number]): string | null {
-    return equipmentProduct(state, s.grinderEquipmentId)?.imageUrl ?? null;
-  }
 
   // RootLayout guarantees at least one setup+bean exist before this screen is
   // even reachable; this only covers the edge case where none is *active*
@@ -55,7 +52,7 @@ export function Heute() {
             className="w-32 flex-none"
             active={activeSetupId === s.id}
             onClick={() => setActiveSetup(s.id)}
-            image={<EntityImage src={setupImage(s)} kind="grinder" className="w-full h-full" />}
+            image={<SetupThumbnail setup={s} />}
           >
             <div className="text-[14px] font-medium leading-tight truncate">{s.name}</div>
             <div className="text-[12px] text-muted truncate">{s.method}</div>

@@ -17,8 +17,21 @@ interface KvarnState {
 
   hydrate: () => Promise<void>;
   addEquipmentFromProduct: (productId: string) => Promise<Equipment>;
-  addCustomEquipment: (customName: string) => Promise<Equipment>;
-  addSetup: (input: { name: string; method: Setup["method"]; grinderEquipmentId: string }) => Promise<Setup>;
+  addCustomEquipment: (customName: string, kind: Product["kind"]) => Promise<Equipment>;
+  addSetup: (input: {
+    name: string;
+    method: Setup["method"];
+    grinderEquipmentId: string;
+    machineEquipmentId?: string | null;
+    beanId?: string | null;
+  }) => Promise<Setup>;
+  /** Reuses a setup with the same grinder+machine+method combo if one exists, else creates it. */
+  findOrCreateSetup: (input: {
+    method: Setup["method"];
+    grinderEquipmentId: string;
+    machineEquipmentId?: string | null;
+    beanId?: string | null;
+  }) => Promise<Setup>;
   addBean: (input: {
     roaster: string;
     name: string;
@@ -74,11 +87,13 @@ export const useKvarnStore = create<KvarnState>((set, get) => ({
   },
 
   addEquipmentFromProduct: async (productId) => {
+    const product = get().products.find((p) => p.id === productId);
     const equipment: Equipment = {
       id: newId("equipment"),
       userId: LOCAL_USER_ID,
       productId,
       customName: null,
+      kind: product?.kind ?? null,
       notes: null,
       burrKg: null,
       updatedAt: nowIso(),
@@ -90,12 +105,13 @@ export const useKvarnStore = create<KvarnState>((set, get) => ({
     return equipment;
   },
 
-  addCustomEquipment: async (customName) => {
+  addCustomEquipment: async (customName, kind) => {
     const equipment: Equipment = {
       id: newId("equipment"),
       userId: LOCAL_USER_ID,
       productId: null,
       customName,
+      kind,
       notes: null,
       burrKg: null,
       updatedAt: nowIso(),
@@ -107,14 +123,15 @@ export const useKvarnStore = create<KvarnState>((set, get) => ({
     return equipment;
   },
 
-  addSetup: async ({ name, method, grinderEquipmentId }) => {
+  addSetup: async ({ name, method, grinderEquipmentId, machineEquipmentId, beanId }) => {
     const setup: Setup = {
       id: newId("setup"),
       userId: LOCAL_USER_ID,
       name,
       method,
       grinderEquipmentId,
-      machineEquipmentId: null,
+      machineEquipmentId: machineEquipmentId ?? null,
+      beanId: beanId ?? null,
       accessoryEquipmentIds: [],
       updatedAt: nowIso(),
       deletedAt: null,
@@ -123,6 +140,18 @@ export const useKvarnStore = create<KvarnState>((set, get) => ({
     await db.setups.add(setup);
     set((s) => ({ setups: [...s.setups, setup], activeSetupId: s.activeSetupId ?? setup.id }));
     return setup;
+  },
+
+  findOrCreateSetup: async ({ method, grinderEquipmentId, machineEquipmentId, beanId }) => {
+    const normalizedMachineId = machineEquipmentId ?? null;
+    const existing = get().setups.find(
+      (s) =>
+        s.method === method &&
+        s.grinderEquipmentId === grinderEquipmentId &&
+        (s.machineEquipmentId ?? null) === normalizedMachineId,
+    );
+    if (existing) return existing;
+    return get().addSetup({ name: method, method, grinderEquipmentId, machineEquipmentId: normalizedMachineId, beanId });
   },
 
   addBean: async ({ roaster, name, origin, roastDate, photoUrl }) => {
@@ -245,6 +274,18 @@ export function equipmentProduct(state: KvarnState, equipmentId: string | null):
   const eq = state.equipment.find((e) => e.id === equipmentId);
   if (!eq?.productId) return undefined;
   return state.products.find((p) => p.id === eq.productId);
+}
+
+/**
+ * Best-effort equipment kind: the equipment's own `kind` if set, else the
+ * linked product's kind, else "grinder" — the only kind custom equipment
+ * could be before machines were supported, so it's the safe default for
+ * rows created before the `kind` column existed.
+ */
+export function equipmentKind(state: KvarnState, equipmentId: string | null): Product["kind"] {
+  const eq = state.equipment.find((e) => e.id === equipmentId);
+  if (eq?.kind) return eq.kind;
+  return equipmentProduct(state, equipmentId)?.kind ?? "grinder";
 }
 
 /** Most recent brew for this exact setup+bean combination, if any. */

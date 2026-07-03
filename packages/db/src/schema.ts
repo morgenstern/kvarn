@@ -48,6 +48,13 @@ export const equipment = sqliteTable("equipment", {
   userId: text("user_id").notNull(),
   productId: text("product_id").references(() => product.id),
   customName: text("custom_name"),
+  // Nullable: for product-linked equipment this mirrors product.kind (denormalized
+  // to avoid a join everywhere); for custom (non-catalog) equipment it's the only
+  // place the kind is recorded, since there's no product row to derive it from.
+  // Rows created before this column existed are null — callers should fall back
+  // to the linked product's kind, then to "grinder" for legacy custom equipment
+  // (the only kind custom equipment could be before machines were supported).
+  kind: text("kind", { enum: ["grinder", "machine", "brewer", "accessory"] }),
   notes: text("notes"),
   burrKg: real("burr_kg"),
   ...syncColumns,
@@ -64,6 +71,10 @@ export const setup = sqliteTable("setup", {
     .notNull()
     .references(() => equipment.id),
   machineEquipmentId: text("machine_equipment_id").references(() => equipment.id),
+  // Optional bean pinned to this setup (e.g. "my espresso setup, usually with
+  // this bean") — distinct from the app-wide activeBeanId, which still governs
+  // what's actually brewed and can override this default per session.
+  beanId: text("bean_id").references(() => bean.id),
   accessoryEquipmentIds: text("accessory_equipment_ids", { mode: "json" }).$type<string[]>().default([]),
   ...syncColumns,
 });

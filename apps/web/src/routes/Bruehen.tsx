@@ -2,20 +2,25 @@ import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { Button, Card, Chip, EntityImage, Hint, ParamStepper, ProductCard, RatingSlider, SectionLabel, TimerRing } from "@kvarn/ui";
 import { computeRatio, nextGrindSuggestion } from "@kvarn/core";
-import type { WeatherSnapshot } from "@kvarn/db";
-import { BarChart3, CheckCircle2, Droplets, Home, Package, SlidersHorizontal } from "lucide-react";
+import type { Setup as SetupType, WeatherSnapshot } from "@kvarn/db";
+import { BarChart3, CheckCircle2, Coffee, Droplets, Home, Package, SlidersHorizontal, X } from "lucide-react";
 import {
   activeBean,
   activeSetup,
+  equipmentKind,
   equipmentProduct,
   lastBrewFor,
   useKvarnStore,
   weatherSnapshotFor,
 } from "../state/store";
+import { SetupThumbnail } from "../components/SetupThumbnail";
 import { useStopwatch } from "../hooks/useStopwatch";
 import { useT, useTags } from "../i18n";
 
 type Step = "params" | "timer" | "rating";
+type PickMode = "setup" | "combo";
+
+const METHODS: SetupType["method"][] = ["espresso", "v60", "aeropress", "frenchpress", "moka", "auto"];
 
 function beanAgeDaysFor(roastDate: string | null): number | null {
   if (!roastDate) return null;
@@ -24,7 +29,7 @@ function beanAgeDaysFor(roastDate: string | null): number | null {
 
 export function Bruehen() {
   const state = useKvarnStore();
-  const { setups, beans, activeSetupId, activeBeanId, setActiveSetup, setActiveBean } = state;
+  const { setups, beans, equipment, activeSetupId, activeBeanId, setActiveSetup, setActiveBean, findOrCreateSetup } = state;
   const setup = activeSetup(state);
   const bean = activeBean(state);
   const grinder = equipmentProduct(state, setup?.grinderEquipmentId ?? null);
@@ -36,8 +41,38 @@ export function Bruehen() {
   const visualTagOptions = useTags("bruehen", "visualTags");
   const flavorTagOptions = useTags("bruehen", "flavorTags");
 
-  function setupImage(s: (typeof setups)[number]): string | null {
-    return equipmentProduct(state, s.grinderEquipmentId)?.imageUrl ?? null;
+  const grinderEquipment = equipment.filter((eq) => equipmentKind(state, eq.id) === "grinder");
+  const machineEquipment = equipment.filter((eq) => equipmentKind(state, eq.id) === "machine");
+
+  // "Setup" mode picks a saved setup (which already bundles a mill+machine
+  // combo); "combo" mode assembles one from scratch. Assembling a combo
+  // doesn't touch global state until confirmed — see confirmCombo() — so
+  // just browsing options doesn't spam the setups list with unused rows.
+  const [pickMode, setPickMode] = useState<PickMode>("setup");
+  const [comboMethod, setComboMethod] = useState<SetupType["method"]>("espresso");
+  const [comboGrinderId, setComboGrinderId] = useState("");
+  const [comboMachineId, setComboMachineId] = useState("");
+  const [comboBeanId, setComboBeanId] = useState("");
+
+  function startCombo() {
+    setComboMethod(setup?.method ?? "espresso");
+    setComboGrinderId(setup?.grinderEquipmentId ?? grinderEquipment[0]?.id ?? "");
+    setComboMachineId(setup?.machineEquipmentId ?? "");
+    setComboBeanId(bean?.id ?? "");
+    setPickMode("combo");
+  }
+
+  async function confirmCombo() {
+    if (!comboGrinderId || !comboBeanId) return;
+    const resolved = await findOrCreateSetup({
+      method: comboMethod,
+      grinderEquipmentId: comboGrinderId,
+      machineEquipmentId: comboMachineId || null,
+      beanId: comboBeanId,
+    });
+    setActiveSetup(resolved.id);
+    setActiveBean(comboBeanId);
+    setPickMode("setup");
   }
 
   const grindScale = grinder?.grindScale ?? {
@@ -183,35 +218,125 @@ export function Bruehen() {
 
       {step === "params" ? (
         <>
-          <SectionLabel icon={SlidersHorizontal} className="mt-5">{t("pickGrinder")}</SectionLabel>
-          <div className="flex gap-3 overflow-x-auto pb-1 -mx-5 px-5">
-            {setups.map((s) => (
-              <ProductCard
-                key={s.id}
-                className="w-28 flex-none"
-                active={activeSetupId === s.id}
-                onClick={() => setActiveSetup(s.id)}
-                image={<EntityImage src={setupImage(s)} kind="grinder" className="w-full h-full" />}
-              >
-                <div className="text-[13px] font-medium leading-tight truncate">{s.name}</div>
-              </ProductCard>
-            ))}
+          <div className="flex gap-2 mt-5">
+            <Chip active={pickMode === "setup"} onClick={() => setPickMode("setup")}>
+              {t("modeSetup")}
+            </Chip>
+            <Chip active={pickMode === "combo"} onClick={startCombo}>
+              {t("modeCombo")}
+            </Chip>
           </div>
 
-          <SectionLabel icon={Package} className="mt-4">{t("pickBean")}</SectionLabel>
-          <div className="flex gap-3 overflow-x-auto pb-1 -mx-5 px-5">
-            {beans.map((b) => (
-              <ProductCard
-                key={b.id}
-                className="w-28 flex-none"
-                active={activeBeanId === b.id}
-                onClick={() => setActiveBean(b.id)}
-                image={<EntityImage src={b.photoUrl} kind="bean" className="w-full h-full" />}
-              >
-                <div className="text-[13px] font-medium leading-tight truncate">{b.roaster}</div>
-              </ProductCard>
-            ))}
-          </div>
+          {pickMode === "setup" ? (
+            <div className="flex gap-3 overflow-x-auto pb-1 -mx-5 px-5 mt-3">
+              {setups.map((s) => (
+                <ProductCard
+                  key={s.id}
+                  className="w-28 flex-none"
+                  active={activeSetupId === s.id}
+                  onClick={() => setActiveSetup(s.id)}
+                  image={<SetupThumbnail setup={s} />}
+                >
+                  <div className="text-[13px] font-medium leading-tight truncate">{s.name}</div>
+                </ProductCard>
+              ))}
+            </div>
+          ) : (
+            <>
+              <SectionLabel className="mt-4">{t("pickMethod")}</SectionLabel>
+              <div className="flex flex-wrap gap-2">
+                {METHODS.map((m) => (
+                  <Chip key={m} active={comboMethod === m} onClick={() => setComboMethod(m)}>
+                    {m}
+                  </Chip>
+                ))}
+              </div>
+
+              <SectionLabel icon={SlidersHorizontal} className="mt-4">{t("pickGrinder")}</SectionLabel>
+              <div className="flex gap-3 overflow-x-auto pb-1 -mx-5 px-5">
+                {grinderEquipment.map((eq) => (
+                  <ProductCard
+                    key={eq.id}
+                    className="w-28 flex-none"
+                    active={comboGrinderId === eq.id}
+                    onClick={() => setComboGrinderId(eq.id)}
+                    image={<EntityImage src={equipmentProduct(state, eq.id)?.imageUrl} kind="grinder" className="w-full h-full" />}
+                  >
+                    <div className="text-[13px] font-medium leading-tight truncate">
+                      {eq.customName ?? equipmentProduct(state, eq.id)?.model ?? "—"}
+                    </div>
+                  </ProductCard>
+                ))}
+              </div>
+
+              <SectionLabel icon={Coffee} className="mt-4">{t("pickMachine")}</SectionLabel>
+              <div className="flex gap-3 overflow-x-auto pb-1 -mx-5 px-5">
+                <ProductCard
+                  className="w-28 flex-none"
+                  active={comboMachineId === ""}
+                  onClick={() => setComboMachineId("")}
+                  image={
+                    <div className="w-full h-full flex items-center justify-center text-muted">
+                      <X size={28} strokeWidth={1.5} />
+                    </div>
+                  }
+                >
+                  <div className="text-[13px] font-medium leading-tight truncate">{t("noMachine")}</div>
+                </ProductCard>
+                {machineEquipment.map((eq) => (
+                  <ProductCard
+                    key={eq.id}
+                    className="w-28 flex-none"
+                    active={comboMachineId === eq.id}
+                    onClick={() => setComboMachineId(eq.id)}
+                    image={<EntityImage src={equipmentProduct(state, eq.id)?.imageUrl} kind="machine" className="w-full h-full" />}
+                  >
+                    <div className="text-[13px] font-medium leading-tight truncate">
+                      {eq.customName ?? equipmentProduct(state, eq.id)?.model ?? "—"}
+                    </div>
+                  </ProductCard>
+                ))}
+              </div>
+
+              <SectionLabel icon={Package} className="mt-4">{t("pickBean")}</SectionLabel>
+              <div className="flex gap-3 overflow-x-auto pb-1 -mx-5 px-5">
+                {beans.map((b) => (
+                  <ProductCard
+                    key={b.id}
+                    className="w-28 flex-none"
+                    active={comboBeanId === b.id}
+                    onClick={() => setComboBeanId(b.id)}
+                    image={<EntityImage src={b.photoUrl} kind="bean" className="w-full h-full" />}
+                  >
+                    <div className="text-[13px] font-medium leading-tight truncate">{b.roaster}</div>
+                  </ProductCard>
+                ))}
+              </div>
+
+              <Button disabled={!comboGrinderId || !comboBeanId} onClick={confirmCombo}>
+                {t("comboConfirm")}
+              </Button>
+            </>
+          )}
+
+          {pickMode === "setup" ? (
+            <>
+              <SectionLabel icon={Package} className="mt-4">{t("pickBean")}</SectionLabel>
+              <div className="flex gap-3 overflow-x-auto pb-1 -mx-5 px-5">
+                {beans.map((b) => (
+                  <ProductCard
+                    key={b.id}
+                    className="w-28 flex-none"
+                    active={activeBeanId === b.id}
+                    onClick={() => setActiveBean(b.id)}
+                    image={<EntityImage src={b.photoUrl} kind="bean" className="w-full h-full" />}
+                  >
+                    <div className="text-[13px] font-medium leading-tight truncate">{b.roaster}</div>
+                  </ProductCard>
+                ))}
+              </div>
+            </>
+          ) : null}
         </>
       ) : null}
 
