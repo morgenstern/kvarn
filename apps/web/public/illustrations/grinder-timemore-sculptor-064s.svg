@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" role="img">
+<title>Timemore Sculptor 064S — Kvarn Sketch</title>
+<defs>
+<filter id="wc" x="-20%" y="-20%" width="140%" height="140%">
+<feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" result="n" seed="7"/>
+<feDisplacementMap in="SourceGraphic" in2="n" scale="7"/>
+</filter>
+<filter id="ink" x="-10%" y="-10%" width="120%" height="120%">
+<feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" result="m" seed="11"/>
+<feDisplacementMap in="SourceGraphic" in2="m" scale="4"/>
+</filter>
+</defs>
+<rect width="400" height="400" fill="#F7F4EF"/><ellipse cx="208" cy="281" rx="129" ry="53" fill="#C0754D" opacity="0.09" filter="url(#wc)"/><circle cx="74" cy="124" r="36" fill="#96A694" opacity="0.16" filter="url(#wc)"/><g filter="url(#wc)"><rect x="150" y="118" width="100" height="150" rx="16" fill="#E7E0D5" opacity="0.5"/><rect x="176" y="84" width="48" height="34" rx="8" fill="#C0754D" opacity="0.45"/><circle cx="133" cy="190" r="17" fill="#C0754D" opacity="0.5"/><rect x="184" y="292" width="32" height="26" rx="6" fill="#E7E0D5" opacity="0.6"/></g><ellipse cx="200" cy="345" rx="75" ry="10" fill="#3B2E28" opacity="0.12" filter="url(#wc)"/><g filter="url(#ink)" fill="none" stroke="#3B2E28" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><rect x="150" y="118" width="100" height="150" rx="16"/><rect x="176" y="84" width="48" height="34" rx="8"/><path d="M176 95h48M176 106h48"/><circle cx="133" cy="190" r="17"/><path d="M133 178v9"/><path d="M182 268v14h36v-14"/><rect x="184" y="292" width="32" height="26" rx="6"/><path d="M192 240h16" opacity="0.9"/><circle cx="170" cy="244" r="4"/></g><circle cx="68" cy="199" r="1.6" fill="#C0754D" opacity="0.67"/><circle cx="60" cy="233" r="1.3" fill="#C0754D" opacity="0.55"/><circle cx="329" cy="102" r="2.3" fill="#C0754D" opacity="0.41"/><circle cx="60" cy="293" r="2.0" fill="#C0754D" opacity="0.41"/><circle cx="78" cy="330" r="2.5" fill="#C0754D" opacity="0.65"/></svg>

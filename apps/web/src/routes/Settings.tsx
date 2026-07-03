@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { Button, Card } from "@kvarn/ui";
+import { Button, Card, SectionLabel } from "@kvarn/ui";
 import { sendFeedback } from "@kvarn/api-client";
+import { Database, Download, Languages, LogOut, MessageCircle, Send, Trash2, User } from "lucide-react";
 import { useT, useLocale, type Locale } from "../i18n";
 import { deleteAllLocalData, exportAllData } from "../data/db";
 import { authClient } from "../auth/client";
@@ -73,17 +74,17 @@ export function Settings() {
 
   return (
     <div>
-      <h1 className="font-display text-[28px] mt-3.5 mb-0.5">{t("title")}</h1>
+      <h1 className="font-display text-[32px] mt-3.5 mb-0.5">{t("title")}</h1>
 
       <Card>
-        <div className="text-[11px] uppercase tracking-wider text-muted font-medium mb-2">{t("language")}</div>
+        <SectionLabel icon={Languages}>{t("language")}</SectionLabel>
         <div className="flex gap-2">
           {(["de", "en"] as Locale[]).map((l) => (
             <button
               key={l}
               type="button"
               onClick={() => setLocale(l)}
-              className={`px-4 py-2 rounded-control border text-sm ${
+              className={`px-4 py-2 rounded-control border text-base ${
                 locale === l ? "border-copper bg-copper-soft text-[#7a4526]" : "border-linen bg-birch text-espresso"
               }`}
             >
@@ -94,21 +95,22 @@ export function Settings() {
       </Card>
 
       <Card>
-        <div className="text-[11px] uppercase tracking-wider text-muted font-medium mb-2">{t("account")}</div>
+        <SectionLabel icon={User}>{t("account")}</SectionLabel>
         {isRealAccount ? (
           <>
-            <p className="text-sm">{t("signedInAs", { email: session.user.email })}</p>
+            <p className="text-base">{t("signedInAs", { email: session.user.email })}</p>
             <Button variant="ghost" onClick={() => signOut()}>
+              <LogOut size={18} strokeWidth={1.5} />
               {t("signOut")}
             </Button>
           </>
         ) : (
           <>
-            <p className="text-sm text-muted mb-2">{t("anonymousAccount")}</p>
+            <p className="text-base text-muted mb-2">{t("anonymousAccount")}</p>
             <form onSubmit={handleAuthSubmit} className="flex flex-col gap-3">
               <input
                 type="email"
-                className="border border-linen rounded-control px-3 py-2 text-sm bg-birch"
+                className="border border-linen rounded-control px-3 py-2 text-base bg-birch"
                 placeholder={t("email")}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -116,7 +118,7 @@ export function Settings() {
               />
               <input
                 type="password"
-                className="border border-linen rounded-control px-3 py-2 text-sm bg-birch"
+                className="border border-linen rounded-control px-3 py-2 text-base bg-birch"
                 placeholder={t("password")}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -124,10 +126,10 @@ export function Settings() {
                 minLength={8}
               />
               <Button type="submit">{authMode === "signIn" ? t("signIn") : t("signUp")}</Button>
-              {authError ? <p className="text-xs text-clay">{t("authError")}</p> : null}
+              {authError ? <p className="text-sm text-clay">{t("authError")}</p> : null}
               <button
                 type="button"
-                className="text-[13px] text-copper underline"
+                className="text-[15px] text-copper underline"
                 onClick={() => setAuthMode(authMode === "signIn" ? "signUp" : "signIn")}
               >
                 {authMode === "signIn" ? t("signUpToggle") : t("signInToggle")}
@@ -138,17 +140,19 @@ export function Settings() {
       </Card>
 
       <Card>
-        <div className="text-[11px] uppercase tracking-wider text-muted font-medium mb-2">{t("data")}</div>
+        <SectionLabel icon={Database}>{t("data")}</SectionLabel>
         <Button variant="ghost" onClick={handleExport}>
+          <Download size={18} strokeWidth={1.5} />
           {t("exportData")}
         </Button>
         {!confirmingDelete ? (
           <Button variant="ghost" onClick={() => setConfirmingDelete(true)}>
+            <Trash2 size={18} strokeWidth={1.5} />
             {t("deleteData")}
           </Button>
         ) : (
           <>
-            <p className="text-sm text-clay mt-3">{t("deleteConfirm")}</p>
+            <p className="text-base text-clay mt-3">{t("deleteConfirm")}</p>
             <Button onClick={handleDelete}>{t("deleteConfirmButton")}</Button>
             <Button variant="ghost" onClick={() => setConfirmingDelete(false)}>
               {tCommon("cancel")}
@@ -158,11 +162,11 @@ export function Settings() {
       </Card>
 
       <Card>
-        <div className="text-[11px] uppercase tracking-wider text-muted font-medium mb-2">{t("feedback")}</div>
-        <p className="text-sm text-muted mb-2">{t("feedbackIntro")}</p>
+        <SectionLabel icon={MessageCircle}>{t("feedback")}</SectionLabel>
+        <p className="text-base text-muted mb-2">{t("feedbackIntro")}</p>
         <form onSubmit={handleFeedbackSubmit} className="flex flex-col gap-3">
           <textarea
-            className="border border-linen rounded-control px-3 py-2 text-sm bg-birch min-h-24"
+            className="border border-linen rounded-control px-3 py-2 text-base bg-birch min-h-24"
             placeholder={t("feedbackPlaceholder")}
             value={feedbackMessage}
             onChange={(e) => setFeedbackMessage(e.target.value)}
@@ -170,16 +174,17 @@ export function Settings() {
           />
           <input
             type="email"
-            className="border border-linen rounded-control px-3 py-2 text-sm bg-birch"
+            className="border border-linen rounded-control px-3 py-2 text-base bg-birch"
             placeholder={t("feedbackEmailPlaceholder")}
             value={feedbackEmail}
             onChange={(e) => setFeedbackEmail(e.target.value)}
           />
           <Button type="submit" disabled={feedbackState === "sending"}>
+            <Send size={18} strokeWidth={1.5} />
             {t("feedbackSend")}
           </Button>
-          {feedbackState === "sent" ? <p className="text-xs text-sage">{t("feedbackSent")}</p> : null}
-          {feedbackState === "error" ? <p className="text-xs text-clay">{t("feedbackError")}</p> : null}
+          {feedbackState === "sent" ? <p className="text-sm text-sage">{t("feedbackSent")}</p> : null}
+          {feedbackState === "error" ? <p className="text-sm text-clay">{t("feedbackError")}</p> : null}
         </form>
       </Card>
     </div>

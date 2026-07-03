@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
-import { Button, Card } from "@kvarn/ui";
+import { Button, Card, EntityImage } from "@kvarn/ui";
 import { uploadPhoto } from "@kvarn/api-client";
 import { computeBeanAgeDays, freshnessPct } from "@kvarn/core";
+import { Archive, Camera, CheckCircle2, Plus } from "lucide-react";
 import { useKvarnStore } from "../state/store";
 import { useT } from "../i18n";
 
@@ -52,42 +53,45 @@ export function Regal() {
 
   return (
     <div>
-      <h1 className="font-display text-[28px] mt-3.5 mb-0.5">{t("title")}</h1>
-      <p className="text-sm text-muted">{beans.length === 0 ? t("emptyState") : t("beanCount", { count: beans.length })}</p>
+      <h1 className="font-display text-[32px] mt-3.5 mb-0.5">{t("title")}</h1>
+      <p className="text-base text-muted">{beans.length === 0 ? t("emptyState") : t("beanCount", { count: beans.length })}</p>
 
       {showForm ? (
         <Card>
           <form onSubmit={submit} className="flex flex-col gap-3">
             <input
-              className="border border-linen rounded-control px-3 py-2 text-sm bg-birch"
+              className="border border-linen rounded-control px-3 py-2 text-base bg-birch"
               placeholder={t("roasterPlaceholder")}
               value={roaster}
               onChange={(e) => setRoaster(e.target.value)}
               required
             />
             <input
-              className="border border-linen rounded-control px-3 py-2 text-sm bg-birch"
+              className="border border-linen rounded-control px-3 py-2 text-base bg-birch"
               placeholder={t("namePlaceholder")}
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
             />
             <input
-              className="border border-linen rounded-control px-3 py-2 text-sm bg-birch"
+              className="border border-linen rounded-control px-3 py-2 text-base bg-birch"
               placeholder={t("originPlaceholder")}
               value={origin}
               onChange={(e) => setOrigin(e.target.value)}
             />
-            <label className="text-xs text-muted -mb-2">{t("roastDateLabel")}</label>
+            <label className="text-sm text-muted -mb-2">{t("roastDateLabel")}</label>
             <input
               type="date"
-              className="border border-linen rounded-control px-3 py-2 text-sm bg-birch"
+              className="border border-linen rounded-control px-3 py-2 text-base bg-birch"
               value={roastDate}
               onChange={(e) => setRoastDate(e.target.value)}
             />
-            <label className="text-xs text-muted -mb-2">{t("photoLabel")}</label>
-            <input type="file" accept="image/jpeg,image/png,image/webp" onChange={handlePhotoChange} className="text-sm" />
-            {photoUploading ? <p className="text-xs text-muted">{t("photoUploading")}</p> : null}
+            <label className="text-sm text-muted -mb-2 flex items-center gap-1.5">
+              <Camera size={15} strokeWidth={1.5} />
+              {t("photoLabel")}
+            </label>
+            <input type="file" accept="image/jpeg,image/png,image/webp" onChange={handlePhotoChange} className="text-base" />
+            {photoUploading ? <p className="text-sm text-muted">{t("photoUploading")}</p> : null}
             {photoUrl ? <img src={photoUrl} alt="" className="w-20 h-20 object-cover rounded-control" /> : null}
             <Button type="submit">{t("saveBean")}</Button>
             <Button type="button" variant="ghost" onClick={() => setShowForm(false)}>
@@ -96,7 +100,10 @@ export function Regal() {
           </form>
         </Card>
       ) : (
-        <Button onClick={() => setShowForm(true)}>{t("addBean")}</Button>
+        <Button onClick={() => setShowForm(true)}>
+          <Plus size={18} strokeWidth={1.5} />
+          {t("addBean")}
+        </Button>
       )}
 
       {beans.map((bean) => {
@@ -107,21 +114,22 @@ export function Regal() {
             className={`cursor-pointer flex gap-3 ${activeBeanId === bean.id ? "border-copper" : ""}`}
             onClick={() => navigate({ to: "/regal/$beanId", params: { beanId: bean.id } })}
           >
-            {bean.photoUrl ? (
-              <img src={bean.photoUrl} alt="" className="w-14 h-14 object-cover rounded-control flex-none" />
-            ) : null}
+            <EntityImage src={bean.photoUrl} kind="bean" className="w-16 h-16 rounded-control flex-none" />
             <div className="flex-1">
               <div className="flex items-center justify-between">
                 <div>
-                  <div className="text-sm font-medium">{bean.roaster}</div>
-                  <div className="text-xs text-muted">{bean.name}{bean.origin ? ` · ${bean.origin}` : ""}</div>
+                  <div className="text-base font-medium">{bean.roaster}</div>
+                  <div className="text-sm text-muted">{bean.name}{bean.origin ? ` · ${bean.origin}` : ""}</div>
                 </div>
                 {activeBeanId === bean.id ? (
-                  <span className="text-[11px] text-copper font-medium">{tCommon("active")}</span>
+                  <span className="flex items-center gap-1 text-[13px] text-copper font-medium">
+                    <CheckCircle2 size={15} strokeWidth={1.5} />
+                    {tCommon("active")}
+                  </span>
                 ) : (
                   <button
                     type="button"
-                    className="text-[11px] text-muted underline"
+                    className="text-[13px] text-muted underline"
                     onClick={(e) => {
                       e.stopPropagation();
                       setActiveBean(bean.id);
@@ -138,12 +146,13 @@ export function Regal() {
               ) : null}
               <button
                 type="button"
-                className="text-[11px] text-muted mt-2 underline"
+                className="flex items-center gap-1 text-[13px] text-muted mt-2 underline"
                 onClick={(e) => {
                   e.stopPropagation();
                   archiveBean(bean.id);
                 }}
               >
+                <Archive size={13} strokeWidth={1.5} />
                 {tCommon("archive")}
               </button>
             </div>

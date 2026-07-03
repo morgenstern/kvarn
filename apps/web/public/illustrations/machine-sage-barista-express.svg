@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" role="img">
+<title>Sage Barista Express — Kvarn Sketch</title>
+<defs>
+<filter id="wc" x="-20%" y="-20%" width="140%" height="140%">
+<feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" result="n" seed="7"/>
+<feDisplacementMap in="SourceGraphic" in2="n" scale="7"/>
+</filter>
+<filter id="ink" x="-10%" y="-10%" width="120%" height="120%">
+<feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" result="m" seed="11"/>
+<feDisplacementMap in="SourceGraphic" in2="m" scale="4"/>
+</filter>
+</defs>
+<rect width="400" height="400" fill="#F7F4EF"/><ellipse cx="159" cy="298" rx="112" ry="40" fill="#C0754D" opacity="0.09" filter="url(#wc)"/><circle cx="316" cy="109" r="36" fill="#96A694" opacity="0.16" filter="url(#wc)"/><g filter="url(#wc)"><rect x="95" y="127" width="210" height="147" rx="10" fill="#E7E0D5" opacity="0.5"/><rect x="91" y="274" width="218" height="12" rx="4" fill="#3B2E28" opacity="0.28"/><path d="M128 118c0-20 12-32 26-32s26 12 26 32z" fill="#3B2E28" opacity="0.3"/><circle cx="200" cy="161" r="13" fill="#F7F4EF" opacity="0.7"/><circle cx="116" cy="200" r="8" fill="#C0754D" opacity="0.5"/></g><ellipse cx="200" cy="345" rx="125" ry="10" fill="#3B2E28" opacity="0.12" filter="url(#wc)"/><g filter="url(#ink)" fill="none" stroke="#3B2E28" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><rect x="95" y="127" width="210" height="147" rx="10"/><rect x="91" y="274" width="218" height="12" rx="4"/><path d="M128 118c0-20 12-32 26-32s26 12 26 32"/><circle cx="160" cy="152" r="6"/><circle cx="240" cy="152" r="6"/><circle cx="200" cy="161" r="13"/><path d="M200 159l6.5 5.8500000000000005"/><path d="M172 286h56l-6 16a24 10 0 01-44 0z"/><path d="M228 290l40 7l-1 5l-39 -6"/><path d="M191 308v9M209 308v9"/><path d="M297 254l26 34l4 10"/><circle cx="116" cy="200" r="8"/><path d="M112 200h8"/><path d="M113 118h174"/><path d="M115 125v-7"/><path d="M171 125v-7"/><path d="M227 125v-7"/><path d="M283 125v-7"/><rect x="110" y="306" width="180" height="14" rx="4"/><path d="M124 311h10"/><path d="M162 311h10"/><path d="M200 311h10"/><path d="M238 311h10"/></g><circle cx="60" cy="169" r="2.8" fill="#C0754D" opacity="0.68"/><circle cx="95" cy="79" r="2.3" fill="#C0754D" opacity="0.58"/><circle cx="60" cy="96" r="2.6" fill="#C0754D" opacity="0.57"/><circle cx="60" cy="109" r="2.5" fill="#C0754D" opacity="0.47"/><circle cx="72" cy="131" r="2.5" fill="#C0754D" opacity="0.67"/></svg>

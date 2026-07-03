@@ -42,8 +42,8 @@ export function TimerRing({ elapsedS, lapLabel, size = 250, targetS = 40 }: Time
         />
       </svg>
       <div className="absolute inset-0 flex flex-col items-center justify-center">
-        <div className="font-display text-[52px] num tracking-tight">{display}</div>
-        {lapLabel ? <div className="text-[12.5px] text-muted mt-1">{lapLabel}</div> : null}
+        <div className="font-display text-[58px] num tracking-tight">{display}</div>
+        {lapLabel ? <div className="text-[14px] text-muted mt-1">{lapLabel}</div> : null}
       </div>
     </div>
   );

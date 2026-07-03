@@ -10,7 +10,7 @@ interface RatingSliderProps {
 export function RatingSlider({ label, value, min, max, onChange, bipolarLabels }: RatingSliderProps) {
   return (
     <div className="mt-[18px]">
-      <div className="flex items-center justify-between mb-2 text-[13.5px]">
+      <div className="flex items-center justify-between mb-2 text-[15px]">
         <span>{label}</span>
         <span className="font-display num">{value}</span>
       </div>
@@ -23,7 +23,7 @@ export function RatingSlider({ label, value, min, max, onChange, bipolarLabels }
         className="w-full accent-copper h-8"
       />
       {bipolarLabels ? (
-        <div className="flex justify-between text-[11px] text-muted mt-0.5">
+        <div className="flex justify-between text-[13px] text-muted mt-0.5">
           <span>{bipolarLabels[0]}</span>
           <span>{bipolarLabels[1]}</span>
         </div>

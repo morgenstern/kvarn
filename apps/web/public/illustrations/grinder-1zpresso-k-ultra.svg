@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" role="img">
+<title>1Zpresso K-Ultra — Kvarn Sketch</title>
+<defs>
+<filter id="wc" x="-20%" y="-20%" width="140%" height="140%">
+<feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" result="n" seed="7"/>
+<feDisplacementMap in="SourceGraphic" in2="n" scale="7"/>
+</filter>
+<filter id="ink" x="-10%" y="-10%" width="120%" height="120%">
+<feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" result="m" seed="11"/>
+<feDisplacementMap in="SourceGraphic" in2="m" scale="4"/>
+</filter>
+</defs>
+<rect width="400" height="400" fill="#F7F4EF"/><ellipse cx="248" cy="289" rx="146" ry="54" fill="#C0754D" opacity="0.09" filter="url(#wc)"/><circle cx="82" cy="117" r="29" fill="#C0754D" opacity="0.16" filter="url(#wc)"/><g filter="url(#wc)"><rect x="174" y="96" width="52" height="154" rx="20" fill="#3B2E28" opacity="0.28"/><rect x="172" y="84" width="56" height="14" rx="6" fill="#E7E0D5" opacity="0.55"/><rect x="180" y="250" width="40" height="52" rx="10" fill="#E7E0D5" opacity="0.5"/><circle cx="268" cy="74" r="8" fill="#C0754D" opacity="0.55"/></g><ellipse cx="200" cy="345" rx="60" ry="10" fill="#3B2E28" opacity="0.12" filter="url(#wc)"/><g filter="url(#ink)" fill="none" stroke="#3B2E28" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><rect x="174" y="96" width="52" height="154" rx="20"/><rect x="172" y="84" width="56" height="14" rx="6"/><circle cx="200" cy="78" r="7"/><path d="M200 84c24-10 46-12 62-10"/><circle cx="268" cy="74" r="8"/><rect x="180" y="250" width="40" height="52" rx="10"/><path d="M174 114h52"/><path d="M182 107v5M194 107v5M206 107v5M218 107v5"/><path d="M180 154v16"/><path d="M188 154v16"/><path d="M196 154v16"/><path d="M204 154v16"/><path d="M212 154v16"/><path d="M220 154v16"/></g><circle cx="347" cy="235" r="2.9" fill="#C0754D" opacity="0.45"/><circle cx="77" cy="323" r="1.3" fill="#C0754D" opacity="0.55"/><circle cx="168" cy="359" r="2.0" fill="#C0754D" opacity="0.5"/><circle cx="260" cy="353" r="2.3" fill="#C0754D" opacity="0.69"/><circle cx="60" cy="176" r="2.1" fill="#C0754D" opacity="0.47"/></svg>

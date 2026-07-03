@@ -1,6 +1,12 @@
 import { useEffect, useState } from "react";
-import { Button, Card } from "@kvarn/ui";
+import { Button, Card, EntityImage } from "@kvarn/ui";
 import { approveSubmission, fetchPendingSubmissions, rejectSubmission, type SubmittedProduct } from "@kvarn/api-client";
+import { Check, ShieldCheck, X } from "lucide-react";
+
+const KNOWN_KINDS = ["grinder", "machine", "brewer", "accessory"] as const;
+function submissionKind(kind: string): (typeof KNOWN_KINDS)[number] {
+  return (KNOWN_KINDS as readonly string[]).includes(kind) ? (kind as (typeof KNOWN_KINDS)[number]) : "accessory";
+}
 import { useT } from "../i18n";
 import { authClient } from "../auth/client";
 
@@ -35,35 +41,41 @@ export function Moderation() {
 
   return (
     <div>
-      <h1 className="font-display text-[28px] mt-3.5 mb-0.5">{t("title")}</h1>
-      <p className="text-sm text-muted">{t("subtitle")}</p>
+      <h1 className="flex items-center gap-2 font-display text-[32px] mt-3.5 mb-0.5">
+        <ShieldCheck size={28} strokeWidth={1.5} />
+        {t("title")}
+      </h1>
+      <p className="text-base text-muted">{t("subtitle")}</p>
 
       {isPending ? null : !canModerate ? (
         <Card>
-          <p className="text-sm">{t("signInRequired")}</p>
+          <p className="text-base">{t("signInRequired")}</p>
         </Card>
       ) : (
         <>
           {error ? (
             <Card>
-              <p className="text-sm">{t("workerUnreachable", { code: "pnpm dev:worker" })}</p>
+              <p className="text-base">{t("workerUnreachable", { code: "pnpm dev:worker" })}</p>
             </Card>
           ) : null}
 
           {pending && pending.length === 0 ? (
             <Card>
-              <p className="text-sm">{t("noPending")}</p>
+              <p className="text-base">{t("noPending")}</p>
             </Card>
           ) : null}
 
           {pending?.map((p) => (
             <Card key={p.id}>
-              <div className="flex items-center justify-between">
-                <div>
-                  <div className="text-sm font-medium">
-                    {p.brand} {p.model}
+              <div className="flex items-center justify-between gap-3">
+                <div className="flex items-center gap-3">
+                  <EntityImage kind={submissionKind(p.kind)} className="w-10 h-10 flex-none" />
+                  <div>
+                    <div className="text-base font-medium">
+                      {p.brand} {p.model}
+                    </div>
+                    <div className="text-sm text-muted">{p.kind}</div>
                   </div>
-                  <div className="text-xs text-muted">{p.kind}</div>
                 </div>
                 <div className="flex gap-2">
                   <Button
@@ -73,6 +85,7 @@ export function Moderation() {
                       reload();
                     }}
                   >
+                    <Check size={16} strokeWidth={1.5} />
                     {t("approve")}
                   </Button>
                   <Button
@@ -83,6 +96,7 @@ export function Moderation() {
                       reload();
                     }}
                   >
+                    <X size={16} strokeWidth={1.5} />
                     {t("reject")}
                   </Button>
                 </div>

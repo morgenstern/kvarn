@@ -15,7 +15,7 @@ not_found_handling = "single-page-application"
 [[d1_databases]]
 binding = "DB"
 database_name = "kvarn"
-database_id = "REPLACE_WITH_D1_DATABASE_ID"
+database_id = "f5238eee-e796-4297-a972-dead2e6fc299"
 migrations_dir = "../../packages/db/migrations"
 
 # --- R2 (bean photos, user equipment photos) ---
@@ -28,7 +28,7 @@ bucket_name = "kvarn-photos"
 #   pnpm wrangler kv namespace create WEATHER_CACHE
 [[kv_namespaces]]
 binding = "WEATHER_CACHE"
-id = "REPLACE_WITH_KV_NAMESPACE_ID"
+id = "1cf546db2d774167b8d9788ca915afa1"
 
 [observability]
 enabled = true

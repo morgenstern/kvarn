@@ -1,4 +1,5 @@
-import { Card, Chart } from "@kvarn/ui";
+import { Card, Chart, SectionLabel } from "@kvarn/ui";
+import { BookOpen, Star, TrendingUp } from "lucide-react";
 import { useKvarnStore, weatherSnapshotFor } from "../state/store";
 import { localeCode, useLocale, useT } from "../i18n";
 
@@ -21,12 +22,12 @@ export function Kompass() {
 
   return (
     <div>
-      <h1 className="font-display text-[28px] mt-3.5 mb-0.5">{t("title")}</h1>
-      <p className="text-sm text-muted">{t("subtitle")}</p>
+      <h1 className="font-display text-[32px] mt-3.5 mb-0.5">{t("title")}</h1>
+      <p className="text-base text-muted">{t("subtitle")}</p>
 
       {recipes.length > 0 ? (
         <>
-          <div className="text-[11px] uppercase tracking-wider text-muted font-medium mt-5 mb-1">{t("bestRecipes")}</div>
+          <SectionLabel icon={Star} className="mt-5">{t("bestRecipes")}</SectionLabel>
           {recipes.map((recipe) => {
             const setup = setups.find((s) => s.id === recipe.setupId);
             const bean = beans.find((b) => b.id === recipe.beanId);
@@ -34,12 +35,12 @@ export function Kompass() {
             return (
               <Card key={recipe.id}>
                 <div className="flex items-center justify-between">
-                  <div className="text-sm font-medium">
+                  <div className="text-base font-medium">
                     {setup?.name ?? t("deletedSetup")} · {bean?.name ?? t("deletedBean")}
                   </div>
-                  <div className="font-display text-lg num">{recipe.avgRating}</div>
+                  <div className="font-display text-xl num">{recipe.avgRating}</div>
                 </div>
-                <div className="text-xs text-muted mt-1">
+                <div className="text-sm text-muted mt-1">
                   {t("recipeMeta", {
                     grind: params?.grindSetting ?? "—",
                     dose: params?.doseG ?? "—",
@@ -54,28 +55,28 @@ export function Kompass() {
         </>
       ) : null}
 
-      <div className="text-[11px] uppercase tracking-wider text-muted font-medium mt-5 mb-1">{t("insights")}</div>
+      <SectionLabel icon={TrendingUp} className="mt-5">{t("insights")}</SectionLabel>
       <Card>
-        <div className="text-sm font-medium mb-1">{t("humidityTime")}</div>
+        <div className="text-base font-medium mb-1">{t("humidityTime")}</div>
         {humidityTimePoints.length > 0 ? (
           <Chart points={humidityTimePoints} mode="scatter" xAxisLabel={(x) => `${x}%`} />
         ) : (
-          <p className="text-xs text-muted">{t("humidityTimeEmpty")}</p>
+          <p className="text-sm text-muted">{t("humidityTimeEmpty")}</p>
         )}
       </Card>
       <Card>
-        <div className="text-sm font-medium mb-1">{t("beanAgeRating")}</div>
+        <div className="text-base font-medium mb-1">{t("beanAgeRating")}</div>
         {beanAgeRatingPoints.length > 0 ? (
           <Chart points={beanAgeRatingPoints} mode="scatter" yDomain={[1, 10]} xAxisLabel={(x) => `${x}`} />
         ) : (
-          <p className="text-xs text-muted">{t("beanAgeRatingEmpty")}</p>
+          <p className="text-sm text-muted">{t("beanAgeRatingEmpty")}</p>
         )}
       </Card>
 
-      <div className="text-[11px] uppercase tracking-wider text-muted font-medium mt-5 mb-1">{t("logbook")}</div>
+      <SectionLabel icon={BookOpen} className="mt-5">{t("logbook")}</SectionLabel>
       {brews.length === 0 ? (
         <Card>
-          <p className="text-sm">{t("logbookEmpty")}</p>
+          <p className="text-base">{t("logbookEmpty")}</p>
         </Card>
       ) : (
         <Card className="!p-0">
@@ -84,14 +85,14 @@ export function Kompass() {
             const bean = beans.find((be) => be.id === b.beanId);
             return (
               <div key={b.id} className="flex items-center gap-3 px-4 py-3 border-b border-linen last:border-b-0">
-                <div className="w-9 h-9 rounded-xl bg-birch flex items-center justify-center font-display text-sm">
+                <div className="w-9 h-9 rounded-xl bg-birch flex items-center justify-center font-display text-base">
                   {b.ratingTotal}
                 </div>
                 <div className="flex-1">
-                  <div className="text-sm font-medium">
+                  <div className="text-base font-medium">
                     {setup?.name ?? t("deletedSetup")} · {bean?.name ?? t("deletedBean")}
                   </div>
-                  <div className="text-xs text-muted">
+                  <div className="text-sm text-muted">
                     {new Date(b.brewedAt).toLocaleString(localeCode(locale))} ·{" "}
                     {t("logRowMeta", {
                       grind: b.grindSetting,

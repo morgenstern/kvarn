@@ -1,7 +1,8 @@
 import { useMemo, useState } from "react";
-import { Button, Card, Chip } from "@kvarn/ui";
+import { Button, Card, Chip, EntityImage, SectionLabel } from "@kvarn/ui";
 import { submitProduct } from "@kvarn/api-client";
 import type { Setup as SetupType } from "@kvarn/db";
+import { CheckCircle2, Plus, Search, SlidersHorizontal, Users } from "lucide-react";
 import { useKvarnStore } from "../state/store";
 import { useT } from "../i18n";
 
@@ -40,6 +41,12 @@ export function Setup() {
     return product ? `${product.brand} ${product.model}` : "—";
   }
 
+  function equipmentImage(equipmentId: string): string | null {
+    const eq = equipment.find((e) => e.id === equipmentId);
+    if (!eq?.productId) return null;
+    return products.find((p) => p.id === eq.productId)?.imageUrl ?? null;
+  }
+
   async function submitSetup(e: React.FormEvent) {
     e.preventDefault();
     if (!setupName || !grinderEquipmentId) return;
@@ -51,13 +58,13 @@ export function Setup() {
 
   return (
     <div>
-      <h1 className="font-display text-[28px] mt-3.5 mb-0.5">{t("title")}</h1>
-      <p className="text-sm text-muted">{t("subtitle")}</p>
+      <h1 className="font-display text-[32px] mt-3.5 mb-0.5">{t("title")}</h1>
+      <p className="text-base text-muted">{t("subtitle")}</p>
 
       <Card>
-        <div className="text-[11px] uppercase tracking-wider text-muted font-medium mb-2">{t("addGrinder")}</div>
+        <SectionLabel icon={Search}>{t("addGrinder")}</SectionLabel>
         <input
-          className="border border-linen rounded-control px-3 py-2 text-sm bg-birch w-full"
+          className="border border-linen rounded-control px-3 py-2 text-base bg-birch w-full"
           placeholder={t("searchPlaceholder")}
           value={query}
           onChange={(e) => setQuery(e.target.value)}
@@ -66,12 +73,13 @@ export function Setup() {
           <button
             key={p.id}
             type="button"
-            className="w-full text-left text-sm py-2 border-b border-linen last:border-b-0"
+            className="w-full text-left text-base py-2 border-b border-linen last:border-b-0 flex items-center gap-3"
             onClick={async () => {
               await addEquipmentFromProduct(p.id);
               setQuery("");
             }}
           >
+            <EntityImage src={p.imageUrl} kind={p.kind === "grinder" ? "grinder" : "machine"} className="w-10 h-10 rounded-control flex-none" />
             {p.brand} {p.model}
           </button>
         ))}
@@ -79,7 +87,7 @@ export function Setup() {
           <div className="mt-2 flex flex-col gap-2 items-start">
             <button
               type="button"
-              className="text-[13px] text-copper underline"
+              className="text-[15px] text-copper underline"
               onClick={async () => {
                 await addCustomEquipment(query);
                 setQuery("");
@@ -89,7 +97,7 @@ export function Setup() {
             </button>
             <button
               type="button"
-              className="text-[13px] text-copper underline"
+              className="flex items-center gap-1.5 text-[15px] text-copper underline"
               onClick={() => {
                 setSubmitBrand(query.split(" ")[0] ?? query);
                 setSubmitModel(query.split(" ").slice(1).join(" "));
@@ -97,6 +105,7 @@ export function Setup() {
                 setSubmissionState("idle");
               }}
             >
+              <Users size={15} strokeWidth={1.5} />
               {t("suggestForCommunity")}
             </button>
           </div>
@@ -104,15 +113,15 @@ export function Setup() {
 
         {showSubmitForm ? (
           <div className="mt-3 pt-3 border-t border-linen flex flex-col gap-2">
-            <p className="text-xs text-muted">{t("submitIntro")}</p>
+            <p className="text-sm text-muted">{t("submitIntro")}</p>
             <input
-              className="border border-linen rounded-control px-3 py-2 text-sm bg-birch"
+              className="border border-linen rounded-control px-3 py-2 text-base bg-birch"
               placeholder={t("brandPlaceholder")}
               value={submitBrand}
               onChange={(e) => setSubmitBrand(e.target.value)}
             />
             <input
-              className="border border-linen rounded-control px-3 py-2 text-sm bg-birch"
+              className="border border-linen rounded-control px-3 py-2 text-base bg-birch"
               placeholder={t("modelPlaceholder")}
               value={submitModel}
               onChange={(e) => setSubmitModel(e.target.value)}
@@ -133,26 +142,36 @@ export function Setup() {
             >
               {t("submit")}
             </Button>
-            {submissionState === "submitted" ? <p className="text-xs text-sage">{t("submitted")}</p> : null}
-            {submissionState === "error" ? <p className="text-xs text-clay">{t("submitError")}</p> : null}
+            {submissionState === "submitted" ? <p className="text-sm text-sage">{t("submitted")}</p> : null}
+            {submissionState === "error" ? <p className="text-sm text-clay">{t("submitError")}</p> : null}
           </div>
         ) : null}
       </Card>
 
       {equipment.length > 0 ? (
         <Card>
-          <div className="text-[11px] uppercase tracking-wider text-muted font-medium mb-2">{t("yourEquipment")}</div>
+          <SectionLabel>{t("yourEquipment")}</SectionLabel>
           <div className="flex flex-wrap gap-2">
             {equipment.map((eq) => (
-              <Chip key={eq.id}>{equipmentLabel(eq.id)}</Chip>
+              <Chip key={eq.id} className="!pl-1">
+                <EntityImage src={equipmentImage(eq.id)} kind="grinder" className="w-6 h-6 rounded-full" />
+                {equipmentLabel(eq.id)}
+              </Chip>
             ))}
           </div>
         </Card>
       ) : null}
 
       <div className="mt-6 flex items-center justify-between">
-        <div className="text-[11px] uppercase tracking-wider text-muted font-medium">{t("setups")}</div>
-        <button type="button" className="text-[13px] text-copper underline" onClick={() => setShowSetupForm((v) => !v)}>
+        <SectionLabel icon={SlidersHorizontal} className="mb-0">
+          {t("setups")}
+        </SectionLabel>
+        <button
+          type="button"
+          className="flex items-center gap-1 text-[15px] text-copper underline"
+          onClick={() => setShowSetupForm((v) => !v)}
+        >
+          {showSetupForm ? null : <Plus size={15} strokeWidth={1.5} />}
           {showSetupForm ? tCommon("cancel") : t("newSetup")}
         </button>
       </div>
@@ -161,14 +180,14 @@ export function Setup() {
         <Card>
           <form onSubmit={submitSetup} className="flex flex-col gap-3">
             <input
-              className="border border-linen rounded-control px-3 py-2 text-sm bg-birch"
+              className="border border-linen rounded-control px-3 py-2 text-base bg-birch"
               placeholder={t("setupNamePlaceholder")}
               value={setupName}
               onChange={(e) => setSetupName(e.target.value)}
               required
             />
             <select
-              className="border border-linen rounded-control px-3 py-2 text-sm bg-birch"
+              className="border border-linen rounded-control px-3 py-2 text-base bg-birch"
               value={method}
               onChange={(e) => setMethod(e.target.value as SetupType["method"])}
             >
@@ -179,7 +198,7 @@ export function Setup() {
               ))}
             </select>
             <select
-              className="border border-linen rounded-control px-3 py-2 text-sm bg-birch"
+              className="border border-linen rounded-control px-3 py-2 text-base bg-birch"
               value={grinderEquipmentId}
               onChange={(e) => setGrinderEquipmentId(e.target.value)}
               required
@@ -203,15 +222,21 @@ export function Setup() {
       {setups.map((s) => (
         <Card
           key={s.id}
-          className={`cursor-pointer ${activeSetupId === s.id ? "border-copper" : ""}`}
+          className={`cursor-pointer flex items-center gap-3 ${activeSetupId === s.id ? "border-copper" : ""}`}
           onClick={() => setActiveSetup(s.id)}
         >
-          <div className="flex items-center justify-between">
+          <EntityImage src={equipmentImage(s.grinderEquipmentId)} kind="grinder" className="w-12 h-12 rounded-control flex-none" />
+          <div className="flex-1 flex items-center justify-between">
             <div>
-              <div className="text-sm font-medium">{s.name}</div>
-              <div className="text-xs text-muted">{s.method} · {equipmentLabel(s.grinderEquipmentId)}</div>
+              <div className="text-base font-medium">{s.name}</div>
+              <div className="text-sm text-muted">{s.method} · {equipmentLabel(s.grinderEquipmentId)}</div>
             </div>
-            {activeSetupId === s.id ? <span className="text-[11px] text-copper font-medium">{tCommon("active")}</span> : null}
+            {activeSetupId === s.id ? (
+              <span className="flex items-center gap-1 text-[13px] text-copper font-medium">
+                <CheckCircle2 size={15} strokeWidth={1.5} />
+                {tCommon("active")}
+              </span>
+            ) : null}
           </div>
         </Card>
       ))}

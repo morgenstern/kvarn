@@ -1,7 +1,8 @@
 import { useMemo, useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
-import { Button, Card, Chip } from "@kvarn/ui";
+import { Button, Card, Chip, EntityImage, SectionLabel } from "@kvarn/ui";
 import type { Setup as SetupType } from "@kvarn/db";
+import { Coffee, MapPin, Package, SlidersHorizontal } from "lucide-react";
 import { useKvarnStore } from "../state/store";
 import { useT } from "../i18n";
 
@@ -71,6 +72,9 @@ export function Onboarding() {
     setStep("bean");
   }
 
+  // Beans have no sensible generic fallback (unlike equipment's "custom gear"),
+  // so this step has no skip — onboarding's whole point is guaranteeing at
+  // least one real bean exists before the rest of the app opens up.
   async function saveBean() {
     if (!roaster || !beanName) return;
     const bean = await addBean({ roaster, name: beanName });
@@ -91,13 +95,13 @@ export function Onboarding() {
 
   return (
     <div>
-      <h1 className="font-display text-[28px] mt-3.5 mb-0.5">{t("welcomeTitle")}</h1>
-      <p className="text-sm text-muted">{t("welcomeSubtitle")}</p>
+      <h1 className="font-display text-[32px] mt-3.5 mb-0.5">{t("welcomeTitle")}</h1>
+      <p className="text-base text-muted">{t("welcomeSubtitle")}</p>
 
       {step === "method" ? (
         <Card>
-          <div className="text-[11px] uppercase tracking-wider text-muted font-medium mb-2">{t("stepMethod")}</div>
-          <p className="text-sm mb-3">{t("methodQuestion")}</p>
+          <SectionLabel icon={Coffee}>{t("stepMethod")}</SectionLabel>
+          <p className="text-base mb-3">{t("methodQuestion")}</p>
           <div className="flex flex-wrap gap-2">
             {METHODS.map((m) => (
               <Chip key={m} active={method === m} onClick={() => setMethod(m)}>
@@ -113,10 +117,10 @@ export function Onboarding() {
 
       {step === "equipment" ? (
         <Card>
-          <div className="text-[11px] uppercase tracking-wider text-muted font-medium mb-2">{t("stepEquipment")}</div>
-          <p className="text-sm mb-3">{t("equipmentQuestion")}</p>
+          <SectionLabel icon={SlidersHorizontal}>{t("stepEquipment")}</SectionLabel>
+          <p className="text-base mb-3">{t("equipmentQuestion")}</p>
           <input
-            className="border border-linen rounded-control px-3 py-2 text-sm bg-birch w-full"
+            className="border border-linen rounded-control px-3 py-2 text-base bg-birch w-full"
             placeholder={tSetup("searchPlaceholder")}
             value={query}
             onChange={(e) => setQuery(e.target.value)}
@@ -125,14 +129,15 @@ export function Onboarding() {
             <button
               key={p.id}
               type="button"
-              className="w-full text-left text-sm py-2 border-b border-linen last:border-b-0"
+              className="w-full text-left text-base py-2 border-b border-linen last:border-b-0 flex items-center gap-3"
               onClick={() => pickEquipmentFromProduct(p.id)}
             >
+              <EntityImage src={p.imageUrl} kind="grinder" className="w-10 h-10 rounded-control flex-none" />
               {p.brand} {p.model}
             </button>
           ))}
           {query && filteredProducts.length === 0 ? (
-            <button type="button" className="text-[13px] text-copper underline mt-2" onClick={pickCustomEquipment}>
+            <button type="button" className="text-[15px] text-copper underline mt-2" onClick={pickCustomEquipment}>
               „{query}“ →
             </button>
           ) : null}
@@ -144,17 +149,17 @@ export function Onboarding() {
 
       {step === "bean" ? (
         <Card>
-          <div className="text-[11px] uppercase tracking-wider text-muted font-medium mb-2">{t("stepBean")}</div>
-          <p className="text-sm mb-3">{t("beanQuestion")}</p>
+          <SectionLabel icon={Package}>{t("stepBean")}</SectionLabel>
+          <p className="text-base mb-3">{t("beanQuestion")}</p>
           <div className="flex flex-col gap-3">
             <input
-              className="border border-linen rounded-control px-3 py-2 text-sm bg-birch"
+              className="border border-linen rounded-control px-3 py-2 text-base bg-birch"
               placeholder={tRegal("roasterPlaceholder")}
               value={roaster}
               onChange={(e) => setRoaster(e.target.value)}
             />
             <input
-              className="border border-linen rounded-control px-3 py-2 text-sm bg-birch"
+              className="border border-linen rounded-control px-3 py-2 text-base bg-birch"
               placeholder={tRegal("namePlaceholder")}
               value={beanName}
               onChange={(e) => setBeanName(e.target.value)}
@@ -162,18 +167,15 @@ export function Onboarding() {
             <Button disabled={!roaster || !beanName} onClick={saveBean}>
               {t("next")}
             </Button>
-            <Button variant="ghost" onClick={() => setStep("location")}>
-              {t("skip")}
-            </Button>
           </div>
         </Card>
       ) : null}
 
       {step === "location" ? (
         <Card>
-          <div className="text-[11px] uppercase tracking-wider text-muted font-medium mb-2">{t("stepLocation")}</div>
-          <p className="text-sm mb-3">{t("locationQuestion")}</p>
-          <p className="text-xs text-muted mb-3">{t("locationExplainer")}</p>
+          <SectionLabel icon={MapPin}>{t("stepLocation")}</SectionLabel>
+          <p className="text-base mb-3">{t("locationQuestion")}</p>
+          <p className="text-sm text-muted mb-3">{t("locationExplainer")}</p>
           <Button onClick={() => finish(true)}>{t("locationAllow")}</Button>
           <Button variant="ghost" onClick={() => finish(false)}>
             {t("locationSkip")}

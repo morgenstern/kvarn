@@ -19,6 +19,7 @@
     "@tanstack/react-router": "^1.79.0",
     "better-auth": "^1.6.23",
     "dexie": "^4.0.10",
+    "lucide-react": "^1.23.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "zustand": "^5.0.1"

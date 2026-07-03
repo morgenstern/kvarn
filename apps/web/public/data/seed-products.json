@@ -141,7 +141,8 @@
       "preisEurCa": 450,
       "verstellung": "stepless"
     },
-    "status": "seed"
+    "status": "seed",
+    "imageUrl": "/illustrations/grinder-eureka-mignon-specialita.svg"
   },
   {
     "id": "grinder-eureka-mignon-perfetto",
@@ -717,7 +718,8 @@
       "preisEurCa": 1500,
       "verstellung": "stepless"
     },
-    "status": "seed"
+    "status": "seed",
+    "imageUrl": "/illustrations/grinder-mahlkonig-x64.svg"
   },
   {
     "id": "grinder-mahlkonig-e65s",
@@ -885,7 +887,8 @@
       "preisEurCa": 700,
       "verstellung": "stepless"
     },
-    "status": "seed"
+    "status": "seed",
+    "imageUrl": "/illustrations/grinder-niche-zero.svg"
   },
   {
     "id": "grinder-niche-duo",
@@ -1053,7 +1056,8 @@
       "preisEurCa": 220,
       "verstellung": "stepped"
     },
-    "status": "seed"
+    "status": "seed",
+    "imageUrl": "/illustrations/grinder-baratza-encore-esp.svg"
   },
   {
     "id": "grinder-baratza-virtuoso",
@@ -1245,7 +1249,8 @@
       "preisEurCa": 380,
       "verstellung": "stepped"
     },
-    "status": "seed"
+    "status": "seed",
+    "imageUrl": "/illustrations/grinder-fellow-ode-gen-2.svg"
   },
   {
     "id": "grinder-fellow-opus",
@@ -1725,7 +1730,8 @@
       "preisEurCa": 450,
       "verstellung": "stepless"
     },
-    "status": "seed"
+    "status": "seed",
+    "imageUrl": "/illustrations/grinder-turin-df64-gen-2.svg"
   },
   {
     "id": "grinder-turin-df64v",
@@ -1869,7 +1875,8 @@
       "preisEurCa": 750,
       "verstellung": "stepless"
     },
-    "status": "seed"
+    "status": "seed",
+    "imageUrl": "/illustrations/grinder-timemore-sculptor-064s.svg"
   },
   {
     "id": "grinder-timemore-sculptor-078",
@@ -3549,7 +3556,8 @@
       "preisEurCa": 290,
       "verstellung": "clicks"
     },
-    "status": "seed"
+    "status": "seed",
+    "imageUrl": "/illustrations/grinder-comandante-c40-mk4.svg"
   },
   {
     "id": "grinder-comandante-c60-baracuda",
@@ -3861,7 +3869,8 @@
       "preisEurCa": 230,
       "verstellung": "clicks"
     },
-    "status": "seed"
+    "status": "seed",
+    "imageUrl": "/illustrations/grinder-1zpresso-k-ultra.svg"
   },
   {
     "id": "grinder-1zpresso-x-ultra",
@@ -4005,7 +4014,8 @@
       "preisEurCa": 90,
       "verstellung": "clicks"
     },
-    "status": "seed"
+    "status": "seed",
+    "imageUrl": "/illustrations/grinder-kingrinder-k6.png"
   },
   {
     "id": "grinder-kingrinder-p2",
@@ -4677,7 +4687,8 @@
       "preisEurCa": 300,
       "verstellung": "stepless"
     },
-    "status": "seed"
+    "status": "seed",
+    "imageUrl": "/illustrations/grinder-eureka-mci-mg50e-mignon-istantaneo.png"
   },
   {
     "id": "machine-gaggia-classic-evo-pro",
@@ -4693,7 +4704,8 @@
       "segment": "entry",
       "preisEurCa": 449
     },
-    "status": "seed"
+    "status": "seed",
+    "imageUrl": "/illustrations/machine-gaggia-classic-evo-pro.svg"
   },
   {
     "id": "machine-gaggia-carezza-deluxe",
@@ -4773,7 +4785,8 @@
       "segment": "mid",
       "preisEurCa": 450
     },
-    "status": "seed"
+    "status": "seed",
+    "imageUrl": "/illustrations/machine-sage-bambino-plus.svg"
   },
   {
     "id": "machine-sage-duo-temp-pro",
@@ -4805,7 +4818,8 @@
       "segment": "mid",
       "preisEurCa": 600
     },
-    "status": "seed"
+    "status": "seed",
+    "imageUrl": "/illustrations/machine-sage-barista-express.svg"
   },
   {
     "id": "machine-sage-barista-express-impress",
@@ -5221,7 +5235,8 @@
       "segment": "high",
       "preisEurCa": 3150
     },
-    "status": "seed"
+    "status": "seed",
+    "imageUrl": "/illustrations/machine-ecm-synchronika.svg"
   },
   {
     "id": "machine-ecm-controvento",
@@ -5269,7 +5284,8 @@
       "segment": "mid",
       "preisEurCa": 850
     },
-    "status": "seed"
+    "status": "seed",
+    "imageUrl": "/illustrations/machine-profitec-go.svg"
   },
   {
     "id": "machine-profitec-move",
@@ -5413,7 +5429,8 @@
       "segment": "mid",
       "preisEurCa": 1450
     },
-    "status": "seed"
+    "status": "seed",
+    "imageUrl": "/illustrations/machine-rocket-appartamento.svg"
   },
   {
     "id": "machine-rocket-appartamento-tca",
@@ -5669,7 +5686,8 @@
       "segment": "mid",
       "preisEurCa": 1450
     },
-    "status": "seed"
+    "status": "seed",
+    "imageUrl": "/illustrations/machine-lelit-marax-pl62x.svg"
   },
   {
     "id": "machine-lelit-elizabeth-pl92t",
@@ -5701,7 +5719,8 @@
       "segment": "high",
       "preisEurCa": 3100
     },
-    "status": "seed"
+    "status": "seed",
+    "imageUrl": "/illustrations/machine-lelit-bianca-pl162t-v3.svg"
   },
   {
     "id": "machine-bezzera-hobby",
@@ -5877,7 +5896,8 @@
       "segment": "mid",
       "preisEurCa": 750
     },
-    "status": "seed"
+    "status": "seed",
+    "imageUrl": "/illustrations/machine-rancilio-silvia-v6.svg"
   },
   {
     "id": "machine-rancilio-silvia-pro-x",
@@ -5909,7 +5929,8 @@
       "segment": "mid",
       "preisEurCa": 600
     },
-    "status": "seed"
+    "status": "seed",
+    "imageUrl": "/illustrations/machine-quick-mill-orione-3000.png"
   },
   {
     "id": "machine-quick-mill-carola",
@@ -6197,7 +6218,8 @@
       "segment": "pro",
       "preisEurCa": 3800
     },
-    "status": "seed"
+    "status": "seed",
+    "imageUrl": "/illustrations/machine-la-marzocco-linea-micra.svg"
   },
   {
     "id": "machine-la-marzocco-linea-mini",
@@ -7045,7 +7067,8 @@
       "segment": "mid",
       "preisEurCa": 400
     },
-    "status": "seed"
+    "status": "seed",
+    "imageUrl": "/illustrations/machine-cafelat-robot.png"
   },
   {
     "id": "machine-9barista-espresso-machine",

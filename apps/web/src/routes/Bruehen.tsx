@@ -3,6 +3,7 @@ import { useNavigate } from "@tanstack/react-router";
 import { Button, Card, Chip, Hint, ParamStepper, RatingSlider, TimerRing } from "@kvarn/ui";
 import { computeRatio, nextGrindSuggestion } from "@kvarn/core";
 import type { WeatherSnapshot } from "@kvarn/db";
+import { BarChart3, CheckCircle2, Droplets, Home } from "lucide-react";
 import {
   activeBean,
   activeSetup,
@@ -89,9 +90,9 @@ export function Bruehen() {
   if (!setup || !bean) {
     return (
       <div>
-        <h1 className="font-display text-[28px] mt-3.5 mb-0.5">{t("title")}</h1>
+        <h1 className="font-display text-[32px] mt-3.5 mb-0.5">{t("title")}</h1>
         <Card>
-          <p className="text-sm">{t("needsSetupAndBean")}</p>
+          <p className="text-base">{t("needsSetupAndBean")}</p>
         </Card>
       </div>
     );
@@ -139,10 +140,17 @@ export function Bruehen() {
   if (saved) {
     return (
       <div>
-        <h1 className="font-display text-[28px] mt-3.5 mb-0.5">{t("savedTitle")}</h1>
-        <p className="text-sm text-muted">{t("savedSubtitle")}</p>
-        <Button onClick={() => navigate({ to: "/" })}>{t("backToToday")}</Button>
+        <h1 className="flex items-center gap-2 font-display text-[32px] mt-3.5 mb-0.5">
+          <CheckCircle2 className="text-sage" size={28} strokeWidth={1.5} />
+          {t("savedTitle")}
+        </h1>
+        <p className="text-base text-muted">{t("savedSubtitle")}</p>
+        <Button onClick={() => navigate({ to: "/" })}>
+          <Home size={18} strokeWidth={1.5} />
+          {t("backToToday")}
+        </Button>
         <Button variant="ghost" onClick={() => navigate({ to: "/kompass" })}>
+          <BarChart3 size={18} strokeWidth={1.5} />
           {t("viewLog")}
         </Button>
       </div>
@@ -151,10 +159,11 @@ export function Bruehen() {
 
   return (
     <div>
-      <h1 className="font-display text-[28px] mt-3.5 mb-0.5">{t("title")}</h1>
-      <p className="text-sm text-muted">{setup.name} · {bean.roaster} — {bean.name}</p>
+      <h1 className="font-display text-[32px] mt-3.5 mb-0.5">{t("title")}</h1>
+      <p className="text-base text-muted">{setup.name} · {bean.roaster} — {bean.name}</p>
       {weatherSnapshot?.humidityPct != null ? (
-        <p className="text-xs text-muted mt-1">
+        <p className="flex items-center gap-1.5 text-sm text-muted mt-1">
+          <Droplets size={14} strokeWidth={1.5} />
           {t("humidityLine", { temp: weatherSnapshot.tempC ?? "—", humidity: weatherSnapshot.humidityPct })}
         </p>
       ) : null}
@@ -179,7 +188,7 @@ export function Bruehen() {
             min={1}
             onChange={setTargetYieldG}
           />
-          <div className="flex justify-between text-xs text-muted pt-3">
+          <div className="flex justify-between text-sm text-muted pt-3">
             <span>{t("ratio")}</span>
             <span className="num">1:{computeRatio({ doseG, yieldG: targetYieldG })}</span>
           </div>
@@ -246,7 +255,7 @@ export function Bruehen() {
             bipolarLabels={[t("sour"), t("bitter")]}
           />
           <div className="mt-3">
-            <div className="text-xs text-muted mb-2">{t("visual")}</div>
+            <div className="text-sm text-muted mb-2">{t("visual")}</div>
             <div className="flex flex-wrap gap-2">
               {visualTagOptions.map((tag) => (
                 <Chip key={tag} active={visualTags.includes(tag)} onClick={() => toggleTag(visualTags, setVisualTags, tag)}>
@@ -256,7 +265,7 @@ export function Bruehen() {
             </div>
           </div>
           <div className="mt-3">
-            <div className="text-xs text-muted mb-2">{t("aroma")}</div>
+            <div className="text-sm text-muted mb-2">{t("aroma")}</div>
             <div className="flex flex-wrap gap-2">
               {flavorTagOptions.map((tag) => (
                 <Chip key={tag} active={flavorTags.includes(tag)} onClick={() => toggleTag(flavorTags, setFlavorTags, tag)}>

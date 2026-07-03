@@ -1,6 +1,7 @@
 import { useParams } from "@tanstack/react-router";
-import { Card, Chart } from "@kvarn/ui";
+import { Card, Chart, EntityImage, SectionLabel } from "@kvarn/ui";
 import { computeBeanAgeDays, freshnessPct, FRESHNESS_PEAK_WINDOW_DAYS } from "@kvarn/core";
+import { Activity, FlaskConical, Info, Star } from "lucide-react";
 import { useKvarnStore } from "../state/store";
 import { localeCode, useLocale, useT } from "../i18n";
 
@@ -17,7 +18,7 @@ export function BeanDetail() {
   if (!bean) {
     return (
       <div>
-        <h1 className="font-display text-[28px] mt-3.5 mb-0.5">{t("notFound")}</h1>
+        <h1 className="font-display text-[32px] mt-3.5 mb-0.5">{t("notFound")}</h1>
       </div>
     );
   }
@@ -40,18 +41,22 @@ export function BeanDetail() {
 
   return (
     <div>
-      <h1 className="font-display text-[28px] mt-3.5 mb-0.5">{bean.name}</h1>
-      <p className="text-sm text-muted">{bean.roaster}{bean.origin ? ` · ${bean.origin}` : ""}</p>
+      <h1 className="font-display text-[32px] mt-3.5 mb-0.5">{bean.name}</h1>
+      <p className="text-base text-muted">{bean.roaster}{bean.origin ? ` · ${bean.origin}` : ""}</p>
 
-      {bean.photoUrl ? <img src={bean.photoUrl} alt="" className="w-full h-40 object-cover rounded-card mt-3" /> : null}
+      {bean.photoUrl ? (
+        <img src={bean.photoUrl} alt="" className="w-full h-40 object-cover rounded-card mt-3" />
+      ) : (
+        <EntityImage kind="bean" className="w-24 h-24 mt-3" />
+      )}
 
       <Card>
-        <div className="text-[11px] uppercase tracking-wider text-muted font-medium mb-2">{t("stammdaten")}</div>
-        <div className="flex justify-between text-sm py-1">
+        <SectionLabel icon={Info}>{t("stammdaten")}</SectionLabel>
+        <div className="flex justify-between text-base py-1">
           <span className="text-muted">{t("roastDate")}</span>
           <span>{bean.roastDate ? new Date(bean.roastDate).toLocaleDateString(dateLocale) : t("unknown")}</span>
         </div>
-        <div className="flex justify-between text-sm py-1">
+        <div className="flex justify-between text-base py-1">
           <span className="text-muted">{t("beanAge")}</span>
           <span>{ageDays !== null ? t("daysUnit", { count: ageDays }) : "—"}</span>
         </div>
@@ -59,7 +64,7 @@ export function BeanDetail() {
 
       {bean.roastDate ? (
         <Card>
-          <div className="text-[11px] uppercase tracking-wider text-muted font-medium mb-2">{t("freshnessCurve")}</div>
+          <SectionLabel icon={Activity}>{t("freshnessCurve")}</SectionLabel>
           <Chart
             points={freshnessCurvePoints}
             mode="line"
@@ -76,7 +81,7 @@ export function BeanDetail() {
 
       {ratingHistoryPoints.length > 0 ? (
         <Card>
-          <div className="text-[11px] uppercase tracking-wider text-muted font-medium mb-2">{t("ratingHistory")}</div>
+          <SectionLabel icon={Star}>{t("ratingHistory")}</SectionLabel>
           <Chart
             points={ratingHistoryPoints}
             mode="scatter"
@@ -88,12 +93,12 @@ export function BeanDetail() {
 
       {beanRecipes.length > 0 ? (
         <Card>
-          <div className="text-[11px] uppercase tracking-wider text-muted font-medium mb-2">{t("recipes")}</div>
+          <SectionLabel icon={FlaskConical}>{t("recipes")}</SectionLabel>
           {beanRecipes.map((recipe) => {
             const setup = setups.find((s) => s.id === recipe.setupId);
             const params = recipe.params as { grindSetting?: number; doseG?: number; targetYieldG?: number } | null;
             return (
-              <div key={recipe.id} className="flex justify-between text-sm py-1.5 border-b border-linen last:border-b-0">
+              <div key={recipe.id} className="flex justify-between text-base py-1.5 border-b border-linen last:border-b-0">
                 <span>{setup?.name ?? tKompass("deletedSetup")}</span>
                 <span className="text-muted">
                   {t("recipeLine", {
