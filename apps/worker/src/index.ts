@@ -4,6 +4,7 @@ import { weather } from "./weather";
 import { products } from "./products";
 import { photos } from "./photos";
 import { feedbackRoute } from "./feedback";
+import { illustrations } from "./illustrations";
 import { createAuth } from "./auth";
 
 const app = new Hono<{ Bindings: Env }>();
@@ -13,6 +14,7 @@ app.route("/api/weather", weather);
 app.route("/api/products", products);
 app.route("/api/photos", photos);
 app.route("/api/feedback", feedbackRoute);
+app.route("/api/illustrations", illustrations);
 app.on(["GET", "POST"], "/api/auth/*", (c) => createAuth(c.env).handler(c.req.raw));
 
 // Everything else falls through to the static SPA build (apps/web/dist),

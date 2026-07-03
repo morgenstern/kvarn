@@ -6,6 +6,12 @@
       "runtimeExecutable": "pnpm",
       "runtimeArgs": ["--filter", "@kvarn/web", "dev"],
       "port": 5173
+    },
+    {
+      "name": "kvarn-worker",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": ["--filter", "@kvarn/worker", "dev"],
+      "port": 8787
     }
   ]
 }

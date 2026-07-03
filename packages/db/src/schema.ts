@@ -187,3 +187,43 @@ export const feedback = sqliteTable("feedback", {
 
 export type Feedback = typeof feedback.$inferSelect;
 export type NewFeedback = typeof feedback.$inferInsert;
+
+// AI illustration pipeline (docs/07_ILLUSTRATION_STYLE.md §3): for a product
+// with no "Kvarn Sketch" illustration yet, a worker job pulls candidate photos
+// from a web image search, rates each with a vision model, and runs the best
+// two through image generation. Candidates/drafts are global (one run per
+// product, not per user) and reviewed in the moderation queue before a draft
+// is promoted to product.imageUrl.
+export const illustrationCandidate = sqliteTable("illustration_candidate", {
+  id: text("id").primaryKey(),
+  productId: text("product_id")
+    .notNull()
+    .references(() => product.id),
+  imageUrl: text("image_url").notNull(),
+  sourceUrl: text("source_url"),
+  suitabilityScore: real("suitability_score"),
+  suitabilityReason: text("suitability_reason"),
+  rank: integer("rank"),
+  createdAt: text("created_at")
+    .notNull()
+    .default(sql`(CURRENT_TIMESTAMP)`),
+});
+
+export const illustrationDraft = sqliteTable("illustration_draft", {
+  id: text("id").primaryKey(),
+  productId: text("product_id")
+    .notNull()
+    .references(() => product.id),
+  candidateId: text("candidate_id").references(() => illustrationCandidate.id),
+  imageUrl: text("image_url").notNull(),
+  keyFeatures: text("key_features"),
+  isDefault: integer("is_default", { mode: "boolean" }).notNull().default(false),
+  createdAt: text("created_at")
+    .notNull()
+    .default(sql`(CURRENT_TIMESTAMP)`),
+});
+
+export type IllustrationCandidate = typeof illustrationCandidate.$inferSelect;
+export type NewIllustrationCandidate = typeof illustrationCandidate.$inferInsert;
+export type IllustrationDraft = typeof illustrationDraft.$inferSelect;
+export type NewIllustrationDraft = typeof illustrationDraft.$inferInsert;

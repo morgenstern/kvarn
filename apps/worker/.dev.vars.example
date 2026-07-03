@@ -4,3 +4,14 @@
 BETTER_AUTH_SECRET=
 
 # Production: wrangler secret put BETTER_AUTH_SECRET
+
+# Optional — AI illustration pipeline (docs/07_ILLUSTRATION_STYLE.md §3).
+# Without these, /api/illustrations/*/generate returns 501; everything else works fine.
+# GOOGLE_CSE_API_KEY / GOOGLE_CSE_CX: Google Programmable Search (console.cloud.google.com,
+#   enable "Custom Search API") + a Custom Search Engine configured for image search
+#   (programmablesearchengine.google.com).
+# GEMINI_API_KEY: Google AI Studio key (aistudio.google.com/apikey) for Gemini vision
+#   (rating candidates) and Gemini 2.5 Flash Image ("nano banana") generation.
+GOOGLE_CSE_API_KEY=
+GOOGLE_CSE_CX=
+GEMINI_API_KEY=

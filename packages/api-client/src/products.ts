@@ -13,6 +13,21 @@ export interface SubmittedProduct {
   status: "community" | "verified" | "seed";
 }
 
+export interface VerifiedProduct {
+  id: string;
+  kind: string;
+  brand: string;
+  model: string;
+  imageUrl: string | null;
+}
+
+/** Community products approved into the shared catalog (apps/worker's GET /api/products). */
+export async function fetchVerifiedProducts(): Promise<VerifiedProduct[]> {
+  const res = await fetch("/api/products");
+  if (!res.ok) throw new Error(`fetching products failed: ${res.status}`);
+  return (await res.json()) as VerifiedProduct[];
+}
+
 /** Submit a missing device to the community moderation queue (apps/worker's /api/products/submissions). */
 export async function submitProduct(input: ProductSubmissionInput): Promise<SubmittedProduct> {
   const res = await fetch("/api/products/submissions", {

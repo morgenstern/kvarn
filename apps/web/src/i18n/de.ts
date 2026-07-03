@@ -131,6 +131,11 @@ export const de = {
     noPending: "Keine offenen Vorschläge.",
     approve: "Freigeben",
     reject: "Ablehnen",
+    illustrationsTitle: "Illustrationen",
+    illustrationsGenerate: "Illustrationen generieren",
+    illustrationsGenerating: "Generiere …",
+    illustrationsSetDefault: "Als Standard festlegen",
+    illustrationsIsDefault: "Aktueller Standard",
   },
   settings: {
     title: "Einstellungen",

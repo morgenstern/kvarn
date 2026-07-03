@@ -6,3 +6,4 @@ export * from "./weather";
 export * from "./products";
 export * from "./photos";
 export * from "./feedback";
+export * from "./illustrations";

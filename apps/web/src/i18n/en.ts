@@ -132,6 +132,11 @@ export const en: Dictionary = {
     noPending: "No pending suggestions.",
     approve: "Approve",
     reject: "Reject",
+    illustrationsTitle: "Illustrations",
+    illustrationsGenerate: "Generate illustrations",
+    illustrationsGenerating: "Generating…",
+    illustrationsSetDefault: "Set as default",
+    illustrationsIsDefault: "Current default",
   },
   settings: {
     title: "Settings",

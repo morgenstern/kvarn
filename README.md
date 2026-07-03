@@ -83,6 +83,11 @@ pnpm build
 - **Lokale Daten sind nicht an Konten gebunden**: Setups/Bohnen/Bezüge bleiben geräte-lokal in IndexedDB,
   auch nach Anmeldung. Ein echtes Sync/Merge zwischen Geräten ist ein eigenes Vorhaben (Backlog-Epic E6),
   bewusst nicht Teil von M4.
+- **AI-Illustrations-Pipeline ohne Credentials**: `/api/illustrations/*/generate` (Moderation-Screen →
+  Abschnitt "Illustrationen", für Community-Geräte ohne Bild) braucht `GOOGLE_CSE_API_KEY`,
+  `GOOGLE_CSE_CX` und `GEMINI_API_KEY` (siehe `apps/worker/.dev.vars.example`). Ohne diese drei Keys
+  antwortet der Endpunkt mit 501 statt zu generieren — Code und Tests sind vollständig, nur die
+  Drittanbieter-Keys fehlen, weil sie nur der Kontoinhaber anlegen kann.
 
 ## Deploy (später, sobald gewünscht)
 
@@ -91,7 +96,9 @@ pnpm build
 3. `pnpm wrangler d1 create kvarn`, `pnpm wrangler r2 bucket create kvarn-photos`,
    `pnpm wrangler kv namespace create WEATHER_CACHE` — jeweils die zurückgegebene ID in
    `apps/worker/wrangler.toml` eintragen.
-4. `pnpm wrangler secret put BETTER_AUTH_SECRET` — eigenen Zufallswert setzen (siehe oben).
+4. `pnpm wrangler secret put BETTER_AUTH_SECRET` — eigenen Zufallswert setzen (siehe oben). Optional für die
+   AI-Illustrations-Pipeline zusätzlich `pnpm wrangler secret put GOOGLE_CSE_API_KEY`,
+   `GOOGLE_CSE_CX` und `GEMINI_API_KEY` setzen (siehe `apps/worker/.dev.vars.example`).
 5. `pnpm --filter @kvarn/worker db:migrate:remote` — Migrationen auf die echte D1 anwenden.
 6. In Cloudflare: **Workers & Pages → Create → Import a repository**, das GitHub-Repo `kvarn` verbinden
    (Workers Builds deployt danach bei jedem Push auf `main`).
