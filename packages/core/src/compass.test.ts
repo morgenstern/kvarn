@@ -1,0 +1,92 @@
+import { describe, expect, it } from "vitest";
+import { nextGrindSuggestion, type GrindScale } from "./compass";
+
+// Niche Zero-style scale: 0 = finest, 30 = coarsest, step 0.5, lower = finer.
+const nicheScale: GrindScale = { min: 0, max: 30, step: 0.5, unit: "clicks", finerDirection: -1 };
+
+describe("nextGrindSuggestion — golden tests", () => {
+  it("no history -> espresso method default (25% into scale)", () => {
+    const result = nextGrindSuggestion({
+      method: "espresso",
+      grindScale: nicheScale,
+      lastBrew: null,
+    });
+    expect(result.grindSetting).toBe(7.5);
+    expect(result.reasons).toHaveLength(1);
+    expect(result.reasons[0]?.factor).toBe("no_history");
+  });
+
+  it("no history -> french press default (85% into scale)", () => {
+    const result = nextGrindSuggestion({
+      method: "frenchpress",
+      grindScale: nicheScale,
+      lastBrew: null,
+    });
+    expect(result.grindSetting).toBe(25.5);
+  });
+
+  it("sour + too fast espresso -> finer", () => {
+    const result = nextGrindSuggestion({
+      method: "espresso",
+      grindScale: nicheScale,
+      lastBrew: { grindSetting: 10, timeTotalS: 20, balance: -3 },
+    });
+    // balance -3 -> magnitude 2 finer; time 20s < 25s min -> +1 finer; total 3 steps finer
+    // finerDirection -1 -> delta = 3 * -1 * 0.5 = -1.5
+    expect(result.grindSetting).toBe(8.5);
+    expect(result.reasons.map((r) => r.factor)).toEqual(["balance", "time_too_fast"]);
+  });
+
+  it("bitter + too slow espresso -> coarser", () => {
+    const result = nextGrindSuggestion({
+      method: "espresso",
+      grindScale: nicheScale,
+      lastBrew: { grindSetting: 10, timeTotalS: 40, balance: 4 },
+    });
+    // balance +4 -> magnitude 2 coarser; time 40s > 32s max -> 1 coarser; total 3 steps coarser
+    // delta = -3 * -1 * 0.5 = +1.5
+    expect(result.grindSetting).toBe(11.5);
+  });
+
+  it("balanced brew within time window -> no correction", () => {
+    const result = nextGrindSuggestion({
+      method: "espresso",
+      grindScale: nicheScale,
+      lastBrew: { grindSetting: 10, timeTotalS: 28, balance: 0 },
+    });
+    expect(result.grindSetting).toBe(10);
+    expect(result.reasons).toHaveLength(0);
+  });
+
+  it("bean age 4-8 days nudges finer even with no other signal", () => {
+    const result = nextGrindSuggestion({
+      method: "espresso",
+      grindScale: nicheScale,
+      lastBrew: { grindSetting: 10, timeTotalS: 28, balance: 0 },
+      beanAgeDays: 6,
+    });
+    // fractionalFiner 0.1 -> rounds to nearest step (0.5) after applying to grind: delta = 0.1*-1*0.5=-0.05 -> rounds to 10
+    expect(result.grindSetting).toBe(10);
+    expect(result.reasons[0]?.factor).toBe("bean_age");
+  });
+
+  it("large positive humidity delta nudges coarser", () => {
+    const result = nextGrindSuggestion({
+      method: "espresso",
+      grindScale: nicheScale,
+      lastBrew: { grindSetting: 10, timeTotalS: 28, balance: 0 },
+      humidityDeltaPct: 20,
+    });
+    expect(result.reasons[0]?.factor).toBe("humidity");
+    expect(result.reasons[0]?.effect).toContain("gröber");
+  });
+
+  it("clamps to scale bounds", () => {
+    const result = nextGrindSuggestion({
+      method: "espresso",
+      grindScale: nicheScale,
+      lastBrew: { grindSetting: 0.5, timeTotalS: 10, balance: -5 },
+    });
+    expect(result.grindSetting).toBeGreaterThanOrEqual(nicheScale.min);
+  });
+});

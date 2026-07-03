@@ -1,0 +1,29 @@
+/* Kvarn design tokens — source: docs/01_BRAND_DESIGN.md */
+@theme {
+  --color-birch: #f7f4ef;
+  --color-linen: #e7e0d5;
+  --color-copper: #c0754d;
+  --color-copper-soft: #e8d3c4;
+  --color-sage: #96a694;
+  --color-sage-soft: #dde4db;
+  --color-espresso: #3b2e28;
+  --color-charcoal: #22201c;
+  --color-clay: #b85c48;
+  --color-card: #ffffff;
+  --color-muted: #8c8478;
+
+  --font-display: "Fraunces", serif;
+  --font-sans: "Inter", sans-serif;
+
+  --radius-card: 16px;
+  --radius-control: 12px;
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+.num {
+  font-feature-settings: "tnum";
+  font-variant-numeric: tabular-nums;
+}

@@ -1,0 +1,33 @@
+name = "kvarn"
+main = "src/index.ts"
+compatibility_date = "2025-04-01"
+compatibility_flags = ["nodejs_compat"]
+
+[assets]
+directory = "../web/dist"
+binding = "ASSETS"
+not_found_handling = "single-page-application"
+
+# --- D1 (SQLite) ---
+# Create once you have a Cloudflare account: `pnpm wrangler login`, then
+#   pnpm wrangler d1 create kvarn
+# and paste the returned database_id below (Location Hint: weur — Western Europe).
+[[d1_databases]]
+binding = "DB"
+database_name = "kvarn"
+database_id = "REPLACE_WITH_D1_DATABASE_ID"
+
+# --- R2 (bean photos, user equipment photos) ---
+#   pnpm wrangler r2 bucket create kvarn-photos
+[[r2_buckets]]
+binding = "PHOTOS"
+bucket_name = "kvarn-photos"
+
+# --- KV (weather snapshot cache) ---
+#   pnpm wrangler kv namespace create WEATHER_CACHE
+[[kv_namespaces]]
+binding = "WEATHER_CACHE"
+id = "REPLACE_WITH_KV_NAMESPACE_ID"
+
+[observability]
+enabled = true

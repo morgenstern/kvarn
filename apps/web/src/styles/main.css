@@ -1,0 +1,10 @@
+@import "tailwindcss";
+@import "@kvarn/ui/theme.css";
+@source "../../../../packages/ui/src";
+
+body {
+  background: #ebe6dd;
+  color: var(--color-charcoal);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
