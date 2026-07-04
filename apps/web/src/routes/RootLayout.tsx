@@ -71,7 +71,7 @@ export function RootLayout() {
           </Link>
         </div>
         <div className="max-w-md mx-auto w-full px-5 pt-1 flex justify-center">
-          <LogoLockup />
+          <LogoLockup size={30} />
         </div>
         <main className="flex-1 max-w-md mx-auto w-full px-5 pt-2 pb-8">
           <Outlet />

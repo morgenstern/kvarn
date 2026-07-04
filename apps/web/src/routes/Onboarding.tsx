@@ -1,10 +1,11 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
-import { Button, Card, Chip, EntityImage, ProductCard, SectionLabel } from "@kvarn/ui";
+import { Button, Card, Chip, Logo, SectionLabel } from "@kvarn/ui";
 import type { Setup as SetupType } from "@kvarn/db";
-import { Coffee, Copy, Download, MapPin, Package, SlidersHorizontal, UserPlus } from "lucide-react";
+import { Coffee, Compass, Copy, Download, MapPin, Package, SlidersHorizontal, Sun, UserPlus } from "lucide-react";
 import { useKvarnStore } from "../state/store";
-import { exampleEquipment } from "../utils/exampleEquipment";
+import { EquipmentSearchSection } from "../components/EquipmentSearchSection";
+import { BeanForm } from "../components/BeanForm";
 import { useT } from "../i18n";
 import { authClient } from "../auth/client";
 
@@ -47,30 +48,40 @@ function isStandaloneDisplay(): boolean {
   );
 }
 
-type Step = "method" | "equipment" | "bean" | "location" | "account" | "install";
+type Step = "welcome" | "method" | "grinder" | "machine" | "bean" | "location" | "account" | "install";
+
+// Steps with a visual progress indicator — "welcome" is a splash screen, not
+// really a "step", so it's excluded from the dots.
+const STEP_ORDER: Step[] = ["method", "grinder", "machine", "bean", "location", "account", "install"];
+
+function StepDots({ current }: { current: Step }) {
+  const idx = STEP_ORDER.indexOf(current);
+  if (idx === -1) return null;
+  return (
+    <div className="flex items-center justify-center gap-1.5 mt-4 mb-1">
+      {STEP_ORDER.map((s, i) => (
+        <span
+          key={s}
+          className={`h-2 rounded-full transition-all ${i === idx ? "w-6 bg-copper" : i < idx ? "w-2 bg-copper/40" : "w-2 bg-linen"}`}
+        />
+      ))}
+    </div>
+  );
+}
 
 export function Onboarding() {
   const t = useT("onboarding");
   const tSetup = useT("setup");
-  const tRegal = useT("regal");
   const tSettings = useT("settings");
   const navigate = useNavigate();
-  const {
-    products,
-    addEquipmentFromProduct,
-    addCustomEquipment,
-    addSetup,
-    addBean,
-    captureWeatherSnapshot,
-    setActiveSetup,
-    setActiveBean,
-  } = useKvarnStore();
+  const { products, equipment, beans, addCustomEquipment, addSetup, addBean, captureWeatherSnapshot, setActiveSetup, setActiveBean } =
+    useKvarnStore();
 
-  const [step, setStep] = useState<Step>("method");
+  const [step, setStep] = useState<Step>("welcome");
   const [method, setMethod] = useState<SetupType["method"] | null>(null);
-  const [query, setQuery] = useState("");
-  const [roaster, setRoaster] = useState("");
-  const [beanName, setBeanName] = useState("");
+  const [addedGrinderIds, setAddedGrinderIds] = useState<string[]>([]);
+  const [addedMachineIds, setAddedMachineIds] = useState<string[]>([]);
+  const [addedBeanIds, setAddedBeanIds] = useState<string[]>([]);
   const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
   const platform = useMemo(detectPlatform, []);
   const [firstName, setFirstName] = useState("");
@@ -80,13 +91,6 @@ export function Onboarding() {
   const [passwordCopied, setPasswordCopied] = useState(false);
   const [accountBusy, setAccountBusy] = useState(false);
   const [accountError, setAccountError] = useState(false);
-
-  const filteredProducts = useMemo(() => {
-    if (!query) return [];
-    const q = query.toLowerCase();
-    return products.filter((p) => p.kind === "grinder" && `${p.brand} ${p.model}`.toLowerCase().includes(q)).slice(0, 6);
-  }, [products, query]);
-  const equipmentExamples = useMemo(() => exampleEquipment(products, "grinder"), [products]);
 
   useEffect(() => {
     function handler(e: Event) {
@@ -109,11 +113,6 @@ export function Onboarding() {
       captureWeatherSnapshot();
     }
     setStep("account");
-  }
-
-  function finishOnboarding() {
-    markOnboardingSeen();
-    navigate({ to: "/bruehen" });
   }
 
   function handleGeneratePassword() {
@@ -143,52 +142,87 @@ export function Onboarding() {
     }
   }
 
-  // Onboarding represents the user's primary setup/bean — always activate what
-  // they just created here, even if an older setup/bean was already active
-  // (e.g. leftover local data from a previous install).
-  async function pickEquipmentFromProduct(productId: string) {
-    const equipment = await addEquipmentFromProduct(productId);
-    if (method) {
-      const setup = await addSetup({ name: method, method, grinderEquipmentId: equipment.id });
-      setActiveSetup(setup.id);
-    }
-    setStep("bean");
+  function equipmentLabel(id: string): string {
+    const eq = equipment.find((e) => e.id === id);
+    if (!eq) return "—";
+    if (eq.customName) return eq.customName;
+    const product = products.find((p) => p.id === eq.productId);
+    return product ? `${product.brand} ${product.model}` : "—";
   }
 
-  async function pickCustomEquipment() {
-    const equipment = await addCustomEquipment(query, "grinder");
-    if (method) {
-      const setup = await addSetup({ name: method, method, grinderEquipmentId: equipment.id });
-      setActiveSetup(setup.id);
-    }
-    setStep("bean");
+  function beanLabel(id: string): string {
+    const bean = beans.find((b) => b.id === id);
+    return bean ? `${bean.roaster} — ${bean.name}` : "—";
   }
 
-  // Beans have no sensible generic fallback (unlike equipment's "custom gear"),
-  // so this step has no skip — onboarding's whole point is guaranteeing at
-  // least one real bean exists before the rest of the app opens up.
-  async function saveBean() {
-    if (!roaster || !beanName) return;
-    const bean = await addBean({ roaster, name: beanName });
-    setActiveBean(bean.id);
-    setStep("location");
+  // Bundles whatever was added along the way into the user's primary setup +
+  // active bean. Grinders/machines/beans without a sensible generic fallback
+  // (unlike equipment, which falls back to "custom gear") get one synthesized
+  // here so the app never re-opens onboarding right after finishing it.
+  async function buildInitialSetupAndBean() {
+    let grinderId = addedGrinderIds[0];
+    if (!grinderId) {
+      const generic = await addCustomEquipment(t("genericGrinderName"), "grinder");
+      grinderId = generic.id;
+    }
+    const resolvedMethod = method ?? "espresso";
+    const setup = await addSetup({
+      name: resolvedMethod,
+      method: resolvedMethod,
+      grinderEquipmentId: grinderId,
+      machineEquipmentId: addedMachineIds[0] ?? null,
+    });
+    setActiveSetup(setup.id);
+
+    let beanId = addedBeanIds[0];
+    if (!beanId) {
+      const generic = await addBean({ roaster: t("genericBeanRoaster"), name: t("genericBeanName") });
+      beanId = generic.id;
+    }
+    setActiveBean(beanId);
   }
 
-  // Skipping equipment must still leave a usable setup — otherwise the user
-  // finishes onboarding with no way to brew, silently defeating its purpose.
-  async function skipEquipment() {
-    if (method) {
-      const equipment = await addCustomEquipment(t("genericGrinderName"), "grinder");
-      const setup = await addSetup({ name: method, method, grinderEquipmentId: equipment.id });
-      setActiveSetup(setup.id);
-    }
-    setStep("bean");
+  async function finishOnboarding() {
+    await buildInitialSetupAndBean();
+    markOnboardingSeen();
+    navigate({ to: "/bruehen" });
   }
 
   return (
     <div>
-      <h1 className="font-display text-[32px] mt-3.5 mb-0.5">{t("welcomeTitle")}</h1>
-      <p className="text-base text-muted">{t("welcomeSubtitle")}</p>
+      {step === "welcome" ? (
+        <div className="flex flex-col items-center text-center pt-6">
+          <Logo size={72} />
+          <h1 className="font-display text-[34px] mt-4 mb-1">{t("welcomeTitle")}</h1>
+          <p className="text-base text-copper font-medium mb-3">{t("welcomeSubtitle")}</p>
+          <p className="text-base text-muted mb-6">{t("welcomeDescription")}</p>
+          <div className="grid grid-cols-3 gap-4 w-full mb-8">
+            <div className="flex flex-col items-center gap-2">
+              <span className="w-11 h-11 rounded-full bg-copper-soft flex items-center justify-center text-[#7a4526]">
+                <SlidersHorizontal size={20} strokeWidth={1.5} />
+              </span>
+              <span className="text-[12px] text-muted leading-tight">{t("welcomeFeatureDialIn")}</span>
+            </div>
+            <div className="flex flex-col items-center gap-2">
+              <span className="w-11 h-11 rounded-full bg-copper-soft flex items-center justify-center text-[#7a4526]">
+                <Sun size={20} strokeWidth={1.5} />
+              </span>
+              <span className="text-[12px] text-muted leading-tight">{t("welcomeFeatureWeather")}</span>
+            </div>
+            <div className="flex flex-col items-center gap-2">
+              <span className="w-11 h-11 rounded-full bg-copper-soft flex items-center justify-center text-[#7a4526]">
+                <Compass size={20} strokeWidth={1.5} />
+              </span>
+              <span className="text-[12px] text-muted leading-tight">{t("welcomeFeatureCompass")}</span>
+            </div>
+          </div>
+          <Button className="w-full" onClick={() => setStep("method")}>
+            {t("welcomeStart")}
+          </Button>
+        </div>
+      ) : (
+        <StepDots current={step} />
+      )}
 
       {step === "method" ? (
         <Card>
@@ -201,85 +235,81 @@ export function Onboarding() {
               </Chip>
             ))}
           </div>
-          <Button disabled={!method} onClick={() => setStep("equipment")}>
-            {t("next")}
-          </Button>
+          <Button onClick={() => setStep("grinder")}>{method ? t("next") : t("skip")}</Button>
         </Card>
       ) : null}
 
-      {step === "equipment" ? (
-        <Card>
-          <SectionLabel icon={SlidersHorizontal}>{t("stepEquipment")}</SectionLabel>
-          <p className="text-base mb-3">{t("equipmentQuestion")}</p>
-          <input
-            className="border border-linen rounded-control px-3 py-2 text-base bg-birch w-full"
+      {step === "grinder" ? (
+        <>
+          <EquipmentSearchSection
+            kind="grinder"
+            icon={SlidersHorizontal}
+            title={t("stepGrinder")}
             placeholder={tSetup("searchPlaceholder")}
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
+            onAdded={(id) => setAddedGrinderIds((ids) => [...ids, id])}
           />
-          {!query && equipmentExamples.length > 0 ? (
+          {addedGrinderIds.length > 0 ? (
             <div className="mt-3">
-              <p className="text-[13px] text-muted mb-1.5">{tSetup("popularExamples")}</p>
-              <div className="flex gap-3 overflow-x-auto pb-1 -mx-[18px] px-[18px]">
-                {equipmentExamples.map((p) => (
-                  <ProductCard
-                    key={p.id}
-                    className="w-24 flex-none"
-                    image={<EntityImage src={p.imageUrl} kind="grinder" className="w-full h-full" />}
-                    onClick={() => pickEquipmentFromProduct(p.id)}
-                  >
-                    <div className="text-[12px] font-medium leading-tight truncate">
-                      {p.brand} {p.model}
-                    </div>
-                  </ProductCard>
+              <p className="text-[13px] text-muted mb-1.5">{t("addedSoFar", { count: addedGrinderIds.length })}</p>
+              <div className="flex flex-wrap gap-2">
+                {addedGrinderIds.map((id) => (
+                  <Chip key={id} active>
+                    {equipmentLabel(id)}
+                  </Chip>
                 ))}
               </div>
             </div>
           ) : null}
-          {filteredProducts.map((p) => (
-            <button
-              key={p.id}
-              type="button"
-              className="w-full text-left text-base py-2 border-b border-linen last:border-b-0 flex items-center gap-3"
-              onClick={() => pickEquipmentFromProduct(p.id)}
-            >
-              <EntityImage src={p.imageUrl} kind="grinder" className="w-14 h-14 rounded-control flex-none" />
-              {p.brand} {p.model}
-            </button>
-          ))}
-          {query && filteredProducts.length === 0 ? (
-            <button type="button" className="text-[15px] text-copper underline mt-2" onClick={pickCustomEquipment}>
-              „{query}“ →
-            </button>
+          <Button onClick={() => setStep("machine")}>{addedGrinderIds.length > 0 ? t("next") : t("skip")}</Button>
+        </>
+      ) : null}
+
+      {step === "machine" ? (
+        <>
+          <EquipmentSearchSection
+            kind="machine"
+            icon={Coffee}
+            title={t("stepMachine")}
+            placeholder={tSetup("searchPlaceholderMachine")}
+            onAdded={(id) => setAddedMachineIds((ids) => [...ids, id])}
+          />
+          {addedMachineIds.length > 0 ? (
+            <div className="mt-3">
+              <p className="text-[13px] text-muted mb-1.5">{t("addedSoFar", { count: addedMachineIds.length })}</p>
+              <div className="flex flex-wrap gap-2">
+                {addedMachineIds.map((id) => (
+                  <Chip key={id} active>
+                    {equipmentLabel(id)}
+                  </Chip>
+                ))}
+              </div>
+            </div>
           ) : null}
-          <Button variant="ghost" onClick={skipEquipment}>
-            {t("skip")}
-          </Button>
-        </Card>
+          <Button onClick={() => setStep("bean")}>{addedMachineIds.length > 0 ? t("next") : t("skip")}</Button>
+        </>
       ) : null}
 
       {step === "bean" ? (
-        <Card>
-          <SectionLabel icon={Package}>{t("stepBean")}</SectionLabel>
-          <p className="text-base mb-3">{t("beanQuestion")}</p>
-          <div className="flex flex-col gap-3">
-            <input
-              className="border border-linen rounded-control px-3 py-2 text-base bg-birch"
-              placeholder={tRegal("roasterPlaceholder")}
-              value={roaster}
-              onChange={(e) => setRoaster(e.target.value)}
-            />
-            <input
-              className="border border-linen rounded-control px-3 py-2 text-base bg-birch"
-              placeholder={tRegal("namePlaceholder")}
-              value={beanName}
-              onChange={(e) => setBeanName(e.target.value)}
-            />
-            <Button disabled={!roaster || !beanName} onClick={saveBean}>
-              {t("next")}
-            </Button>
-          </div>
-        </Card>
+        <>
+          <Card>
+            <SectionLabel icon={Package}>{t("stepBean")}</SectionLabel>
+            <p className="text-base mb-3">{t("beanQuestion")}</p>
+            <BeanForm onSaved={(bean) => setAddedBeanIds((ids) => [...ids, bean.id])} />
+          </Card>
+          {addedBeanIds.length > 0 ? (
+            <div className="mt-3">
+              <p className="text-[13px] text-muted mb-1.5">{t("addedSoFar", { count: addedBeanIds.length })}</p>
+              <div className="flex flex-wrap gap-2">
+                {addedBeanIds.map((id) => (
+                  <Chip key={id} active>
+                    {beanLabel(id)}
+                  </Chip>
+                ))}
+              </div>
+            </div>
+          ) : null}
+          <Button onClick={() => setStep("location")}>{addedBeanIds.length > 0 ? t("next") : t("skip")}</Button>
+        </>
       ) : null}
 
       {step === "location" ? (
