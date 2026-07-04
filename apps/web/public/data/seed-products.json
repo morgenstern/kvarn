@@ -7811,5 +7811,525 @@
     "grindScale": null,
     "specs": {},
     "status": "seed"
+  },
+  {
+    "id": "bean-tchibo-espresso-sizilianer-art",
+    "kind": "bean",
+    "brand": "Tchibo",
+    "model": "Espresso Sizilianer Art",
+    "grindScale": null,
+    "specs": {
+      "segment": "supermarket",
+      "origin": "Arabica/Robusta-Blend, süditalienische Röstung",
+      "notes": "Kräftig, würzig, dichte Crema"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "bean-tchibo-espresso-mailaender-art",
+    "kind": "bean",
+    "brand": "Tchibo",
+    "model": "Espresso Mailänder Art",
+    "grindScale": null,
+    "specs": {
+      "segment": "supermarket",
+      "origin": "Arabica/Robusta-Blend, norditalienische Röstung",
+      "notes": "Ausgewogen, mild-elegant"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "bean-tchibo-barista-espresso",
+    "kind": "bean",
+    "brand": "Tchibo",
+    "model": "Barista Espresso",
+    "grindScale": null,
+    "specs": {
+      "segment": "supermarket",
+      "origin": "100% Arabica-Blend",
+      "notes": "Für Siebträger optimiert, feine Crema"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "bean-tchibo-espresso-fair-trade",
+    "kind": "bean",
+    "brand": "Tchibo",
+    "model": "Espresso Fair Trade",
+    "grindScale": null,
+    "specs": {
+      "segment": "supermarket",
+      "origin": "100% Fairtrade-zertifiziert",
+      "notes": "Seidig, mit warmen Kakaonoten"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "bean-dallmayr-espresso-doro",
+    "kind": "bean",
+    "brand": "Dallmayr",
+    "model": "Espresso d'Oro",
+    "grindScale": null,
+    "specs": {
+      "segment": "supermarket",
+      "origin": "Arabica/Robusta-Blend",
+      "notes": "Weich, vollmundig, dezente Kakaonote"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "bean-dallmayr-crema-doro-espresso",
+    "kind": "bean",
+    "brand": "Dallmayr",
+    "model": "Crema d'Oro Espresso",
+    "grindScale": null,
+    "specs": {
+      "segment": "supermarket",
+      "origin": "Arabica/Robusta-Blend",
+      "notes": "Mild, samtig-feine helle Crema"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "bean-dallmayr-espresso-classico",
+    "kind": "bean",
+    "brand": "Dallmayr",
+    "model": "Espresso Classico",
+    "grindScale": null,
+    "specs": {
+      "segment": "supermarket",
+      "origin": "Arabica/Robusta-Blend",
+      "notes": "Dunkel geröstet, wenig Säure"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "bean-dallmayr-selezione-oro-espresso",
+    "kind": "bean",
+    "brand": "Dallmayr",
+    "model": "Selezione Oro Espresso",
+    "grindScale": null,
+    "specs": {
+      "segment": "supermarket",
+      "origin": "100% Arabica",
+      "notes": "Prämiumlinie aus München, aromatisch"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "bean-jacobs-espresso-kraeftig",
+    "kind": "bean",
+    "brand": "Jacobs",
+    "model": "Espresso Kräftig",
+    "grindScale": null,
+    "specs": {
+      "segment": "supermarket",
+      "origin": "Arabica/Robusta-Blend",
+      "notes": "Kräftig geröstet, würzig"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "bean-jacobs-barista-editions-espresso",
+    "kind": "bean",
+    "brand": "Jacobs",
+    "model": "Barista Editions Espresso",
+    "grindScale": null,
+    "specs": {
+      "segment": "supermarket",
+      "origin": "Arabica/Robusta-Blend",
+      "notes": "Für Espresso, Cappuccino, Latte Macchiato"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "bean-jacobs-expertenroestung-espresso",
+    "kind": "bean",
+    "brand": "Jacobs",
+    "model": "Expertenröstung Espresso",
+    "grindScale": null,
+    "specs": {
+      "segment": "supermarket",
+      "origin": "Arabica/Robusta-Blend",
+      "notes": "Sehr kräftig, intensives Röstaroma"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "bean-melitta-espresso",
+    "kind": "bean",
+    "brand": "Melitta",
+    "model": "Espresso",
+    "grindScale": null,
+    "specs": {
+      "segment": "supermarket",
+      "origin": "100% Arabica",
+      "notes": "Stärke 5/5, reiche Crema, kräftiger Röstgrad"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "bean-melitta-bellacrema-espresso",
+    "kind": "bean",
+    "brand": "Melitta",
+    "model": "BellaCrema Espresso",
+    "grindScale": null,
+    "specs": {
+      "segment": "supermarket",
+      "origin": "Arabica/Robusta-Blend",
+      "notes": "Mild bis kräftig, für Vollautomaten"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "bean-melitta-barista-espresso",
+    "kind": "bean",
+    "brand": "Melitta",
+    "model": "Barista Espresso",
+    "grindScale": null,
+    "specs": {
+      "segment": "supermarket",
+      "origin": "100% Arabica",
+      "notes": "Feine Crema, ausgewogen"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "bean-lavazza-qualita-oro",
+    "kind": "bean",
+    "brand": "Lavazza",
+    "model": "Qualità Oro",
+    "grindScale": null,
+    "specs": {
+      "segment": "supermarket",
+      "origin": "100% Arabica",
+      "notes": "Mild, aromatisch, klassisch italienisch"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "bean-lavazza-super-crema",
+    "kind": "bean",
+    "brand": "Lavazza",
+    "model": "Super Crema",
+    "grindScale": null,
+    "specs": {
+      "segment": "supermarket",
+      "origin": "Arabica/Robusta-Blend",
+      "notes": "Cremig, nussig-süß"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "bean-lavazza-crema-e-gusto",
+    "kind": "bean",
+    "brand": "Lavazza",
+    "model": "Crema e Gusto",
+    "grindScale": null,
+    "specs": {
+      "segment": "supermarket",
+      "origin": "Arabica/Robusta-Blend",
+      "notes": "Kräftig, für Siebträger und Vollautomaten"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "bean-lavazza-espresso-barista-gran-crema",
+    "kind": "bean",
+    "brand": "Lavazza",
+    "model": "Espresso Barista Gran Crema",
+    "grindScale": null,
+    "specs": {
+      "segment": "supermarket",
+      "origin": "Arabica/Robusta-Blend",
+      "notes": "Dichte Crema, vollmundig"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "bean-the-barn-berlin-ick-liebe-dir",
+    "kind": "bean",
+    "brand": "The Barn",
+    "model": "Berlin Ick Liebe Dir Espresso",
+    "grindScale": null,
+    "specs": {
+      "segment": "regional",
+      "city": "Berlin",
+      "notes": "Third-Wave-Röstung, fruchtig-süß, wechselt je Ernte"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "bean-bonanza-blend-espresso",
+    "kind": "bean",
+    "brand": "Bonanza Coffee Roasters",
+    "model": "Bonanza Blend Espresso",
+    "grindScale": null,
+    "specs": {
+      "segment": "regional",
+      "city": "Berlin",
+      "notes": "Ausgewogen, schokoladig — Kreuzberger Kultröster"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "bean-five-elephant-house-espresso",
+    "kind": "bean",
+    "brand": "Five Elephant",
+    "model": "House Espresso",
+    "grindScale": null,
+    "specs": {
+      "segment": "regional",
+      "city": "Berlin",
+      "notes": "Hell geröstet, fruchtbetont"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "bean-coffeecircle-casa-espresso",
+    "kind": "bean",
+    "brand": "CoffeeCircle",
+    "model": "Casa Espresso",
+    "grindScale": null,
+    "specs": {
+      "segment": "regional",
+      "city": "Berlin",
+      "notes": "Direct-Trade-Blend, süß-nussig"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "bean-elbgold-ristretto-espresso-blend",
+    "kind": "bean",
+    "brand": "Elbgold",
+    "model": "Ristretto Espresso Blend",
+    "grindScale": null,
+    "specs": {
+      "segment": "regional",
+      "city": "Hamburg",
+      "notes": "Cup-of-Excellence-Bohnen, schokoladig-süß"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "bean-public-coffee-roasters-signature-espresso",
+    "kind": "bean",
+    "brand": "Public Coffee Roasters",
+    "model": "Signature Espresso",
+    "grindScale": null,
+    "specs": {
+      "segment": "regional",
+      "city": "Hamburg",
+      "notes": "Third-Wave, ausbalanciert"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "bean-speicherstadt-kaffeeroesterei-hamburg-espresso",
+    "kind": "bean",
+    "brand": "Speicherstadt Kaffeerösterei",
+    "model": "Hamburg Espresso",
+    "grindScale": null,
+    "specs": {
+      "segment": "regional",
+      "city": "Hamburg",
+      "notes": "Traditionelle Trommelröstung, mild-würzig"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "bean-man-versus-machine-blend-no-3-espresso",
+    "kind": "bean",
+    "brand": "Man Versus Machine",
+    "model": "MvM Blend No. 3 Espresso",
+    "grindScale": null,
+    "specs": {
+      "segment": "regional",
+      "city": "München",
+      "notes": "International in der Sterne-Gastronomie im Einsatz"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "bean-tegernseer-kaffeeroesterei-espresso",
+    "kind": "bean",
+    "brand": "Tegernseer Kaffeerösterei",
+    "model": "Tegernseer Espresso",
+    "grindScale": null,
+    "specs": {
+      "segment": "regional",
+      "city": "München",
+      "notes": "Sanfte Trommelröstung, harmonisch"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "bean-ernst-kaffeeroester-hausespresso",
+    "kind": "bean",
+    "brand": "ERNST Kaffeeröster",
+    "model": "Hausespresso",
+    "grindScale": null,
+    "specs": {
+      "segment": "regional",
+      "city": "Köln",
+      "notes": "Hell geröstet, Single-Origin-fokussiert"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "bean-van-dyck-kaffee-espresso",
+    "kind": "bean",
+    "brand": "Van Dyck Kaffee",
+    "model": "Van Dyck Espresso",
+    "grindScale": null,
+    "specs": {
+      "segment": "regional",
+      "city": "Köln",
+      "notes": "Kölns älteste Rösterei (seit 1949), traditionell"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "bean-benson-coffee-signature-espresso",
+    "kind": "bean",
+    "brand": "Benson Coffee",
+    "model": "Signature Espresso",
+    "grindScale": null,
+    "specs": {
+      "segment": "regional",
+      "city": "Köln",
+      "notes": "Vom zweifachen deutschen Röstmeister"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "bean-hoppenworth-ploch-espresso-no-1",
+    "kind": "bean",
+    "brand": "Hoppenworth & Ploch",
+    "model": "Espresso No. 1",
+    "grindScale": null,
+    "specs": {
+      "segment": "regional",
+      "city": "Frankfurt am Main",
+      "notes": "Ausgewogener Hausblend"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "bean-backyard-coffee-espresso-blend",
+    "kind": "bean",
+    "brand": "Backyard Coffee",
+    "model": "Espresso Blend",
+    "grindScale": null,
+    "specs": {
+      "segment": "regional",
+      "city": "Frankfurt am Main",
+      "notes": "Specialty-Coffee-Pionier in Frankfurt"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "bean-froehlich-kaffeeroesterei-stuttgarter-espresso",
+    "kind": "bean",
+    "brand": "Fröhlich Kaffeerösterei",
+    "model": "Stuttgarter Espresso",
+    "grindScale": null,
+    "specs": {
+      "segment": "regional",
+      "city": "Stuttgart",
+      "notes": "Stuttgarts erste Specialty-Rösterei, Trommelröstung"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "bean-schvarz-espresso-blend",
+    "kind": "bean",
+    "brand": "Schvarz",
+    "model": "Espresso Blend",
+    "grindScale": null,
+    "specs": {
+      "segment": "regional",
+      "city": "Düsseldorf",
+      "notes": "Verschiedene Röstgrade und Aromaprofile"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "bean-brew-specialty-coffee-hausmarke-espresso",
+    "kind": "bean",
+    "brand": "BREW Specialty Coffee",
+    "model": "Hausmarke Espresso",
+    "grindScale": null,
+    "specs": {
+      "segment": "regional",
+      "city": "Düsseldorf",
+      "notes": "Fruchtig-intensiv"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "bean-obenauf-kaffeemanufaktur-espresso",
+    "kind": "bean",
+    "brand": "Obenauf Kaffeemanufaktur",
+    "model": "Espresso",
+    "grindScale": null,
+    "specs": {
+      "segment": "regional",
+      "city": "Leipzig",
+      "notes": "Ausgezeichnet als bester Espresso Deutschlands 2016"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "bean-elstermuehle-espresso",
+    "kind": "bean",
+    "brand": "Elstermühle",
+    "model": "Espresso",
+    "grindScale": null,
+    "specs": {
+      "segment": "regional",
+      "city": "Leipzig",
+      "notes": "Säurearm, lang und schonend geröstet"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "bean-roestwerk-dortmund-espresso",
+    "kind": "bean",
+    "brand": "Röstwerk Dortmund",
+    "model": "Espresso",
+    "grindScale": null,
+    "specs": {
+      "segment": "regional",
+      "city": "Dortmund",
+      "notes": "Handgeröstete Einzelcharge aus dem Ruhrgebiet"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "bean-derks-kaffeeroesterei-dortmunder-espresso",
+    "kind": "bean",
+    "brand": "Derks Kaffeerösterei",
+    "model": "Dortmunder Espresso",
+    "grindScale": null,
+    "specs": {
+      "segment": "regional",
+      "city": "Dortmund",
+      "notes": "Traditionsrösterei, klassische Langzeitröstung"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "bean-kettwiger-roesterei-espresso",
+    "kind": "bean",
+    "brand": "Kettwiger Rösterei",
+    "model": "Espresso",
+    "grindScale": null,
+    "specs": {
+      "segment": "regional",
+      "city": "Essen",
+      "notes": "Trommelröstung, ausgewogen"
+    },
+    "status": "seed"
   }
 ]

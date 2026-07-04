@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { Button, Card, EntityImage, ProductCard } from "@kvarn/ui";
 import { generateIllustrationFromPhoto, uploadPhoto } from "@kvarn/api-client";
 import { computeBeanAgeDays, freshnessPct } from "@kvarn/core";
-import { Archive, Camera, Plus } from "lucide-react";
+import { Archive, Camera, Plus, Search } from "lucide-react";
 import { useKvarnStore } from "../state/store";
 import { useT } from "../i18n";
 
@@ -13,17 +13,34 @@ function beanFreshnessPct(roastDate: string | null): number | null {
 }
 
 export function Regal() {
-  const { beans, addBean, archiveBean, activeBeanId, setActiveBean, setBeanImage } = useKvarnStore();
+  const { beans, products, addBean, archiveBean, activeBeanId, setActiveBean, setBeanImage } = useKvarnStore();
   const navigate = useNavigate();
   const t = useT("regal");
   const tCommon = useT("common");
   const [showForm, setShowForm] = useState(false);
+  const [beanQuery, setBeanQuery] = useState("");
   const [roaster, setRoaster] = useState("");
   const [name, setName] = useState("");
   const [origin, setOrigin] = useState("");
   const [roastDate, setRoastDate] = useState("");
   const [photoUrl, setPhotoUrl] = useState<string | undefined>();
   const [photoUploading, setPhotoUploading] = useState(false);
+
+  const beanCatalogMatches = useMemo(() => {
+    if (!beanQuery) return [];
+    const q = beanQuery.toLowerCase();
+    return products.filter((p) => p.kind === "bean" && `${p.brand} ${p.model}`.toLowerCase().includes(q)).slice(0, 8);
+  }, [products, beanQuery]);
+
+  function pickBeanFromCatalog(productId: string) {
+    const p = products.find((pr) => pr.id === productId);
+    if (!p) return;
+    setRoaster(p.brand);
+    setName(p.model);
+    const specOrigin = p.specs && typeof p.specs.origin === "string" ? p.specs.origin : "";
+    setOrigin(specOrigin);
+    setBeanQuery("");
+  }
 
   async function handlePhotoChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
@@ -66,6 +83,31 @@ export function Regal() {
       {showForm ? (
         <Card>
           <form onSubmit={submit} className="flex flex-col gap-3">
+            <div className="flex items-center gap-1.5 text-sm text-muted -mb-1">
+              <Search size={14} strokeWidth={1.5} />
+              {t("searchBeanHint")}
+            </div>
+            <input
+              className="border border-linen rounded-control px-3 py-2 text-base bg-birch"
+              placeholder={t("searchBeanPlaceholder")}
+              value={beanQuery}
+              onChange={(e) => setBeanQuery(e.target.value)}
+            />
+            {beanCatalogMatches.length > 0 ? (
+              <div className="-mt-1 flex flex-col">
+                {beanCatalogMatches.map((p) => (
+                  <button
+                    key={p.id}
+                    type="button"
+                    className="w-full text-left text-base py-2.5 border-b border-linen last:border-b-0"
+                    onClick={() => pickBeanFromCatalog(p.id)}
+                  >
+                    <span className="font-medium">{p.brand}</span> — {p.model}
+                  </button>
+                ))}
+              </div>
+            ) : null}
+            <p className="text-sm text-muted -mb-2">{t("orEnterManually")}</p>
             <input
               className="border border-linen rounded-control px-3 py-2 text-base bg-birch"
               placeholder={t("roasterPlaceholder")}

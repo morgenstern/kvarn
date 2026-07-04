@@ -23,7 +23,11 @@ const syncColumns = {
 
 export const product = sqliteTable("product", {
   id: text("id").primaryKey(),
-  kind: text("kind", { enum: ["grinder", "machine", "brewer", "accessory"] }).notNull(),
+  // "bean" entries are a curated catalog of roasters/varieties (see
+  // apps/web/public/data/seed-products.json) used only to prefill the
+  // free-text roaster/name fields on the user's own `bean` rows below —
+  // there's no productId FK from `bean` to `product` for this kind.
+  kind: text("kind", { enum: ["grinder", "machine", "brewer", "accessory", "bean"] }).notNull(),
   brand: text("brand").notNull(),
   model: text("model").notNull(),
   imageUrl: text("image_url"),

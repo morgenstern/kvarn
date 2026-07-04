@@ -17,7 +17,7 @@ export interface KvarnState {
 
   hydrate: () => Promise<void>;
   addEquipmentFromProduct: (productId: string, photoUrl?: string) => Promise<Equipment>;
-  addCustomEquipment: (customName: string, kind: Product["kind"], photoUrl?: string) => Promise<Equipment>;
+  addCustomEquipment: (customName: string, kind: Exclude<Product["kind"], "bean">, photoUrl?: string) => Promise<Equipment>;
   addSetup: (input: {
     name: string;
     method: Setup["method"];
@@ -96,7 +96,7 @@ export const useKvarnStore = create<KvarnState>((set, get) => ({
       userId: LOCAL_USER_ID,
       productId,
       customName: null,
-      kind: product?.kind ?? null,
+      kind: product && product.kind !== "bean" ? product.kind : null,
       notes: null,
       burrKg: null,
       photoUrl: photoUrl ?? null,
