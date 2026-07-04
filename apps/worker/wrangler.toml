@@ -1,4 +1,9 @@
-name = "kvarn"
+# Must match the Worker connected to Workers Builds / the GitHub integration
+# in the Cloudflare dashboard exactly (currently "kvarn-coffee", serving
+# kvarn.helgemorgenstern.de) — never override with `--name` on the CLI
+# (`wrangler deploy`, `wrangler secret put`, ...), that creates a second,
+# disconnected Worker instead of targeting this one.
+name = "kvarn-coffee"
 main = "src/index.ts"
 compatibility_date = "2025-04-01"
 compatibility_flags = ["nodejs_compat"]

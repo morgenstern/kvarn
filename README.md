@@ -91,17 +91,28 @@ pnpm build
 
 ## Deploy (später, sobald gewünscht)
 
+**Wichtig:** Alle `wrangler`-Befehle unten mit `cd apps/worker` ausführen (nicht im `kvarn/`-Repo-Root — Wrangler
+findet dort kein `wrangler.toml`, sieht aber `pnpm-workspace.yaml` und bricht mit einem
+"application detection... in the root of a workspace"-Fehler ab). Nie `--name` an einen `wrangler`-Befehl
+anhängen, auch nicht um den Fehler zu umgehen — das legt einen zweiten, unabhängigen Worker an statt den
+einen aus `apps/worker/wrangler.toml` (`name = "kvarn-coffee"`) zu treffen. Genau das ist uns schon einmal
+passiert: ein per `--name kvarn` erzeugter Geister-Worker ohne Routen/Domain, während der echte,
+GitHub-verbundene Worker (`kvarn-coffee`, mit der Domain) die Secrets nie bekam.
+
 1. Cloudflare-Account anlegen: https://dash.cloudflare.com/sign-up
-2. `pnpm dlx wrangler login` im `kvarn/`-Ordner ausführen (Browser-Login).
+2. `cd apps/worker && pnpm dlx wrangler login` (Browser-Login).
 3. `pnpm wrangler d1 create kvarn`, `pnpm wrangler r2 bucket create kvarn-photos`,
-   `pnpm wrangler kv namespace create WEATHER_CACHE` — jeweils die zurückgegebene ID in
-   `apps/worker/wrangler.toml` eintragen.
+   `pnpm wrangler kv namespace create WEATHER_CACHE` (weiterhin in `apps/worker`) — jeweils die
+   zurückgegebene ID in `apps/worker/wrangler.toml` eintragen.
 4. `pnpm wrangler secret put BETTER_AUTH_SECRET` — eigenen Zufallswert setzen (siehe oben). Optional für die
    AI-Illustrations-Pipeline zusätzlich `pnpm wrangler secret put GOOGLE_CSE_API_KEY`,
    `GOOGLE_CSE_CX` und `GEMINI_API_KEY` setzen (siehe `apps/worker/.dev.vars.example`).
 5. `pnpm --filter @kvarn/worker db:migrate:remote` — Migrationen auf die echte D1 anwenden.
 6. In Cloudflare: **Workers & Pages → Create → Import a repository**, das GitHub-Repo `kvarn` verbinden
-   (Workers Builds deployt danach bei jedem Push auf `main`).
+   (Workers Builds deployt danach bei jedem Push auf `main`). Im Projekt unter **Settings → Build** den
+   **Deploy command** auf `npx wrangler deploy --config apps/worker/wrangler.toml` setzen — ohne den
+   `--config`-Pfad läuft `wrangler deploy` im Repo-Root und schlägt mit demselben
+   "workspace root"-Fehler wie oben fehl, weil Workers Builds vom Monorepo-Root aus deployt.
 7. Sobald eine öffentliche URL/Domain feststeht: in `apps/worker/src/auth.ts` zu `trustedOrigins` hinzufügen
    (aktuell nur die lokalen Dev-Origins für den Vite-Proxy).
 
