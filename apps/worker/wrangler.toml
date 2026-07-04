@@ -7,6 +7,12 @@ name = "kvarn-coffee"
 main = "src/index.ts"
 compatibility_date = "2025-04-01"
 compatibility_flags = ["nodejs_compat"]
+# Served via the custom domain kvarn.helgemorgenstern.de (attached through the
+# Cloudflare dashboard's Domains tab, not tracked here in wrangler.toml).
+# Without this, Wrangler defaults to assuming a workers.dev deployment and
+# fails deploys until a workers.dev subdomain is registered on the account —
+# which we don't need since the custom domain already routes to this Worker.
+workers_dev = false
 
 [assets]
 directory = "../web/dist"
