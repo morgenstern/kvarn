@@ -1,8 +1,8 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { Button, Card, Chip, EntityImage, SectionLabel } from "@kvarn/ui";
 import type { Setup as SetupType } from "@kvarn/db";
-import { Coffee, MapPin, Package, SlidersHorizontal } from "lucide-react";
+import { Coffee, Download, MapPin, Package, SlidersHorizontal } from "lucide-react";
 import { useKvarnStore } from "../state/store";
 import { useT } from "../i18n";
 
@@ -13,7 +13,29 @@ export function markOnboardingSeen() {
   localStorage.setItem(ONBOARDING_SEEN_KEY, "1");
 }
 
-type Step = "method" | "equipment" | "bean" | "location";
+// Chrome/Edge-only event (Android + desktop) — no official DOM lib type yet.
+interface BeforeInstallPromptEvent extends Event {
+  prompt: () => Promise<void>;
+  userChoice: Promise<{ outcome: "accepted" | "dismissed" }>;
+}
+
+type Platform = "ios" | "android" | "desktop";
+
+function detectPlatform(): Platform {
+  const ua = navigator.userAgent;
+  if (/iPad|iPhone|iPod/.test(ua)) return "ios";
+  if (/Android/.test(ua)) return "android";
+  return "desktop";
+}
+
+function isStandaloneDisplay(): boolean {
+  return (
+    window.matchMedia("(display-mode: standalone)").matches ||
+    (window.navigator as unknown as { standalone?: boolean }).standalone === true
+  );
+}
+
+type Step = "method" | "equipment" | "bean" | "location" | "install";
 
 export function Onboarding() {
   const t = useT("onboarding");
@@ -36,6 +58,8 @@ export function Onboarding() {
   const [query, setQuery] = useState("");
   const [roaster, setRoaster] = useState("");
   const [beanName, setBeanName] = useState("");
+  const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
+  const platform = useMemo(detectPlatform, []);
 
   const filteredProducts = useMemo(() => {
     if (!query) return [];
@@ -43,11 +67,31 @@ export function Onboarding() {
     return products.filter((p) => p.kind === "grinder" && `${p.brand} ${p.model}`.toLowerCase().includes(q)).slice(0, 6);
   }, [products, query]);
 
-  async function finish(withWeather: boolean) {
-    markOnboardingSeen();
+  useEffect(() => {
+    function handler(e: Event) {
+      e.preventDefault();
+      setDeferredPrompt(e as BeforeInstallPromptEvent);
+    }
+    window.addEventListener("beforeinstallprompt", handler);
+    return () => window.removeEventListener("beforeinstallprompt", handler);
+  }, []);
+
+  async function triggerInstall() {
+    if (!deferredPrompt) return;
+    await deferredPrompt.prompt();
+    await deferredPrompt.userChoice;
+    setDeferredPrompt(null);
+  }
+
+  function advanceFromLocation(withWeather: boolean) {
     if (withWeather) {
       captureWeatherSnapshot();
     }
+    setStep("install");
+  }
+
+  function finishOnboarding() {
+    markOnboardingSeen();
     navigate({ to: "/bruehen" });
   }
 
@@ -176,10 +220,32 @@ export function Onboarding() {
           <SectionLabel icon={MapPin}>{t("stepLocation")}</SectionLabel>
           <p className="text-base mb-3">{t("locationQuestion")}</p>
           <p className="text-sm text-muted mb-3">{t("locationExplainer")}</p>
-          <Button onClick={() => finish(true)}>{t("locationAllow")}</Button>
-          <Button variant="ghost" onClick={() => finish(false)}>
+          <Button onClick={() => advanceFromLocation(true)}>{t("locationAllow")}</Button>
+          <Button variant="ghost" onClick={() => advanceFromLocation(false)}>
             {t("locationSkip")}
           </Button>
+        </Card>
+      ) : null}
+
+      {step === "install" ? (
+        <Card>
+          <SectionLabel icon={Download}>{t("stepInstall")}</SectionLabel>
+          <p className="text-base mb-3">{t("installQuestion")}</p>
+          {isStandaloneDisplay() ? (
+            <p className="text-sm text-muted mb-3">{t("installAlready")}</p>
+          ) : platform === "ios" ? (
+            <p className="text-sm text-muted mb-3">{t("installIosHint")}</p>
+          ) : deferredPrompt ? (
+            <Button variant="ghost" onClick={triggerInstall}>
+              <Download size={18} strokeWidth={1.5} />
+              {t("installButton")}
+            </Button>
+          ) : (
+            <p className="text-sm text-muted mb-3">
+              {platform === "android" ? t("installAndroidHint") : t("installDesktopHint")}
+            </p>
+          )}
+          <Button onClick={finishOnboarding}>{t("finish")}</Button>
         </Card>
       ) : null}
     </div>
