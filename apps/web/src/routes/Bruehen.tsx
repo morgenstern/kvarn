@@ -1,20 +1,14 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
-import { Button, Card, Chip, EntityImage, Hint, ParamStepper, ProductCard, RatingSlider, SectionLabel, TimerRing } from "@kvarn/ui";
-import { computeRatio, nextGrindSuggestion } from "@kvarn/core";
+import { Button, Card, Chip, EntityImage, Hint, ParamStepper, ProductCard, RatingSlider, RatioViz, SectionLabel, TimerRing, WeatherStrip } from "@kvarn/ui";
+import { computeRatio, weatherConditionKey } from "@kvarn/core";
 import type { Setup as SetupType, WeatherSnapshot } from "@kvarn/db";
-import { BarChart3, CheckCircle2, Coffee, Droplets, Home, Package, SlidersHorizontal, X } from "lucide-react";
-import {
-  activeBean,
-  activeSetup,
-  equipmentKind,
-  equipmentProduct,
-  lastBrewFor,
-  useKvarnStore,
-  weatherSnapshotFor,
-} from "../state/store";
+import { BarChart3, CheckCircle2, Coffee, Home, Package, SlidersHorizontal, X } from "lucide-react";
+import { activeBean, activeSetup, equipmentKind, equipmentProduct, useKvarnStore } from "../state/store";
 import { SetupThumbnail } from "../components/SetupThumbnail";
+import { useGrindSuggestion } from "../hooks/useGrindSuggestion";
 import { useStopwatch } from "../hooks/useStopwatch";
+import { CONDITION_I18N_KEY } from "../utils/weatherLabels";
 import { useT, useTags } from "../i18n";
 
 type Step = "params" | "timer" | "rating";
@@ -32,12 +26,12 @@ export function Bruehen() {
   const { setups, beans, equipment, activeSetupId, activeBeanId, setActiveSetup, setActiveBean, findOrCreateSetup } = state;
   const setup = activeSetup(state);
   const bean = activeBean(state);
-  const grinder = equipmentProduct(state, setup?.grinderEquipmentId ?? null);
   const commitBrew = useKvarnStore((s) => s.commitBrew);
   const captureWeatherSnapshot = useKvarnStore((s) => s.captureWeatherSnapshot);
   const navigate = useNavigate();
   const stopwatch = useStopwatch();
   const t = useT("bruehen");
+  const tHeute = useT("heute");
   const visualTagOptions = useTags("bruehen", "visualTags");
   const flavorTagOptions = useTags("bruehen", "flavorTags");
 
@@ -75,15 +69,6 @@ export function Bruehen() {
     setPickMode("setup");
   }
 
-  const grindScale = grinder?.grindScale ?? {
-    min: 0,
-    max: 40,
-    step: 0.5,
-    unit: "clicks",
-    label: t("grindLabel"),
-    finerDirection: -1 as const,
-  };
-
   const [weatherSnapshot, setWeatherSnapshot] = useState<WeatherSnapshot | null>(null);
 
   useEffect(() => {
@@ -92,27 +77,7 @@ export function Bruehen() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const suggestion = useMemo(() => {
-    if (!setup || !bean) return null;
-    const lastBrew = lastBrewFor(state, setup.id, bean.id);
-    const lastWeather = lastBrew ? weatherSnapshotFor(state, lastBrew.weatherId) : undefined;
-    const humidityDeltaPct =
-      weatherSnapshot?.humidityPct != null && lastWeather?.humidityPct != null
-        ? weatherSnapshot.humidityPct - lastWeather.humidityPct
-        : undefined;
-    return nextGrindSuggestion({
-      method: setup.method,
-      grindScale,
-      lastBrew: lastBrew
-        ? { grindSetting: lastBrew.grindSetting, timeTotalS: lastBrew.timeTotalS, balance: lastBrew.balance ?? 0 }
-        : null,
-      beanAgeDays: beanAgeDaysFor(bean.roastDate) ?? undefined,
-      humidityDeltaPct,
-    });
-    // Only recompute when the underlying combination or the weather snapshot changes,
-    // not on every render — this is a one-shot default, not a live recalculation.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [setup?.id, bean?.id, weatherSnapshot?.id]);
+  const { grindScale, suggestion } = useGrindSuggestion(state, setup, bean, weatherSnapshot);
 
   const [step, setStep] = useState<Step>("params");
   const [grindSetting, setGrindSetting] = useState(
@@ -209,11 +174,16 @@ export function Bruehen() {
     <div>
       <h1 className="font-display text-[32px] mt-3.5 mb-0.5">{t("title")}</h1>
       <p className="text-base text-muted">{setup.name} · {bean.roaster} — {bean.name}</p>
-      {weatherSnapshot?.humidityPct != null ? (
-        <p className="flex items-center gap-1.5 text-sm text-muted mt-1">
-          <Droplets size={14} strokeWidth={1.5} />
-          {t("humidityLine", { temp: weatherSnapshot.tempC ?? "—", humidity: weatherSnapshot.humidityPct })}
-        </p>
+      {weatherSnapshot ? (
+        <WeatherStrip
+          className="mt-3"
+          tempC={weatherSnapshot.tempC}
+          humidityPct={weatherSnapshot.humidityPct}
+          pressureHpa={weatherSnapshot.pressureHpa}
+          condition={tHeute(CONDITION_I18N_KEY[weatherConditionKey(weatherSnapshot.weatherCode)] ?? "condUnknown")}
+          humidityLabel={tHeute("weatherHumidity")}
+          pressureLabel={tHeute("weatherPressure")}
+        />
       ) : null}
 
       {step === "params" ? (
@@ -306,7 +276,7 @@ export function Bruehen() {
                     className="w-28 flex-none"
                     active={comboBeanId === b.id}
                     onClick={() => setComboBeanId(b.id)}
-                    image={<EntityImage src={b.photoUrl} kind="bean" className="w-full h-full" />}
+                    image={<EntityImage src={b.imageUrl ?? b.photoUrl} kind="bean" className="w-full h-full" />}
                   >
                     <div className="text-[13px] font-medium leading-tight truncate">{b.roaster}</div>
                   </ProductCard>
@@ -329,7 +299,7 @@ export function Bruehen() {
                     className="w-28 flex-none"
                     active={activeBeanId === b.id}
                     onClick={() => setActiveBean(b.id)}
-                    image={<EntityImage src={b.photoUrl} kind="bean" className="w-full h-full" />}
+                    image={<EntityImage src={b.imageUrl ?? b.photoUrl} kind="bean" className="w-full h-full" />}
                   >
                     <div className="text-[13px] font-medium leading-tight truncate">{b.roaster}</div>
                   </ProductCard>
@@ -343,7 +313,7 @@ export function Bruehen() {
       {step === "params" ? (
         <Card>
           <ParamStepper
-            label={grindScale.label}
+            label={grindScale.label || t("grindLabel")}
             unit={grindScale.unit}
             value={grindSetting}
             step={grindScale.step}
@@ -364,6 +334,13 @@ export function Bruehen() {
             <span>{t("ratio")}</span>
             <span className="num">1:{computeRatio({ doseG, yieldG: targetYieldG })}</span>
           </div>
+          <RatioViz
+            className="mt-2"
+            doseG={doseG}
+            yieldG={targetYieldG}
+            doseLabel={`${t("doseLabel")} ${doseG}g`}
+            yieldLabel={`${targetYieldG}g ${t("targetYieldLabel")}`}
+          />
           {suggestion && suggestion.reasons.length > 0 ? (
             <Hint>
               <span>
@@ -388,6 +365,30 @@ export function Bruehen() {
 
       {step === "timer" ? (
         <div className="flex flex-col items-center pt-6">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="flex flex-col items-center gap-1">
+              <EntityImage
+                src={equipmentProduct(state, setup.grinderEquipmentId)?.imageUrl}
+                kind={equipmentKind(state, setup.grinderEquipmentId)}
+                className="w-14 h-14 rounded-control"
+              />
+              <span className="text-[11px] text-muted">{t("pickGrinder")}</span>
+            </div>
+            {setup.machineEquipmentId ? (
+              <div className="flex flex-col items-center gap-1">
+                <EntityImage
+                  src={equipmentProduct(state, setup.machineEquipmentId)?.imageUrl}
+                  kind="machine"
+                  className="w-14 h-14 rounded-control"
+                />
+                <span className="text-[11px] text-muted">{t("pickMachine")}</span>
+              </div>
+            ) : null}
+            <div className="flex flex-col items-center gap-1">
+              <EntityImage src={bean.imageUrl ?? bean.photoUrl} kind="bean" className="w-14 h-14 rounded-control" />
+              <span className="text-[11px] text-muted">{t("pickBean")}</span>
+            </div>
+          </div>
           <TimerRing elapsedS={stopwatch.elapsedS} lapLabel={stopwatch.running ? t("running") : t("stopped")} />
           <div className="w-full mt-6">
             {stopwatch.running ? (

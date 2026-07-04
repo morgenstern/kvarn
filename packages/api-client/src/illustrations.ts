@@ -38,3 +38,24 @@ export async function setDefaultIllustration(draftId: string): Promise<void> {
   const res = await fetch(`/api/illustrations/drafts/${draftId}/set-default`, { method: "POST" });
   if (!res.ok) throw new Error(`setting default illustration failed: ${res.status}`);
 }
+
+export type PhotoIllustrationKind = "grinder" | "machine" | "brewer" | "accessory" | "bean";
+
+/**
+ * Single-shot generation from a user-uploaded photo (custom equipment, a
+ * bean bag) — no product row involved, just returns the generated image URL
+ * for the caller to store on its own equipment/bean record.
+ */
+export async function generateIllustrationFromPhoto(input: {
+  photoUrl: string;
+  label: string;
+  kind: PhotoIllustrationKind;
+}): Promise<{ imageUrl: string }> {
+  const res = await fetch("/api/illustrations/from-photo", {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify(input),
+  });
+  if (!res.ok) throw new Error(`illustration generation from photo failed: ${res.status}`);
+  return (await res.json()) as { imageUrl: string };
+}

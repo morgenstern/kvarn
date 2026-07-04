@@ -57,6 +57,12 @@ export const equipment = sqliteTable("equipment", {
   kind: text("kind", { enum: ["grinder", "machine", "brewer", "accessory"] }),
   notes: text("notes"),
   burrKg: real("burr_kg"),
+  // Private reference photo (e.g. for custom/non-catalog gear) — never shown
+  // publicly, only used as generation input. See docs/07_ILLUSTRATION_STYLE.md §3.
+  photoUrl: text("photo_url"),
+  // Generated "Kvarn Sketch" illustration from photoUrl, once available.
+  // EntityImage prefers this over photoUrl wherever equipment is displayed.
+  imageUrl: text("image_url"),
   ...syncColumns,
 });
 
@@ -93,6 +99,9 @@ export const bean = sqliteTable("bean", {
   roastDate: text("roast_date"),
   openedAt: text("opened_at"),
   photoUrl: text("photo_url"),
+  // Generated "Kvarn Sketch" illustration from photoUrl, once available —
+  // EntityImage prefers this over photoUrl, same pattern as equipment.
+  imageUrl: text("image_url"),
   barcode: text("barcode"),
   archived: integer("archived", { mode: "boolean" }).notNull().default(false),
   ...syncColumns,
@@ -104,6 +113,9 @@ export const weatherSnapshot = sqliteTable("weather_snapshot", {
   tempC: real("temp_c"),
   humidityPct: real("humidity_pct"),
   pressureHpa: real("pressure_hpa"),
+  // Open-Meteo WMO weather code (0 = clear, 1-3 = cloudy, 45/48 = fog, ...) —
+  // mapped to a display condition via packages/core's weatherConditionKey().
+  weatherCode: integer("weather_code"),
   source: text("source", { enum: ["open_meteo", "sensor", "manual"] }).notNull(),
   geoCell: text("geo_cell"),
   ...syncColumns,

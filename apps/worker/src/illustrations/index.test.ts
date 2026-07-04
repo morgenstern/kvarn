@@ -15,4 +15,35 @@ describe("illustrations — not configured", () => {
     const body = await res.json();
     expect(body).toMatchObject({ error: expect.stringContaining("not configured") });
   });
+
+  it("from-photo returns 501 when GEMINI_API_KEY is missing", async () => {
+    const res = await app.request(
+      "/api/illustrations/from-photo",
+      { method: "POST", body: JSON.stringify({ photoUrl: "/api/photos/x.jpg", label: "My rig", kind: "grinder" }), headers: { "content-type": "application/json" } },
+      {} as Env,
+    );
+    expect(res.status).toBe(501);
+  });
+
+  it("from-photo rejects a request missing required fields", async () => {
+    const res = await app.request(
+      "/api/illustrations/from-photo",
+      { method: "POST", body: JSON.stringify({ label: "My rig" }), headers: { "content-type": "application/json" } },
+      { GEMINI_API_KEY: "test-key" } as Env,
+    );
+    expect(res.status).toBe(400);
+  });
+
+  it("from-photo rejects an invalid kind", async () => {
+    const res = await app.request(
+      "/api/illustrations/from-photo",
+      {
+        method: "POST",
+        body: JSON.stringify({ photoUrl: "/api/photos/x.jpg", label: "My rig", kind: "spaceship" }),
+        headers: { "content-type": "application/json" },
+      },
+      { GEMINI_API_KEY: "test-key" } as Env,
+    );
+    expect(res.status).toBe(400);
+  });
 });

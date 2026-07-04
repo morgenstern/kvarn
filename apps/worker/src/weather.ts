@@ -17,6 +17,7 @@ interface WeatherSnapshotPayload {
   tempC: number | null;
   humidityPct: number | null;
   pressureHpa: number | null;
+  weatherCode: number | null;
   source: "open_meteo";
   geoCell: string;
   takenAt: string;
@@ -45,20 +46,21 @@ weather.get("/", async (c) => {
   const url = new URL("https://api.open-meteo.com/v1/forecast");
   url.searchParams.set("latitude", geoCell.split(",")[0] ?? String(lat));
   url.searchParams.set("longitude", geoCell.split(",")[1] ?? String(lon));
-  url.searchParams.set("current", "temperature_2m,relative_humidity_2m,surface_pressure");
+  url.searchParams.set("current", "temperature_2m,relative_humidity_2m,surface_pressure,weather_code");
 
   const upstream = await fetch(url.toString());
   if (!upstream.ok) {
     return c.json({ error: "weather upstream unavailable" }, 502);
   }
   const data = (await upstream.json()) as {
-    current?: { temperature_2m?: number; relative_humidity_2m?: number; surface_pressure?: number };
+    current?: { temperature_2m?: number; relative_humidity_2m?: number; surface_pressure?: number; weather_code?: number };
   };
 
   const payload: WeatherSnapshotPayload = {
     tempC: data.current?.temperature_2m ?? null,
     humidityPct: data.current?.relative_humidity_2m ?? null,
     pressureHpa: data.current?.surface_pressure ?? null,
+    weatherCode: data.current?.weather_code ?? null,
     source: "open_meteo",
     geoCell,
     takenAt: new Date().toISOString(),

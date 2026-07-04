@@ -1,6 +1,6 @@
 import { EntityImage } from "@kvarn/ui";
 import type { Setup } from "@kvarn/db";
-import { equipmentKind, equipmentProduct, useKvarnStore } from "../state/store";
+import { equipmentImage, equipmentKind, useKvarnStore } from "../state/store";
 
 /**
  * A setup's card image: just the grinder (mill) if that's all it has, or a
@@ -9,14 +9,14 @@ import { equipmentKind, equipmentProduct, useKvarnStore } from "../state/store";
  */
 export function SetupThumbnail({ setup, className = "" }: { setup: Setup; className?: string }) {
   const state = useKvarnStore();
-  const grinderImage = equipmentProduct(state, setup.grinderEquipmentId)?.imageUrl ?? null;
+  const grinderImage = equipmentImage(state, setup.grinderEquipmentId);
   const grinderKind = equipmentKind(state, setup.grinderEquipmentId);
 
   if (!setup.machineEquipmentId) {
     return <EntityImage src={grinderImage} kind={grinderKind} className={`w-full h-full ${className}`} />;
   }
 
-  const machineImage = equipmentProduct(state, setup.machineEquipmentId)?.imageUrl ?? null;
+  const machineImage = equipmentImage(state, setup.machineEquipmentId);
   const machineKind = equipmentKind(state, setup.machineEquipmentId);
 
   return (

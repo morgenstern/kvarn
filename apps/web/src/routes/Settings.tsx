@@ -5,6 +5,7 @@ import { Database, Download, Languages, LogOut, MessageCircle, Send, Trash2, Use
 import { useT, useLocale, type Locale } from "../i18n";
 import { deleteAllLocalData, exportAllData } from "../data/db";
 import { authClient } from "../auth/client";
+import { useDisplayName } from "../hooks/useDisplayName";
 
 const { signIn, signOut, signUp, useSession } = authClient;
 
@@ -16,6 +17,7 @@ export function Settings() {
   const tCommon = useT("common");
   const { locale, setLocale } = useLocale();
   const { data: session } = useSession();
+  const { displayName, setDisplayName } = useDisplayName();
 
   const [authMode, setAuthMode] = useState<AuthMode>("signIn");
   const [email, setEmail] = useState("");
@@ -92,6 +94,17 @@ export function Settings() {
             </button>
           ))}
         </div>
+      </Card>
+
+      <Card>
+        <SectionLabel icon={User}>{t("displayName")}</SectionLabel>
+        <input
+          className="border border-linen rounded-control px-3 py-2 text-base bg-birch w-full"
+          placeholder={t("displayNamePlaceholder")}
+          value={displayName}
+          onChange={(e) => setDisplayName(e.target.value)}
+        />
+        <p className="text-sm text-muted mt-2">{t("displayNameHint")}</p>
       </Card>
 
       <Card>

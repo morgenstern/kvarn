@@ -3,7 +3,7 @@ import { eq } from "drizzle-orm";
 import type { Env } from "../env";
 import { getDb } from "../db";
 import { searchProductImages } from "./imageSearch";
-import { generateIllustration, generateKeyFeatures, rateImageSuitability } from "./gemini";
+import { generateIllustration, generateKeyFeatures, generateKeyFeaturesFromPhoto, rateImageSuitability } from "./gemini";
 import { buildIllustrationPrompt } from "./prompt";
 import { genericProductType, KNOWN_KEY_FEATURES } from "./knownFeatures";
 
@@ -92,4 +92,27 @@ export async function runIllustrationPipeline(
   await db.insert(illustrationDraft).values(draftRows);
 
   return { candidates: candidateRows, drafts: draftRows };
+}
+
+/**
+ * Stateless single-shot generation from a user-supplied photo — for equipment
+ * or beans that aren't catalog products (no product row to attach candidates/
+ * drafts to, so nothing is persisted to D1 here; the caller stores the
+ * returned URL directly on its own equipment/bean record). Skips web search
+ * and rating entirely since the photo itself IS the one reference.
+ */
+export async function runIllustrationFromPhoto(
+  env: Env,
+  input: { photoUrl: string; label: string; kind: "grinder" | "machine" | "brewer" | "accessory" | "bean" },
+): Promise<{ imageUrl: string }> {
+  const productType = input.kind === "bean" ? "bag of coffee beans" : genericProductType(input.kind);
+  const keyFeatures = await generateKeyFeaturesFromPhoto(env, input.photoUrl, input.kind, input.label);
+  const prompt = buildIllustrationPrompt({ productName: input.label, productType, keyFeatures });
+
+  const generated = await generateIllustration(env, prompt, input.photoUrl);
+  const ext = generated.mimeType.includes("png") ? "png" : "jpg";
+  const key = `illustrations/from-photo/${crypto.randomUUID()}.${ext}`;
+  await env.PHOTOS.put(key, generated.bytes, { httpMetadata: { contentType: generated.mimeType } });
+
+  return { imageUrl: `/api/photos/${key}` };
 }

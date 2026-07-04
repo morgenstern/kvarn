@@ -1,10 +1,10 @@
 import { useMemo, useState } from "react";
-import { Button, Card, EntityImage, ProductCard, SectionLabel } from "@kvarn/ui";
-import { submitProduct } from "@kvarn/api-client";
-import type { Product, Setup as SetupType } from "@kvarn/db";
+import { Button, Card, EntityImage, ProductCard, SectionLabel, Select } from "@kvarn/ui";
+import { generateIllustrationFromPhoto, submitProduct, uploadPhoto } from "@kvarn/api-client";
+import type { Setup as SetupType } from "@kvarn/db";
 import type { LucideIcon } from "lucide-react";
-import { Plus, Search, SlidersHorizontal, Users } from "lucide-react";
-import { equipmentKind, useKvarnStore } from "../state/store";
+import { Camera, Plus, Search, SlidersHorizontal, Users } from "lucide-react";
+import { equipmentImage, equipmentKind, useKvarnStore } from "../state/store";
 import { SetupThumbnail } from "../components/SetupThumbnail";
 import { useT } from "../i18n";
 
@@ -23,19 +23,41 @@ function EquipmentSearchSection({
   title: string;
   placeholder: string;
 }) {
-  const { products, addEquipmentFromProduct, addCustomEquipment } = useKvarnStore();
+  const { products, addEquipmentFromProduct, addCustomEquipment, setEquipmentImage } = useKvarnStore();
   const t = useT("setup");
   const [query, setQuery] = useState("");
   const [showSubmitForm, setShowSubmitForm] = useState(false);
   const [submitBrand, setSubmitBrand] = useState("");
   const [submitModel, setSubmitModel] = useState("");
   const [submissionState, setSubmissionState] = useState<SubmissionState>("idle");
+  const [customPhotoFile, setCustomPhotoFile] = useState<File | null>(null);
+  const [customPhotoBusy, setCustomPhotoBusy] = useState(false);
 
   const filteredProducts = useMemo(() => {
     if (!query) return [];
     const q = query.toLowerCase();
     return products.filter((p) => p.kind === kind && `${p.brand} ${p.model}`.toLowerCase().includes(q)).slice(0, 8);
   }, [products, query, kind]);
+
+  async function handleAddCustom() {
+    setCustomPhotoBusy(true);
+    try {
+      const photoUrl = customPhotoFile ? await uploadPhoto(customPhotoFile).catch(() => undefined) : undefined;
+      const created = await addCustomEquipment(query, kind, photoUrl);
+      const label = query;
+      setQuery("");
+      setCustomPhotoFile(null);
+      if (photoUrl) {
+        // Best-effort: the raw photo (or a placeholder) already shows fine —
+        // the generated illustration just swaps in once/if it's ready.
+        generateIllustrationFromPhoto({ photoUrl, label, kind })
+          .then((result) => setEquipmentImage(created.id, result.imageUrl))
+          .catch(() => {});
+      }
+    } finally {
+      setCustomPhotoBusy(false);
+    }
+  }
 
   return (
     <Card>
@@ -62,15 +84,18 @@ function EquipmentSearchSection({
       ))}
       {query && filteredProducts.length === 0 ? (
         <div className="mt-2 flex flex-col gap-2 items-start">
-          <button
-            type="button"
-            className="text-[15px] text-copper underline"
-            onClick={async () => {
-              await addCustomEquipment(query, kind);
-              setQuery("");
-            }}
-          >
-            {t("addAsCustom", { query })}
+          <label className="flex items-center gap-1.5 text-[13px] text-muted cursor-pointer">
+            <Camera size={14} strokeWidth={1.5} />
+            {customPhotoFile ? customPhotoFile.name : t("addPhotoOptional")}
+            <input
+              type="file"
+              accept="image/jpeg,image/png,image/webp"
+              className="hidden"
+              onChange={(e) => setCustomPhotoFile(e.target.files?.[0] ?? null)}
+            />
+          </label>
+          <button type="button" className="text-[15px] text-copper underline" disabled={customPhotoBusy} onClick={handleAddCustom}>
+            {customPhotoBusy ? t("photoUploading") : t("addAsCustom", { query })}
           </button>
           <button
             type="button"
@@ -179,17 +204,14 @@ export function Setup() {
         <>
           <SectionLabel className="mt-6">{t("yourEquipment")}</SectionLabel>
           <div className="grid grid-cols-2 gap-3">
-            {equipment.map((eq) => {
-              const product = products.find((p: Product) => p.id === eq.productId);
-              return (
-                <ProductCard
-                  key={eq.id}
-                  image={<EntityImage src={product?.imageUrl} kind={equipmentKind(state, eq.id)} className="w-full h-full" />}
-                >
-                  <div className="text-[15px] font-medium leading-tight">{equipmentLabel(eq.id)}</div>
-                </ProductCard>
-              );
-            })}
+            {equipment.map((eq) => (
+              <ProductCard
+                key={eq.id}
+                image={<EntityImage src={equipmentImage(state, eq.id)} kind={equipmentKind(state, eq.id)} className="w-full h-full" />}
+              >
+                <div className="text-[15px] font-medium leading-tight">{equipmentLabel(eq.id)}</div>
+              </ProductCard>
+            ))}
           </div>
         </>
       ) : null}
@@ -218,56 +240,29 @@ export function Setup() {
               onChange={(e) => setSetupName(e.target.value)}
               required
             />
-            <select
-              className="border border-linen rounded-control px-3 py-2 text-base bg-birch"
+            <Select
               value={method}
-              onChange={(e) => setMethod(e.target.value as SetupType["method"])}
-            >
-              {METHODS.map((m) => (
-                <option key={m} value={m}>
-                  {m}
-                </option>
-              ))}
-            </select>
-            <select
-              className="border border-linen rounded-control px-3 py-2 text-base bg-birch"
+              onChange={(v) => setMethod(v as SetupType["method"])}
+              options={METHODS.map((m) => ({ value: m, label: m }))}
+            />
+            <Select
               value={grinderEquipmentId}
-              onChange={(e) => setGrinderEquipmentId(e.target.value)}
-              required
-            >
-              <option value="" disabled>
-                {t("chooseGrinder")}
-              </option>
-              {grinderEquipment.map((eq) => (
-                <option key={eq.id} value={eq.id}>
-                  {equipmentLabel(eq.id)}
-                </option>
-              ))}
-            </select>
-            <select
-              className="border border-linen rounded-control px-3 py-2 text-base bg-birch"
+              onChange={setGrinderEquipmentId}
+              placeholder={t("chooseGrinder")}
+              options={grinderEquipment.map((eq) => ({ value: eq.id, label: equipmentLabel(eq.id) }))}
+            />
+            <Select
               value={machineEquipmentId}
-              onChange={(e) => setMachineEquipmentId(e.target.value)}
-            >
-              <option value="">{t("noMachine")}</option>
-              {machineEquipment.map((eq) => (
-                <option key={eq.id} value={eq.id}>
-                  {equipmentLabel(eq.id)}
-                </option>
-              ))}
-            </select>
-            <select
-              className="border border-linen rounded-control px-3 py-2 text-base bg-birch"
+              onChange={setMachineEquipmentId}
+              placeholder={t("noMachine")}
+              options={machineEquipment.map((eq) => ({ value: eq.id, label: equipmentLabel(eq.id) }))}
+            />
+            <Select
               value={beanId}
-              onChange={(e) => setBeanId(e.target.value)}
-            >
-              <option value="">{t("noBean")}</option>
-              {beans.map((b) => (
-                <option key={b.id} value={b.id}>
-                  {b.roaster} — {b.name}
-                </option>
-              ))}
-            </select>
+              onChange={setBeanId}
+              placeholder={t("noBean")}
+              options={beans.map((b) => ({ value: b.id, label: `${b.roaster} — ${b.name}` }))}
+            />
             <Button type="submit" disabled={grinderEquipment.length === 0}>
               {t("saveSetup")}
             </Button>

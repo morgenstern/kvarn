@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { Button, Card, EntityImage, ProductCard } from "@kvarn/ui";
-import { uploadPhoto } from "@kvarn/api-client";
+import { generateIllustrationFromPhoto, uploadPhoto } from "@kvarn/api-client";
 import { computeBeanAgeDays, freshnessPct } from "@kvarn/core";
 import { Archive, Camera, Plus } from "lucide-react";
 import { useKvarnStore } from "../state/store";
@@ -13,7 +13,7 @@ function beanFreshnessPct(roastDate: string | null): number | null {
 }
 
 export function Regal() {
-  const { beans, addBean, archiveBean, activeBeanId, setActiveBean } = useKvarnStore();
+  const { beans, addBean, archiveBean, activeBeanId, setActiveBean, setBeanImage } = useKvarnStore();
   const navigate = useNavigate();
   const t = useT("regal");
   const tCommon = useT("common");
@@ -42,7 +42,14 @@ export function Regal() {
   async function submit(e: React.FormEvent) {
     e.preventDefault();
     if (!roaster || !name) return;
-    await addBean({ roaster, name, origin: origin || undefined, roastDate: roastDate || undefined, photoUrl });
+    const bean = await addBean({ roaster, name, origin: origin || undefined, roastDate: roastDate || undefined, photoUrl });
+    if (photoUrl) {
+      // Best-effort: the raw photo already shows fine — the generated
+      // illustration just swaps in once/if it's ready.
+      generateIllustrationFromPhoto({ photoUrl, label: `${roaster} ${name}`, kind: "bean" })
+        .then((result) => setBeanImage(bean.id, result.imageUrl))
+        .catch(() => {});
+    }
     setRoaster("");
     setName("");
     setOrigin("");
@@ -114,7 +121,7 @@ export function Regal() {
               key={bean.id}
               active={activeBeanId === bean.id}
               onClick={() => navigate({ to: "/regal/$beanId", params: { beanId: bean.id } })}
-              image={<EntityImage src={bean.photoUrl} kind="bean" className="w-full h-full" />}
+              image={<EntityImage src={bean.imageUrl ?? bean.photoUrl} kind="bean" className="w-full h-full" />}
             >
               <div className="text-[15px] font-medium leading-tight">{bean.roaster}</div>
               <div className="text-[13px] text-muted truncate">{bean.name}{bean.origin ? ` · ${bean.origin}` : ""}</div>

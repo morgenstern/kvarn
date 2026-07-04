@@ -1,14 +1,17 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
-  <rect width="128" height="128" rx="28" fill="#3B2E28"/>
-  <circle cx="64" cy="64" r="44" fill="none" stroke="#F7F4EF" stroke-width="6"/>
-  <rect x="60" y="16" width="8" height="14" rx="4" fill="#F7F4EF"/>
-  <g stroke="#F7F4EF" stroke-width="4" stroke-linecap="round">
-    <line x1="64" y1="40" x2="64" y2="52"/>
-    <line x1="64" y1="76" x2="64" y2="88"/>
-    <line x1="40" y1="64" x2="52" y2="64"/>
-    <line x1="76" y1="64" x2="88" y2="64"/>
-    <line x1="46.7" y1="46.7" x2="55" y2="55"/>
-    <line x1="73" y1="73" x2="81.3" y2="81.3"/>
-    <line x1="81.3" y1="46.7" x2="73" y2="55"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <!-- KVARN App-Icon — Dial auf Espresso, Kerbe in Kupfer -->
+  <rect width="120" height="120" rx="27" fill="#3B2E28"/>
+  <g transform="translate(60 62) scale(0.78) translate(-60 -60)">
+    <circle cx="60" cy="60" r="44" fill="none" stroke="#F7F4EF" stroke-width="7" stroke-linecap="round" stroke-dasharray="202.35 10"/>
+    <line x1="60" y1="8" x2="60" y2="23" stroke="#C0754D" stroke-width="7" stroke-linecap="round"/>
+    <g stroke="#F7F4EF" stroke-width="6" stroke-linecap="round">
+      <line x1="67.4" y1="44.7" x2="73.5" y2="32.1"/>
+      <line x1="76.6" y1="56.2" x2="90.2" y2="53.1"/>
+      <line x1="73.3" y1="70.6" x2="84.2" y2="79.4"/>
+      <line x1="60" y1="77" x2="60" y2="91"/>
+      <line x1="46.7" y1="70.6" x2="35.8" y2="79.4"/>
+      <line x1="43.4" y1="56.2" x2="29.8" y2="53.1"/>
+      <line x1="52.6" y1="44.7" x2="46.6" y2="32.1"/>
+    </g>
   </g>
 </svg>

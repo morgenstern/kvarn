@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { Link, Outlet, useLocation, useNavigate } from "@tanstack/react-router";
 import { Coffee, Compass, Settings as SettingsIcon, SlidersHorizontal, Sun } from "lucide-react";
+import { Logo, LogoLockup } from "@kvarn/ui";
 import { useKvarnStore } from "../state/store";
 import { useT } from "../i18n";
 import { useEnsureSession } from "../auth/useEnsureSession";
@@ -46,7 +47,8 @@ export function RootLayout() {
 
   if (!hydrated) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-birch text-muted text-lg">
+      <div className="min-h-screen flex flex-col items-center justify-center gap-3 bg-birch text-muted text-lg">
+        <Logo size={40} spinning />
         {tCommon("loading")}
       </div>
     );
@@ -77,7 +79,8 @@ export function RootLayout() {
 
   return (
     <div className="min-h-screen bg-birch flex flex-col">
-      <div className="max-w-md mx-auto w-full px-5 pt-3 flex justify-end">
+      <div className="max-w-md mx-auto w-full px-5 pt-3 flex items-center justify-between">
+        <LogoLockup />
         <Link to="/settings" className="flex items-center gap-1.5 text-base text-muted">
           <SettingsIcon size={16} strokeWidth={1.5} />
           {tSettings("title")}

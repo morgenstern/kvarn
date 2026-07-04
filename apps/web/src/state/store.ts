@@ -3,7 +3,7 @@ import { fetchWeatherSnapshot, getRoughLocation } from "@kvarn/api-client";
 import type { Bean, Brew, Equipment, Product, Recipe, Setup, WeatherSnapshot } from "@kvarn/db";
 import { db, ensureSeeded, LOCAL_USER_ID, newId, nowIso, syncApprovedProducts } from "../data/db";
 
-interface KvarnState {
+export interface KvarnState {
   hydrated: boolean;
   products: Product[];
   equipment: Equipment[];
@@ -16,8 +16,8 @@ interface KvarnState {
   activeBeanId: string | null;
 
   hydrate: () => Promise<void>;
-  addEquipmentFromProduct: (productId: string) => Promise<Equipment>;
-  addCustomEquipment: (customName: string, kind: Product["kind"]) => Promise<Equipment>;
+  addEquipmentFromProduct: (productId: string, photoUrl?: string) => Promise<Equipment>;
+  addCustomEquipment: (customName: string, kind: Product["kind"], photoUrl?: string) => Promise<Equipment>;
   addSetup: (input: {
     name: string;
     method: Setup["method"];
@@ -40,6 +40,9 @@ interface KvarnState {
     photoUrl?: string;
   }) => Promise<Bean>;
   archiveBean: (beanId: string) => Promise<void>;
+  setEquipmentPhoto: (equipmentId: string, photoUrl: string) => Promise<void>;
+  setEquipmentImage: (equipmentId: string, imageUrl: string) => Promise<void>;
+  setBeanImage: (beanId: string, imageUrl: string) => Promise<void>;
   setActiveSetup: (setupId: string | null) => void;
   setActiveBean: (beanId: string | null) => void;
   captureWeatherSnapshot: () => Promise<WeatherSnapshot | null>;
@@ -86,7 +89,7 @@ export const useKvarnStore = create<KvarnState>((set, get) => ({
     });
   },
 
-  addEquipmentFromProduct: async (productId) => {
+  addEquipmentFromProduct: async (productId, photoUrl) => {
     const product = get().products.find((p) => p.id === productId);
     const equipment: Equipment = {
       id: newId("equipment"),
@@ -96,6 +99,8 @@ export const useKvarnStore = create<KvarnState>((set, get) => ({
       kind: product?.kind ?? null,
       notes: null,
       burrKg: null,
+      photoUrl: photoUrl ?? null,
+      imageUrl: null,
       updatedAt: nowIso(),
       deletedAt: null,
       clientId: newId("client"),
@@ -105,7 +110,7 @@ export const useKvarnStore = create<KvarnState>((set, get) => ({
     return equipment;
   },
 
-  addCustomEquipment: async (customName, kind) => {
+  addCustomEquipment: async (customName, kind, photoUrl) => {
     const equipment: Equipment = {
       id: newId("equipment"),
       userId: LOCAL_USER_ID,
@@ -114,6 +119,8 @@ export const useKvarnStore = create<KvarnState>((set, get) => ({
       kind,
       notes: null,
       burrKg: null,
+      photoUrl: photoUrl ?? null,
+      imageUrl: null,
       updatedAt: nowIso(),
       deletedAt: null,
       clientId: newId("client"),
@@ -167,6 +174,7 @@ export const useKvarnStore = create<KvarnState>((set, get) => ({
       roastDate: roastDate ?? null,
       openedAt: null,
       photoUrl: photoUrl ?? null,
+      imageUrl: null,
       barcode: null,
       archived: false,
       updatedAt: nowIso(),
@@ -186,6 +194,21 @@ export const useKvarnStore = create<KvarnState>((set, get) => ({
     }));
   },
 
+  setEquipmentPhoto: async (equipmentId, photoUrl) => {
+    await db.equipment.update(equipmentId, { photoUrl, updatedAt: nowIso() });
+    set((s) => ({ equipment: s.equipment.map((e) => (e.id === equipmentId ? { ...e, photoUrl } : e)) }));
+  },
+
+  setEquipmentImage: async (equipmentId, imageUrl) => {
+    await db.equipment.update(equipmentId, { imageUrl, updatedAt: nowIso() });
+    set((s) => ({ equipment: s.equipment.map((e) => (e.id === equipmentId ? { ...e, imageUrl } : e)) }));
+  },
+
+  setBeanImage: async (beanId, imageUrl) => {
+    await db.beans.update(beanId, { imageUrl, updatedAt: nowIso() });
+    set((s) => ({ beans: s.beans.map((b) => (b.id === beanId ? { ...b, imageUrl } : b)) }));
+  },
+
   setActiveSetup: (setupId) => set({ activeSetupId: setupId }),
   setActiveBean: (beanId) => set({ activeBeanId: beanId }),
 
@@ -200,6 +223,7 @@ export const useKvarnStore = create<KvarnState>((set, get) => ({
         tempC: response.tempC,
         humidityPct: response.humidityPct,
         pressureHpa: response.pressureHpa,
+        weatherCode: response.weatherCode,
         source: response.source,
         geoCell: response.geoCell,
         updatedAt: nowIso(),
@@ -288,6 +312,18 @@ export function equipmentKind(state: KvarnState, equipmentId: string | null): Pr
   return equipmentProduct(state, equipmentId)?.kind ?? "grinder";
 }
 
+/**
+ * Best available image for a piece of equipment: the catalog product's
+ * illustration if linked, else this equipment's own generated illustration,
+ * else its raw reference photo (custom/non-catalog gear only has the latter
+ * two). EntityImage falls back to a category placeholder if this is null.
+ */
+export function equipmentImage(state: KvarnState, equipmentId: string | null): string | null {
+  const eq = state.equipment.find((e) => e.id === equipmentId);
+  if (!eq) return null;
+  return equipmentProduct(state, equipmentId)?.imageUrl ?? eq.imageUrl ?? eq.photoUrl ?? null;
+}
+
 /** Most recent brew for this exact setup+bean combination, if any. */
 export function lastBrewFor(state: KvarnState, setupId: string, beanId: string): Brew | undefined {
   return state.brews.find((b) => b.setupId === setupId && b.beanId === beanId);
@@ -296,6 +332,16 @@ export function lastBrewFor(state: KvarnState, setupId: string, beanId: string):
 export function weatherSnapshotFor(state: KvarnState, weatherId: string | null): WeatherSnapshot | undefined {
   if (!weatherId) return undefined;
   return state.weatherSnapshots.find((w) => w.id === weatherId);
+}
+
+/**
+ * Most recently captured weather snapshot, if any — used for passive display
+ * (e.g. Heute's weather strip) without triggering a new capture/location
+ * prompt. Active capture (and the permission prompt that comes with it)
+ * stays scoped to actually starting a brew, see Bruehen.tsx.
+ */
+export function latestWeatherSnapshot(state: KvarnState): WeatherSnapshot | undefined {
+  return [...state.weatherSnapshots].sort((a, b) => b.takenAt.localeCompare(a.takenAt))[0];
 }
 
 export function recipeFor(state: KvarnState, setupId: string, beanId: string): Recipe | undefined {

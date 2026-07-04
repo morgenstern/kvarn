@@ -2,6 +2,7 @@ export interface WeatherSnapshotResponse {
   tempC: number | null;
   humidityPct: number | null;
   pressureHpa: number | null;
+  weatherCode: number | null;
   source: "open_meteo";
   geoCell: string;
   takenAt: string;

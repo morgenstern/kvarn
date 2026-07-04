@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <!-- KVARN Bildmarke B "Dial Minimal" — Ring, Einstell-Marke, Zentrum. Für kleinste Größen (Favicon, Pin) -->
+  <circle cx="60" cy="60" r="44" fill="none" stroke="#3B2E28" stroke-width="6"/>
+  <line x1="60" y1="10" x2="60" y2="25" stroke="#C0754D" stroke-width="6" stroke-linecap="round"/>
+  <circle cx="60" cy="60" r="6.5" fill="#3B2E28"/>
+</svg>

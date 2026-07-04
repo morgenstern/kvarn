@@ -31,7 +31,7 @@ describe("weather proxy", () => {
     const fetchMock = vi.spyOn(globalThis, "fetch").mockResolvedValue(
       new Response(
         JSON.stringify({
-          current: { temperature_2m: 21.5, relative_humidity_2m: 72, surface_pressure: 1013 },
+          current: { temperature_2m: 21.5, relative_humidity_2m: 72, surface_pressure: 1013, weather_code: 3 },
         }),
       ),
     );
@@ -41,7 +41,7 @@ describe("weather proxy", () => {
     const res = await app.request("/api/weather?lat=52.52&lon=13.405", {}, env);
     expect(res.status).toBe(200);
     const body = await res.json();
-    expect(body).toMatchObject({ tempC: 21.5, humidityPct: 72, pressureHpa: 1013, source: "open_meteo" });
+    expect(body).toMatchObject({ tempC: 21.5, humidityPct: 72, pressureHpa: 1013, weatherCode: 3, source: "open_meteo" });
     expect(fetchMock).toHaveBeenCalledTimes(1);
     expect(kv.put).toHaveBeenCalledTimes(1);
   });

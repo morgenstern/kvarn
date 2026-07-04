@@ -44,8 +44,8 @@ export function BeanDetail() {
       <h1 className="font-display text-[32px] mt-3.5 mb-0.5">{bean.name}</h1>
       <p className="text-base text-muted">{bean.roaster}{bean.origin ? ` · ${bean.origin}` : ""}</p>
 
-      {bean.photoUrl ? (
-        <img src={bean.photoUrl} alt="" className="w-full h-40 object-cover rounded-card mt-3" />
+      {bean.imageUrl ?? bean.photoUrl ? (
+        <img src={bean.imageUrl ?? bean.photoUrl ?? undefined} alt="" className="w-full h-40 object-cover rounded-card mt-3" />
       ) : (
         <EntityImage kind="bean" className="w-24 h-24 mt-3" />
       )}

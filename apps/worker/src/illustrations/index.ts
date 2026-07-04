@@ -3,7 +3,7 @@ import { eq } from "drizzle-orm";
 import { illustrationCandidate, illustrationDraft, product } from "@kvarn/db";
 import type { Env } from "../env";
 import { getDb } from "../db";
-import { runIllustrationPipeline } from "./pipeline";
+import { runIllustrationFromPhoto, runIllustrationPipeline } from "./pipeline";
 
 /**
  * AI illustration-generation pipeline for products without a "Kvarn Sketch"
@@ -33,6 +33,35 @@ illustrations.post("/:productId/generate", async (c) => {
     return c.json(result, 201);
   } catch (err) {
     return c.json({ error: err instanceof Error ? err.message : "illustration pipeline failed" }, 502);
+  }
+});
+
+const PHOTO_KINDS = ["grinder", "machine", "brewer", "accessory", "bean"] as const;
+type PhotoKind = (typeof PHOTO_KINDS)[number];
+function isPhotoKind(value: unknown): value is PhotoKind {
+  return typeof value === "string" && (PHOTO_KINDS as readonly string[]).includes(value);
+}
+
+illustrations.post("/from-photo", async (c) => {
+  if (!c.env.GEMINI_API_KEY) {
+    return c.json({ error: "illustration pipeline not configured — set GEMINI_API_KEY" }, 501);
+  }
+
+  const body = await c.req.json<{ photoUrl?: string; label?: string; kind?: string }>();
+  if (!body.photoUrl || !body.label || !isPhotoKind(body.kind)) {
+    return c.json({ error: "photoUrl, label, and kind (grinder|machine|brewer|accessory|bean) are required" }, 400);
+  }
+
+  try {
+    // photoUrl is typically the relative path returned by POST /api/photos —
+    // Workers' fetch() (used inside the pipeline to read the image back)
+    // needs an absolute URL, unlike browser fetch which resolves relative
+    // paths against document.location.
+    const absolutePhotoUrl = new URL(body.photoUrl, c.req.url).toString();
+    const result = await runIllustrationFromPhoto(c.env, { photoUrl: absolutePhotoUrl, label: body.label, kind: body.kind });
+    return c.json(result, 201);
+  } catch (err) {
+    return c.json({ error: err instanceof Error ? err.message : "illustration generation failed" }, 502);
   }
 });
 

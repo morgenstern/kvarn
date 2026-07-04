@@ -104,6 +104,29 @@ export async function generateKeyFeatures(env: Env, kind: string, brand: string,
 }
 
 /**
+ * Vision-based key-feature extraction directly from a user-supplied photo —
+ * used when there's no catalog brand/model to go on (custom equipment, a
+ * bean bag photo), so the model has to look at the actual object instead of
+ * looking up a known product.
+ */
+export async function generateKeyFeaturesFromPhoto(env: Env, photoUrl: string, kind: string, label: string): Promise<string> {
+  const { base64, mimeType } = await fetchImageAsBase64(photoUrl);
+  const prompt = `Look at the attached photo of "${label}" (a coffee ${kind}). List its visually distinguishing physical features as ONE comma-separated phrase, 15-30 words, in the terse visual-facts style of a product-illustration brief (shape, materials, distinctive parts, finish, proportions, colors). No marketing language, no text/label transcription, no quotes, no preamble — respond with ONLY the phrase.`;
+
+  const res = await fetch(geminiUrl(GEMINI_TEXT_MODEL, env), {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({
+      contents: [{ parts: [{ text: prompt }, { inlineData: { mimeType, data: base64 } }] }],
+    }),
+  });
+  if (!res.ok) throw new Error(`Gemini key-feature-from-photo call failed: ${res.status} ${await res.text()}`);
+  const data = (await res.json()) as GeminiGenerateContentResponse;
+  const text = data.candidates?.[0]?.content?.parts?.find((p) => p.text)?.text ?? "";
+  return text.trim().replace(/^"|"$/g, "");
+}
+
+/**
  * Runs the reference image + master prompt through Gemini 2.5 Flash Image
  * ("nano banana") and returns the generated PNG bytes.
  */
