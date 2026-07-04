@@ -17,12 +17,12 @@ interface ProductCardProps extends Omit<HTMLAttributes<HTMLDivElement>, "childre
 export function ProductCard({ image, active = false, children, className = "", ...props }: ProductCardProps) {
   return (
     <div
-      className={`relative flex flex-col bg-card border rounded-card overflow-hidden ${
+      className={`relative flex flex-col bg-linen border rounded-card overflow-hidden ${
         active ? "border-copper" : "border-linen"
       } ${props.onClick ? "cursor-pointer active:scale-[.98] transition-transform" : ""} ${className}`}
       {...props}
     >
-      <div className="aspect-square w-full bg-birch relative">
+      <div className="aspect-square w-full bg-linen relative">
         {image}
         {active ? (
           <span className="absolute top-2 right-2 text-copper bg-white rounded-full leading-none">

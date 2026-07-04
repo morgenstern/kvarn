@@ -154,7 +154,7 @@ export function Moderation() {
 
           {missingIllustrations.length > 0 ? (
             <>
-              <SectionLabel icon={Sparkles} className="mt-6">
+              <SectionLabel icon={Sparkles} className="mt-5">
                 {t("illustrationsTitle")}
               </SectionLabel>
               {missingIllustrations.map((p) => {

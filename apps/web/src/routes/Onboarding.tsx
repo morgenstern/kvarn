@@ -1,9 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
-import { Button, Card, Chip, EntityImage, SectionLabel } from "@kvarn/ui";
+import { Button, Card, Chip, EntityImage, ProductCard, SectionLabel } from "@kvarn/ui";
 import type { Setup as SetupType } from "@kvarn/db";
 import { Coffee, Copy, Download, MapPin, Package, SlidersHorizontal, UserPlus } from "lucide-react";
 import { useKvarnStore } from "../state/store";
+import { exampleEquipment } from "../utils/exampleEquipment";
 import { useT } from "../i18n";
 import { authClient } from "../auth/client";
 
@@ -85,6 +86,7 @@ export function Onboarding() {
     const q = query.toLowerCase();
     return products.filter((p) => p.kind === "grinder" && `${p.brand} ${p.model}`.toLowerCase().includes(q)).slice(0, 6);
   }, [products, query]);
+  const equipmentExamples = useMemo(() => exampleEquipment(products, "grinder"), [products]);
 
   useEffect(() => {
     function handler(e: Event) {
@@ -215,6 +217,25 @@ export function Onboarding() {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
           />
+          {!query && equipmentExamples.length > 0 ? (
+            <div className="mt-3">
+              <p className="text-[13px] text-muted mb-1.5">{tSetup("popularExamples")}</p>
+              <div className="flex gap-3 overflow-x-auto pb-1 -mx-[18px] px-[18px]">
+                {equipmentExamples.map((p) => (
+                  <ProductCard
+                    key={p.id}
+                    className="w-24 flex-none"
+                    image={<EntityImage src={p.imageUrl} kind="grinder" className="w-full h-full" />}
+                    onClick={() => pickEquipmentFromProduct(p.id)}
+                  >
+                    <div className="text-[12px] font-medium leading-tight truncate">
+                      {p.brand} {p.model}
+                    </div>
+                  </ProductCard>
+                ))}
+              </div>
+            </div>
+          ) : null}
           {filteredProducts.map((p) => (
             <button
               key={p.id}

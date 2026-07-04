@@ -1,9 +1,9 @@
 import { useMemo, useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
-import { Button, Card, EntityImage, ProductCard } from "@kvarn/ui";
+import { Button, Card, EntityImage, ProductCard, SectionLabel } from "@kvarn/ui";
 import { generateIllustrationFromPhoto, uploadPhoto } from "@kvarn/api-client";
 import { computeBeanAgeDays, freshnessPct } from "@kvarn/core";
-import { Archive, Camera, Plus, Search } from "lucide-react";
+import { Archive, Camera, Package, Plus, Search } from "lucide-react";
 import { useKvarnStore } from "../state/store";
 import { useT } from "../i18n";
 
@@ -80,6 +80,23 @@ export function Regal() {
       <h1 className="font-display text-[32px] mt-3.5 mb-0.5">{t("title")}</h1>
       <p className="text-base text-muted">{beans.length === 0 ? t("emptyState") : t("beanCount", { count: beans.length })}</p>
 
+      <SectionLabel
+        icon={Package}
+        className="mt-5"
+        action={
+          <button
+            type="button"
+            className="flex items-center gap-1 text-[15px] text-copper underline py-2.5 px-1 -my-2.5 -mr-1"
+            onClick={() => setShowForm((v) => !v)}
+          >
+            {showForm ? null : <Plus size={15} strokeWidth={1.5} />}
+            {showForm ? tCommon("cancel") : t("addBean")}
+          </button>
+        }
+      >
+        {t("yourBeans")}
+      </SectionLabel>
+
       {showForm ? (
         <Card>
           <form onSubmit={submit} className="flex flex-col gap-3">
@@ -143,19 +160,11 @@ export function Regal() {
             {photoUploading ? <p className="text-sm text-muted">{t("photoUploading")}</p> : null}
             {photoUrl ? <img src={photoUrl} alt="" className="w-20 h-20 object-cover rounded-control" /> : null}
             <Button type="submit">{t("saveBean")}</Button>
-            <Button type="button" variant="ghost" onClick={() => setShowForm(false)}>
-              {tCommon("cancel")}
-            </Button>
           </form>
         </Card>
-      ) : (
-        <Button onClick={() => setShowForm(true)}>
-          <Plus size={18} strokeWidth={1.5} />
-          {t("addBean")}
-        </Button>
-      )}
+      ) : null}
 
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid grid-cols-2 gap-3 mt-3">
         {beans.map((bean) => {
           const fresh = beanFreshnessPct(bean.roastDate);
           return (

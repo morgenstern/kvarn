@@ -213,7 +213,7 @@ export function Bruehen() {
             </div>
           ) : (
             <>
-              <SectionLabel className="mt-4">{t("pickMethod")}</SectionLabel>
+              <SectionLabel className="mt-5">{t("pickMethod")}</SectionLabel>
               <div className="flex flex-wrap gap-2">
                 {METHODS.map((m) => (
                   <Chip key={m} active={comboMethod === m} onClick={() => setComboMethod(m)}>
@@ -222,7 +222,7 @@ export function Bruehen() {
                 ))}
               </div>
 
-              <SectionLabel icon={SlidersHorizontal} className="mt-4">{t("pickGrinder")}</SectionLabel>
+              <SectionLabel icon={SlidersHorizontal} className="mt-5">{t("pickGrinder")}</SectionLabel>
               <div className="flex gap-3 overflow-x-auto pb-1 -mx-5 px-5">
                 {grinderEquipment.map((eq) => (
                   <ProductCard
@@ -239,7 +239,7 @@ export function Bruehen() {
                 ))}
               </div>
 
-              <SectionLabel icon={Coffee} className="mt-4">{t("pickMachine")}</SectionLabel>
+              <SectionLabel icon={Coffee} className="mt-5">{t("pickMachine")}</SectionLabel>
               <div className="flex gap-3 overflow-x-auto pb-1 -mx-5 px-5">
                 <ProductCard
                   className="w-28 flex-none"
@@ -268,7 +268,7 @@ export function Bruehen() {
                 ))}
               </div>
 
-              <SectionLabel icon={Package} className="mt-4">{t("pickBean")}</SectionLabel>
+              <SectionLabel icon={Package} className="mt-5">{t("pickBean")}</SectionLabel>
               <div className="flex gap-3 overflow-x-auto pb-1 -mx-5 px-5">
                 {beans.map((b) => (
                   <ProductCard
@@ -291,7 +291,7 @@ export function Bruehen() {
 
           {pickMode === "setup" ? (
             <>
-              <SectionLabel icon={Package} className="mt-4">{t("pickBean")}</SectionLabel>
+              <SectionLabel icon={Package} className="mt-5">{t("pickBean")}</SectionLabel>
               <div className="flex gap-3 overflow-x-auto pb-1 -mx-5 px-5">
                 {beans.map((b) => (
                   <ProductCard

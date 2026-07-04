@@ -6,6 +6,7 @@ import type { LucideIcon } from "lucide-react";
 import { Camera, Plus, Search, SlidersHorizontal, Users } from "lucide-react";
 import { equipmentImage, equipmentKind, useKvarnStore } from "../state/store";
 import { SetupThumbnail } from "../components/SetupThumbnail";
+import { exampleEquipment } from "../utils/exampleEquipment";
 import { useT } from "../i18n";
 
 const METHODS: SetupType["method"][] = ["espresso", "v60", "aeropress", "frenchpress", "moka", "auto"];
@@ -26,6 +27,7 @@ function EquipmentSearchSection({
   const { products, addEquipmentFromProduct, addCustomEquipment, setEquipmentImage } = useKvarnStore();
   const t = useT("setup");
   const [query, setQuery] = useState("");
+  const examples = useMemo(() => exampleEquipment(products, kind), [products, kind]);
   const [showSubmitForm, setShowSubmitForm] = useState(false);
   const [submitBrand, setSubmitBrand] = useState("");
   const [submitModel, setSubmitModel] = useState("");
@@ -68,6 +70,27 @@ function EquipmentSearchSection({
         value={query}
         onChange={(e) => setQuery(e.target.value)}
       />
+      {!query && examples.length > 0 ? (
+        <div className="mt-3">
+          <p className="text-[13px] text-muted mb-1.5">{t("popularExamples")}</p>
+          <div className="flex gap-3 overflow-x-auto pb-1 -mx-[18px] px-[18px]">
+            {examples.map((p) => (
+              <ProductCard
+                key={p.id}
+                className="w-24 flex-none"
+                image={<EntityImage src={p.imageUrl} kind={kind} className="w-full h-full" />}
+                onClick={async () => {
+                  await addEquipmentFromProduct(p.id);
+                }}
+              >
+                <div className="text-[12px] font-medium leading-tight truncate">
+                  {p.brand} {p.model}
+                </div>
+              </ProductCard>
+            ))}
+          </div>
+        </div>
+      ) : null}
       {filteredProducts.map((p) => (
         <button
           key={p.id}
@@ -207,8 +230,8 @@ export function Setup() {
 
       {equipment.length > 0 ? (
         <>
-          <SectionLabel className="mt-6">{t("yourEquipment")}</SectionLabel>
-          <div className="grid grid-cols-2 gap-3">
+          <SectionLabel className="mt-5">{t("yourEquipment")}</SectionLabel>
+          <div className="grid grid-cols-2 gap-3 mt-3">
             {equipment.map((eq) => (
               <ProductCard
                 key={eq.id}
@@ -221,19 +244,22 @@ export function Setup() {
         </>
       ) : null}
 
-      <div className="mt-6 flex items-center justify-between">
-        <SectionLabel icon={SlidersHorizontal} className="mb-0">
-          {t("setups")}
-        </SectionLabel>
-        <button
-          type="button"
-          className="flex items-center gap-1 text-[15px] text-copper underline py-2.5 px-1 -my-2.5 -mr-1"
-          onClick={() => setShowSetupForm((v) => !v)}
-        >
-          {showSetupForm ? null : <Plus size={15} strokeWidth={1.5} />}
-          {showSetupForm ? tCommon("cancel") : t("newSetup")}
-        </button>
-      </div>
+      <SectionLabel
+        icon={SlidersHorizontal}
+        className="mt-5"
+        action={
+          <button
+            type="button"
+            className="flex items-center gap-1 text-[15px] text-copper underline py-2.5 px-1 -my-2.5 -mr-1"
+            onClick={() => setShowSetupForm((v) => !v)}
+          >
+            {showSetupForm ? null : <Plus size={15} strokeWidth={1.5} />}
+            {showSetupForm ? tCommon("cancel") : t("newSetup")}
+          </button>
+        }
+      >
+        {t("setups")}
+      </SectionLabel>
 
       {showSetupForm ? (
         <Card>
