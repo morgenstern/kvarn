@@ -84,7 +84,7 @@ function EquipmentSearchSection({
       ))}
       {query && filteredProducts.length === 0 ? (
         <div className="mt-2 flex flex-col gap-2 items-start">
-          <label className="flex items-center gap-1.5 text-[13px] text-muted cursor-pointer">
+          <label className="flex items-center gap-1.5 text-[13px] text-muted cursor-pointer py-2.5 -my-2.5">
             <Camera size={14} strokeWidth={1.5} />
             {customPhotoFile ? customPhotoFile.name : t("addPhotoOptional")}
             <input
@@ -94,12 +94,17 @@ function EquipmentSearchSection({
               onChange={(e) => setCustomPhotoFile(e.target.files?.[0] ?? null)}
             />
           </label>
-          <button type="button" className="text-[15px] text-copper underline" disabled={customPhotoBusy} onClick={handleAddCustom}>
+          <button
+            type="button"
+            className="text-[15px] text-copper underline py-2.5 -my-2.5"
+            disabled={customPhotoBusy}
+            onClick={handleAddCustom}
+          >
             {customPhotoBusy ? t("photoUploading") : t("addAsCustom", { query })}
           </button>
           <button
             type="button"
-            className="flex items-center gap-1.5 text-[15px] text-copper underline"
+            className="flex items-center gap-1.5 text-[15px] text-copper underline py-2.5 -my-2.5"
             onClick={() => {
               setSubmitBrand(query.split(" ")[0] ?? query);
               setSubmitModel(query.split(" ").slice(1).join(" "));
@@ -222,7 +227,7 @@ export function Setup() {
         </SectionLabel>
         <button
           type="button"
-          className="flex items-center gap-1 text-[15px] text-copper underline"
+          className="flex items-center gap-1 text-[15px] text-copper underline py-2.5 px-1 -my-2.5 -mr-1"
           onClick={() => setShowSetupForm((v) => !v)}
         >
           {showSetupForm ? null : <Plus size={15} strokeWidth={1.5} />}

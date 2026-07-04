@@ -130,13 +130,13 @@ export function Regal() {
                   <div className="h-full rounded-full bg-sage" style={{ width: `${fresh}%` }} />
                 </div>
               ) : null}
-              <div className="flex items-center justify-between mt-2">
+              <div className="flex flex-col items-start mt-1 -mx-2">
                 {activeBeanId === bean.id ? (
-                  <span className="text-[13px] text-copper font-medium">{tCommon("active")}</span>
+                  <span className="text-[13px] text-copper font-medium px-2 py-3">{tCommon("active")}</span>
                 ) : (
                   <button
                     type="button"
-                    className="text-[13px] text-muted underline"
+                    className="text-[13px] text-muted underline px-2 py-3"
                     onClick={(e) => {
                       e.stopPropagation();
                       setActiveBean(bean.id);
@@ -147,7 +147,7 @@ export function Regal() {
                 )}
                 <button
                   type="button"
-                  className="flex items-center gap-1 text-[13px] text-muted underline"
+                  className="flex items-center gap-1 text-[13px] text-muted underline px-2 py-3"
                   onClick={(e) => {
                     e.stopPropagation();
                     archiveBean(bean.id);
