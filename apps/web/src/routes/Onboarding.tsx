@@ -2,9 +2,20 @@ import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { Button, Card, Chip, EntityImage, SectionLabel } from "@kvarn/ui";
 import type { Setup as SetupType } from "@kvarn/db";
-import { Coffee, Download, MapPin, Package, SlidersHorizontal } from "lucide-react";
+import { Coffee, Copy, Download, MapPin, Package, SlidersHorizontal, UserPlus } from "lucide-react";
 import { useKvarnStore } from "../state/store";
 import { useT } from "../i18n";
+import { authClient } from "../auth/client";
+
+const { signUp } = authClient;
+
+const PASSWORD_CHARS = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789!@#$%^&*";
+
+function generateSecurePassword(): string {
+  const bytes = new Uint32Array(16);
+  crypto.getRandomValues(bytes);
+  return Array.from(bytes, (b) => PASSWORD_CHARS[b % PASSWORD_CHARS.length]).join("");
+}
 
 const METHODS: SetupType["method"][] = ["espresso", "v60", "aeropress", "frenchpress", "moka", "auto"];
 const ONBOARDING_SEEN_KEY = "kvarn:onboardingSeen";
@@ -35,12 +46,13 @@ function isStandaloneDisplay(): boolean {
   );
 }
 
-type Step = "method" | "equipment" | "bean" | "location" | "install";
+type Step = "method" | "equipment" | "bean" | "location" | "account" | "install";
 
 export function Onboarding() {
   const t = useT("onboarding");
   const tSetup = useT("setup");
   const tRegal = useT("regal");
+  const tSettings = useT("settings");
   const navigate = useNavigate();
   const {
     products,
@@ -60,6 +72,13 @@ export function Onboarding() {
   const [beanName, setBeanName] = useState("");
   const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
   const platform = useMemo(detectPlatform, []);
+  const [firstName, setFirstName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [passwordCopied, setPasswordCopied] = useState(false);
+  const [accountBusy, setAccountBusy] = useState(false);
+  const [accountError, setAccountError] = useState(false);
 
   const filteredProducts = useMemo(() => {
     if (!query) return [];
@@ -87,12 +106,39 @@ export function Onboarding() {
     if (withWeather) {
       captureWeatherSnapshot();
     }
-    setStep("install");
+    setStep("account");
   }
 
   function finishOnboarding() {
     markOnboardingSeen();
     navigate({ to: "/bruehen" });
+  }
+
+  function handleGeneratePassword() {
+    setPassword(generateSecurePassword());
+    setShowPassword(true);
+    setPasswordCopied(false);
+  }
+
+  async function handleCopyPassword() {
+    await navigator.clipboard.writeText(password);
+    setPasswordCopied(true);
+  }
+
+  async function handleAccountSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    setAccountError(false);
+    setAccountBusy(true);
+    try {
+      const result = await signUp.email({ email, password, name: firstName || email });
+      if (result.error) {
+        setAccountError(true);
+      } else {
+        setStep("install");
+      }
+    } finally {
+      setAccountBusy(false);
+    }
   }
 
   // Onboarding represents the user's primary setup/bean — always activate what
@@ -223,6 +269,64 @@ export function Onboarding() {
           <Button onClick={() => advanceFromLocation(true)}>{t("locationAllow")}</Button>
           <Button variant="ghost" onClick={() => advanceFromLocation(false)}>
             {t("locationSkip")}
+          </Button>
+        </Card>
+      ) : null}
+
+      {step === "account" ? (
+        <Card>
+          <SectionLabel icon={UserPlus}>{t("stepAccount")}</SectionLabel>
+          <p className="text-base mb-3">{t("accountQuestion")}</p>
+          <form onSubmit={handleAccountSubmit} className="flex flex-col gap-3">
+            <input
+              className="border border-linen rounded-control px-3 py-2 text-base bg-birch"
+              placeholder={t("firstNamePlaceholder")}
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+            />
+            <input
+              type="email"
+              className="border border-linen rounded-control px-3 py-2 text-base bg-birch"
+              placeholder={tSettings("email")}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+            <input
+              type={showPassword ? "text" : "password"}
+              className="border border-linen rounded-control px-3 py-2 text-base bg-birch"
+              placeholder={tSettings("password")}
+              value={password}
+              onChange={(e) => {
+                setPassword(e.target.value);
+                setPasswordCopied(false);
+              }}
+              required
+              minLength={8}
+            />
+            <div className="flex items-center gap-3 -mt-1">
+              <button type="button" className="text-[13px] text-copper underline" onClick={handleGeneratePassword}>
+                {t("generatePassword")}
+              </button>
+              {showPassword && password ? (
+                <button
+                  type="button"
+                  className="flex items-center gap-1 text-[13px] text-muted underline"
+                  onClick={handleCopyPassword}
+                >
+                  <Copy size={13} strokeWidth={1.5} />
+                  {passwordCopied ? t("copied") : t("copyPassword")}
+                </button>
+              ) : null}
+            </div>
+            {showPassword && password ? <p className="text-[13px] text-muted -mt-1">{t("passwordGeneratedHint")}</p> : null}
+            <Button type="submit" disabled={accountBusy}>
+              {t("createAccount")}
+            </Button>
+            {accountError ? <p className="text-sm text-clay">{tSettings("authError")}</p> : null}
+          </form>
+          <Button variant="ghost" onClick={() => setStep("install")}>
+            {t("accountSkip")}
           </Button>
         </Card>
       ) : null}
