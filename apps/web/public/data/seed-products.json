@@ -8331,5 +8331,19 @@
       "notes": "Trommelröstung, ausgewogen"
     },
     "status": "seed"
+  },
+  {
+    "id": "bean-maya91-espresso-kraeftig",
+    "kind": "bean",
+    "brand": "MAYA91",
+    "model": "Espresso Kräftig",
+    "grindScale": null,
+    "specs": {
+      "segment": "regional",
+      "city": "Hamburg",
+      "origin": "Bio, Mexiko/Äthiopien/Kolumbien",
+      "notes": "Bio-zertifiziert und klimaneutral geröstet"
+    },
+    "status": "seed"
   }
 ]
