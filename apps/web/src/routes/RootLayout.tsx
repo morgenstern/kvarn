@@ -70,6 +70,9 @@ export function RootLayout() {
             {tSettings("title")}
           </Link>
         </div>
+        <div className="max-w-md mx-auto w-full px-5 pt-1 flex justify-center">
+          <LogoLockup />
+        </div>
         <main className="flex-1 max-w-md mx-auto w-full px-5 pt-2 pb-8">
           <Outlet />
         </main>
