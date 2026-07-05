@@ -93,6 +93,8 @@ export function Bruehen() {
   }, [setup?.id, bean?.id]);
   const [doseG, setDoseG] = useState(18);
   const [targetYieldG, setTargetYieldG] = useState(36);
+  const [preinfusion, setPreinfusion] = useState(false);
+  const [preinfusionS, setPreinfusionS] = useState(5);
   const [actualYieldG, setActualYieldG] = useState(36);
   const [ratingTotal, setRatingTotal] = useState(7);
   const [balance, setBalance] = useState(0);
@@ -125,7 +127,7 @@ export function Bruehen() {
       doseG,
       targetYieldG,
       waterTempC: null,
-      preinfusionS: null,
+      preinfusionS: preinfusion ? preinfusionS : null,
       puckPrep: null,
       beanAgeDays: beanAgeDaysFor(bean!.roastDate),
       timeTotalS: Math.round(stopwatch.elapsedS * 10) / 10,
@@ -330,6 +332,30 @@ export function Bruehen() {
             min={1}
             onChange={setTargetYieldG}
           />
+          <div className="flex items-center justify-between py-[13px] border-b border-linen last:border-b-0">
+            <div className="text-base">{t("preinfusion")}</div>
+            <button
+              type="button"
+              role="switch"
+              aria-checked={preinfusion}
+              onClick={() => setPreinfusion((v) => !v)}
+              className={`w-11 h-6 rounded-full relative transition-colors ${preinfusion ? "bg-copper" : "bg-linen"}`}
+            >
+              <span
+                className={`absolute top-0.5 left-0.5 w-5 h-5 rounded-full bg-white transition-transform ${preinfusion ? "translate-x-5" : ""}`}
+              />
+            </button>
+          </div>
+          {preinfusion ? (
+            <ParamStepper
+              label={t("preinfusionDuration")}
+              unit={t("preinfusionUnit")}
+              value={preinfusionS}
+              step={1}
+              min={1}
+              onChange={setPreinfusionS}
+            />
+          ) : null}
           <div className="flex justify-between text-sm text-muted pt-3">
             <span>{t("ratio")}</span>
             <span className="num">1:{computeRatio({ doseG, yieldG: targetYieldG })}</span>
