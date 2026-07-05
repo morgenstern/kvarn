@@ -1,13 +1,50 @@
 import { useState } from "react";
 import { Button, Card, EntityImage, ProductCard, SectionLabel, Select } from "@kvarn/ui";
 import type { Setup as SetupType } from "@kvarn/db";
-import { Plus, Search, SlidersHorizontal } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
+import { Coffee, Plus, SlidersHorizontal } from "lucide-react";
 import { equipmentImage, equipmentKind, useKvarnStore } from "../state/store";
 import { SetupThumbnail } from "../components/SetupThumbnail";
 import { EquipmentSearchSection } from "../components/EquipmentSearchSection";
 import { useT } from "../i18n";
 
 const METHODS: SetupType["method"][] = ["espresso", "v60", "aeropress", "frenchpress", "moka", "auto"];
+
+/** Collapses the (fairly tall) equipment search behind a single tap target,
+ * sliding it open via a CSS grid-rows trick rather than measuring heights. */
+function CollapsibleEquipmentSection({
+  kind,
+  icon: Icon,
+  label,
+  placeholder,
+}: {
+  kind: "grinder" | "machine";
+  icon: LucideIcon;
+  label: string;
+  placeholder: string;
+}) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="mt-3.5">
+      <button
+        type="button"
+        className="w-full flex items-center justify-between gap-3 bg-card border border-linen rounded-card px-4 py-3.5"
+        onClick={() => setOpen((v) => !v)}
+      >
+        <span className="flex items-center gap-2.5 text-base font-medium text-espresso">
+          <Icon size={18} strokeWidth={1.5} />
+          {label}
+        </span>
+        <Plus size={18} strokeWidth={1.5} className={`transition-transform ${open ? "rotate-45" : ""}`} />
+      </button>
+      <div className={`grid transition-[grid-template-rows] duration-300 ease-out ${open ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}>
+        <div className="overflow-hidden">
+          <EquipmentSearchSection kind={kind} icon={Icon} title={label} placeholder={placeholder} />
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export function Setup() {
   const state = useKvarnStore();
@@ -54,8 +91,8 @@ export function Setup() {
       <h1 className="font-display text-[32px] mt-3.5 mb-0.5">{t("title")}</h1>
       <p className="text-base text-muted">{t("subtitle")}</p>
 
-      <EquipmentSearchSection kind="grinder" icon={Search} title={t("addGrinder")} placeholder={t("searchPlaceholder")} />
-      <EquipmentSearchSection kind="machine" icon={Search} title={t("addMachine")} placeholder={t("searchPlaceholderMachine")} />
+      <CollapsibleEquipmentSection kind="grinder" icon={SlidersHorizontal} label={t("addGrinder")} placeholder={t("searchPlaceholder")} />
+      <CollapsibleEquipmentSection kind="machine" icon={Coffee} label={t("addMachine")} placeholder={t("searchPlaceholderMachine")} />
 
       {equipment.length > 0 ? (
         <>
