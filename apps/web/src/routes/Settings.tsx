@@ -1,11 +1,14 @@
 import { useState } from "react";
 import { Button, Card, SectionLabel } from "@kvarn/ui";
 import { sendFeedback } from "@kvarn/api-client";
-import { Database, Download, Languages, LogOut, MessageCircle, Send, Trash2, User } from "lucide-react";
+import { Database, Download, History, Languages, LogOut, MessageCircle, Send, Trash2, User } from "lucide-react";
 import { useT, useLocale, type Locale } from "../i18n";
 import { deleteAllLocalData, exportAllData } from "../data/db";
 import { authClient } from "../auth/client";
 import { useDisplayName } from "../hooks/useDisplayName";
+import { RELEASE_NOTES } from "../releaseNotes";
+
+const APP_VERSION = `beta 0.${__APP_VERSION__.padStart(3, "0")}`;
 
 const { signIn, signOut, signUp, useSession } = authClient;
 
@@ -199,6 +202,22 @@ export function Settings() {
           {feedbackState === "sent" ? <p className="text-sm text-sage">{t("feedbackSent")}</p> : null}
           {feedbackState === "error" ? <p className="text-sm text-clay">{t("feedbackError")}</p> : null}
         </form>
+      </Card>
+
+      <Card>
+        <SectionLabel icon={History}>{t("releaseNotesTitle")}</SectionLabel>
+        <p className="text-sm text-muted mb-2">
+          {t("version")} {APP_VERSION}
+        </p>
+        <ul className="flex flex-col gap-1.5">
+          {[...RELEASE_NOTES]
+            .sort((a, b) => b.version - a.version)
+            .map((note) => (
+              <li key={note.version} className="text-sm text-muted">
+                <span className="text-espresso font-medium">v{note.version}</span> — {locale === "de" ? note.de : note.en}
+              </li>
+            ))}
+        </ul>
       </Card>
     </div>
   );

@@ -1,9 +1,26 @@
+import { execSync } from "node:child_process";
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 import { VitePWA } from "vite-plugin-pwa";
 
+// Version = total commit count, so it climbs by exactly 1 per commit and a
+// user-reported version number maps straight back to `git log` for support.
+// Falls back to "0" if the build environment has no git history available
+// (e.g. a shallow clone) rather than failing the build over a cosmetic label.
+function getCommitCount() {
+  try {
+    return execSync("git rev-list --count HEAD").toString().trim();
+  } catch {
+    return "0";
+  }
+}
+const commitCount = getCommitCount();
+
 export default defineConfig({
+  define: {
+    __APP_VERSION__: JSON.stringify(commitCount),
+  },
   plugins: [
     react(),
     tailwindcss(),

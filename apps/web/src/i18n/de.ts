@@ -216,6 +216,8 @@ export const de = {
     feedbackSend: "Absenden",
     feedbackSent: "Danke für dein Feedback!",
     feedbackError: "Ging gerade nicht (kein Server erreichbar?).",
+    version: "Version",
+    releaseNotesTitle: "Versionshinweise",
   },
   onboarding: {
     welcomeTitle: "Willkommen bei Kvarn.",

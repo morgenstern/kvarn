@@ -217,6 +217,8 @@ export const en: Dictionary = {
     feedbackSend: "Send",
     feedbackSent: "Thanks for your feedback!",
     feedbackError: "Couldn't send (server unreachable?).",
+    version: "Version",
+    releaseNotesTitle: "Release notes",
   },
   onboarding: {
     welcomeTitle: "Welcome to Kvarn.",
