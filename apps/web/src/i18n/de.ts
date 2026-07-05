@@ -86,6 +86,13 @@ export const de = {
     saveSetup: "Setup speichern",
     addPhotoOptional: "Foto hinzufügen (optional)",
     photoUploading: "Lädt hoch …",
+    grindRangeHint: "Mahlgrad-Bereich deiner Mühle",
+    grindMin: "Min",
+    grindMax: "Max (offen)",
+    grindStep: "Schritt",
+    editGrindScaleTitle: "Mahlgrad-Bereich: {name}",
+    tapToEditGrindScale: "Zum Bearbeiten tippen",
+    saveGrindScale: "Speichern",
   },
   bruehen: {
     title: "Brühen",

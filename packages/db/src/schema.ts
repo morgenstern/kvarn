@@ -21,6 +21,16 @@ const syncColumns = {
   clientId: text("client_id").notNull(),
 };
 
+type GrindScaleJson = {
+  min: number;
+  max: number;
+  step: number;
+  unit: string;
+  label: string;
+  /** Sign added to the raw value to move one step finer — see packages/core/src/compass.ts. */
+  finerDirection: -1 | 1;
+} | null;
+
 export const product = sqliteTable("product", {
   id: text("id").primaryKey(),
   // "bean" entries are a curated catalog of roasters/varieties (see
@@ -31,15 +41,8 @@ export const product = sqliteTable("product", {
   brand: text("brand").notNull(),
   model: text("model").notNull(),
   imageUrl: text("image_url"),
-  grindScale: text("grind_scale", { mode: "json" }).$type<{
-    min: number;
-    max: number;
-    step: number;
-    unit: string;
-    label: string;
-    /** Sign added to the raw value to move one step finer — see packages/core/src/compass.ts. */
-    finerDirection: -1 | 1;
-  } | null>(),
+  // Catalog default — see equipment.grindScale below for the per-owner override.
+  grindScale: text("grind_scale", { mode: "json" }).$type<GrindScaleJson>(),
   specs: text("specs", { mode: "json" }).$type<Record<string, unknown> | null>(),
   status: text("status", { enum: ["seed", "community", "verified"] })
     .notNull()
@@ -61,6 +64,14 @@ export const equipment = sqliteTable("equipment", {
   kind: text("kind", { enum: ["grinder", "machine", "brewer", "accessory"] }),
   notes: text("notes"),
   burrKg: real("burr_kg"),
+  // User-configurable grind range for this specific grinder (min/max/step),
+  // independent of the linked product's catalog default — two owners of the
+  // same model may have dialed in different numbers, and custom/unlisted
+  // grinders have no catalog default to inherit. Only meaningful when this
+  // equipment's kind is "grinder"; resolution order is this, then the linked
+  // product's grindScale, then a hardcoded fallback — see equipmentGrindScale
+  // in apps/web/src/state/store.ts.
+  grindScale: text("grind_scale", { mode: "json" }).$type<GrindScaleJson>(),
   // Private reference photo (e.g. for custom/non-catalog gear) — never shown
   // publicly, only used as generation input. See docs/07_ILLUSTRATION_STYLE.md §3.
   photoUrl: text("photo_url"),

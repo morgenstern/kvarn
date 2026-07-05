@@ -88,6 +88,13 @@ export const en: Dictionary = {
     saveSetup: "Save setup",
     addPhotoOptional: "Add a photo (optional)",
     photoUploading: "Uploading …",
+    grindRangeHint: "Your grinder's grind range",
+    grindMin: "Min",
+    grindMax: "Max (open-ended)",
+    grindStep: "Step",
+    editGrindScaleTitle: "Grind range: {name}",
+    tapToEditGrindScale: "Tap to edit",
+    saveGrindScale: "Save",
   },
   bruehen: {
     title: "Brew",

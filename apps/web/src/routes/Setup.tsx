@@ -3,7 +3,7 @@ import { Button, Card, EntityImage, ProductCard, SectionLabel, Select } from "@k
 import type { Setup as SetupType } from "@kvarn/db";
 import type { LucideIcon } from "lucide-react";
 import { Coffee, Plus, SlidersHorizontal } from "lucide-react";
-import { equipmentImage, equipmentKind, useKvarnStore } from "../state/store";
+import { equipmentGrindScale, equipmentImage, equipmentKind, useKvarnStore, type GrindScaleValue } from "../state/store";
 import { SetupThumbnail } from "../components/SetupThumbnail";
 import { EquipmentSearchSection } from "../components/EquipmentSearchSection";
 import { useT } from "../i18n";
@@ -48,7 +48,7 @@ function CollapsibleEquipmentSection({
 
 export function Setup() {
   const state = useKvarnStore();
-  const { products, equipment, setups, beans, addSetup, activeSetupId, setActiveSetup } = state;
+  const { products, equipment, setups, beans, addSetup, activeSetupId, setActiveSetup, setEquipmentGrindScale } = state;
   const t = useT("setup");
   const tCommon = useT("common");
   const [showSetupForm, setShowSetupForm] = useState(false);
@@ -57,6 +57,8 @@ export function Setup() {
   const [grinderEquipmentId, setGrinderEquipmentId] = useState<string>("");
   const [machineEquipmentId, setMachineEquipmentId] = useState<string>("");
   const [beanId, setBeanId] = useState<string>("");
+  const [editingGrinderId, setEditingGrinderId] = useState<string | null>(null);
+  const [editScale, setEditScale] = useState<GrindScaleValue | null>(null);
 
   const grinderEquipment = equipment.filter((eq) => equipmentKind(state, eq.id) === "grinder");
   const machineEquipment = equipment.filter((eq) => equipmentKind(state, eq.id) === "machine");
@@ -67,6 +69,17 @@ export function Setup() {
     if (eq.customName) return eq.customName;
     const product = products.find((p) => p.id === eq.productId);
     return product ? `${product.brand} ${product.model}` : "—";
+  }
+
+  function openGrindScaleEditor(equipmentId: string) {
+    setEditingGrinderId(equipmentId);
+    setEditScale(equipmentGrindScale(state, equipmentId));
+  }
+
+  async function saveGrindScale() {
+    if (!editingGrinderId || !editScale) return;
+    await setEquipmentGrindScale(editingGrinderId, editScale);
+    setEditingGrinderId(null);
   }
 
   async function submitSetup(e: React.FormEvent) {
@@ -98,16 +111,61 @@ export function Setup() {
         <>
           <SectionLabel className="mt-5">{t("yourEquipment")}</SectionLabel>
           <div className="grid grid-cols-2 gap-3 mt-3">
-            {equipment.map((eq) => (
-              <ProductCard
-                key={eq.id}
-                image={<EntityImage src={equipmentImage(state, eq.id)} kind={equipmentKind(state, eq.id)} className="w-full h-full" />}
-              >
-                <div className="text-[15px] font-medium leading-tight">{equipmentLabel(eq.id)}</div>
-              </ProductCard>
-            ))}
+            {equipment.map((eq) => {
+              const isGrinder = equipmentKind(state, eq.id) === "grinder";
+              return (
+                <ProductCard
+                  key={eq.id}
+                  onClick={isGrinder ? () => openGrindScaleEditor(eq.id) : undefined}
+                  image={<EntityImage src={equipmentImage(state, eq.id)} kind={equipmentKind(state, eq.id)} className="w-full h-full" />}
+                >
+                  <div className="text-[15px] font-medium leading-tight">{equipmentLabel(eq.id)}</div>
+                  {isGrinder ? <div className="text-[12px] text-muted mt-0.5">{t("tapToEditGrindScale")}</div> : null}
+                </ProductCard>
+              );
+            })}
           </div>
         </>
+      ) : null}
+
+      {editingGrinderId && editScale ? (
+        <Card>
+          <SectionLabel icon={SlidersHorizontal}>{t("editGrindScaleTitle", { name: equipmentLabel(editingGrinderId) })}</SectionLabel>
+          <div className="flex items-center gap-3">
+            <div className="flex flex-col gap-0.5">
+              <label className="text-[13px] text-muted">{t("grindMin")}</label>
+              <input
+                type="number"
+                value={editScale.min}
+                onChange={(e) => setEditScale((s) => (s ? { ...s, min: Number(e.target.value) } : s))}
+                className="w-20 border border-linen rounded-control px-2 py-2 text-base bg-birch"
+              />
+            </div>
+            <div className="flex flex-col gap-0.5">
+              <label className="text-[13px] text-muted">{t("grindMax")}</label>
+              <input
+                type="number"
+                value={editScale.max}
+                onChange={(e) => setEditScale((s) => (s ? { ...s, max: Number(e.target.value) } : s))}
+                className="w-20 border border-linen rounded-control px-2 py-2 text-base bg-birch"
+              />
+            </div>
+            <div className="flex flex-col gap-0.5">
+              <label className="text-[13px] text-muted">{t("grindStep")}</label>
+              <input
+                type="number"
+                step="0.1"
+                value={editScale.step}
+                onChange={(e) => setEditScale((s) => (s ? { ...s, step: Number(e.target.value) } : s))}
+                className="w-20 border border-linen rounded-control px-2 py-2 text-base bg-birch"
+              />
+            </div>
+          </div>
+          <Button onClick={saveGrindScale}>{t("saveGrindScale")}</Button>
+          <Button variant="ghost" onClick={() => setEditingGrinderId(null)}>
+            {tCommon("cancel")}
+          </Button>
+        </Card>
       ) : null}
 
       <SectionLabel

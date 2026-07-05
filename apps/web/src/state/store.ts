@@ -3,6 +3,17 @@ import { fetchWeatherSnapshot, getRoughLocation } from "@kvarn/api-client";
 import type { Bean, Brew, Equipment, Product, Recipe, Setup, WeatherSnapshot } from "@kvarn/db";
 import { db, ensureSeeded, LOCAL_USER_ID, newId, nowIso, syncApprovedProducts } from "../data/db";
 
+export type GrindScaleValue = NonNullable<Product["grindScale"]>;
+
+export const DEFAULT_GRIND_SCALE: GrindScaleValue = {
+  min: 0,
+  max: 40,
+  step: 0.5,
+  unit: "clicks",
+  label: "",
+  finerDirection: -1,
+};
+
 export interface KvarnState {
   hydrated: boolean;
   products: Product[];
@@ -17,7 +28,13 @@ export interface KvarnState {
 
   hydrate: () => Promise<void>;
   addEquipmentFromProduct: (productId: string, photoUrl?: string) => Promise<Equipment>;
-  addCustomEquipment: (customName: string, kind: Exclude<Product["kind"], "bean">, photoUrl?: string) => Promise<Equipment>;
+  addCustomEquipment: (
+    customName: string,
+    kind: Exclude<Product["kind"], "bean">,
+    photoUrl?: string,
+    grindScale?: GrindScaleValue | null,
+  ) => Promise<Equipment>;
+  setEquipmentGrindScale: (equipmentId: string, grindScale: GrindScaleValue) => Promise<void>;
   addSetup: (input: {
     name: string;
     method: Setup["method"];
@@ -99,6 +116,7 @@ export const useKvarnStore = create<KvarnState>((set, get) => ({
       kind: product && product.kind !== "bean" ? product.kind : null,
       notes: null,
       burrKg: null,
+      grindScale: null,
       photoUrl: photoUrl ?? null,
       imageUrl: null,
       updatedAt: nowIso(),
@@ -110,7 +128,7 @@ export const useKvarnStore = create<KvarnState>((set, get) => ({
     return equipment;
   },
 
-  addCustomEquipment: async (customName, kind, photoUrl) => {
+  addCustomEquipment: async (customName, kind, photoUrl, grindScale) => {
     const equipment: Equipment = {
       id: newId("equipment"),
       userId: LOCAL_USER_ID,
@@ -119,6 +137,7 @@ export const useKvarnStore = create<KvarnState>((set, get) => ({
       kind,
       notes: null,
       burrKg: null,
+      grindScale: grindScale ?? null,
       photoUrl: photoUrl ?? null,
       imageUrl: null,
       updatedAt: nowIso(),
@@ -128,6 +147,11 @@ export const useKvarnStore = create<KvarnState>((set, get) => ({
     await db.equipment.add(equipment);
     set((s) => ({ equipment: [...s.equipment, equipment] }));
     return equipment;
+  },
+
+  setEquipmentGrindScale: async (equipmentId, grindScale) => {
+    await db.equipment.update(equipmentId, { grindScale, updatedAt: nowIso() });
+    set((s) => ({ equipment: s.equipment.map((e) => (e.id === equipmentId ? { ...e, grindScale } : e)) }));
   },
 
   addSetup: async ({ name, method, grinderEquipmentId, machineEquipmentId, beanId }) => {
@@ -310,6 +334,18 @@ export function equipmentKind(state: KvarnState, equipmentId: string | null): Pr
   const eq = state.equipment.find((e) => e.id === equipmentId);
   if (eq?.kind) return eq.kind;
   return equipmentProduct(state, equipmentId)?.kind ?? "grinder";
+}
+
+/**
+ * Grind range to use for a given piece of equipment: the owner's own
+ * override on the equipment record if they've set one, else the linked
+ * catalog product's default, else a generic fallback for custom/unlisted
+ * grinders. Only meaningful for grinder-kind equipment.
+ */
+export function equipmentGrindScale(state: KvarnState, equipmentId: string | null): GrindScaleValue {
+  const eq = state.equipment.find((e) => e.id === equipmentId);
+  if (eq?.grindScale) return eq.grindScale;
+  return equipmentProduct(state, equipmentId)?.grindScale ?? DEFAULT_GRIND_SCALE;
 }
 
 /**

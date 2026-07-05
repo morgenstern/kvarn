@@ -1,16 +1,7 @@
 import { useMemo } from "react";
 import { nextGrindSuggestion } from "@kvarn/core";
 import type { Bean, Setup, WeatherSnapshot } from "@kvarn/db";
-import { equipmentProduct, lastBrewFor, weatherSnapshotFor, type KvarnState } from "../state/store";
-
-const DEFAULT_GRIND_SCALE = {
-  min: 0,
-  max: 40,
-  step: 0.5,
-  unit: "clicks",
-  label: "",
-  finerDirection: -1 as const,
-};
+import { equipmentGrindScale, lastBrewFor, weatherSnapshotFor, type KvarnState } from "../state/store";
 
 function beanAgeDaysFor(roastDate: string | null): number | null {
   if (!roastDate) return null;
@@ -29,8 +20,7 @@ export function useGrindSuggestion(
   bean: Bean | undefined,
   weatherSnapshot: WeatherSnapshot | null | undefined,
 ) {
-  const grinder = equipmentProduct(state, setup?.grinderEquipmentId ?? null);
-  const grindScale = grinder?.grindScale ?? DEFAULT_GRIND_SCALE;
+  const grindScale = equipmentGrindScale(state, setup?.grinderEquipmentId ?? null);
 
   const suggestion = useMemo(() => {
     if (!setup || !bean) return null;

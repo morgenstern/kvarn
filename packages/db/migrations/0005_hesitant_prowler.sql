@@ -1,0 +1,1 @@
+ALTER TABLE `equipment` ADD `grind_scale` text;
