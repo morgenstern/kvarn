@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { Button, Card, Chip, Logo, Modal, SectionLabel } from "@kvarn/ui";
 import type { Setup as SetupType } from "@kvarn/db";
-import { Coffee, Compass, Copy, Download, MapPin, Package, SlidersHorizontal, Sun, UserPlus } from "lucide-react";
+import { ChevronLeft, Coffee, Compass, Copy, Download, MapPin, Package, SlidersHorizontal, Sun, UserPlus } from "lucide-react";
 import { equipmentGrindScale, useKvarnStore, type GrindScaleValue } from "../state/store";
 import { EquipmentSearchSection } from "../components/EquipmentSearchSection";
 import { BeanForm } from "../components/BeanForm";
@@ -216,6 +216,11 @@ export function Onboarding() {
     navigate({ to: "/bruehen" });
   }
 
+  function goBack() {
+    const idx = STEP_ORDER.indexOf(step);
+    setStep(idx <= 0 ? "welcome" : (STEP_ORDER[idx - 1] ?? "welcome"));
+  }
+
   return (
     <div>
       {step === "welcome" ? (
@@ -249,7 +254,17 @@ export function Onboarding() {
           </Button>
         </div>
       ) : (
-        <StepDots current={step} />
+        <>
+          <button
+            type="button"
+            onClick={goBack}
+            className="flex items-center gap-0.5 text-[13px] text-muted mt-4 py-2 -my-2 -ml-1"
+          >
+            <ChevronLeft size={16} strokeWidth={1.5} />
+            {t("back")}
+          </button>
+          <StepDots current={step} />
+        </>
       )}
 
       {step === "method" ? (
