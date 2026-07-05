@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Button, Card, EntityImage, Modal, ProductCard, SectionLabel, Select } from "@kvarn/ui";
 import type { Setup as SetupType } from "@kvarn/db";
 import type { LucideIcon } from "lucide-react";
-import { Coffee, Plus, SlidersHorizontal } from "lucide-react";
+import { Coffee, Plus, SlidersHorizontal, Trash2 } from "lucide-react";
 import { equipmentGrindScale, equipmentImage, equipmentKind, useKvarnStore, type GrindScaleValue } from "../state/store";
 import { SetupThumbnail } from "../components/SetupThumbnail";
 import { EquipmentSearchSection } from "../components/EquipmentSearchSection";
@@ -49,7 +49,18 @@ function CollapsibleEquipmentSection({
 
 export function Setup() {
   const state = useKvarnStore();
-  const { products, equipment, setups, beans, addSetup, activeSetupId, setActiveSetup, setEquipmentGrindScale } = state;
+  const {
+    products,
+    equipment,
+    setups,
+    beans,
+    addSetup,
+    activeSetupId,
+    setActiveSetup,
+    setEquipmentGrindScale,
+    setEquipmentCustomName,
+    deleteEquipment,
+  } = state;
   const t = useT("setup");
   const tCommon = useT("common");
   const [showSetupForm, setShowSetupForm] = useState(false);
@@ -58,8 +69,11 @@ export function Setup() {
   const [grinderEquipmentId, setGrinderEquipmentId] = useState<string>("");
   const [machineEquipmentId, setMachineEquipmentId] = useState<string>("");
   const [beanId, setBeanId] = useState<string>("");
-  const [editingGrinderId, setEditingGrinderId] = useState<string | null>(null);
+  const [editingEquipmentId, setEditingEquipmentId] = useState<string | null>(null);
+  const [editName, setEditName] = useState("");
   const [editScale, setEditScale] = useState<GrindScaleValue | null>(null);
+  const [deleteConfirm, setDeleteConfirm] = useState(false);
+  const [deleteError, setDeleteError] = useState(false);
 
   const grinderEquipment = equipment.filter((eq) => equipmentKind(state, eq.id) === "grinder");
   const machineEquipment = equipment.filter((eq) => equipmentKind(state, eq.id) === "machine");
@@ -72,15 +86,45 @@ export function Setup() {
     return product ? `${product.brand} ${product.model}` : "—";
   }
 
-  function openGrindScaleEditor(equipmentId: string) {
-    setEditingGrinderId(equipmentId);
-    setEditScale(equipmentGrindScale(state, equipmentId));
+  function originalProductLabel(equipmentId: string): string | null {
+    const eq = equipment.find((e) => e.id === equipmentId);
+    if (!eq?.productId) return null;
+    const product = products.find((p) => p.id === eq.productId);
+    return product ? `${product.brand} ${product.model}` : null;
   }
 
-  async function saveGrindScale() {
-    if (!editingGrinderId || !editScale) return;
-    await setEquipmentGrindScale(editingGrinderId, editScale);
-    setEditingGrinderId(null);
+  function openEquipmentEditor(equipmentId: string) {
+    const eq = equipment.find((e) => e.id === equipmentId);
+    setEditingEquipmentId(equipmentId);
+    setEditName(eq?.customName ?? "");
+    setEditScale(equipmentKind(state, equipmentId) === "grinder" ? equipmentGrindScale(state, equipmentId) : null);
+    setDeleteConfirm(false);
+    setDeleteError(false);
+  }
+
+  function closeEquipmentEditor() {
+    setEditingEquipmentId(null);
+    setDeleteConfirm(false);
+    setDeleteError(false);
+  }
+
+  async function saveEquipmentEdits() {
+    if (!editingEquipmentId) return;
+    await setEquipmentCustomName(editingEquipmentId, editName.trim() || null);
+    if (editScale) {
+      await setEquipmentGrindScale(editingEquipmentId, editScale);
+    }
+    closeEquipmentEditor();
+  }
+
+  async function handleDeleteEquipment() {
+    if (!editingEquipmentId) return;
+    try {
+      await deleteEquipment(editingEquipmentId);
+      closeEquipmentEditor();
+    } catch {
+      setDeleteError(true);
+    }
   }
 
   async function submitSetup(e: React.FormEvent) {
@@ -112,33 +156,56 @@ export function Setup() {
         <>
           <SectionLabel className="mt-5">{t("yourEquipment")}</SectionLabel>
           <div className="grid grid-cols-2 gap-3 mt-3">
-            {equipment.map((eq) => {
-              const isGrinder = equipmentKind(state, eq.id) === "grinder";
-              return (
-                <ProductCard
-                  key={eq.id}
-                  onClick={isGrinder ? () => openGrindScaleEditor(eq.id) : undefined}
-                  image={<EntityImage src={equipmentImage(state, eq.id)} kind={equipmentKind(state, eq.id)} className="w-full h-full" />}
-                >
-                  <div className="text-[15px] font-medium leading-tight">{equipmentLabel(eq.id)}</div>
-                  {isGrinder ? <div className="text-[12px] text-muted mt-0.5">{t("tapToEditGrindScale")}</div> : null}
-                </ProductCard>
-              );
-            })}
+            {equipment.map((eq) => (
+              <ProductCard
+                key={eq.id}
+                onClick={() => openEquipmentEditor(eq.id)}
+                image={<EntityImage src={equipmentImage(state, eq.id)} kind={equipmentKind(state, eq.id)} className="w-full h-full" />}
+              >
+                <div className="text-[15px] font-medium leading-tight">{equipmentLabel(eq.id)}</div>
+                <div className="text-[12px] text-muted mt-0.5">{t("tapToEdit")}</div>
+              </ProductCard>
+            ))}
           </div>
         </>
       ) : null}
 
-      {editingGrinderId && editScale ? (
-        <Modal onClose={() => setEditingGrinderId(null)}>
-          <SectionLabel icon={SlidersHorizontal}>{t("editGrindScaleTitle", { name: equipmentLabel(editingGrinderId) })}</SectionLabel>
-          <GrindScaleFields value={editScale} onChange={setEditScale} />
-          <Button onClick={saveGrindScale}>{t("saveGrindScale")}</Button>
-          <Button variant="ghost" onClick={() => setEditingGrinderId(null)}>
-            {tCommon("cancel")}
-          </Button>
-        </Modal>
-      ) : null}
+      {editingEquipmentId
+        ? (() => {
+            const originalName = originalProductLabel(editingEquipmentId);
+            return (
+              <Modal onClose={closeEquipmentEditor}>
+                <SectionLabel icon={equipmentKind(state, editingEquipmentId) === "grinder" ? SlidersHorizontal : Coffee}>
+                  {t("editEquipmentTitle", { name: equipmentLabel(editingEquipmentId) })}
+                </SectionLabel>
+                {originalName ? <p className="text-sm text-muted mb-2">{t("originalNameLabel", { name: originalName })}</p> : null}
+                <input
+                  className="border border-linen rounded-control px-3 py-2 text-base bg-birch w-full mb-3"
+                  placeholder={t("customNamePlaceholder")}
+                  value={editName}
+                  onChange={(e) => setEditName(e.target.value)}
+                />
+                {editScale ? <GrindScaleFields value={editScale} onChange={setEditScale} /> : null}
+                <Button onClick={saveEquipmentEdits}>{t("saveChanges")}</Button>
+                {!deleteConfirm ? (
+                  <Button variant="ghost" onClick={() => setDeleteConfirm(true)}>
+                    <Trash2 size={18} strokeWidth={1.5} />
+                    {t("deleteEquipment")}
+                  </Button>
+                ) : (
+                  <>
+                    <p className="text-base text-clay mt-3">{t("deleteEquipmentConfirm")}</p>
+                    <Button onClick={handleDeleteEquipment}>{t("deleteEquipmentConfirmButton")}</Button>
+                    <Button variant="ghost" onClick={() => setDeleteConfirm(false)}>
+                      {tCommon("cancel")}
+                    </Button>
+                  </>
+                )}
+                {deleteError ? <p className="text-sm text-clay mt-2">{t("deleteEquipmentBlocked")}</p> : null}
+              </Modal>
+            );
+          })()
+        : null}
 
       <SectionLabel
         icon={SlidersHorizontal}

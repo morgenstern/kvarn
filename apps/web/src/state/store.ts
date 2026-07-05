@@ -35,6 +35,12 @@ export interface KvarnState {
     grindScale?: GrindScaleValue | null,
   ) => Promise<Equipment>;
   setEquipmentGrindScale: (equipmentId: string, grindScale: GrindScaleValue) => Promise<void>;
+  setEquipmentCustomName: (equipmentId: string, customName: string | null) => Promise<void>;
+  /** Throws EQUIPMENT_IN_USE if a setup still requires this equipment as its
+   * (non-optional) grinder — callers should catch and surface that. Clears
+   * the equipment from any setup's optional machine/accessory slots instead
+   * of blocking, since those are safe to just unset. */
+  deleteEquipment: (equipmentId: string) => Promise<void>;
   addSetup: (input: {
     name: string;
     method: Setup["method"];
@@ -152,6 +158,46 @@ export const useKvarnStore = create<KvarnState>((set, get) => ({
   setEquipmentGrindScale: async (equipmentId, grindScale) => {
     await db.equipment.update(equipmentId, { grindScale, updatedAt: nowIso() });
     set((s) => ({ equipment: s.equipment.map((e) => (e.id === equipmentId ? { ...e, grindScale } : e)) }));
+  },
+
+  setEquipmentCustomName: async (equipmentId, customName) => {
+    await db.equipment.update(equipmentId, { customName, updatedAt: nowIso() });
+    set((s) => ({ equipment: s.equipment.map((e) => (e.id === equipmentId ? { ...e, customName } : e)) }));
+  },
+
+  deleteEquipment: async (equipmentId) => {
+    const state = get();
+    const requiredBy = state.setups.filter((s) => s.grinderEquipmentId === equipmentId);
+    if (requiredBy.length > 0) {
+      throw new Error("EQUIPMENT_IN_USE");
+    }
+
+    const affectedSetups = state.setups.filter(
+      (s) => s.machineEquipmentId === equipmentId || (s.accessoryEquipmentIds ?? []).includes(equipmentId),
+    );
+    await Promise.all(
+      affectedSetups.map((s) =>
+        db.setups.update(s.id, {
+          machineEquipmentId: s.machineEquipmentId === equipmentId ? null : s.machineEquipmentId,
+          accessoryEquipmentIds: (s.accessoryEquipmentIds ?? []).filter((id) => id !== equipmentId),
+          updatedAt: nowIso(),
+        }),
+      ),
+    );
+    await db.equipment.delete(equipmentId);
+
+    set((s) => ({
+      equipment: s.equipment.filter((e) => e.id !== equipmentId),
+      setups: s.setups.map((s2) =>
+        s2.machineEquipmentId === equipmentId || (s2.accessoryEquipmentIds ?? []).includes(equipmentId)
+          ? {
+              ...s2,
+              machineEquipmentId: s2.machineEquipmentId === equipmentId ? null : s2.machineEquipmentId,
+              accessoryEquipmentIds: (s2.accessoryEquipmentIds ?? []).filter((id) => id !== equipmentId),
+            }
+          : s2,
+      ),
+    }));
   },
 
   addSetup: async ({ name, method, grinderEquipmentId, machineEquipmentId, beanId }) => {
