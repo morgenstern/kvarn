@@ -1,11 +1,12 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
-import { Button, Card, Chip, Logo, SectionLabel } from "@kvarn/ui";
+import { Button, Card, Chip, Logo, Modal, SectionLabel } from "@kvarn/ui";
 import type { Setup as SetupType } from "@kvarn/db";
 import { Coffee, Compass, Copy, Download, MapPin, Package, SlidersHorizontal, Sun, UserPlus } from "lucide-react";
-import { useKvarnStore } from "../state/store";
+import { equipmentGrindScale, useKvarnStore, type GrindScaleValue } from "../state/store";
 import { EquipmentSearchSection } from "../components/EquipmentSearchSection";
 import { BeanForm } from "../components/BeanForm";
+import { GrindScaleFields } from "../components/GrindScaleFields";
 import { useT } from "../i18n";
 import { authClient } from "../auth/client";
 
@@ -74,14 +75,26 @@ export function Onboarding() {
   const tSetup = useT("setup");
   const tSettings = useT("settings");
   const navigate = useNavigate();
-  const { products, equipment, beans, addCustomEquipment, addSetup, addBean, captureWeatherSnapshot, setActiveSetup, setActiveBean } =
-    useKvarnStore();
+  const {
+    products,
+    equipment,
+    beans,
+    addCustomEquipment,
+    addSetup,
+    addBean,
+    captureWeatherSnapshot,
+    setActiveSetup,
+    setActiveBean,
+    setEquipmentGrindScale,
+  } = useKvarnStore();
 
   const [step, setStep] = useState<Step>("welcome");
   const [method, setMethod] = useState<SetupType["method"] | null>(null);
   const [addedGrinderIds, setAddedGrinderIds] = useState<string[]>([]);
   const [addedMachineIds, setAddedMachineIds] = useState<string[]>([]);
   const [addedBeanIds, setAddedBeanIds] = useState<string[]>([]);
+  const [confirmingGrinderId, setConfirmingGrinderId] = useState<string | null>(null);
+  const [confirmScale, setConfirmScale] = useState<GrindScaleValue | null>(null);
   const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
   const platform = useMemo(detectPlatform, []);
   const [firstName, setFirstName] = useState("");
@@ -153,6 +166,21 @@ export function Onboarding() {
   function beanLabel(id: string): string {
     const bean = beans.find((b) => b.id === id);
     return bean ? `${bean.roaster} — ${bean.name}` : "—";
+  }
+
+  // Prompts for the grind range right after a grinder is added — a one-off
+  // snapshot read via getState() since this runs in an event handler, not
+  // during render.
+  function handleGrinderAdded(id: string) {
+    setAddedGrinderIds((ids) => [...ids, id]);
+    setConfirmingGrinderId(id);
+    setConfirmScale(equipmentGrindScale(useKvarnStore.getState(), id));
+  }
+
+  async function saveConfirmedGrindScale() {
+    if (!confirmingGrinderId || !confirmScale) return;
+    await setEquipmentGrindScale(confirmingGrinderId, confirmScale);
+    setConfirmingGrinderId(null);
   }
 
   // Bundles whatever was added along the way into the user's primary setup +
@@ -246,7 +274,7 @@ export function Onboarding() {
             icon={SlidersHorizontal}
             title={t("stepGrinder")}
             placeholder={tSetup("searchPlaceholder")}
-            onAdded={(id) => setAddedGrinderIds((ids) => [...ids, id])}
+            onAdded={handleGrinderAdded}
           />
           {addedGrinderIds.length > 0 ? (
             <div className="mt-3">
@@ -262,6 +290,18 @@ export function Onboarding() {
           ) : null}
           <Button onClick={() => setStep("machine")}>{addedGrinderIds.length > 0 ? t("next") : t("skip")}</Button>
         </>
+      ) : null}
+
+      {confirmingGrinderId && confirmScale ? (
+        <Modal onClose={() => setConfirmingGrinderId(null)}>
+          <SectionLabel icon={SlidersHorizontal}>{t("confirmGrindScaleTitle")}</SectionLabel>
+          <p className="text-base mb-3">{t("confirmGrindScaleQuestion", { name: equipmentLabel(confirmingGrinderId) })}</p>
+          <GrindScaleFields value={confirmScale} onChange={setConfirmScale} />
+          <Button onClick={saveConfirmedGrindScale}>{tSetup("saveGrindScale")}</Button>
+          <Button variant="ghost" onClick={() => setConfirmingGrinderId(null)}>
+            {t("skip")}
+          </Button>
+        </Modal>
       ) : null}
 
       {step === "machine" ? (

@@ -39,9 +39,6 @@ export function EquipmentSearchSection({
   const [submissionState, setSubmissionState] = useState<SubmissionState>("idle");
   const [customPhotoFile, setCustomPhotoFile] = useState<File | null>(null);
   const [customPhotoBusy, setCustomPhotoBusy] = useState(false);
-  const [customGrindMin, setCustomGrindMin] = useState(0);
-  const [customGrindMax, setCustomGrindMax] = useState(40);
-  const [customGrindStep, setCustomGrindStep] = useState(1);
 
   const filteredProducts = useMemo(() => {
     if (!query) return [];
@@ -53,11 +50,7 @@ export function EquipmentSearchSection({
     setCustomPhotoBusy(true);
     try {
       const photoUrl = customPhotoFile ? await uploadPhoto(customPhotoFile).catch(() => undefined) : undefined;
-      const grindScale =
-        kind === "grinder"
-          ? { min: customGrindMin, max: customGrindMax, step: customGrindStep, unit: "clicks", label: "", finerDirection: -1 as const }
-          : null;
-      const created = await addCustomEquipment(query, kind, photoUrl, grindScale);
+      const created = await addCustomEquipment(query, kind, photoUrl);
       const label = query;
       setQuery("");
       setCustomPhotoFile(null);
@@ -132,41 +125,6 @@ export function EquipmentSearchSection({
               onChange={(e) => setCustomPhotoFile(e.target.files?.[0] ?? null)}
             />
           </label>
-          {kind === "grinder" ? (
-            <div className="w-full">
-              <p className="text-[13px] text-muted mb-1.5">{t("grindRangeHint")}</p>
-              <div className="flex items-center gap-2.5">
-                <div className="flex flex-col gap-0.5">
-                  <label className="text-[11px] text-muted">{t("grindMin")}</label>
-                  <input
-                    type="number"
-                    value={customGrindMin}
-                    onChange={(e) => setCustomGrindMin(Number(e.target.value))}
-                    className="w-16 border border-linen rounded-control px-2 py-1.5 text-sm bg-birch"
-                  />
-                </div>
-                <div className="flex flex-col gap-0.5">
-                  <label className="text-[11px] text-muted">{t("grindMax")}</label>
-                  <input
-                    type="number"
-                    value={customGrindMax}
-                    onChange={(e) => setCustomGrindMax(Number(e.target.value))}
-                    className="w-16 border border-linen rounded-control px-2 py-1.5 text-sm bg-birch"
-                  />
-                </div>
-                <div className="flex flex-col gap-0.5">
-                  <label className="text-[11px] text-muted">{t("grindStep")}</label>
-                  <input
-                    type="number"
-                    step="0.1"
-                    value={customGrindStep}
-                    onChange={(e) => setCustomGrindStep(Number(e.target.value))}
-                    className="w-16 border border-linen rounded-control px-2 py-1.5 text-sm bg-birch"
-                  />
-                </div>
-              </div>
-            </div>
-          ) : null}
           <button
             type="button"
             className="text-[15px] text-copper underline py-2.5 -my-2.5"

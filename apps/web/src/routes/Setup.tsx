@@ -1,11 +1,12 @@
 import { useState } from "react";
-import { Button, Card, EntityImage, ProductCard, SectionLabel, Select } from "@kvarn/ui";
+import { Button, Card, EntityImage, Modal, ProductCard, SectionLabel, Select } from "@kvarn/ui";
 import type { Setup as SetupType } from "@kvarn/db";
 import type { LucideIcon } from "lucide-react";
 import { Coffee, Plus, SlidersHorizontal } from "lucide-react";
 import { equipmentGrindScale, equipmentImage, equipmentKind, useKvarnStore, type GrindScaleValue } from "../state/store";
 import { SetupThumbnail } from "../components/SetupThumbnail";
 import { EquipmentSearchSection } from "../components/EquipmentSearchSection";
+import { GrindScaleFields } from "../components/GrindScaleFields";
 import { useT } from "../i18n";
 
 const METHODS: SetupType["method"][] = ["espresso", "v60", "aeropress", "frenchpress", "moka", "auto"];
@@ -129,43 +130,14 @@ export function Setup() {
       ) : null}
 
       {editingGrinderId && editScale ? (
-        <Card>
+        <Modal onClose={() => setEditingGrinderId(null)}>
           <SectionLabel icon={SlidersHorizontal}>{t("editGrindScaleTitle", { name: equipmentLabel(editingGrinderId) })}</SectionLabel>
-          <div className="flex items-center gap-3">
-            <div className="flex flex-col gap-0.5">
-              <label className="text-[13px] text-muted">{t("grindMin")}</label>
-              <input
-                type="number"
-                value={editScale.min}
-                onChange={(e) => setEditScale((s) => (s ? { ...s, min: Number(e.target.value) } : s))}
-                className="w-20 border border-linen rounded-control px-2 py-2 text-base bg-birch"
-              />
-            </div>
-            <div className="flex flex-col gap-0.5">
-              <label className="text-[13px] text-muted">{t("grindMax")}</label>
-              <input
-                type="number"
-                value={editScale.max}
-                onChange={(e) => setEditScale((s) => (s ? { ...s, max: Number(e.target.value) } : s))}
-                className="w-20 border border-linen rounded-control px-2 py-2 text-base bg-birch"
-              />
-            </div>
-            <div className="flex flex-col gap-0.5">
-              <label className="text-[13px] text-muted">{t("grindStep")}</label>
-              <input
-                type="number"
-                step="0.1"
-                value={editScale.step}
-                onChange={(e) => setEditScale((s) => (s ? { ...s, step: Number(e.target.value) } : s))}
-                className="w-20 border border-linen rounded-control px-2 py-2 text-base bg-birch"
-              />
-            </div>
-          </div>
+          <GrindScaleFields value={editScale} onChange={setEditScale} />
           <Button onClick={saveGrindScale}>{t("saveGrindScale")}</Button>
           <Button variant="ghost" onClick={() => setEditingGrinderId(null)}>
             {tCommon("cancel")}
           </Button>
-        </Card>
+        </Modal>
       ) : null}
 
       <SectionLabel
