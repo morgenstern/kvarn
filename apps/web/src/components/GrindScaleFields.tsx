@@ -1,6 +1,8 @@
 import type { GrindScaleValue } from "../state/store";
 import { useT } from "../i18n";
 
+const DEFAULT_SUBCLICK_RANGE = { mainMin: 1, mainMax: 4, subMin: 0, subMax: 40 };
+
 function NumberField({ label, value, onChange }: { label: string; value: number; onChange: (v: number) => void }) {
   return (
     <div className="flex flex-col gap-0.5">
@@ -36,10 +38,10 @@ export function GrindScaleFields({ value, onChange }: { value: GrindScaleValue; 
             onChange({
               ...value,
               subclicksEnabled: !subclicksEnabled,
-              mainMin: value.mainMin ?? 1,
-              mainMax: value.mainMax ?? 4,
-              subMin: value.subMin ?? 0,
-              subMax: value.subMax ?? 40,
+              mainMin: value.mainMin ?? DEFAULT_SUBCLICK_RANGE.mainMin,
+              mainMax: value.mainMax ?? DEFAULT_SUBCLICK_RANGE.mainMax,
+              subMin: value.subMin ?? DEFAULT_SUBCLICK_RANGE.subMin,
+              subMax: value.subMax ?? DEFAULT_SUBCLICK_RANGE.subMax,
             })
           }
           className={`w-11 h-6 rounded-full relative transition-colors ${subclicksEnabled ? "bg-copper" : "bg-linen"}`}
@@ -51,10 +53,10 @@ export function GrindScaleFields({ value, onChange }: { value: GrindScaleValue; 
       </div>
       {subclicksEnabled ? (
         <div className="flex items-center gap-3 pt-3 flex-wrap">
-          <NumberField label={t("mainClickMin")} value={value.mainMin ?? 1} onChange={(v) => onChange({ ...value, mainMin: v })} />
-          <NumberField label={t("mainClickMax")} value={value.mainMax ?? 4} onChange={(v) => onChange({ ...value, mainMax: v })} />
-          <NumberField label={t("subClickMin")} value={value.subMin ?? 0} onChange={(v) => onChange({ ...value, subMin: v })} />
-          <NumberField label={t("subClickMax")} value={value.subMax ?? 40} onChange={(v) => onChange({ ...value, subMax: v })} />
+          <NumberField label={t("mainClickMin")} value={value.mainMin ?? DEFAULT_SUBCLICK_RANGE.mainMin} onChange={(v) => onChange({ ...value, mainMin: v })} />
+          <NumberField label={t("mainClickMax")} value={value.mainMax ?? DEFAULT_SUBCLICK_RANGE.mainMax} onChange={(v) => onChange({ ...value, mainMax: v })} />
+          <NumberField label={t("subClickMin")} value={value.subMin ?? DEFAULT_SUBCLICK_RANGE.subMin} onChange={(v) => onChange({ ...value, subMin: v })} />
+          <NumberField label={t("subClickMax")} value={value.subMax ?? DEFAULT_SUBCLICK_RANGE.subMax} onChange={(v) => onChange({ ...value, subMax: v })} />
         </div>
       ) : (
         <div className="flex items-center gap-3 pt-3">
