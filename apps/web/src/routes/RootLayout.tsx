@@ -7,6 +7,7 @@ import { useT } from "../i18n";
 import { useEnsureSession } from "../auth/useEnsureSession";
 import { useDisplayName } from "../hooks/useDisplayName";
 import { authClient } from "../auth/client";
+import { runSync } from "../sync/runSync";
 
 const { useSession } = authClient;
 
@@ -44,6 +45,9 @@ export function RootLayout() {
   const hydrated = useKvarnStore((s) => s.hydrated);
   const setups = useKvarnStore((s) => s.setups);
   const beans = useKvarnStore((s) => s.beans);
+  const equipment = useKvarnStore((s) => s.equipment);
+  const brews = useKvarnStore((s) => s.brews);
+  const recipes = useKvarnStore((s) => s.recipes);
   const tCommon = useT("common");
   const tNav = useT("nav");
   const tSettings = useT("settings");
@@ -62,6 +66,18 @@ export function RootLayout() {
   useEffect(() => {
     hydrate();
   }, [hydrate]);
+
+  // Sync on startup, then again ~4s after any local change to a synced
+  // table (debounced so a burst of edits doesn't fire a request per
+  // keystroke) — no-ops itself if not signed into a real account.
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      runSync().then((didSync) => {
+        if (didSync) hydrate();
+      });
+    }, 4000);
+    return () => clearTimeout(timeout);
+  }, [hydrate, equipment, setups, beans, brews, recipes]);
 
   // Mandatory onboarding: block every route until at least one setup and one
   // bean exist, except onboarding itself and settings. Onboarding always
