@@ -1,8 +1,7 @@
 import type { Bean, Brew, Equipment, Recipe, Setup, WeatherSnapshot } from "@kvarn/db";
 import { db } from "../data/db";
 import { authClient } from "../auth/client";
-
-const LAST_SYNCED_KEY = "kvarn:lastSyncedAt";
+import { LAST_SYNCED_KEY } from "./constants";
 
 export function getLastSyncedAt(): string | null {
   return localStorage.getItem(LAST_SYNCED_KEY);

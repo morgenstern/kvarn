@@ -3,7 +3,7 @@ import { fetchWeatherSnapshot, getRoughLocation } from "@kvarn/api-client";
 import { formatClickParts } from "@kvarn/core";
 import type { Bean, Brew, Equipment, Product, Recipe, Setup, WeatherSnapshot } from "@kvarn/db";
 import { db, ensureSeeded, LOCAL_USER_ID, newId, nowIso, syncApprovedProducts } from "../data/db";
-import { getLastSyncedAt } from "../sync/runSync";
+import { LAST_SYNCED_KEY } from "../sync/constants";
 
 export type GrindScaleValue = NonNullable<Product["grindScale"]>;
 
@@ -90,7 +90,10 @@ export const useKvarnStore = create<KvarnState>((set, get) => ({
   recipes: [],
   activeSetupId: null,
   activeBeanId: null,
-  lastSyncedAt: getLastSyncedAt(),
+  // Not imported from ../sync/runSync — that module also imports
+  // ../auth/client, which calls window.location.origin at top level and
+  // would crash when store.ts is imported in the Node vitest environment.
+  lastSyncedAt: localStorage.getItem(LAST_SYNCED_KEY),
 
   hydrate: async () => {
     await ensureSeeded();
