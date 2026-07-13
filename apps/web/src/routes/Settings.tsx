@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { Button, Card, SectionLabel } from "@kvarn/ui";
 import { sendFeedback } from "@kvarn/api-client";
-import { Database, Download, History, Languages, LogOut, MessageCircle, Send, Trash2, User } from "lucide-react";
+import { Database, Download, History, Languages, LogOut, MessageCircle, RefreshCw, Send, Trash2, User } from "lucide-react";
 import { useT, useLocale, type Locale } from "../i18n";
 import { deleteAllLocalData, exportAllData } from "../data/db";
 import { authClient } from "../auth/client";
 import { useDisplayName } from "../hooks/useDisplayName";
 import { RELEASE_NOTES } from "../releaseNotes";
+import { getLastSyncedAt, runSync } from "../sync/runSync";
 
 const APP_VERSION = `beta 0.${__APP_VERSION__.padStart(3, "0")}`;
 
@@ -29,6 +30,9 @@ export function Settings() {
 
   const [confirmingDelete, setConfirmingDelete] = useState(false);
 
+  const [syncState, setSyncState] = useState<"idle" | "syncing" | "synced" | "error">("idle");
+  const [lastSyncedAt, setLastSyncedAt] = useState(getLastSyncedAt());
+
   const [feedbackMessage, setFeedbackMessage] = useState("");
   const [feedbackEmail, setFeedbackEmail] = useState("");
   const [feedbackState, setFeedbackState] = useState<SendState>("idle");
@@ -47,6 +51,13 @@ export function Settings() {
   async function handleDelete() {
     await deleteAllLocalData();
     window.location.href = "/";
+  }
+
+  async function handleSyncNow() {
+    setSyncState("syncing");
+    const ok = await runSync();
+    setLastSyncedAt(getLastSyncedAt());
+    setSyncState(ok ? "synced" : "error");
   }
 
   async function handleAuthSubmit(e: React.FormEvent) {
@@ -161,7 +172,9 @@ export function Settings() {
           <Download size={18} strokeWidth={1.5} />
           {t("exportData")}
         </Button>
-        {!confirmingDelete ? (
+        {isRealAccount ? (
+          <p className="text-sm text-muted mt-2">{t("accountDeletionComingSoon")}</p>
+        ) : !confirmingDelete ? (
           <Button variant="ghost" onClick={() => setConfirmingDelete(true)}>
             <Trash2 size={18} strokeWidth={1.5} />
             {t("deleteData")}
@@ -176,6 +189,21 @@ export function Settings() {
           </>
         )}
       </Card>
+
+      {isRealAccount ? (
+        <Card>
+          <SectionLabel icon={RefreshCw}>{t("sync")}</SectionLabel>
+          <p className="text-sm text-muted mb-2">
+            {lastSyncedAt ? t("lastSyncedAt", { time: new Date(lastSyncedAt).toLocaleString(locale) }) : t("neverSynced")}
+          </p>
+          <Button variant="ghost" onClick={handleSyncNow} disabled={syncState === "syncing"}>
+            <RefreshCw size={18} strokeWidth={1.5} />
+            {t("syncNow")}
+          </Button>
+          {syncState === "synced" ? <p className="text-sm text-sage">{t("syncSuccess")}</p> : null}
+          {syncState === "error" ? <p className="text-sm text-clay">{t("syncError")}</p> : null}
+        </Card>
+      ) : null}
 
       <Card>
         <SectionLabel icon={MessageCircle}>{t("feedback")}</SectionLabel>
