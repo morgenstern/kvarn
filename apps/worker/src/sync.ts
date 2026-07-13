@@ -41,6 +41,60 @@ interface SyncPushBody {
 
 const EPOCH = "1970-01-01T00:00:00.000Z";
 
+// Per-row last-write-wins, keyed by (userId, clientId). The incoming
+// row's own userId is never trusted — every write is attributed to the
+// authenticated session regardless of what the client sent.
+//
+// One concrete (non-generic) function per table: fighting Drizzle's
+// generic table typing to unify these isn't worth it for 5 tables, but
+// naming each one keeps the handler body a readable list of one-liners
+// and removes the copy-paste risk of forgetting the `userId` override.
+
+async function mergeEquipment(db: ReturnType<typeof getDb>, userId: string, rows: Equipment[]) {
+  for (const row of rows) {
+    const existing = await db.select().from(equipment).where(and(eq(equipment.userId, userId), eq(equipment.clientId, row.clientId))).get();
+    if (existing && existing.updatedAt >= row.updatedAt) continue;
+    if (existing) await db.update(equipment).set({ ...row, userId }).where(and(eq(equipment.userId, userId), eq(equipment.clientId, row.clientId)));
+    else await db.insert(equipment).values({ ...row, userId });
+  }
+}
+
+async function mergeSetups(db: ReturnType<typeof getDb>, userId: string, rows: Setup[]) {
+  for (const row of rows) {
+    const existing = await db.select().from(setup).where(and(eq(setup.userId, userId), eq(setup.clientId, row.clientId))).get();
+    if (existing && existing.updatedAt >= row.updatedAt) continue;
+    if (existing) await db.update(setup).set({ ...row, userId }).where(and(eq(setup.userId, userId), eq(setup.clientId, row.clientId)));
+    else await db.insert(setup).values({ ...row, userId });
+  }
+}
+
+async function mergeBeans(db: ReturnType<typeof getDb>, userId: string, rows: Bean[]) {
+  for (const row of rows) {
+    const existing = await db.select().from(bean).where(and(eq(bean.userId, userId), eq(bean.clientId, row.clientId))).get();
+    if (existing && existing.updatedAt >= row.updatedAt) continue;
+    if (existing) await db.update(bean).set({ ...row, userId }).where(and(eq(bean.userId, userId), eq(bean.clientId, row.clientId)));
+    else await db.insert(bean).values({ ...row, userId });
+  }
+}
+
+async function mergeBrews(db: ReturnType<typeof getDb>, userId: string, rows: Brew[]) {
+  for (const row of rows) {
+    const existing = await db.select().from(brew).where(and(eq(brew.userId, userId), eq(brew.clientId, row.clientId))).get();
+    if (existing && existing.updatedAt >= row.updatedAt) continue;
+    if (existing) await db.update(brew).set({ ...row, userId }).where(and(eq(brew.userId, userId), eq(brew.clientId, row.clientId)));
+    else await db.insert(brew).values({ ...row, userId });
+  }
+}
+
+async function mergeRecipes(db: ReturnType<typeof getDb>, userId: string, rows: Recipe[]) {
+  for (const row of rows) {
+    const existing = await db.select().from(recipe).where(and(eq(recipe.userId, userId), eq(recipe.clientId, row.clientId))).get();
+    if (existing && existing.updatedAt >= row.updatedAt) continue;
+    if (existing) await db.update(recipe).set({ ...row, userId }).where(and(eq(recipe.userId, userId), eq(recipe.clientId, row.clientId)));
+    else await db.insert(recipe).values({ ...row, userId });
+  }
+}
+
 sync.post("/", async (c) => {
   const session = await createAuth(c.env).api.getSession({ headers: c.req.raw.headers });
   if (!session || session.user.isAnonymous) {
@@ -50,39 +104,12 @@ sync.post("/", async (c) => {
   const body = await c.req.json<SyncPushBody>();
   const db = getDb(c.env);
 
-  // Per-row last-write-wins, keyed by (userId, clientId). The incoming
-  // row's own userId is never trusted — every write is attributed to the
-  // authenticated session regardless of what the client sent.
-  for (const row of body.equipment) {
-    const existing = await db.select().from(equipment).where(and(eq(equipment.userId, userId), eq(equipment.clientId, row.clientId))).get();
-    if (existing && existing.updatedAt >= row.updatedAt) continue;
-    if (existing) await db.update(equipment).set({ ...row, userId }).where(and(eq(equipment.userId, userId), eq(equipment.clientId, row.clientId)));
-    else await db.insert(equipment).values({ ...row, userId });
-  }
-  for (const row of body.setups) {
-    const existing = await db.select().from(setup).where(and(eq(setup.userId, userId), eq(setup.clientId, row.clientId))).get();
-    if (existing && existing.updatedAt >= row.updatedAt) continue;
-    if (existing) await db.update(setup).set({ ...row, userId }).where(and(eq(setup.userId, userId), eq(setup.clientId, row.clientId)));
-    else await db.insert(setup).values({ ...row, userId });
-  }
-  for (const row of body.beans) {
-    const existing = await db.select().from(bean).where(and(eq(bean.userId, userId), eq(bean.clientId, row.clientId))).get();
-    if (existing && existing.updatedAt >= row.updatedAt) continue;
-    if (existing) await db.update(bean).set({ ...row, userId }).where(and(eq(bean.userId, userId), eq(bean.clientId, row.clientId)));
-    else await db.insert(bean).values({ ...row, userId });
-  }
-  for (const row of body.brews) {
-    const existing = await db.select().from(brew).where(and(eq(brew.userId, userId), eq(brew.clientId, row.clientId))).get();
-    if (existing && existing.updatedAt >= row.updatedAt) continue;
-    if (existing) await db.update(brew).set({ ...row, userId }).where(and(eq(brew.userId, userId), eq(brew.clientId, row.clientId)));
-    else await db.insert(brew).values({ ...row, userId });
-  }
-  for (const row of body.recipes) {
-    const existing = await db.select().from(recipe).where(and(eq(recipe.userId, userId), eq(recipe.clientId, row.clientId))).get();
-    if (existing && existing.updatedAt >= row.updatedAt) continue;
-    if (existing) await db.update(recipe).set({ ...row, userId }).where(and(eq(recipe.userId, userId), eq(recipe.clientId, row.clientId)));
-    else await db.insert(recipe).values({ ...row, userId });
-  }
+  await mergeEquipment(db, userId, body.equipment);
+  await mergeSetups(db, userId, body.setups);
+  await mergeBeans(db, userId, body.beans);
+  await mergeBrews(db, userId, body.brews);
+  await mergeRecipes(db, userId, body.recipes);
+
   // weatherSnapshot has no userId column (shared cache table, not
   // per-owner) — push is a plain "insert if this id doesn't exist yet"
   // (these rows are never updated after creation, only created).
