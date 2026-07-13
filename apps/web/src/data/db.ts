@@ -27,10 +27,49 @@ export class KvarnDB extends Dexie {
       weatherSnapshots: "id, geoCell, takenAt",
       recipes: "id, userId, setupId, beanId",
     });
+    // v2: grindScale gained subclicksEnabled (main-click/subclick grinders,
+    // e.g. Kingrinder K6) — existing rows predate the field entirely, so
+    // backfill it to false (flat scale, today's behavior) rather than
+    // leaving it undefined everywhere reads happen to check it.
+    this.version(2)
+      .stores({
+        products: "id, kind, brand",
+        equipment: "id, userId, productId",
+        setups: "id, userId, method",
+        beans: "id, userId",
+        brews: "id, userId, setupId, beanId, brewedAt",
+        weatherSnapshots: "id, geoCell, takenAt",
+        recipes: "id, userId, setupId, beanId",
+      })
+      .upgrade((tx) =>
+        tx
+          .table("equipment")
+          .toCollection()
+          .modify((row: Equipment) => {
+            if (row.grindScale && row.grindScale.subclicksEnabled === undefined) {
+              row.grindScale.subclicksEnabled = false;
+            }
+          }),
+      );
   }
 }
 
 export const db = new KvarnDB();
+
+/**
+ * Same backfill as the v2 upgrade above, exposed standalone so it's
+ * unit-testable without spinning up a second real IndexedDB version chain
+ * (Dexie only runs `.upgrade()` once per browser database, on the version
+ * transition itself) — see apps/web/src/data/db.test.ts.
+ */
+export async function backfillGrindScaleSubclicks(): Promise<void> {
+  const rows = await db.equipment.toArray();
+  await Promise.all(
+    rows
+      .filter((row) => row.grindScale && row.grindScale.subclicksEnabled === undefined)
+      .map((row) => db.equipment.update(row.id, { grindScale: { ...row.grindScale!, subclicksEnabled: false } })),
+  );
+}
 
 const LOCAL_USER_ID = "local";
 export { LOCAL_USER_ID };
