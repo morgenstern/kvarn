@@ -5,11 +5,12 @@ import { computeRatio, weatherConditionKey } from "@kvarn/core";
 import type { Setup as SetupType, WeatherSnapshot } from "@kvarn/db";
 import { BarChart3, CheckCircle2, Coffee, Home, Package, SlidersHorizontal, X } from "lucide-react";
 import { activeBean, activeSetup, equipmentKind, equipmentProduct, useKvarnStore } from "../state/store";
+import { GrindStepper } from "../components/GrindStepper";
 import { SetupThumbnail } from "../components/SetupThumbnail";
 import { useGrindSuggestion } from "../hooks/useGrindSuggestion";
 import { useStopwatch } from "../hooks/useStopwatch";
 import { CONDITION_I18N_KEY } from "../utils/weatherLabels";
-import { useT, useTags } from "../i18n";
+import { useLocale, useT, useTags } from "../i18n";
 
 type Step = "params" | "timer" | "rating";
 type PickMode = "setup" | "combo";
@@ -32,6 +33,7 @@ export function Bruehen() {
   const stopwatch = useStopwatch();
   const t = useT("bruehen");
   const tHeute = useT("heute");
+  const { locale } = useLocale();
   const visualTagOptions = useTags("bruehen", "visualTags");
   const flavorTagOptions = useTags("bruehen", "flavorTags");
 
@@ -314,14 +316,12 @@ export function Bruehen() {
 
       {step === "params" ? (
         <Card>
-          <ParamStepper
+          <GrindStepper
             label={grindScale.label || t("grindLabel")}
-            unit={grindScale.unit}
+            grindScale={grindScale}
             value={grindSetting}
-            step={grindScale.step}
-            min={grindScale.min}
-            max={grindScale.max}
             onChange={setGrindSetting}
+            locale={locale}
           />
           <ParamStepper label={t("doseLabel")} unit={t("doseUnit")} value={doseG} step={0.5} min={1} onChange={setDoseG} />
           <ParamStepper
