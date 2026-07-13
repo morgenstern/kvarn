@@ -1,14 +1,43 @@
 import { useEffect } from "react";
 import { Link, Outlet, useLocation, useNavigate } from "@tanstack/react-router";
-import { Coffee, Compass, Settings as SettingsIcon, SlidersHorizontal, Sun } from "lucide-react";
+import { Coffee, Compass, Settings as SettingsIcon, SlidersHorizontal, Sun, User } from "lucide-react";
 import { Logo, LogoLockup } from "@kvarn/ui";
 import { useKvarnStore } from "../state/store";
 import { useT } from "../i18n";
 import { useEnsureSession } from "../auth/useEnsureSession";
+import { useDisplayName } from "../hooks/useDisplayName";
+import { authClient } from "../auth/client";
+
+const { useSession } = authClient;
 
 // Settings must stay reachable even mid-onboarding (e.g. to switch language or
 // sign in) — everything else is gated behind having at least one setup + bean.
 const ALLOWED_WITHOUT_ONBOARDING = ["/onboarding", "/settings"];
+
+/** The header's settings entry point — personalized to the user's name +
+ * a user icon when signed into a real account, otherwise today's plain
+ * gear icon + "Settings" link. Same auth check Settings.tsx uses. */
+function HeaderAccountLink({ settingsLabel }: { settingsLabel: string }) {
+  const { data: session } = useSession();
+  const { displayName } = useDisplayName();
+  const isRealAccount = !!session?.user && !session.user.isAnonymous;
+
+  if (isRealAccount) {
+    return (
+      <Link to="/settings" className="flex items-center gap-1.5 text-base text-muted">
+        <User size={16} strokeWidth={1.5} />
+        {displayName || session.user.email}
+      </Link>
+    );
+  }
+
+  return (
+    <Link to="/settings" className="flex items-center gap-1.5 text-base text-muted">
+      <SettingsIcon size={16} strokeWidth={1.5} />
+      {settingsLabel}
+    </Link>
+  );
+}
 
 export function RootLayout() {
   const hydrate = useKvarnStore((s) => s.hydrate);
@@ -65,10 +94,7 @@ export function RootLayout() {
     return (
       <div className="min-h-screen bg-birch flex flex-col">
         <div className="max-w-md mx-auto w-full px-5 pt-3 flex justify-end">
-          <Link to="/settings" className="flex items-center gap-1.5 text-base text-muted">
-            <SettingsIcon size={16} strokeWidth={1.5} />
-            {tSettings("title")}
-          </Link>
+          <HeaderAccountLink settingsLabel={tSettings("title")} />
         </div>
         <div className="max-w-md mx-auto w-full px-5 pt-1 flex justify-center">
           <LogoLockup size={30} />
@@ -84,10 +110,7 @@ export function RootLayout() {
     <div className="min-h-screen bg-birch flex flex-col">
       <div className="max-w-md mx-auto w-full px-5 pt-3 flex items-center justify-between">
         <LogoLockup />
-        <Link to="/settings" className="flex items-center gap-1.5 text-base text-muted">
-          <SettingsIcon size={16} strokeWidth={1.5} />
-          {tSettings("title")}
-        </Link>
+        <HeaderAccountLink settingsLabel={tSettings("title")} />
       </div>
       <main className="flex-1 max-w-md mx-auto w-full px-5 pt-2 pb-28">
         <Outlet />
