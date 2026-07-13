@@ -102,4 +102,50 @@ describe("nextGrindSuggestion — golden tests", () => {
     });
     expect(result.grindSetting).toBeGreaterThanOrEqual(nicheScale.min);
   });
+
+  it("subclicks enabled: moves within the same main click, no rollover needed", () => {
+    const kingrinder: GrindScale = {
+      min: 1, max: 4.4, step: 0.01, unit: "clicks", finerDirection: -1,
+      subclicksEnabled: true, mainMin: 1, mainMax: 4, subMin: 0, subMax: 40,
+    };
+    const result = nextGrindSuggestion({
+      method: "espresso",
+      grindScale: kingrinder,
+      // sour (balance -3 -> 2 steps finer) + too fast (20s < 25s min -> 1 step finer) = 3 steps finer
+      lastBrew: { grindSetting: 1.25, timeTotalS: 20, balance: -3 },
+    });
+    // finerDirection -1 -> index moves -3 from index 25 (main 1, sub 25) -> index 22 -> main 1, sub 22
+    expect(result.grindSetting).toBe(1.22);
+  });
+
+  it("subclicks enabled: rolls over into the next main click instead of an invalid position", () => {
+    const kingrinder: GrindScale = {
+      min: 1, max: 4.4, step: 0.01, unit: "clicks", finerDirection: -1,
+      subclicksEnabled: true, mainMin: 1, mainMax: 4, subMin: 0, subMax: 40,
+    };
+    const result = nextGrindSuggestion({
+      method: "espresso",
+      grindScale: kingrinder,
+      // bitter (balance +4 -> 2 steps coarser) + too slow (40s > 32s max -> 1 step coarser) = 3 steps coarser
+      lastBrew: { grindSetting: 1.39, timeTotalS: 40, balance: 4 },
+    });
+    // finerDirection -1, coarser -> index moves +3 from index 39 (main 1, sub 39) -> index 42
+    // -> rolls past the end of main click 1 (indices 0-40) into main click 2, sub 1 — not "main 1, sub 42" (invalid).
+    expect(result.grindSetting).toBe(2.01);
+  });
+
+  it("subclicks enabled: clamps at the top of the whole scale instead of exceeding it", () => {
+    const kingrinder: GrindScale = {
+      min: 1, max: 4.4, step: 0.01, unit: "clicks", finerDirection: -1,
+      subclicksEnabled: true, mainMin: 1, mainMax: 4, subMin: 0, subMax: 40,
+    };
+    const result = nextGrindSuggestion({
+      method: "espresso",
+      grindScale: kingrinder,
+      // same 3-steps-coarser signal as above, but starting 3 positions from the very top already
+      lastBrew: { grindSetting: 4.38, timeTotalS: 40, balance: 4 },
+    });
+    // index 161 (main 4, sub 38) + 3 = 164, but the last valid index is 163 (main 4, sub 40) -> clamp
+    expect(result.grindSetting).toBe(4.4);
+  });
 });

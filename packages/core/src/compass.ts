@@ -1,5 +1,6 @@
 import { clamp, roundToStep } from "./units";
 import type { BrewMethod } from "./units";
+import { indexToValue, totalPositions, valueToIndex, type ClickScale } from "./grindClicks";
 
 /**
  * Kompass Phase 1 — deterministic rule-based grind suggestion.
@@ -169,6 +170,29 @@ export function nextGrindSuggestion(input: CompassInput): CompassSuggestion {
   // finerDirection is the sign added to the raw value to make it one step finer,
   // so a positive `totalSteps` (finer) times finerDirection gives the right sign.
   const totalSteps = stepsFiner + fractionalFiner;
+
+  if (
+    grindScale.subclicksEnabled &&
+    grindScale.mainMin !== undefined &&
+    grindScale.mainMax !== undefined &&
+    grindScale.subMin !== undefined &&
+    grindScale.subMax !== undefined
+  ) {
+    const clickScale: ClickScale = {
+      mainMin: grindScale.mainMin,
+      mainMax: grindScale.mainMax,
+      subMin: grindScale.subMin,
+      subMax: grindScale.subMax,
+    };
+    // Same signed-steps logic as the flat scale below, but applied in
+    // absolute-index space (uniform step of 1 = one subclick) so a delta
+    // that crosses a main-click boundary rolls over instead of landing on
+    // an invalid position like "main 1, sub 42" when subMax is 40.
+    const lastIndex = valueToIndex(lastBrew.grindSetting, clickScale);
+    const newIndex = clamp(Math.round(lastIndex + totalSteps * grindScale.finerDirection), 0, totalPositions(clickScale) - 1);
+    return { grindSetting: indexToValue(newIndex, clickScale), reasons };
+  }
+
   const delta = totalSteps * grindScale.finerDirection * grindScale.step;
   const grindSetting = clamp(
     roundToStep(lastBrew.grindSetting + delta, grindScale.step),
