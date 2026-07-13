@@ -1162,17 +1162,82 @@ This is used unmodified by both `Setup.tsx`'s equipment editor and `Onboarding.t
 
 ---
 
-## Task 9: Odometer-style stepper on the brew screen
+## Task 9: Shared `GrindStepper` component + odometer stepper on the brew screen
 
 **Files:**
+- Create: `apps/web/src/components/GrindStepper.tsx`
 - Modify: `apps/web/src/routes/Bruehen.tsx`
 
-- [ ] **Step 1: Add the grindClicks import and locale hook**
+This is written as a standalone component (not inlined into `Bruehen.tsx`) because the upcoming manual-brew-entry feature (`docs/superpowers/plans/2026-07-05-manual-brew-entry.md`) needs the exact same flat-vs-odometer branching in a second place — extracting it now avoids writing throwaway inline code that immediately needs pulling back out.
 
-Add to the existing `@kvarn/core` import line in `apps/web/src/routes/Bruehen.tsx` (currently `import { computeRatio, weatherConditionKey } from "@kvarn/core";`):
+- [ ] **Step 1: Create `GrindStepper`**
+
+Create `apps/web/src/components/GrindStepper.tsx`:
 
 ```typescript
-import { computeRatio, formatClickParts, indexToValue, valueToIndex, weatherConditionKey, type ClickScale } from "@kvarn/core";
+import { ParamStepper } from "@kvarn/ui";
+import { formatClickParts, indexToValue, valueToIndex, type ClickScale } from "@kvarn/core";
+import type { GrindScaleValue } from "../state/store";
+
+function clickScaleOf(grindScale: GrindScaleValue): ClickScale | null {
+  if (grindScale.mainMin === undefined || grindScale.mainMax === undefined || grindScale.subMin === undefined || grindScale.subMax === undefined) {
+    return null;
+  }
+  return { mainMin: grindScale.mainMin, mainMax: grindScale.mainMax, subMin: grindScale.subMin, subMax: grindScale.subMax };
+}
+
+/** Renders a plain flat-scale ParamStepper, or — for a two-dial grinder
+ * (subclicksEnabled) — an odometer-style stepper that steps by exactly one
+ * subclick and displays "main,sub"/"main.sub" depending on locale. See
+ * docs/superpowers/specs/2026-07-05-grind-main-subclicks-design.md. */
+export function GrindStepper({
+  label,
+  grindScale,
+  value,
+  onChange,
+  locale,
+}: {
+  label: string;
+  grindScale: GrindScaleValue;
+  value: number;
+  onChange: (value: number) => void;
+  locale: "de" | "en";
+}) {
+  const clickScale = clickScaleOf(grindScale);
+
+  if (grindScale.subclicksEnabled && clickScale) {
+    const totalPositions = (clickScale.mainMax - clickScale.mainMin + 1) * (clickScale.subMax - clickScale.subMin + 1);
+    return (
+      <ParamStepper
+        label={label}
+        unit={grindScale.unit}
+        value={valueToIndex(value, clickScale)}
+        step={1}
+        min={0}
+        max={totalPositions - 1}
+        formatValue={(index) => {
+          const { mainClick, subClick } = formatClickParts(indexToValue(index, clickScale), clickScale);
+          return `${mainClick}${locale === "de" ? "," : "."}${subClick}`;
+        }}
+        onChange={(index) => onChange(indexToValue(index, clickScale))}
+      />
+    );
+  }
+
+  return (
+    <ParamStepper label={label} unit={grindScale.unit} value={value} step={grindScale.step} min={grindScale.min} max={grindScale.max} onChange={onChange} />
+  );
+}
+```
+
+Note: typing on the odometer variant works in raw absolute-index terms (tap-to-type shows the index, not "main,sub" text) — an accepted rough edge per the design doc, since dragging is the primary interaction for a two-dial grinder (matches turning a physical dial) and `ParamStepper` is deliberately left unmodified.
+
+- [ ] **Step 2: Wire it into Bruehen.tsx**
+
+Add the import to `apps/web/src/routes/Bruehen.tsx`, alongside the other component imports:
+
+```typescript
+import { GrindStepper } from "../components/GrindStepper";
 ```
 
 Add `useLocale` to the existing `../i18n` import (currently `import { useT, useTags } from "../i18n";`):
@@ -1186,21 +1251,6 @@ Inside the `Bruehen()` component, alongside the other `useT(...)` calls near the
 ```typescript
 const { locale } = useLocale();
 ```
-
-- [ ] **Step 2: Add a helper to build a `ClickScale` from the resolved `grindScale`**
-
-Add near the top of `apps/web/src/routes/Bruehen.tsx`, after the existing `beanAgeDaysFor` helper (`Bruehen.tsx:19-22`):
-
-```typescript
-function clickScaleOf(grindScale: { mainMin?: number; mainMax?: number; subMin?: number; subMax?: number }): ClickScale | null {
-  if (grindScale.mainMin === undefined || grindScale.mainMax === undefined || grindScale.subMin === undefined || grindScale.subMax === undefined) {
-    return null;
-  }
-  return { mainMin: grindScale.mainMin, mainMax: grindScale.mainMax, subMin: grindScale.subMin, subMax: grindScale.subMax };
-}
-```
-
-- [ ] **Step 3: Replace the grind `ParamStepper` with a conditional odometer/flat render**
 
 Current (`Bruehen.tsx:315-325`):
 
@@ -1223,47 +1273,23 @@ New:
 ```tsx
       {step === "params" ? (
         <Card>
-          {grindScale.subclicksEnabled && clickScaleOf(grindScale) ? (
-            <ParamStepper
-              label={grindScale.label || t("grindLabel")}
-              unit={grindScale.unit}
-              value={valueToIndex(grindSetting, clickScaleOf(grindScale)!)}
-              step={1}
-              min={0}
-              max={
-                // totalPositions(scale) - 1, inlined to avoid a second import just for this
-                (clickScaleOf(grindScale)!.mainMax - clickScaleOf(grindScale)!.mainMin + 1) *
-                  (clickScaleOf(grindScale)!.subMax - clickScaleOf(grindScale)!.subMin + 1) -
-                1
-              }
-              formatValue={(index) => {
-                const scale = clickScaleOf(grindScale)!;
-                const { mainClick, subClick } = formatClickParts(indexToValue(index, scale), scale);
-                return `${mainClick}${locale === "de" ? "," : "."}${subClick}`;
-              }}
-              onChange={(index) => setGrindSetting(indexToValue(index, clickScaleOf(grindScale)!))}
-            />
-          ) : (
-            <ParamStepper
-              label={grindScale.label || t("grindLabel")}
-              unit={grindScale.unit}
-              value={grindSetting}
-              step={grindScale.step}
-              min={grindScale.min}
-              max={grindScale.max}
-              onChange={setGrindSetting}
-            />
-          )}
+          <GrindStepper
+            label={grindScale.label || t("grindLabel")}
+            grindScale={grindScale}
+            value={grindSetting}
+            onChange={setGrindSetting}
+            locale={locale}
+          />
 ```
 
-Leave everything else in the `params` step (dose, target yield, pre-infusion, ratio viz, Compass hint, "start timer" button) exactly as-is — only the grind stepper itself branches.
+Leave everything else in the `params` step (dose, target yield, pre-infusion, ratio viz, Compass hint, "start timer" button) exactly as-is — only the grind stepper line changes.
 
-- [ ] **Step 4: Typecheck and lint**
+- [ ] **Step 3: Typecheck and lint**
 
 Run: `pnpm --filter @kvarn/web typecheck && pnpm --filter @kvarn/web lint`
 Expected: PASS.
 
-- [ ] **Step 5: Manual verification in the browser**
+- [ ] **Step 4: Manual verification in the browser**
 
 1. Start the dev server if not already running (`pnpm dev` from `apps/web`, or use whatever preview tooling is already set up).
 2. Go to Setup, open the Kingrinder K6 grinder's editor (or any grinder — add one from the catalog if none exists), confirm the subclicks toggle appears and is on for a freshly-added Kingrinder K6 (Task 6's seed default).
@@ -1271,11 +1297,11 @@ Expected: PASS.
 4. Drag the stepper past `40` sub — confirm it rolls over to `"2,00"` instead of showing an invalid value.
 5. Tap the stepper to type a value — note (and accept, per the design's documented trade-off) that typing works in raw absolute-index terms here, not "main,sub" text; this is an intentional scope boundary, not a bug — dragging is the primary interaction for a two-dial grinder, matching how the physical dial works.
 
-- [ ] **Step 6: Commit**
+- [ ] **Step 5: Commit**
 
 ```bash
-git add apps/web/src/routes/Bruehen.tsx
-git commit -m "Add odometer-style grind stepper for two-dial grinders on Bruehen"
+git add apps/web/src/components/GrindStepper.tsx apps/web/src/routes/Bruehen.tsx
+git commit -m "Add GrindStepper component and wire it into Bruehen"
 ```
 
 ---
