@@ -2,11 +2,7 @@ import { useMemo } from "react";
 import { nextGrindSuggestion } from "@kvarn/core";
 import type { Bean, Setup, WeatherSnapshot } from "@kvarn/db";
 import { equipmentGrindScale, lastBrewFor, weatherSnapshotFor, type KvarnState } from "../state/store";
-
-function beanAgeDaysFor(roastDate: string | null): number | null {
-  if (!roastDate) return null;
-  return Math.max(0, Math.round((Date.now() - new Date(roastDate).getTime()) / 86_400_000));
-}
+import { beanAgeDaysFor } from "../utils/beanAge";
 
 /**
  * Shared with Bruehen (active weather capture) and Heute (passive preview of
