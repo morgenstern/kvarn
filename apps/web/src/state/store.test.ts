@@ -182,6 +182,31 @@ describe("useKvarnStore", () => {
     }));
     expect(equipmentKind(useKvarnStore.getState(), custom.id)).toBe("grinder");
   });
+
+  it("deleteEquipment soft-deletes (sets deletedAt) instead of removing the row, so a tombstone can sync", async () => {
+    await useKvarnStore.getState().hydrate();
+    const grinder = useKvarnStore.getState().products.find((p) => p.kind === "grinder")!;
+    const machine = useKvarnStore.getState().products.find((p) => p.kind === "machine")!;
+    const grinderEq = await useKvarnStore.getState().addEquipmentFromProduct(grinder.id);
+    const machineEq = await useKvarnStore.getState().addEquipmentFromProduct(machine.id);
+    // machineEq isn't required by any setup, so deleting it should succeed.
+    await useKvarnStore.getState().deleteEquipment(machineEq.id);
+
+    // Gone from the in-memory store (unchanged behavior)...
+    expect(useKvarnStore.getState().equipment.find((e) => e.id === machineEq.id)).toBeUndefined();
+
+    // ...but still present in Dexie, tombstoned, not actually removed.
+    const row = await db.equipment.get(machineEq.id);
+    expect(row).toBeDefined();
+    expect(row?.deletedAt).not.toBeNull();
+
+    // A fresh hydrate() (simulating app reload) must not resurrect it.
+    useKvarnStore.setState({ hydrated: false, products: [], equipment: [], setups: [], beans: [], brews: [], weatherSnapshots: [], recipes: [], activeSetupId: null, activeBeanId: null });
+    await useKvarnStore.getState().hydrate();
+    expect(useKvarnStore.getState().equipment.find((e) => e.id === machineEq.id)).toBeUndefined();
+    // grinderEq is untouched and still present.
+    expect(useKvarnStore.getState().equipment.find((e) => e.id === grinderEq.id)).toBeDefined();
+  });
 });
 
 describe("formatGrindValue", () => {

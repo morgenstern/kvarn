@@ -93,7 +93,7 @@ export const useKvarnStore = create<KvarnState>((set, get) => ({
     await syncApprovedProducts();
     const [products, equipment, setups, beans, brews, weatherSnapshots, recipes] = await Promise.all([
       db.products.toArray(),
-      db.equipment.toArray(),
+      db.equipment.toArray().then((all) => all.filter((e) => !e.deletedAt)),
       db.setups.toArray(),
       db.beans.toArray().then((all) => all.filter((b) => !b.archived)),
       db.brews.orderBy("brewedAt").reverse().toArray(),
@@ -186,7 +186,7 @@ export const useKvarnStore = create<KvarnState>((set, get) => ({
         }),
       ),
     );
-    await db.equipment.delete(equipmentId);
+    await db.equipment.update(equipmentId, { deletedAt: nowIso(), updatedAt: nowIso() });
 
     set((s) => ({
       equipment: s.equipment.filter((e) => e.id !== equipmentId),
