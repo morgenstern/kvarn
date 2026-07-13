@@ -34,4 +34,5 @@ export const RELEASE_NOTES: ReleaseNote[] = [
   { version: 33, de: "Mühlen und Maschinen lassen sich umbenennen und löschen.", en: "Grinders and machines can now be renamed and deleted." },
   { version: 34, de: "Versionsnummer und Versionshinweise in den Einstellungen ergänzt.", en: "Added a version number and release notes to Settings." },
   { version: 56, de: "Mühlen mit zwei Rädern (Haupt- und Unterklicks, z. B. Kingrinder K6) werden jetzt unterstützt.", en: "Grinders with two dials (main + subclicks, e.g. Kingrinder K6) are now supported." },
+  { version: 58, de: "Bei angemeldetem Konto zeigt der Header jetzt deinen Namen statt „Einstellungen“.", en: "When signed in, the header now shows your name instead of \"Settings\"." },
 ];
