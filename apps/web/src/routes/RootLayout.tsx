@@ -7,7 +7,7 @@ import { useT } from "../i18n";
 import { useEnsureSession } from "../auth/useEnsureSession";
 import { useDisplayName } from "../hooks/useDisplayName";
 import { authClient } from "../auth/client";
-import { runSync } from "../sync/runSync";
+import { getLastSyncedAt, runSync } from "../sync/runSync";
 
 const { useSession } = authClient;
 
@@ -49,6 +49,7 @@ export function RootLayout() {
   const brews = useKvarnStore((s) => s.brews);
   const recipes = useKvarnStore((s) => s.recipes);
   const weatherSnapshots = useKvarnStore((s) => s.weatherSnapshots);
+  const setLastSyncedAt = useKvarnStore((s) => s.setLastSyncedAt);
   const tCommon = useT("common");
   const tNav = useT("nav");
   const tSettings = useT("settings");
@@ -79,11 +80,14 @@ export function RootLayout() {
   useEffect(() => {
     const timeout = setTimeout(() => {
       runSync().then((didSync) => {
-        if (didSync) hydrate();
+        if (didSync) {
+          hydrate();
+          setLastSyncedAt(getLastSyncedAt());
+        }
       });
     }, 4000);
     return () => clearTimeout(timeout);
-  }, [hydrate, equipment, setups, beans, brews, recipes, weatherSnapshots]);
+  }, [hydrate, equipment, setups, beans, brews, recipes, weatherSnapshots, setLastSyncedAt]);
 
   // Mandatory onboarding: block every route until at least one setup and one
   // bean exist, except onboarding itself and settings. Onboarding always

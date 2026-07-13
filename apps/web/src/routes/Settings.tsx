@@ -8,6 +8,7 @@ import { authClient } from "../auth/client";
 import { useDisplayName } from "../hooks/useDisplayName";
 import { RELEASE_NOTES } from "../releaseNotes";
 import { getLastSyncedAt, runSync } from "../sync/runSync";
+import { useKvarnStore } from "../state/store";
 
 const APP_VERSION = `beta 0.${__APP_VERSION__.padStart(3, "0")}`;
 
@@ -31,7 +32,8 @@ export function Settings() {
   const [confirmingDelete, setConfirmingDelete] = useState(false);
 
   const [syncState, setSyncState] = useState<"idle" | "syncing" | "synced" | "error">("idle");
-  const [lastSyncedAt, setLastSyncedAt] = useState(getLastSyncedAt());
+  const lastSyncedAt = useKvarnStore((s) => s.lastSyncedAt);
+  const setLastSyncedAt = useKvarnStore((s) => s.setLastSyncedAt);
 
   const [feedbackMessage, setFeedbackMessage] = useState("");
   const [feedbackEmail, setFeedbackEmail] = useState("");

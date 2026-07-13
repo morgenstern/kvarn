@@ -3,6 +3,7 @@ import { fetchWeatherSnapshot, getRoughLocation } from "@kvarn/api-client";
 import { formatClickParts } from "@kvarn/core";
 import type { Bean, Brew, Equipment, Product, Recipe, Setup, WeatherSnapshot } from "@kvarn/db";
 import { db, ensureSeeded, LOCAL_USER_ID, newId, nowIso, syncApprovedProducts } from "../data/db";
+import { getLastSyncedAt } from "../sync/runSync";
 
 export type GrindScaleValue = NonNullable<Product["grindScale"]>;
 
@@ -27,6 +28,7 @@ export interface KvarnState {
   recipes: Recipe[];
   activeSetupId: string | null;
   activeBeanId: string | null;
+  lastSyncedAt: string | null;
 
   hydrate: () => Promise<void>;
   addEquipmentFromProduct: (productId: string, photoUrl?: string) => Promise<Equipment>;
@@ -70,6 +72,7 @@ export interface KvarnState {
   setBeanImage: (beanId: string, imageUrl: string) => Promise<void>;
   setActiveSetup: (setupId: string | null) => void;
   setActiveBean: (beanId: string | null) => void;
+  setLastSyncedAt: (value: string | null) => void;
   captureWeatherSnapshot: () => Promise<WeatherSnapshot | null>;
   commitBrew: (input: Omit<Brew, "id" | "userId" | "updatedAt" | "deletedAt" | "clientId">) => Promise<Brew>;
 }
@@ -87,6 +90,7 @@ export const useKvarnStore = create<KvarnState>((set, get) => ({
   recipes: [],
   activeSetupId: null,
   activeBeanId: null,
+  lastSyncedAt: getLastSyncedAt(),
 
   hydrate: async () => {
     await ensureSeeded();
@@ -283,6 +287,7 @@ export const useKvarnStore = create<KvarnState>((set, get) => ({
 
   setActiveSetup: (setupId) => set({ activeSetupId: setupId }),
   setActiveBean: (beanId) => set({ activeBeanId: beanId }),
+  setLastSyncedAt: (value) => set({ lastSyncedAt: value }),
 
   captureWeatherSnapshot: async () => {
     const location = await getRoughLocation();
