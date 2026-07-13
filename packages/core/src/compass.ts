@@ -16,6 +16,17 @@ export interface GrindScale {
    * (Niche, EK43-style) use lower number = finer, hence -1. Comandante-style
    * click counts also increase with coarser, so -1 covers both by default. */
   finerDirection: -1 | 1;
+  /** Two-dial grinders (e.g. Kingrinder K6: main click 1-4, subclick 0-40)
+   * store one encoded float (see packages/core/src/grindClicks.ts) instead of
+   * using min/max/step directly. When true, mainMin/mainMax/subMin/subMax
+   * below are used instead — min/max/step are ignored by nextGrindSuggestion
+   * (but still required on the type for backward compatibility with
+   * flat-scale callers). */
+  subclicksEnabled?: boolean;
+  mainMin?: number;
+  mainMax?: number;
+  subMin?: number;
+  subMax?: number;
 }
 
 export interface CompassReason {

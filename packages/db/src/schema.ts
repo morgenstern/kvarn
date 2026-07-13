@@ -29,6 +29,16 @@ type GrindScaleJson = {
   label: string;
   /** Sign added to the raw value to move one step finer — see packages/core/src/compass.ts. */
   finerDirection: -1 | 1;
+  /** Two-dial grinders (e.g. Kingrinder K6: main click 1-4, subclick 0-40) —
+   * see packages/core/src/grindClicks.ts and GrindScale in compass.ts for
+   * what these mean. min/max/step above are ignored for editing/display when
+   * this is true. Missing/false on existing rows means "flat scale, as
+   * before" — see the Dexie migration in apps/web/src/data/db.ts. */
+  subclicksEnabled: boolean;
+  mainMin?: number;
+  mainMax?: number;
+  subMin?: number;
+  subMax?: number;
 } | null;
 
 export const product = sqliteTable("product", {
