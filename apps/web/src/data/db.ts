@@ -71,7 +71,7 @@ type SeedProduct = Omit<Product, "updatedAt" | "deletedAt" | "clientId">;
 // Bump when public/data/seed-products.json changes meaningfully (e.g. catalog
 // size grows) so existing installs re-sync instead of keeping whatever they
 // first seeded. bulkPut is an idempotent upsert, so re-running this is safe.
-const SEED_CATALOG_VERSION = 5;
+const SEED_CATALOG_VERSION = 6;
 const SEED_VERSION_KEY = "kvarn:seedCatalogVersion";
 
 /**
