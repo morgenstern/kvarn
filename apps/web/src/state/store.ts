@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { fetchWeatherSnapshot, getRoughLocation } from "@kvarn/api-client";
+import { formatClickParts } from "@kvarn/core";
 import type { Bean, Brew, Equipment, Product, Recipe, Setup, WeatherSnapshot } from "@kvarn/db";
 import { db, ensureSeeded, LOCAL_USER_ID, newId, nowIso, syncApprovedProducts } from "../data/db";
 
@@ -12,6 +13,7 @@ export const DEFAULT_GRIND_SCALE: GrindScaleValue = {
   unit: "clicks",
   label: "",
   finerDirection: -1,
+  subclicksEnabled: false,
 };
 
 export interface KvarnState {
@@ -392,6 +394,26 @@ export function equipmentGrindScale(state: KvarnState, equipmentId: string | nul
   const eq = state.equipment.find((e) => e.id === equipmentId);
   if (eq?.grindScale) return eq.grindScale;
   return equipmentProduct(state, equipmentId)?.grindScale ?? DEFAULT_GRIND_SCALE;
+}
+
+/**
+ * Human-readable grind value for display (logbook rows, recipe lines, the
+ * live Compass hint) — "1,25"/"1.25" for a subclicks-enabled grinder,
+ * otherwise the plain number. `locale` picks the decimal separator only;
+ * the underlying stored value is always a plain JS number either way.
+ */
+export function formatGrindValue(state: KvarnState, equipmentId: string | null, value: number, locale: "de" | "en"): string {
+  const scale = equipmentGrindScale(state, equipmentId);
+  if (!scale.subclicksEnabled || scale.mainMin === undefined || scale.mainMax === undefined || scale.subMin === undefined || scale.subMax === undefined) {
+    return String(value);
+  }
+  const { mainClick, subClick } = formatClickParts(value, {
+    mainMin: scale.mainMin,
+    mainMax: scale.mainMax,
+    subMin: scale.subMin,
+    subMax: scale.subMax,
+  });
+  return `${mainClick}${locale === "de" ? "," : "."}${subClick}`;
 }
 
 /**

@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it } from "vitest";
 import { db } from "../data/db";
-import { equipmentKind, useKvarnStore } from "./store";
+import { equipmentKind, formatGrindValue, useKvarnStore } from "./store";
 
 describe("useKvarnStore", () => {
   beforeEach(async () => {
@@ -179,5 +179,38 @@ describe("useKvarnStore", () => {
       equipment: s.equipment.map((e) => (e.id === custom.id ? { ...e, kind: null } : e)),
     }));
     expect(equipmentKind(useKvarnStore.getState(), custom.id)).toBe("grinder");
+  });
+});
+
+describe("formatGrindValue", () => {
+  beforeEach(async () => {
+    await db.products.clear();
+    await db.equipment.clear();
+    await db.setups.clear();
+    await db.beans.clear();
+    await db.brews.clear();
+    await db.weatherSnapshots.clear();
+    await db.recipes.clear();
+    useKvarnStore.setState({ hydrated: false, products: [], equipment: [], setups: [], beans: [], brews: [], weatherSnapshots: [], recipes: [], activeSetupId: null, activeBeanId: null });
+  });
+
+  it("renders a flat-scale value as a plain number", async () => {
+    await useKvarnStore.getState().hydrate();
+    const grinder = useKvarnStore.getState().products.find((p) => p.kind === "grinder")!;
+    const equipment = await useKvarnStore.getState().addEquipmentFromProduct(grinder.id);
+    expect(formatGrindValue(useKvarnStore.getState(), equipment.id, 12.5, "de")).toBe("12.5");
+  });
+
+  it("renders a subclicks-enabled value as main,sub with a locale-appropriate separator", async () => {
+    await useKvarnStore.getState().hydrate();
+    const grinder = useKvarnStore.getState().products.find((p) => p.kind === "grinder")!;
+    const equipment = await useKvarnStore.getState().addEquipmentFromProduct(grinder.id);
+    await useKvarnStore.getState().setEquipmentGrindScale(equipment.id, {
+      min: 1, max: 4.4, step: 0.01, unit: "clicks", label: "", finerDirection: -1,
+      subclicksEnabled: true, mainMin: 1, mainMax: 4, subMin: 0, subMax: 40,
+    });
+    expect(formatGrindValue(useKvarnStore.getState(), equipment.id, 1.25, "de")).toBe("1,25");
+    expect(formatGrindValue(useKvarnStore.getState(), equipment.id, 1.05, "de")).toBe("1,05");
+    expect(formatGrindValue(useKvarnStore.getState(), equipment.id, 1.25, "en")).toBe("1.25");
   });
 });
