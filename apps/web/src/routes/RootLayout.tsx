@@ -48,6 +48,7 @@ export function RootLayout() {
   const equipment = useKvarnStore((s) => s.equipment);
   const brews = useKvarnStore((s) => s.brews);
   const recipes = useKvarnStore((s) => s.recipes);
+  const weatherSnapshots = useKvarnStore((s) => s.weatherSnapshots);
   const tCommon = useT("common");
   const tNav = useT("nav");
   const tSettings = useT("settings");
@@ -69,7 +70,12 @@ export function RootLayout() {
 
   // Sync on startup, then again ~4s after any local change to a synced
   // table (debounced so a burst of edits doesn't fire a request per
-  // keystroke) — no-ops itself if not signed into a real account.
+  // keystroke) — no-ops itself if not signed into a real account. Lives
+  // here (not in a page component) because RootLayout is mounted for the
+  // app's entire lifetime, so this is the one place that sees every local
+  // mutation across every route. The dependency array is only a change
+  // detector — runSync() re-reads current data straight from IndexedDB,
+  // so it's never working from stale state.
   useEffect(() => {
     const timeout = setTimeout(() => {
       runSync().then((didSync) => {
@@ -77,7 +83,7 @@ export function RootLayout() {
       });
     }, 4000);
     return () => clearTimeout(timeout);
-  }, [hydrate, equipment, setups, beans, brews, recipes]);
+  }, [hydrate, equipment, setups, beans, brews, recipes, weatherSnapshots]);
 
   // Mandatory onboarding: block every route until at least one setup and one
   // bean exist, except onboarding itself and settings. Onboarding always
