@@ -33,4 +33,5 @@ export const RELEASE_NOTES: ReleaseNote[] = [
   { version: 32, de: "Vorinfusion beim Brühen kann jetzt aktiviert werden.", en: "Pre-infusion can now be enabled when brewing." },
   { version: 33, de: "Mühlen und Maschinen lassen sich umbenennen und löschen.", en: "Grinders and machines can now be renamed and deleted." },
   { version: 34, de: "Versionsnummer und Versionshinweise in den Einstellungen ergänzt.", en: "Added a version number and release notes to Settings." },
+  { version: 56, de: "Mühlen mit zwei Rädern (Haupt- und Unterklicks, z. B. Kingrinder K6) werden jetzt unterstützt.", en: "Grinders with two dials (main + subclicks, e.g. Kingrinder K6) are now supported." },
 ];

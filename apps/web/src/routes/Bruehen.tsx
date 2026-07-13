@@ -4,7 +4,7 @@ import { Button, Card, Chip, EntityImage, Hint, ParamStepper, ProductCard, Ratin
 import { computeRatio, weatherConditionKey } from "@kvarn/core";
 import type { Setup as SetupType, WeatherSnapshot } from "@kvarn/db";
 import { BarChart3, CheckCircle2, Coffee, Home, Package, SlidersHorizontal, X } from "lucide-react";
-import { activeBean, activeSetup, equipmentKind, equipmentProduct, useKvarnStore } from "../state/store";
+import { activeBean, activeSetup, equipmentKind, equipmentProduct, formatGrindValue, useKvarnStore } from "../state/store";
 import { GrindStepper } from "../components/GrindStepper";
 import { SetupThumbnail } from "../components/SetupThumbnail";
 import { useGrindSuggestion } from "../hooks/useGrindSuggestion";
@@ -371,7 +371,7 @@ export function Bruehen() {
             <Hint>
               <span>
                 {t("compassSuggestion", {
-                  grind: suggestion.grindSetting,
+                  grind: formatGrindValue(state, setup?.grinderEquipmentId ?? null, suggestion.grindSetting, locale),
                   unit: grindScale.unit,
                   reasons: suggestion.reasons.map((r) => r.effect).join(" "),
                 })}
