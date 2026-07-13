@@ -9,6 +9,7 @@ import { GrindStepper } from "../components/GrindStepper";
 import { SetupThumbnail } from "../components/SetupThumbnail";
 import { useGrindSuggestion } from "../hooks/useGrindSuggestion";
 import { useStopwatch } from "../hooks/useStopwatch";
+import { beanAgeDaysFor } from "../utils/beanAge";
 import { CONDITION_I18N_KEY } from "../utils/weatherLabels";
 import { useLocale, useT, useTags } from "../i18n";
 
@@ -16,11 +17,6 @@ type Step = "params" | "timer" | "rating";
 type PickMode = "setup" | "combo";
 
 const METHODS: SetupType["method"][] = ["espresso", "v60", "aeropress", "frenchpress", "moka", "auto"];
-
-function beanAgeDaysFor(roastDate: string | null): number | null {
-  if (!roastDate) return null;
-  return Math.max(0, Math.round((Date.now() - new Date(roastDate).getTime()) / 86_400_000));
-}
 
 export function Bruehen() {
   const state = useKvarnStore();
