@@ -17,7 +17,17 @@ interface SyncResponseBody {
   weatherSnapshots: WeatherSnapshot[];
 }
 
-export async function runSync(): Promise<boolean> {
+let inFlight: Promise<boolean> | null = null;
+
+export function runSync(): Promise<boolean> {
+  if (inFlight) return inFlight;
+  inFlight = doRunSync().finally(() => {
+    inFlight = null;
+  });
+  return inFlight;
+}
+
+async function doRunSync(): Promise<boolean> {
   const session = await authClient.getSession();
   if (!session.data?.user || session.data?.user.isAnonymous) return false;
 
