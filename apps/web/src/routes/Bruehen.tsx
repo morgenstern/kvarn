@@ -6,6 +6,7 @@ import type { Setup as SetupType, WeatherSnapshot } from "@kvarn/db";
 import { BarChart3, CheckCircle2, Coffee, Home, Package, SlidersHorizontal, X } from "lucide-react";
 import { activeBean, activeSetup, equipmentKind, equipmentProduct, formatGrindValue, useKvarnStore } from "../state/store";
 import { GrindStepper } from "../components/GrindStepper";
+import { ManualBrewEntry } from "../components/ManualBrewEntry";
 import { SetupThumbnail } from "../components/SetupThumbnail";
 import { useGrindSuggestion } from "../hooks/useGrindSuggestion";
 import { useStopwatch } from "../hooks/useStopwatch";
@@ -14,7 +15,7 @@ import { CONDITION_I18N_KEY } from "../utils/weatherLabels";
 import { useLocale, useT, useTags } from "../i18n";
 
 type Step = "params" | "timer" | "rating";
-type PickMode = "setup" | "combo";
+type PickMode = "setup" | "combo" | "manual";
 
 const METHODS: SetupType["method"][] = ["espresso", "v60", "aeropress", "frenchpress", "moka", "auto"];
 
@@ -196,6 +197,9 @@ export function Bruehen() {
             <Chip active={pickMode === "combo"} onClick={startCombo}>
               {t("modeCombo")}
             </Chip>
+            <Chip active={pickMode === "manual"} onClick={() => setPickMode("manual")}>
+              {t("modeManual")}
+            </Chip>
           </div>
 
           {pickMode === "setup" ? (
@@ -212,7 +216,7 @@ export function Bruehen() {
                 </ProductCard>
               ))}
             </div>
-          ) : (
+          ) : pickMode === "combo" ? (
             <>
               <SectionLabel className="mt-5">{t("pickMethod")}</SectionLabel>
               <div className="flex flex-wrap gap-2">
@@ -288,7 +292,7 @@ export function Bruehen() {
                 {t("comboConfirm")}
               </Button>
             </>
-          )}
+          ) : null}
 
           {pickMode === "setup" ? (
             <>
@@ -308,10 +312,12 @@ export function Bruehen() {
               </div>
             </>
           ) : null}
+
+          {pickMode === "manual" ? <ManualBrewEntry /> : null}
         </>
       ) : null}
 
-      {step === "params" ? (
+      {step === "params" && pickMode !== "manual" ? (
         <Card>
           <GrindStepper
             label={grindScale.label || t("grindLabel")}
