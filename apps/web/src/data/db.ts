@@ -32,15 +32,7 @@ export class KvarnDB extends Dexie {
     // backfill it to false (flat scale, today's behavior) rather than
     // leaving it undefined everywhere reads happen to check it.
     this.version(2)
-      .stores({
-        products: "id, kind, brand",
-        equipment: "id, userId, productId",
-        setups: "id, userId, method",
-        beans: "id, userId",
-        brews: "id, userId, setupId, beanId, brewedAt",
-        weatherSnapshots: "id, geoCell, takenAt",
-        recipes: "id, userId, setupId, beanId",
-      })
+      .stores({})
       .upgrade((tx) =>
         tx
           .table("equipment")
