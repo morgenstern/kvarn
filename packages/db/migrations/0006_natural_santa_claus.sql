@@ -1,0 +1,1 @@
+ALTER TABLE `brew` ADD `is_manual_entry` integer DEFAULT false NOT NULL;

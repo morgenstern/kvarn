@@ -74,6 +74,7 @@ describe("useKvarnStore", () => {
       note: null,
       photoUrl: null,
       isDialIn: false,
+      isManualEntry: false,
       recipeId: null,
     });
 
@@ -121,6 +122,7 @@ describe("useKvarnStore", () => {
       note: null,
       photoUrl: null,
       isDialIn: false,
+      isManualEntry: false,
       recipeId: null,
     };
 

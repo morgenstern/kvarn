@@ -202,6 +202,11 @@ export const brew = sqliteTable("brew", {
   note: text("note"),
   photoUrl: text("photo_url"),
   isDialIn: integer("is_dial_in", { mode: "boolean" }).notNull().default(false),
+  // True for a brew logged via "Nachtragen" (manual historical entry) rather
+  // than the live timer flow — lets the UI distinguish them later (e.g. a
+  // logbook badge) without guessing from other fields like a null weatherId,
+  // which a live brew can also have if location permission was denied.
+  isManualEntry: integer("is_manual_entry", { mode: "boolean" }).notNull().default(false),
   recipeId: text("recipe_id").references(() => recipe.id),
 
   ...syncColumns,

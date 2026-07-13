@@ -145,6 +145,7 @@ export function Bruehen() {
       note: null,
       photoUrl: null,
       isDialIn: false,
+      isManualEntry: false,
       recipeId: null,
     });
     setSaved(true);

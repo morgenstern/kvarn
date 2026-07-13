@@ -43,6 +43,13 @@
       "when": 1783241080328,
       "tag": "0005_hesitant_prowler",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "6",
+      "when": 1783952807341,
+      "tag": "0006_natural_santa_claus",
+      "breakpoints": true
     }
   ]
 }
