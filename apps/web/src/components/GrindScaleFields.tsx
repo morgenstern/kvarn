@@ -1,40 +1,68 @@
 import type { GrindScaleValue } from "../state/store";
 import { useT } from "../i18n";
 
-/** The three fields a grind scale boils down to for editing purposes — unit,
- * label, and finerDirection are preserved from whatever `value` already has. */
+function NumberField({ label, value, onChange }: { label: string; value: number; onChange: (v: number) => void }) {
+  return (
+    <div className="flex flex-col gap-0.5">
+      <label className="text-[13px] text-muted">{label}</label>
+      <input
+        type="number"
+        value={value}
+        onChange={(e) => onChange(Number(e.target.value))}
+        className="w-20 border border-linen rounded-control px-2 py-2 text-base bg-birch"
+      />
+    </div>
+  );
+}
+
+/** Flat scale: min/max/step. Two-dial scale (subclicksEnabled): main click
+ * min/max + subclick min/max, each an integer-step-of-1 dial — see
+ * docs/superpowers/specs/2026-07-05-grind-main-subclicks-design.md. unit,
+ * label, and finerDirection are preserved from whatever `value` already has
+ * in both modes. */
 export function GrindScaleFields({ value, onChange }: { value: GrindScaleValue; onChange: (next: GrindScaleValue) => void }) {
   const t = useT("setup");
+  const subclicksEnabled = value.subclicksEnabled ?? false;
+
   return (
-    <div className="flex items-center gap-3">
-      <div className="flex flex-col gap-0.5">
-        <label className="text-[13px] text-muted">{t("grindMin")}</label>
-        <input
-          type="number"
-          value={value.min}
-          onChange={(e) => onChange({ ...value, min: Number(e.target.value) })}
-          className="w-20 border border-linen rounded-control px-2 py-2 text-base bg-birch"
-        />
+    <div>
+      <div className="flex items-center justify-between py-[13px] border-b border-linen">
+        <div className="text-base">{t("subclicksEnabled")}</div>
+        <button
+          type="button"
+          role="switch"
+          aria-checked={subclicksEnabled}
+          onClick={() =>
+            onChange({
+              ...value,
+              subclicksEnabled: !subclicksEnabled,
+              mainMin: value.mainMin ?? 1,
+              mainMax: value.mainMax ?? 4,
+              subMin: value.subMin ?? 0,
+              subMax: value.subMax ?? 40,
+            })
+          }
+          className={`w-11 h-6 rounded-full relative transition-colors ${subclicksEnabled ? "bg-copper" : "bg-linen"}`}
+        >
+          <span
+            className={`absolute top-0.5 left-0.5 w-5 h-5 rounded-full bg-white transition-transform ${subclicksEnabled ? "translate-x-5" : ""}`}
+          />
+        </button>
       </div>
-      <div className="flex flex-col gap-0.5">
-        <label className="text-[13px] text-muted">{t("grindMax")}</label>
-        <input
-          type="number"
-          value={value.max}
-          onChange={(e) => onChange({ ...value, max: Number(e.target.value) })}
-          className="w-20 border border-linen rounded-control px-2 py-2 text-base bg-birch"
-        />
-      </div>
-      <div className="flex flex-col gap-0.5">
-        <label className="text-[13px] text-muted">{t("grindStep")}</label>
-        <input
-          type="number"
-          step="0.1"
-          value={value.step}
-          onChange={(e) => onChange({ ...value, step: Number(e.target.value) })}
-          className="w-20 border border-linen rounded-control px-2 py-2 text-base bg-birch"
-        />
-      </div>
+      {subclicksEnabled ? (
+        <div className="flex items-center gap-3 pt-3 flex-wrap">
+          <NumberField label={t("mainClickMin")} value={value.mainMin ?? 1} onChange={(v) => onChange({ ...value, mainMin: v })} />
+          <NumberField label={t("mainClickMax")} value={value.mainMax ?? 4} onChange={(v) => onChange({ ...value, mainMax: v })} />
+          <NumberField label={t("subClickMin")} value={value.subMin ?? 0} onChange={(v) => onChange({ ...value, subMin: v })} />
+          <NumberField label={t("subClickMax")} value={value.subMax ?? 40} onChange={(v) => onChange({ ...value, subMax: v })} />
+        </div>
+      ) : (
+        <div className="flex items-center gap-3 pt-3">
+          <NumberField label={t("grindMin")} value={value.min} onChange={(v) => onChange({ ...value, min: v })} />
+          <NumberField label={t("grindMax")} value={value.max} onChange={(v) => onChange({ ...value, max: v })} />
+          <NumberField label={t("grindStep")} value={value.step} onChange={(v) => onChange({ ...value, step: v })} />
+        </div>
+      )}
     </div>
   );
 }
