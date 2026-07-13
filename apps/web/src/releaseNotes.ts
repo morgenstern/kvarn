@@ -36,4 +36,5 @@ export const RELEASE_NOTES: ReleaseNote[] = [
   { version: 56, de: "Mühlen mit zwei Rädern (Haupt- und Unterklicks, z. B. Kingrinder K6) werden jetzt unterstützt.", en: "Grinders with two dials (main + subclicks, e.g. Kingrinder K6) are now supported." },
   { version: 58, de: "Bei angemeldetem Konto zeigt der Header jetzt deinen Namen statt „Einstellungen“.", en: "When signed in, the header now shows your name instead of \"Settings\"." },
   { version: 65, de: "Vergangene Bezüge lassen sich jetzt nachtragen, ganz ohne Timer.", en: "You can now log a past brew without using the timer." },
+  { version: 76, de: "Bei angemeldetem Konto werden alle Daten jetzt automatisch mit dem Server synchronisiert, mit manueller Sync-Option in den Einstellungen.", en: "When signed in, all your data now syncs automatically with the server, with a manual sync option in Settings." },
 ];
