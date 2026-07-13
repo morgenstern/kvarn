@@ -2,14 +2,15 @@ import { useParams } from "@tanstack/react-router";
 import { Card, Chart, EntityImage, SectionLabel } from "@kvarn/ui";
 import { computeBeanAgeDays, freshnessPct, FRESHNESS_PEAK_WINDOW_DAYS } from "@kvarn/core";
 import { Activity, FlaskConical, Info, Star } from "lucide-react";
-import { useKvarnStore } from "../state/store";
+import { formatGrindValue, useKvarnStore } from "../state/store";
 import { localeCode, useLocale, useT } from "../i18n";
 
 const FRESHNESS_CURVE_MAX_DAYS = 50;
 
 export function BeanDetail() {
   const { beanId } = useParams({ from: "/regal/$beanId" });
-  const { beans, brews, setups, recipes } = useKvarnStore();
+  const state = useKvarnStore();
+  const { beans, brews, setups, recipes } = state;
   const bean = beans.find((b) => b.id === beanId);
   const t = useT("beanDetail");
   const tKompass = useT("kompass");
@@ -102,7 +103,10 @@ export function BeanDetail() {
                 <span>{setup?.name ?? tKompass("deletedSetup")}</span>
                 <span className="text-muted">
                   {t("recipeLine", {
-                    grind: params?.grindSetting ?? "—",
+                    grind:
+                      params?.grindSetting !== undefined
+                        ? formatGrindValue(state, setup?.grinderEquipmentId ?? null, params.grindSetting, locale)
+                        : "—",
                     avg: recipe.avgRating ?? "—",
                     count: recipe.brewCount,
                   })}

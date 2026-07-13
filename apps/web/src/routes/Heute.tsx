@@ -2,7 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { Button, Card, EntityImage, Hint, ProductCard, SectionLabel, WeatherStrip } from "@kvarn/ui";
 import { Clock, Package, SlidersHorizontal } from "lucide-react";
 import { weatherConditionKey } from "@kvarn/core";
-import { activeBean, activeSetup, latestWeatherSnapshot, useKvarnStore } from "../state/store";
+import { activeBean, activeSetup, formatGrindValue, latestWeatherSnapshot, useKvarnStore } from "../state/store";
 import { SetupThumbnail } from "../components/SetupThumbnail";
 import { useGrindSuggestion } from "../hooks/useGrindSuggestion";
 import { useDisplayName } from "../hooks/useDisplayName";
@@ -124,7 +124,9 @@ export function Heute() {
               </div>
               <div className="flex-1">
                 <div className="text-base font-medium">{new Date(b.brewedAt).toLocaleDateString(localeCode(locale))}</div>
-                <div className="text-sm text-muted">{b.grindSetting} · {b.doseG}g → {b.actualYieldG ?? b.targetYieldG}g</div>
+                <div className="text-sm text-muted">
+                  {formatGrindValue(state, setups.find((s) => s.id === b.setupId)?.grinderEquipmentId ?? null, b.grindSetting, locale)} · {b.doseG}g → {b.actualYieldG ?? b.targetYieldG}g
+                </div>
               </div>
             </div>
           ))}

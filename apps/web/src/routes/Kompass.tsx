@@ -1,6 +1,6 @@
 import { Card, Chart, SectionLabel } from "@kvarn/ui";
 import { BookOpen, Star, TrendingUp } from "lucide-react";
-import { useKvarnStore, weatherSnapshotFor } from "../state/store";
+import { formatGrindValue, useKvarnStore, weatherSnapshotFor } from "../state/store";
 import { localeCode, useLocale, useT } from "../i18n";
 
 export function Kompass() {
@@ -42,7 +42,10 @@ export function Kompass() {
                 </div>
                 <div className="text-sm text-muted mt-1">
                   {t("recipeMeta", {
-                    grind: params?.grindSetting ?? "—",
+                    grind:
+                      params?.grindSetting !== undefined
+                        ? formatGrindValue(state, setup?.grinderEquipmentId ?? null, params.grindSetting, locale)
+                        : "—",
                     dose: params?.doseG ?? "—",
                     yield: params?.targetYieldG ?? "—",
                     count: recipe.brewCount,
@@ -95,7 +98,7 @@ export function Kompass() {
                   <div className="text-sm text-muted">
                     {new Date(b.brewedAt).toLocaleString(localeCode(locale))} ·{" "}
                     {t("logRowMeta", {
-                      grind: b.grindSetting,
+                      grind: formatGrindValue(state, setup?.grinderEquipmentId ?? null, b.grindSetting, locale),
                       dose: b.doseG,
                       yield: b.actualYieldG ?? b.targetYieldG,
                       time: b.timeTotalS,
