@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { Link, Outlet, useLocation, useNavigate } from "@tanstack/react-router";
 import { Coffee, Compass, Settings as SettingsIcon, SlidersHorizontal, Sun, User } from "lucide-react";
 import { Logo, LogoLockup } from "@kvarn/ui";
-import { useKvarnStore } from "../state/store";
+import { equipmentKind, useKvarnStore } from "../state/store";
 import { useT } from "../i18n";
 import { useEnsureSession } from "../auth/useEnsureSession";
 import { useDisplayName } from "../hooks/useDisplayName";
@@ -12,7 +12,7 @@ import { getLastSyncedAt, runSync } from "../sync/runSync";
 const { useSession } = authClient;
 
 // Settings must stay reachable even mid-onboarding (e.g. to switch language or
-// sign in) — everything else is gated behind having at least one setup + bean.
+// sign in) — everything else is gated behind having at least one grinder + bean.
 const ALLOWED_WITHOUT_ONBOARDING = ["/onboarding", "/settings"];
 
 /** The header's settings entry point — personalized to the user's name +
@@ -41,9 +41,9 @@ function HeaderAccountLink({ settingsLabel }: { settingsLabel: string }) {
 }
 
 export function RootLayout() {
+  const state = useKvarnStore();
   const hydrate = useKvarnStore((s) => s.hydrate);
   const hydrated = useKvarnStore((s) => s.hydrated);
-  const setups = useKvarnStore((s) => s.setups);
   const beans = useKvarnStore((s) => s.beans);
   const equipment = useKvarnStore((s) => s.equipment);
   const brews = useKvarnStore((s) => s.brews);
@@ -87,13 +87,15 @@ export function RootLayout() {
       });
     }, 4000);
     return () => clearTimeout(timeout);
-  }, [hydrate, equipment, setups, beans, brews, recipes, weatherSnapshots, setLastSyncedAt]);
+  }, [hydrate, equipment, beans, brews, recipes, weatherSnapshots, setLastSyncedAt]);
 
-  // Mandatory onboarding: block every route until at least one setup and one
-  // bean exist, except onboarding itself and settings. Onboarding always
+  // Mandatory onboarding: block every route until at least one grinder and
+  // one bean exist, except onboarding itself and settings. Onboarding always
   // creates both before it lets you finish (see Onboarding.tsx), so once
   // it's been seen this only re-triggers if all data was deleted since.
-  const needsOnboarding = hydrated && (setups.length === 0 || beans.length === 0);
+  // Machine is optional (see the design spec), so it's not part of this gate.
+  const hasGrinder = equipment.some((e) => equipmentKind(state, e.id) === "grinder");
+  const needsOnboarding = hydrated && (!hasGrinder || beans.length === 0);
   useEffect(() => {
     if (needsOnboarding && !ALLOWED_WITHOUT_ONBOARDING.includes(location.pathname)) {
       navigate({ to: "/onboarding" });

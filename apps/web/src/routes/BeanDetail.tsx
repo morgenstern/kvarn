@@ -2,7 +2,7 @@ import { useParams } from "@tanstack/react-router";
 import { Card, Chart, EntityImage, SectionLabel } from "@kvarn/ui";
 import { computeBeanAgeDays, freshnessPct, FRESHNESS_PEAK_WINDOW_DAYS } from "@kvarn/core";
 import { Activity, FlaskConical, Info, Star } from "lucide-react";
-import { formatGrindValue, useKvarnStore } from "../state/store";
+import { equipmentProduct, formatGrindValue, useKvarnStore } from "../state/store";
 import { localeCode, useLocale, useT } from "../i18n";
 
 const FRESHNESS_CURVE_MAX_DAYS = 50;
@@ -10,7 +10,7 @@ const FRESHNESS_CURVE_MAX_DAYS = 50;
 export function BeanDetail() {
   const { beanId } = useParams({ from: "/regal/$beanId" });
   const state = useKvarnStore();
-  const { beans, brews, setups, recipes } = state;
+  const { beans, brews, equipment, recipes } = state;
   const bean = beans.find((b) => b.id === beanId);
   const t = useT("beanDetail");
   const tKompass = useT("kompass");
@@ -96,16 +96,20 @@ export function BeanDetail() {
         <Card>
           <SectionLabel icon={FlaskConical}>{t("recipes")}</SectionLabel>
           {beanRecipes.map((recipe) => {
-            const setup = setups.find((s) => s.id === recipe.setupId);
+            const grinder = equipment.find((e) => e.id === recipe.grinderEquipmentId);
+            const machine = equipment.find((e) => e.id === recipe.machineEquipmentId);
+            const grinderLabel = grinder ? grinder.customName ?? equipmentProduct(state, grinder.id)?.model : undefined;
+            const machineLabel = machine ? machine.customName ?? equipmentProduct(state, machine.id)?.model : undefined;
+            const comboLabel = [grinderLabel, machineLabel].filter((p): p is string => Boolean(p)).join(" · ") || tKompass("deletedSetup");
             const params = recipe.params as { grindSetting?: number; doseG?: number; targetYieldG?: number } | null;
             return (
               <div key={recipe.id} className="flex justify-between text-base py-1.5 border-b border-linen last:border-b-0">
-                <span>{setup?.name ?? tKompass("deletedSetup")}</span>
+                <span>{comboLabel}</span>
                 <span className="text-muted">
                   {t("recipeLine", {
                     grind:
                       params?.grindSetting !== undefined
-                        ? formatGrindValue(state, setup?.grinderEquipmentId ?? null, params.grindSetting, locale)
+                        ? formatGrindValue(state, recipe.grinderEquipmentId, params.grindSetting, locale)
                         : "—",
                     avg: recipe.avgRating ?? "—",
                     count: recipe.brewCount,
