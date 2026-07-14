@@ -4,3 +4,4 @@ export * from "./compass";
 export * from "./freshness";
 export * from "./weather";
 export * from "./grindClicks";
+export * from "./brewMethod";
