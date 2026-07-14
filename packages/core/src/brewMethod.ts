@@ -1,6 +1,10 @@
 import type { BrewMethod } from "./units";
 
-export type MachineMethodHint = "espresso" | "v60" | "aeropress" | "frenchpress" | "moka";
+// A physical machine's hint can never be "auto" — that's a UI-only
+// placeholder for "not yet decided," not a real brew method — so this is
+// BrewMethod minus that one member, derived rather than hand-listed to stay
+// in sync if BrewMethod ever grows a new method.
+export type MachineMethodHint = Exclude<BrewMethod, "auto">;
 export type BeanType = "espresso" | "filter";
 
 /**
@@ -10,12 +14,14 @@ export type BeanType = "espresso" | "filter";
  * ("filter" beans default to the "v60" target-time profile, the most
  * generic non-espresso method); if neither is known, espresso — see
  * docs/superpowers/specs/2026-07-14-remove-setup-concept-design.md §2.
+ * Takes the two derived primitives rather than full Bean/Equipment objects
+ * so this package stays decoupled from the app's DB schema.
  */
 export function deriveBrewMethod(
   beanType: BeanType | null | undefined,
   machineMethodHint: MachineMethodHint | null | undefined,
 ): BrewMethod {
-  if (machineMethodHint) return machineMethodHint;
+  if (machineMethodHint != null) return machineMethodHint;
   if (beanType === "espresso") return "espresso";
   if (beanType === "filter") return "v60";
   return "espresso";

@@ -3,7 +3,10 @@ import { deriveBrewMethod } from "./brewMethod";
 
 describe("deriveBrewMethod", () => {
   it("prefers the machine's methodHint when set, regardless of bean type", () => {
+    // filter bean, but the machine hint (espresso) wins
     expect(deriveBrewMethod("filter", "espresso")).toBe("espresso");
+    // espresso bean, but the machine hint (aeropress) wins — hint always
+    // wins, not just when it happens to agree with the bean type
     expect(deriveBrewMethod("espresso", "aeropress")).toBe("aeropress");
     expect(deriveBrewMethod(null, "moka")).toBe("moka");
   });
