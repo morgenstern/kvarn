@@ -53,6 +53,13 @@ export const product = sqliteTable("product", {
   imageUrl: text("image_url"),
   // Catalog default — see equipment.grindScale below for the per-owner override.
   grindScale: text("grind_scale", { mode: "json" }).$type<GrindScaleJson>(),
+  // Catalog default for machine/brewer products — which brew method this
+  // piece of gear makes (e.g. an Aeropress product → "aeropress", a Rancilio
+  // → "espresso"). Null for grinder/accessory/bean products. See
+  // equipment.methodHint below and packages/core/src/brewMethod.ts.
+  methodHint: text("method_hint", {
+    enum: ["espresso", "v60", "aeropress", "frenchpress", "moka"],
+  }),
   specs: text("specs", { mode: "json" }).$type<Record<string, unknown> | null>(),
   status: text("status", { enum: ["seed", "community", "verified"] })
     .notNull()
@@ -72,6 +79,15 @@ export const equipment = sqliteTable("equipment", {
   // to the linked product's kind, then to "grinder" for legacy custom equipment
   // (the only kind custom equipment could be before machines were supported).
   kind: text("kind", { enum: ["grinder", "machine", "brewer", "accessory"] }),
+  // Which brew method this specific machine/brewer makes — the owner's own
+  // override if set, else falls back to the linked product's methodHint (see
+  // equipmentMethodHint in apps/web/src/state/store.ts). Only meaningful for
+  // "machine"/"brewer" kind equipment; null on grinders/accessories, and the
+  // only source of truth for custom (non-catalog) gear, which has no linked
+  // product to fall back to.
+  methodHint: text("method_hint", {
+    enum: ["espresso", "v60", "aeropress", "frenchpress", "moka"],
+  }),
   notes: text("notes"),
   burrKg: real("burr_kg"),
   // User-configurable grind range for this specific grinder (min/max/step),
@@ -91,25 +107,6 @@ export const equipment = sqliteTable("equipment", {
   ...syncColumns,
 });
 
-export const setup = sqliteTable("setup", {
-  id: text("id").primaryKey(),
-  userId: text("user_id").notNull(),
-  name: text("name").notNull(),
-  method: text("method", {
-    enum: ["espresso", "v60", "aeropress", "frenchpress", "moka", "auto"],
-  }).notNull(),
-  grinderEquipmentId: text("grinder_equipment_id")
-    .notNull()
-    .references(() => equipment.id),
-  machineEquipmentId: text("machine_equipment_id").references(() => equipment.id),
-  // Optional bean pinned to this setup (e.g. "my espresso setup, usually with
-  // this bean") — distinct from the app-wide activeBeanId, which still governs
-  // what's actually brewed and can override this default per session.
-  beanId: text("bean_id").references(() => bean.id),
-  accessoryEquipmentIds: text("accessory_equipment_ids", { mode: "json" }).$type<string[]>().default([]),
-  ...syncColumns,
-});
-
 export const bean = sqliteTable("bean", {
   id: text("id").primaryKey(),
   userId: text("user_id").notNull(),
@@ -120,6 +117,12 @@ export const bean = sqliteTable("bean", {
   process: text("process", {
     enum: ["washed", "natural", "honey", "anaerobic", "other"],
   }),
+  // Distinguishes espresso vs. filter/pour-over beans — feeds deriveBrewMethod
+  // (packages/core/src/brewMethod.ts) as the fallback when the selected
+  // machine has no methodHint of its own. Null means unknown (existing rows,
+  // or a user who skipped the field) — deriveBrewMethod treats that the same
+  // as "no info", defaulting to espresso.
+  beanType: text("bean_type", { enum: ["espresso", "filter"] }),
   roastLevel: integer("roast_level"),
   roastDate: text("roast_date"),
   openedAt: text("opened_at"),
@@ -149,9 +152,10 @@ export const weatherSnapshot = sqliteTable("weather_snapshot", {
 export const recipe = sqliteTable("recipe", {
   id: text("id").primaryKey(),
   userId: text("user_id").notNull(),
-  setupId: text("setup_id")
+  grinderEquipmentId: text("grinder_equipment_id")
     .notNull()
-    .references(() => setup.id),
+    .references(() => equipment.id),
+  machineEquipmentId: text("machine_equipment_id").references(() => equipment.id),
   beanId: text("bean_id").references(() => bean.id),
   beanProfile: text("bean_profile", { mode: "json" }).$type<Record<string, unknown> | null>(),
   params: text("params", { mode: "json" }).$type<Record<string, unknown>>(),
@@ -164,9 +168,10 @@ export const recipe = sqliteTable("recipe", {
 export const brew = sqliteTable("brew", {
   id: text("id").primaryKey(),
   userId: text("user_id").notNull(),
-  setupId: text("setup_id")
+  grinderEquipmentId: text("grinder_equipment_id")
     .notNull()
-    .references(() => setup.id),
+    .references(() => equipment.id),
+  machineEquipmentId: text("machine_equipment_id").references(() => equipment.id),
   beanId: text("bean_id")
     .notNull()
     .references(() => bean.id),
@@ -216,8 +221,6 @@ export type Product = typeof product.$inferSelect;
 export type NewProduct = typeof product.$inferInsert;
 export type Equipment = typeof equipment.$inferSelect;
 export type NewEquipment = typeof equipment.$inferInsert;
-export type Setup = typeof setup.$inferSelect;
-export type NewSetup = typeof setup.$inferInsert;
 export type Bean = typeof bean.$inferSelect;
 export type NewBean = typeof bean.$inferInsert;
 export type WeatherSnapshot = typeof weatherSnapshot.$inferSelect;
