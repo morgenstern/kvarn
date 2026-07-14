@@ -1,3 +1,10 @@
+-- grinder_equipment_id is intentionally left nullable below (on recipe and
+-- brew) even though schema.ts declares it .notNull() — this is a
+-- backfill-then-enforce migration and there's no safe default to add a
+-- NOT NULL column against existing rows. A future migration should add the
+-- NOT NULL constraint once all rows are confirmed backfilled. Expect
+-- `drizzle-kit generate` to propose that constraint as a "fix" — this is
+-- expected drift, not a bug to silently resolve.
 ALTER TABLE `product` ADD `method_hint` text;--> statement-breakpoint
 ALTER TABLE `equipment` ADD `method_hint` text;--> statement-breakpoint
 ALTER TABLE `bean` ADD `bean_type` text;--> statement-breakpoint
