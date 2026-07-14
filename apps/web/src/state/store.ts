@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { fetchWeatherSnapshot, getRoughLocation } from "@kvarn/api-client";
 import { formatClickParts } from "@kvarn/core";
-import type { Bean, Brew, Equipment, Product, Recipe, Setup, WeatherSnapshot } from "@kvarn/db";
+import type { Bean, Brew, Equipment, Product, Recipe, WeatherSnapshot } from "@kvarn/db";
 import { db, ensureSeeded, LOCAL_USER_ID, newId, nowIso, syncApprovedProducts } from "../data/db";
 import { LAST_SYNCED_KEY } from "../sync/constants";
 
@@ -21,12 +21,12 @@ export interface KvarnState {
   hydrated: boolean;
   products: Product[];
   equipment: Equipment[];
-  setups: Setup[];
   beans: Bean[];
   brews: Brew[];
   weatherSnapshots: WeatherSnapshot[];
   recipes: Recipe[];
-  activeSetupId: string | null;
+  activeGrinderEquipmentId: string | null;
+  activeMachineEquipmentId: string | null;
   activeBeanId: string | null;
   lastSyncedAt: string | null;
 
@@ -37,40 +37,25 @@ export interface KvarnState {
     kind: Exclude<Product["kind"], "bean">,
     photoUrl?: string,
     grindScale?: GrindScaleValue | null,
+    methodHint?: Equipment["methodHint"] | null,
   ) => Promise<Equipment>;
   setEquipmentGrindScale: (equipmentId: string, grindScale: GrindScaleValue) => Promise<void>;
   setEquipmentCustomName: (equipmentId: string, customName: string | null) => Promise<void>;
-  /** Throws EQUIPMENT_IN_USE if a setup still requires this equipment as its
-   * (non-optional) grinder — callers should catch and surface that. Clears
-   * the equipment from any setup's optional machine/accessory slots instead
-   * of blocking, since those are safe to just unset. */
   deleteEquipment: (equipmentId: string) => Promise<void>;
-  addSetup: (input: {
-    name: string;
-    method: Setup["method"];
-    grinderEquipmentId: string;
-    machineEquipmentId?: string | null;
-    beanId?: string | null;
-  }) => Promise<Setup>;
-  /** Reuses a setup with the same grinder+machine+method combo if one exists, else creates it. */
-  findOrCreateSetup: (input: {
-    method: Setup["method"];
-    grinderEquipmentId: string;
-    machineEquipmentId?: string | null;
-    beanId?: string | null;
-  }) => Promise<Setup>;
   addBean: (input: {
     roaster: string;
     name: string;
     origin?: string;
     roastDate?: string;
     photoUrl?: string;
+    beanType?: Bean["beanType"] | null;
   }) => Promise<Bean>;
   archiveBean: (beanId: string) => Promise<void>;
   setEquipmentPhoto: (equipmentId: string, photoUrl: string) => Promise<void>;
   setEquipmentImage: (equipmentId: string, imageUrl: string) => Promise<void>;
   setBeanImage: (beanId: string, imageUrl: string) => Promise<void>;
-  setActiveSetup: (setupId: string | null) => void;
+  setActiveGrinder: (equipmentId: string | null) => void;
+  setActiveMachine: (equipmentId: string | null) => void;
   setActiveBean: (beanId: string | null) => void;
   setLastSyncedAt: (value: string | null) => void;
   captureWeatherSnapshot: () => Promise<WeatherSnapshot | null>;
@@ -83,12 +68,12 @@ export const useKvarnStore = create<KvarnState>((set, get) => ({
   hydrated: false,
   products: [],
   equipment: [],
-  setups: [],
   beans: [],
   brews: [],
   weatherSnapshots: [],
   recipes: [],
-  activeSetupId: null,
+  activeGrinderEquipmentId: null,
+  activeMachineEquipmentId: null,
   activeBeanId: null,
   // Not imported from ../sync/runSync — that module also imports
   // ../auth/client, which calls window.location.origin at top level and
@@ -98,26 +83,31 @@ export const useKvarnStore = create<KvarnState>((set, get) => ({
   hydrate: async () => {
     await ensureSeeded();
     await syncApprovedProducts();
-    const [products, equipment, setups, beans, brews, weatherSnapshots, recipes] = await Promise.all([
+    const [products, equipment, beans, brews, weatherSnapshots, recipes] = await Promise.all([
       db.products.toArray(),
       db.equipment.toArray().then((all) => all.filter((e) => !e.deletedAt)),
-      db.setups.toArray(),
       db.beans.toArray().then((all) => all.filter((b) => !b.archived)),
       db.brews.orderBy("brewedAt").reverse().toArray(),
       db.weatherSnapshots.toArray(),
       db.recipes.toArray(),
     ]);
+    // brews is newest-first (orderBy(...).reverse() above) — the first row
+    // is the most recently used grinder/machine/bean combo, used to seed the
+    // "active" picks so Bruehen/Heute default to "brew the same thing again"
+    // without needing a saved Setup. See lastUsedCombo() below for the same
+    // logic exposed as a selector (used after hydrate, e.g. post-sync).
+    const latest = brews[0];
     set({
       hydrated: true,
       products,
       equipment,
-      setups,
       beans,
       brews,
       weatherSnapshots,
       recipes,
-      activeSetupId: setups[0]?.id ?? null,
-      activeBeanId: beans[0]?.id ?? null,
+      activeGrinderEquipmentId: latest?.grinderEquipmentId ?? null,
+      activeMachineEquipmentId: latest?.machineEquipmentId ?? null,
+      activeBeanId: latest?.beanId ?? beans[0]?.id ?? null,
     });
   },
 
@@ -129,6 +119,7 @@ export const useKvarnStore = create<KvarnState>((set, get) => ({
       productId,
       customName: null,
       kind: product && product.kind !== "bean" ? product.kind : null,
+      methodHint: null,
       notes: null,
       burrKg: null,
       grindScale: null,
@@ -143,13 +134,14 @@ export const useKvarnStore = create<KvarnState>((set, get) => ({
     return equipment;
   },
 
-  addCustomEquipment: async (customName, kind, photoUrl, grindScale) => {
+  addCustomEquipment: async (customName, kind, photoUrl, grindScale, methodHint) => {
     const equipment: Equipment = {
       id: newId("equipment"),
       userId: LOCAL_USER_ID,
       productId: null,
       customName,
       kind,
+      methodHint: methodHint ?? null,
       notes: null,
       burrKg: null,
       grindScale: grindScale ?? null,
@@ -174,73 +166,15 @@ export const useKvarnStore = create<KvarnState>((set, get) => ({
     set((s) => ({ equipment: s.equipment.map((e) => (e.id === equipmentId ? { ...e, customName } : e)) }));
   },
 
+  // No more "in use by a setup" blocking — without setups, a grinder/machine
+  // can always be soft-deleted; past brews keep pointing at its (now gone)
+  // id, same as how deleting a bean already worked via archiving.
   deleteEquipment: async (equipmentId) => {
-    const state = get();
-    const requiredBy = state.setups.filter((s) => s.grinderEquipmentId === equipmentId);
-    if (requiredBy.length > 0) {
-      throw new Error("EQUIPMENT_IN_USE");
-    }
-
-    const affectedSetups = state.setups.filter(
-      (s) => s.machineEquipmentId === equipmentId || (s.accessoryEquipmentIds ?? []).includes(equipmentId),
-    );
-    await Promise.all(
-      affectedSetups.map((s) =>
-        db.setups.update(s.id, {
-          machineEquipmentId: s.machineEquipmentId === equipmentId ? null : s.machineEquipmentId,
-          accessoryEquipmentIds: (s.accessoryEquipmentIds ?? []).filter((id) => id !== equipmentId),
-          updatedAt: nowIso(),
-        }),
-      ),
-    );
     await db.equipment.update(equipmentId, { deletedAt: nowIso(), updatedAt: nowIso() });
-
-    set((s) => ({
-      equipment: s.equipment.filter((e) => e.id !== equipmentId),
-      setups: s.setups.map((s2) =>
-        s2.machineEquipmentId === equipmentId || (s2.accessoryEquipmentIds ?? []).includes(equipmentId)
-          ? {
-              ...s2,
-              machineEquipmentId: s2.machineEquipmentId === equipmentId ? null : s2.machineEquipmentId,
-              accessoryEquipmentIds: (s2.accessoryEquipmentIds ?? []).filter((id) => id !== equipmentId),
-            }
-          : s2,
-      ),
-    }));
+    set((s) => ({ equipment: s.equipment.filter((e) => e.id !== equipmentId) }));
   },
 
-  addSetup: async ({ name, method, grinderEquipmentId, machineEquipmentId, beanId }) => {
-    const setup: Setup = {
-      id: newId("setup"),
-      userId: LOCAL_USER_ID,
-      name,
-      method,
-      grinderEquipmentId,
-      machineEquipmentId: machineEquipmentId ?? null,
-      beanId: beanId ?? null,
-      accessoryEquipmentIds: [],
-      updatedAt: nowIso(),
-      deletedAt: null,
-      clientId: newId("client"),
-    };
-    await db.setups.add(setup);
-    set((s) => ({ setups: [...s.setups, setup], activeSetupId: s.activeSetupId ?? setup.id }));
-    return setup;
-  },
-
-  findOrCreateSetup: async ({ method, grinderEquipmentId, machineEquipmentId, beanId }) => {
-    const normalizedMachineId = machineEquipmentId ?? null;
-    const existing = get().setups.find(
-      (s) =>
-        s.method === method &&
-        s.grinderEquipmentId === grinderEquipmentId &&
-        (s.machineEquipmentId ?? null) === normalizedMachineId,
-    );
-    if (existing) return existing;
-    return get().addSetup({ name: method, method, grinderEquipmentId, machineEquipmentId: normalizedMachineId, beanId });
-  },
-
-  addBean: async ({ roaster, name, origin, roastDate, photoUrl }) => {
+  addBean: async ({ roaster, name, origin, roastDate, photoUrl, beanType }) => {
     const bean: Bean = {
       id: newId("bean"),
       userId: LOCAL_USER_ID,
@@ -249,6 +183,7 @@ export const useKvarnStore = create<KvarnState>((set, get) => ({
       origin: origin ?? null,
       variety: null,
       process: null,
+      beanType: beanType ?? null,
       roastLevel: null,
       roastDate: roastDate ?? null,
       openedAt: null,
@@ -288,7 +223,8 @@ export const useKvarnStore = create<KvarnState>((set, get) => ({
     set((s) => ({ beans: s.beans.map((b) => (b.id === beanId ? { ...b, imageUrl } : b)) }));
   },
 
-  setActiveSetup: (setupId) => set({ activeSetupId: setupId }),
+  setActiveGrinder: (equipmentId) => set({ activeGrinderEquipmentId: equipmentId }),
+  setActiveMachine: (equipmentId) => set({ activeMachineEquipmentId: equipmentId }),
   setActiveBean: (beanId) => set({ activeBeanId: beanId }),
   setLastSyncedAt: (value) => set({ lastSyncedAt: value }),
 
@@ -331,7 +267,12 @@ export const useKvarnStore = create<KvarnState>((set, get) => ({
     await db.brews.add(brew);
 
     const state = get();
-    const existingRecipe = state.recipes.find((r) => r.setupId === brew.setupId && r.beanId === brew.beanId);
+    const existingRecipe = state.recipes.find(
+      (r) =>
+        r.grinderEquipmentId === brew.grinderEquipmentId &&
+        (r.machineEquipmentId ?? null) === (brew.machineEquipmentId ?? null) &&
+        r.beanId === brew.beanId,
+    );
     const brewCount = (existingRecipe?.brewCount ?? 0) + 1;
     const avgRating = existingRecipe
       ? (existingRecipe.avgRating ?? brew.ratingTotal) * (brewCount - 1) / brewCount + brew.ratingTotal / brewCount
@@ -340,7 +281,8 @@ export const useKvarnStore = create<KvarnState>((set, get) => ({
     const recipe: Recipe = {
       id: existingRecipe?.id ?? newId("recipe"),
       userId: LOCAL_USER_ID,
-      setupId: brew.setupId,
+      grinderEquipmentId: brew.grinderEquipmentId,
+      machineEquipmentId: brew.machineEquipmentId,
       beanId: brew.beanId,
       beanProfile: null,
       params: {
@@ -361,14 +303,13 @@ export const useKvarnStore = create<KvarnState>((set, get) => ({
     set((s) => ({
       brews: [brew, ...s.brews],
       recipes: existingRecipe ? s.recipes.map((r) => (r.id === recipe.id ? recipe : r)) : [...s.recipes, recipe],
+      activeGrinderEquipmentId: brew.grinderEquipmentId,
+      activeMachineEquipmentId: brew.machineEquipmentId,
+      activeBeanId: brew.beanId,
     }));
     return brew;
   },
 }));
-
-export function activeSetup(state: KvarnState): Setup | undefined {
-  return state.setups.find((s) => s.id === state.activeSetupId);
-}
 
 export function activeBean(state: KvarnState): Bean | undefined {
   return state.beans.find((b) => b.id === state.activeBeanId);
@@ -390,6 +331,19 @@ export function equipmentKind(state: KvarnState, equipmentId: string | null): Pr
   const eq = state.equipment.find((e) => e.id === equipmentId);
   if (eq?.kind) return eq.kind;
   return equipmentProduct(state, equipmentId)?.kind ?? "grinder";
+}
+
+/**
+ * Which brew method this piece of gear makes: its own methodHint if set,
+ * else the linked catalog product's methodHint, else null (custom gear with
+ * no hint set, or a grinder/accessory, which never have one). Feeds
+ * deriveBrewMethod (packages/core/src/brewMethod.ts) — same
+ * override-then-catalog-fallback pattern as equipmentGrindScale below.
+ */
+export function equipmentMethodHint(state: KvarnState, equipmentId: string | null): Equipment["methodHint"] {
+  const eq = state.equipment.find((e) => e.id === equipmentId);
+  if (eq?.methodHint) return eq.methodHint;
+  return equipmentProduct(state, equipmentId)?.methodHint ?? null;
 }
 
 /**
@@ -436,9 +390,16 @@ export function equipmentImage(state: KvarnState, equipmentId: string | null): s
   return equipmentProduct(state, equipmentId)?.imageUrl ?? eq.imageUrl ?? eq.photoUrl ?? null;
 }
 
-/** Most recent brew for this exact setup+bean combination, if any. */
-export function lastBrewFor(state: KvarnState, setupId: string, beanId: string): Brew | undefined {
-  return state.brews.find((b) => b.setupId === setupId && b.beanId === beanId);
+/** Most recent brew for this exact grinder+machine+bean combination, if any. */
+export function lastBrewFor(
+  state: KvarnState,
+  grinderEquipmentId: string,
+  machineEquipmentId: string | null,
+  beanId: string,
+): Brew | undefined {
+  return state.brews.find(
+    (b) => b.grinderEquipmentId === grinderEquipmentId && (b.machineEquipmentId ?? null) === machineEquipmentId && b.beanId === beanId,
+  );
 }
 
 export function weatherSnapshotFor(state: KvarnState, weatherId: string | null): WeatherSnapshot | undefined {
@@ -456,6 +417,73 @@ export function latestWeatherSnapshot(state: KvarnState): WeatherSnapshot | unde
   return [...state.weatherSnapshots].sort((a, b) => b.takenAt.localeCompare(a.takenAt))[0];
 }
 
-export function recipeFor(state: KvarnState, setupId: string, beanId: string): Recipe | undefined {
-  return state.recipes.find((r) => r.setupId === setupId && r.beanId === beanId);
+export function recipeFor(
+  state: KvarnState,
+  grinderEquipmentId: string,
+  machineEquipmentId: string | null,
+  beanId: string,
+): Recipe | undefined {
+  return state.recipes.find(
+    (r) => r.grinderEquipmentId === grinderEquipmentId && (r.machineEquipmentId ?? null) === machineEquipmentId && r.beanId === beanId,
+  );
+}
+
+/**
+ * The grinder/machine/bean used in the single most recent brew, if any (all
+ * fields null if there's no brew history yet) — powers Home's "ready for
+ * your next brew" prefilled card, and hydrate()'s initial active picks.
+ */
+export function lastUsedCombo(state: KvarnState): {
+  grinderEquipmentId: string | null;
+  machineEquipmentId: string | null;
+  beanId: string | null;
+} {
+  const latest = state.brews[0];
+  return {
+    grinderEquipmentId: latest?.grinderEquipmentId ?? null,
+    machineEquipmentId: latest?.machineEquipmentId ?? null,
+    beanId: latest?.beanId ?? null,
+  };
+}
+
+/**
+ * Sorts items "most recently used in a brew first"; anything never brewed
+ * with falls back to its own `updatedAt` (which is set at creation time and
+ * only touched by later edits — for a freshly added, never-edited item this
+ * is effectively "when it was added"), so a brand-new grinder/machine/bean
+ * outranks something last brewed with days ago. `brews` is always kept
+ * newest-first (see hydrate/commitBrew), so the first match for an id is
+ * its most recent use.
+ */
+function sortByLastUsed<T extends { id: string; updatedAt: string }>(
+  items: T[],
+  brews: Brew[],
+  matches: (brew: Brew, itemId: string) => boolean,
+): T[] {
+  const lastUsedAt = new Map<string, string>();
+  for (const item of items) {
+    const brew = brews.find((b) => matches(b, item.id));
+    lastUsedAt.set(item.id, brew?.brewedAt ?? item.updatedAt);
+  }
+  return [...items].sort((a, b) => (lastUsedAt.get(b.id) ?? "").localeCompare(lastUsedAt.get(a.id) ?? ""));
+}
+
+export function sortedGrinders(state: KvarnState): Equipment[] {
+  const grinders = state.equipment.filter((e) => equipmentKind(state, e.id) === "grinder");
+  return sortByLastUsed(grinders, state.brews, (b, id) => b.grinderEquipmentId === id);
+}
+
+/** Includes both "machine" (espresso machines) and "brewer" (V60/Aeropress/
+ * French press/moka — see Task 9) kind equipment: from the user's
+ * perspective there's one "what did you brew on" picker, not two. */
+export function sortedMachines(state: KvarnState): Equipment[] {
+  const machines = state.equipment.filter((e) => {
+    const kind = equipmentKind(state, e.id);
+    return kind === "machine" || kind === "brewer";
+  });
+  return sortByLastUsed(machines, state.brews, (b, id) => b.machineEquipmentId === id);
+}
+
+export function sortedBeans(state: KvarnState): Bean[] {
+  return sortByLastUsed(state.beans, state.brews, (b, id) => b.beanId === id);
 }
