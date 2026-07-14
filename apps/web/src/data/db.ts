@@ -1,5 +1,35 @@
 import Dexie, { type EntityTable } from "dexie";
-import type { Bean, Brew, Equipment, Product, Recipe, Setup, WeatherSnapshot } from "@kvarn/db";
+import type { Bean, Brew, Equipment, Product, Recipe, WeatherSnapshot } from "@kvarn/db";
+
+interface LegacySetup {
+  id: string;
+  grinderEquipmentId: string;
+  machineEquipmentId: string | null;
+}
+
+interface LegacyRowWithSetup {
+  id: string;
+  setupId: string;
+  [key: string]: unknown;
+}
+
+/**
+ * Maps a row that had `setupId` onto the new grinderEquipmentId/
+ * machineEquipmentId shape, using its linked setup — pure and Dexie-free so
+ * it's directly unit-testable (see db.test.ts) without needing a live
+ * `setups` table, which no longer exists once v3's `.stores()` above takes
+ * effect. The v3 `.upgrade()` is a thin wrapper: read the (about-to-be-
+ * removed) setups table plus brews/recipes, call this, write results back.
+ * An orphaned setupId (shouldn't happen in practice — every setup existed
+ * before any brew could reference it) falls back to null for both new
+ * fields rather than throwing, since this runs inside a real user's
+ * migration and must never fail their upgrade.
+ */
+export function backfillFromSetup(setups: LegacySetup[], row: LegacyRowWithSetup): Record<string, unknown> {
+  const { setupId, ...rest } = row;
+  const setup = setups.find((s) => s.id === setupId);
+  return { ...rest, grinderEquipmentId: setup?.grinderEquipmentId ?? null, machineEquipmentId: setup?.machineEquipmentId ?? null };
+}
 
 /**
  * Local-first store for the web app, backed by IndexedDB via Dexie.
@@ -10,7 +40,6 @@ import type { Bean, Brew, Equipment, Product, Recipe, Setup, WeatherSnapshot } f
 export class KvarnDB extends Dexie {
   products!: EntityTable<Product, "id">;
   equipment!: EntityTable<Equipment, "id">;
-  setups!: EntityTable<Setup, "id">;
   beans!: EntityTable<Bean, "id">;
   brews!: EntityTable<Brew, "id">;
   weatherSnapshots!: EntityTable<WeatherSnapshot, "id">;
@@ -43,6 +72,25 @@ export class KvarnDB extends Dexie {
             }
           }),
       );
+    // v3: removes the "Setup" concept entirely — brews/recipes now record
+    // grinderEquipmentId/machineEquipmentId directly instead of a saved
+    // setupId, and the setups table itself is dropped. `setups: null` is
+    // Dexie's syntax for deleting a table in a version upgrade.
+    this.version(3)
+      .stores({
+        setups: null,
+        brews: "id, userId, grinderEquipmentId, machineEquipmentId, beanId, brewedAt",
+        recipes: "id, userId, grinderEquipmentId, machineEquipmentId, beanId",
+      })
+      .upgrade(async (tx) => {
+        const setups = (await tx.table("setups").toArray()) as LegacySetup[];
+        const brews = (await tx.table("brews").toArray()) as LegacyRowWithSetup[];
+        const recipes = (await tx.table("recipes").toArray()) as LegacyRowWithSetup[];
+        await Promise.all([
+          ...brews.map((row) => tx.table("brews").put(backfillFromSetup(setups, row))),
+          ...recipes.map((row) => tx.table("recipes").put(backfillFromSetup(setups, row))),
+        ]);
+      });
   }
 }
 
@@ -71,7 +119,7 @@ type SeedProduct = Omit<Product, "updatedAt" | "deletedAt" | "clientId">;
 // Bump when public/data/seed-products.json changes meaningfully (e.g. catalog
 // size grows) so existing installs re-sync instead of keeping whatever they
 // first seeded. bulkPut is an idempotent upsert, so re-running this is safe.
-const SEED_CATALOG_VERSION = 6;
+const SEED_CATALOG_VERSION = 7;
 const SEED_VERSION_KEY = "kvarn:seedCatalogVersion";
 
 /**
@@ -135,15 +183,14 @@ export function nowIso(): string {
  * catalog, not user data.
  */
 export async function exportAllData() {
-  const [equipment, setups, beans, brews, weatherSnapshots, recipes] = await Promise.all([
+  const [equipment, beans, brews, weatherSnapshots, recipes] = await Promise.all([
     db.equipment.toArray(),
-    db.setups.toArray(),
     db.beans.toArray(),
     db.brews.toArray(),
     db.weatherSnapshots.toArray(),
     db.recipes.toArray(),
   ]);
-  return { exportedAt: nowIso(), equipment, setups, beans, brews, weatherSnapshots, recipes };
+  return { exportedAt: nowIso(), equipment, beans, brews, weatherSnapshots, recipes };
 }
 
 /** Deletes every local table's contents, including the seed catalog (re-fetched on next launch). */

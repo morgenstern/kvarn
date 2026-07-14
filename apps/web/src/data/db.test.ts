@@ -93,3 +93,28 @@ describe("Dexie migration to version 2", () => {
     expect(row?.grindScale?.subclicksEnabled).toBe(true);
   });
 });
+
+describe("backfillFromSetup (v3 migration: setup -> grinder/machine ids)", () => {
+  it("maps setupId to grinderEquipmentId/machineEquipmentId and drops setupId", async () => {
+    const { backfillFromSetup } = await import("./db");
+    const setups = [{ id: "setup_1", grinderEquipmentId: "equipment_grinder", machineEquipmentId: "equipment_machine" }];
+    const result = backfillFromSetup(setups, { id: "brew_1", setupId: "setup_1", doseG: 18 });
+    expect(result).toEqual({ id: "brew_1", doseG: 18, grinderEquipmentId: "equipment_grinder", machineEquipmentId: "equipment_machine" });
+    expect("setupId" in result).toBe(false);
+  });
+
+  it("falls back to null grinder/machine ids for an orphaned setupId (shouldn't happen in practice, but is safe)", async () => {
+    const { backfillFromSetup } = await import("./db");
+    const result = backfillFromSetup([], { id: "brew_2", setupId: "missing_setup" });
+    expect(result.grinderEquipmentId).toBeNull();
+    expect(result.machineEquipmentId).toBeNull();
+  });
+
+  it("carries a setup with no machine through as machineEquipmentId: null", async () => {
+    const { backfillFromSetup } = await import("./db");
+    const setups = [{ id: "setup_2", grinderEquipmentId: "equipment_grinder", machineEquipmentId: null }];
+    const result = backfillFromSetup(setups, { id: "recipe_1", setupId: "setup_2", beanId: "bean_1" });
+    expect(result.grinderEquipmentId).toBe("equipment_grinder");
+    expect(result.machineEquipmentId).toBeNull();
+  });
+});
