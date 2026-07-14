@@ -23,9 +23,14 @@ interface LegacyRowWithSetup {
  * An orphaned setupId (shouldn't happen in practice — every setup existed
  * before any brew could reference it) falls back to null for both new
  * fields rather than throwing, since this runs inside a real user's
- * migration and must never fail their upgrade.
+ * migration and must never fail their upgrade. Generic over the row type so
+ * callers keep whatever other fields the row had, typed, rather than
+ * collapsing to an untyped bag.
  */
-export function backfillFromSetup(setups: LegacySetup[], row: LegacyRowWithSetup): Record<string, unknown> {
+export function backfillFromSetup<T extends LegacyRowWithSetup>(
+  setups: LegacySetup[],
+  row: T,
+): Omit<T, "setupId"> & { grinderEquipmentId: string | null; machineEquipmentId: string | null } {
   const { setupId, ...rest } = row;
   const setup = setups.find((s) => s.id === setupId);
   return { ...rest, grinderEquipmentId: setup?.grinderEquipmentId ?? null, machineEquipmentId: setup?.machineEquipmentId ?? null };
@@ -86,9 +91,12 @@ export class KvarnDB extends Dexie {
         const setups = (await tx.table("setups").toArray()) as LegacySetup[];
         const brews = (await tx.table("brews").toArray()) as LegacyRowWithSetup[];
         const recipes = (await tx.table("recipes").toArray()) as LegacyRowWithSetup[];
+        // bulkPut (one batch write per table) rather than per-row put() —
+        // both calls target different tables under the same upgrade
+        // transaction, which Dexie's tx.table(...) shares implicitly.
         await Promise.all([
-          ...brews.map((row) => tx.table("brews").put(backfillFromSetup(setups, row))),
-          ...recipes.map((row) => tx.table("recipes").put(backfillFromSetup(setups, row))),
+          tx.table("brews").bulkPut(brews.map((row) => backfillFromSetup(setups, row))),
+          tx.table("recipes").bulkPut(recipes.map((row) => backfillFromSetup(setups, row))),
         ]);
       });
   }
