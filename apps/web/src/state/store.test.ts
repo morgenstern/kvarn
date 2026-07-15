@@ -22,6 +22,9 @@ const RESET_STATE = {
   activeGrinderEquipmentId: null,
   activeMachineEquipmentId: null,
   activeBeanId: null,
+  // Zustand's setState (no `replace: true`) shallow-merges — any key
+  // missing here silently keeps whatever a prior test left behind.
+  lastSyncedAt: null,
 };
 
 async function clearAllTables() {
