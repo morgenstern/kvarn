@@ -16,10 +16,10 @@ export const de = {
   heute: {
     title: "Heute",
     emptyHint: "Noch kein Setup oder keine Bohne angelegt.",
-    emptyBefore: "Leg zuerst ein ",
+    emptyBefore: "Leg zuerst eine ",
     emptyMid: " und eine ",
     emptyAfter: " an, dann kann's losgehen.",
-    setupWord: "Setup",
+    setupWord: "Mühle",
     beanWord: "Bohne",
     readyCard: "Bereit für den nächsten Bezug",
     grinderLabel: "Mühle",

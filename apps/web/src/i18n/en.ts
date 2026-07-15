@@ -21,7 +21,7 @@ export const en: Dictionary = {
     emptyBefore: "Add a ",
     emptyMid: " and a ",
     emptyAfter: " first, then you're ready to go.",
-    setupWord: "setup",
+    setupWord: "grinder",
     beanWord: "bean",
     readyCard: "Ready for the next brew",
     grinderLabel: "Grinder",

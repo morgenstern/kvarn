@@ -1,9 +1,8 @@
 import { Link } from "@tanstack/react-router";
-import { Button, Card, EntityImage, Hint, ProductCard, SectionLabel, WeatherStrip } from "@kvarn/ui";
-import { Clock, Package, SlidersHorizontal } from "lucide-react";
+import { Button, Card, EntityImage, Hint, SectionLabel, WeatherStrip } from "@kvarn/ui";
+import { Clock } from "lucide-react";
 import { weatherConditionKey } from "@kvarn/core";
-import { activeBean, activeSetup, formatGrindValue, latestWeatherSnapshot, useKvarnStore } from "../state/store";
-import { SetupThumbnail } from "../components/SetupThumbnail";
+import { equipmentProduct, formatGrindValue, lastUsedCombo, latestWeatherSnapshot, useKvarnStore } from "../state/store";
 import { useGrindSuggestion } from "../hooks/useGrindSuggestion";
 import { useDisplayName } from "../hooks/useDisplayName";
 import { greetingWord } from "../utils/greeting";
@@ -12,23 +11,26 @@ import { localeCode, useLocale, useT } from "../i18n";
 
 export function Heute() {
   const state = useKvarnStore();
-  const { setups, beans, activeSetupId, activeBeanId, setActiveSetup, setActiveBean } = state;
-  const setup = activeSetup(state);
-  const bean = activeBean(state);
+  const { equipment, beans } = state;
+  const combo = lastUsedCombo(state);
+  const grinder = equipment.find((e) => e.id === combo.grinderEquipmentId);
+  const machine = equipment.find((e) => e.id === combo.machineEquipmentId);
+  const bean = beans.find((b) => b.id === combo.beanId);
   const recentBrews = state.brews.slice(0, 3);
   const t = useT("heute");
   const { locale } = useLocale();
   const { displayName } = useDisplayName();
   const weatherSnapshot = latestWeatherSnapshot(state);
-  const { suggestion } = useGrindSuggestion(state, setup, bean, weatherSnapshot);
+  const { suggestion } = useGrindSuggestion(state, combo.grinderEquipmentId, combo.machineEquipmentId, bean, weatherSnapshot);
 
   const dateLabel = new Date().toLocaleDateString(localeCode(locale), { weekday: "long", day: "numeric", month: "long" });
   const greeting = `${greetingWord()}, ${displayName || t("greetingFallbackName")}`;
 
-  // RootLayout guarantees at least one setup+bean exist before this screen is
-  // even reachable; this only covers the edge case where none is *active*
-  // right now (e.g. the active one was archived).
-  if (!setup || !bean) {
+  // RootLayout guarantees at least one grinder and one bean exist before this
+  // screen is even reachable; this only covers the edge case where no brew
+  // has ever happened yet (nothing to build a "ready for your next brew"
+  // card from).
+  if (!grinder || !bean) {
     return (
       <div>
         <p className="text-sm text-muted mt-3.5">{dateLabel}</p>
@@ -68,51 +70,36 @@ export function Heute() {
         />
       ) : null}
 
-      <p className="text-base text-muted mt-3">{setup.name} · {bean.roaster} — {bean.name}</p>
+      <Card className="mt-3">
+        <div className="flex items-center gap-3">
+          <EntityImage src={equipmentProduct(state, grinder.id)?.imageUrl} kind="grinder" className="w-14 h-14 rounded-control flex-none" />
+          {machine ? (
+            <EntityImage src={equipmentProduct(state, machine.id)?.imageUrl} kind="machine" className="w-14 h-14 rounded-control flex-none" />
+          ) : null}
+          <EntityImage src={bean.imageUrl ?? bean.photoUrl} kind="bean" className="w-14 h-14 rounded-control flex-none" />
+          <div className="flex-1 min-w-0">
+            <div className="text-sm text-muted">{t("readyCard")}</div>
+            <div className="text-base font-medium truncate">
+              {grinder.customName ?? equipmentProduct(state, grinder.id)?.model ?? "—"}
+              {machine ? ` · ${machine.customName ?? equipmentProduct(state, machine.id)?.model ?? "—"}` : ""}
+              {" · "}
+              {bean.roaster}
+            </div>
+          </div>
+        </div>
 
-      <SectionLabel icon={SlidersHorizontal} className="mt-5">{t("grinderLabel")}</SectionLabel>
-      <div className="flex gap-3 overflow-x-auto pb-1 -mx-5 px-5">
-        {setups.map((s) => (
-          <ProductCard
-            key={s.id}
-            className="w-32 flex-none"
-            active={activeSetupId === s.id}
-            onClick={() => setActiveSetup(s.id)}
-            image={<SetupThumbnail setup={s} />}
-          >
-            <div className="text-[14px] font-medium leading-tight truncate">{s.name}</div>
-            <div className="text-[12px] text-muted truncate">{s.method}</div>
-          </ProductCard>
-        ))}
-      </div>
+        {suggestion && suggestion.reasons.length > 0 ? (
+          <Hint className="mt-3">
+            <span>
+              <b>{t("compassPreview")}:</b> {suggestion.reasons.map((r) => r.effect).join(" ")}
+            </span>
+          </Hint>
+        ) : null}
 
-      <SectionLabel icon={Package} className="mt-5">{t("beanWord")}</SectionLabel>
-      <div className="flex gap-3 overflow-x-auto pb-1 -mx-5 px-5">
-        {beans.map((b) => (
-          <ProductCard
-            key={b.id}
-            className="w-32 flex-none"
-            active={activeBeanId === b.id}
-            onClick={() => setActiveBean(b.id)}
-            image={<EntityImage src={b.imageUrl ?? b.photoUrl} kind="bean" className="w-full h-full" />}
-          >
-            <div className="text-[14px] font-medium leading-tight truncate">{b.roaster}</div>
-            <div className="text-[12px] text-muted truncate">{b.name}</div>
-          </ProductCard>
-        ))}
-      </div>
-
-      {suggestion && suggestion.reasons.length > 0 ? (
-        <Hint>
-          <span>
-            <b>{t("compassPreview")}:</b> {suggestion.reasons.map((r) => r.effect).join(" ")}
-          </span>
-        </Hint>
-      ) : null}
-
-      <Link to="/bruehen">
-        <Button>{t("brewStart")}</Button>
-      </Link>
+        <Link to="/bruehen">
+          <Button>{t("brewStart")}</Button>
+        </Link>
+      </Card>
 
       {recentBrews.length > 0 ? (
         <Card>
@@ -125,7 +112,7 @@ export function Heute() {
               <div className="flex-1">
                 <div className="text-base font-medium">{new Date(b.brewedAt).toLocaleDateString(localeCode(locale))}</div>
                 <div className="text-sm text-muted">
-                  {formatGrindValue(state, setups.find((s) => s.id === b.setupId)?.grinderEquipmentId ?? null, b.grindSetting, locale)} · {b.doseG}g → {b.actualYieldG ?? b.targetYieldG}g
+                  {formatGrindValue(state, b.grinderEquipmentId, b.grindSetting, locale)} · {b.doseG}g → {b.actualYieldG ?? b.targetYieldG}g
                 </div>
               </div>
             </div>
