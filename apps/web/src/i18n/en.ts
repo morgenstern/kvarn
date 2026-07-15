@@ -205,7 +205,8 @@ export const en: Dictionary = {
     displayNameHint: "Used for the greeting on the Today screen.",
     account: "Account",
     signedInAs: "Signed in as {email}",
-    anonymousAccount: "Anonymous device account — data stays local.",
+    anonymousAccount:
+      "Anonymous device account — your data still syncs to our server so it's not lost, without a name or email attached.",
     email: "Email",
     password: "Password",
     signUp: "Create account",
@@ -226,6 +227,9 @@ export const en: Dictionary = {
     syncSuccess: "Synced!",
     syncError: "Couldn't sync (server unreachable?).",
     accountDeletionComingSoon: "Full account deletion is coming soon.",
+    syncToggleLabel: "Share data with our server",
+    syncToggleHint:
+      "On by default, so your gear, beans, and brews aren't lost if you switch devices or reinstall. Turn off to keep everything on this device only.",
     feedback: "Feedback",
     feedbackIntro: "What's missing, what's annoying, what do you love? Straight to us.",
     feedbackPlaceholder: "Your message …",

@@ -7,7 +7,7 @@ import { deleteAllLocalData, exportAllData } from "../data/db";
 import { authClient } from "../auth/client";
 import { useDisplayName } from "../hooks/useDisplayName";
 import { RELEASE_NOTES } from "../releaseNotes";
-import { getLastSyncedAt, runSync } from "../sync/runSync";
+import { getLastSyncedAt, isSyncOptedOut, runSync, setSyncOptedOut } from "../sync/runSync";
 import { useKvarnStore } from "../state/store";
 
 const APP_VERSION = `beta 0.${__APP_VERSION__.padStart(3, "0")}`;
@@ -32,6 +32,7 @@ export function Settings() {
   const [confirmingDelete, setConfirmingDelete] = useState(false);
 
   const [syncState, setSyncState] = useState<"idle" | "syncing" | "synced" | "error">("idle");
+  const [syncOptedOut, setSyncOptedOutState] = useState(() => isSyncOptedOut());
   const lastSyncedAt = useKvarnStore((s) => s.lastSyncedAt);
   const setLastSyncedAt = useKvarnStore((s) => s.setLastSyncedAt);
 
@@ -72,6 +73,8 @@ export function Settings() {
     } else {
       setEmail("");
       setPassword("");
+      setSyncOptedOut(false);
+      setSyncOptedOutState(false);
     }
   }
 
@@ -192,20 +195,31 @@ export function Settings() {
         )}
       </Card>
 
-      {isRealAccount ? (
-        <Card>
-          <SectionLabel icon={RefreshCw}>{t("sync")}</SectionLabel>
-          <p className="text-sm text-muted mb-2">
-            {lastSyncedAt ? t("lastSyncedAt", { time: new Date(lastSyncedAt).toLocaleString(locale) }) : t("neverSynced")}
-          </p>
-          <Button variant="ghost" onClick={handleSyncNow} disabled={syncState === "syncing"}>
-            <RefreshCw size={18} strokeWidth={1.5} />
-            {t("syncNow")}
-          </Button>
-          {syncState === "synced" ? <p className="text-sm text-sage">{t("syncSuccess")}</p> : null}
-          {syncState === "error" ? <p className="text-sm text-clay">{t("syncError")}</p> : null}
-        </Card>
-      ) : null}
+      <Card>
+        <SectionLabel icon={RefreshCw}>{t("sync")}</SectionLabel>
+        <p className="text-sm text-muted mb-2">
+          {lastSyncedAt ? t("lastSyncedAt", { time: new Date(lastSyncedAt).toLocaleString(locale) }) : t("neverSynced")}
+        </p>
+        <Button variant="ghost" onClick={handleSyncNow} disabled={syncState === "syncing"}>
+          <RefreshCw size={18} strokeWidth={1.5} />
+          {t("syncNow")}
+        </Button>
+        {syncState === "synced" ? <p className="text-sm text-sage">{t("syncSuccess")}</p> : null}
+        {syncState === "error" ? <p className="text-sm text-clay">{t("syncError")}</p> : null}
+        <label className="flex items-center gap-2 mt-3 text-base">
+          <input
+            type="checkbox"
+            checked={!syncOptedOut}
+            onChange={(e) => {
+              const optedOut = !e.target.checked;
+              setSyncOptedOut(optedOut);
+              setSyncOptedOutState(optedOut);
+            }}
+          />
+          {t("syncToggleLabel")}
+        </label>
+        <p className="text-sm text-muted mt-1">{t("syncToggleHint")}</p>
+      </Card>
 
       <Card>
         <SectionLabel icon={MessageCircle}>{t("feedback")}</SectionLabel>

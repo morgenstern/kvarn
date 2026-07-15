@@ -144,7 +144,7 @@ export const de = {
     bitter: "bitter",
     visual: "Visuell",
     aroma: "Aroma",
-    save: "Nice, saved.",
+    save: "Notiert.",
     savedTitle: "Notiert.",
     savedSubtitle: "Dein Kompass wird schärfer.",
     backToToday: "Zurück zu Heute",
@@ -204,7 +204,8 @@ export const de = {
     displayNameHint: "Für die Begrüßung auf dem Heute-Screen.",
     account: "Konto",
     signedInAs: "Angemeldet als {email}",
-    anonymousAccount: "Anonymes Gerätekonto — Daten bleiben lokal.",
+    anonymousAccount:
+      "Anonymes Gerätekonto — deine Daten werden trotzdem mit unserem Server synchronisiert, ganz ohne Namen oder E-Mail.",
     email: "E-Mail",
     password: "Passwort",
     signUp: "Konto erstellen",
@@ -225,6 +226,9 @@ export const de = {
     syncSuccess: "Synchronisiert!",
     syncError: "Ging gerade nicht (kein Server erreichbar?).",
     accountDeletionComingSoon: "Vollständiges Löschen des Kontos folgt bald.",
+    syncToggleLabel: "Daten mit unserem Server teilen",
+    syncToggleHint:
+      "Standardmäßig an, damit Mühlen, Bohnen und Bezüge nicht verloren gehen, wenn du das Gerät wechselst. Zum Deaktivieren ausschalten — dann bleibt alles nur auf diesem Gerät.",
     feedback: "Feedback",
     feedbackIntro: "Was fehlt, was nervt, was liebst du? Direkt an uns.",
     feedbackPlaceholder: "Deine Nachricht …",
