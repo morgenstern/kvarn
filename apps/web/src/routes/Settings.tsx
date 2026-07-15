@@ -209,6 +209,9 @@ export function Settings() {
         <label className="flex items-center gap-2 mt-3 text-base">
           <input
             type="checkbox"
+            className="accent-copper"
+            // checked = sharing (opted in); the underlying flag is stored
+            // inverted as an opt-out, so both writes below negate `checked`.
             checked={!syncOptedOut}
             onChange={(e) => {
               const optedOut = !e.target.checked;
