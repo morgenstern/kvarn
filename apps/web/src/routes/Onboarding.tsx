@@ -8,6 +8,7 @@ import { BeanForm } from "../components/BeanForm";
 import { GrindScaleFields } from "../components/GrindScaleFields";
 import { useT } from "../i18n";
 import { authClient } from "../auth/client";
+import { setSyncOptedOut } from "../sync/runSync";
 
 const { signUp } = authClient;
 
@@ -145,6 +146,7 @@ export function Onboarding() {
       if (result.error) {
         setAccountError(true);
       } else {
+        setSyncOptedOut(false);
         setStep("install");
       }
     } finally {
@@ -430,6 +432,7 @@ export function Onboarding() {
             </p>
           )}
           <Button onClick={finishOnboarding}>{t("finish")}</Button>
+          <p className="text-[13px] text-muted mt-3">{t("installSyncNote")}</p>
         </Card>
       ) : null}
     </div>

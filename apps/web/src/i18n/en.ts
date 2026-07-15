@@ -282,6 +282,7 @@ export const en: Dictionary = {
     installAndroidHint: "Tap the menu (⋮) in the top right and choose \"Install app\" or \"Add to Home screen\".",
     installDesktopHint: "Click the install icon in the address bar, or open the browser menu and choose \"Install Kvarn\".",
     installButton: "Install now",
+    installSyncNote: "Your gear, beans, and brews sync anonymously so nothing's lost if you switch devices — no name or email needed. Turn this off anytime in Settings.",
     next: "Next",
     back: "Back",
     finish: "Let's go",

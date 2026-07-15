@@ -282,6 +282,7 @@ export const de = {
     installAndroidHint: "Tippe oben rechts auf das Menü (⋮) und wähle „App installieren“ oder „Zum Startbildschirm hinzufügen“.",
     installDesktopHint: "Klicke in der Adressleiste auf das Installieren-Symbol oder öffne das Browsermenü und wähle „Kvarn installieren“.",
     installButton: "Jetzt installieren",
+    installSyncNote: "Mühlen, Bohnen und Bezüge werden anonym synchronisiert, damit nichts verloren geht, wenn du das Gerät wechselst — ganz ohne Namen oder E-Mail. In den Einstellungen jederzeit abschaltbar.",
     next: "Weiter",
     back: "Zurück",
     finish: "Los geht's",
