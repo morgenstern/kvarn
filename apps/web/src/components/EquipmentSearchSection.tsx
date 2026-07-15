@@ -1,11 +1,21 @@
 import { useMemo, useState } from "react";
-import { Button, Card, EntityImage, ProductCard, SectionLabel } from "@kvarn/ui";
+import { Button, Card, EntityImage, ProductCard, SectionLabel, Select } from "@kvarn/ui";
 import { generateIllustrationFromPhoto, submitProduct, uploadPhoto } from "@kvarn/api-client";
+import type { Equipment } from "@kvarn/db";
 import type { LucideIcon } from "lucide-react";
 import { Camera, Users } from "lucide-react";
 import { exampleEquipment } from "../utils/exampleEquipment";
 import { useKvarnStore } from "../state/store";
 import { useT } from "../i18n";
+
+const METHOD_HINTS: NonNullable<Equipment["methodHint"]>[] = ["espresso", "v60", "aeropress", "frenchpress", "moka"];
+const METHOD_HINT_LABEL_KEYS: Record<NonNullable<Equipment["methodHint"]>, string> = {
+  espresso: "methodHintEspresso",
+  v60: "methodHintV60",
+  aeropress: "methodHintAeropress",
+  frenchpress: "methodHintFrenchpress",
+  moka: "methodHintMoka",
+};
 
 type SubmissionState = "idle" | "submitting" | "submitted" | "error";
 
@@ -39,21 +49,29 @@ export function EquipmentSearchSection({
   const [submissionState, setSubmissionState] = useState<SubmissionState>("idle");
   const [customPhotoFile, setCustomPhotoFile] = useState<File | null>(null);
   const [customPhotoBusy, setCustomPhotoBusy] = useState(false);
+  const [customMethodHint, setCustomMethodHint] = useState<Equipment["methodHint"]>(null);
 
+  // "machine" also surfaces catalog "brewer" products (V60, Aeropress, French
+  // press, moka pot) — from the user's perspective there's one "what did you
+  // brew on" concept, not two. See sortedMachines() in state/store.ts, which
+  // groups them the same way.
   const filteredProducts = useMemo(() => {
     if (!query) return [];
     const q = query.toLowerCase();
-    return products.filter((p) => p.kind === kind && `${p.brand} ${p.model}`.toLowerCase().includes(q)).slice(0, 8);
+    return products
+      .filter((p) => (p.kind === kind || (kind === "machine" && p.kind === "brewer")) && `${p.brand} ${p.model}`.toLowerCase().includes(q))
+      .slice(0, 8);
   }, [products, query, kind]);
 
   async function handleAddCustom() {
     setCustomPhotoBusy(true);
     try {
       const photoUrl = customPhotoFile ? await uploadPhoto(customPhotoFile).catch(() => undefined) : undefined;
-      const created = await addCustomEquipment(query, kind, photoUrl);
+      const created = await addCustomEquipment(query, kind, photoUrl, undefined, kind === "machine" ? customMethodHint : undefined);
       const label = query;
       setQuery("");
       setCustomPhotoFile(null);
+      setCustomMethodHint(null);
       onAdded?.(created.id);
       if (photoUrl) {
         // Best-effort: the raw photo (or a placeholder) already shows fine —
@@ -114,7 +132,15 @@ export function EquipmentSearchSection({
         </button>
       ))}
       {query && filteredProducts.length === 0 ? (
-        <div className="mt-2 flex flex-col gap-2 items-start">
+        <div className="mt-2 flex flex-col gap-2 items-start w-full">
+          {kind === "machine" ? (
+            <Select
+              value={customMethodHint ?? ""}
+              onChange={(v) => setCustomMethodHint((v || null) as Equipment["methodHint"])}
+              placeholder={t("methodHintPlaceholder")}
+              options={METHOD_HINTS.map((m) => ({ value: m, label: t(METHOD_HINT_LABEL_KEYS[m]) }))}
+            />
+          ) : null}
           <label className="flex items-center gap-1.5 text-[13px] text-muted cursor-pointer py-2.5 -my-2.5">
             <Camera size={14} strokeWidth={1.5} />
             {customPhotoFile ? customPhotoFile.name : t("addPhotoOptional")}
