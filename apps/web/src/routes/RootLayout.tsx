@@ -71,8 +71,10 @@ export function RootLayout() {
 
   // Sync on startup, then again ~4s after any local change to a synced
   // table (debounced so a burst of edits doesn't fire a request per
-  // keystroke) — no-ops itself if not signed into a real account. Lives
-  // here (not in a page component) because RootLayout is mounted for the
+  // keystroke) — runs for anonymous and named sessions alike, no-oping
+  // itself only if there's no session at all or the user opted out (see
+  // apps/web/src/sync/runSync.ts). Lives here (not in a page component)
+  // because RootLayout is mounted for the
   // app's entire lifetime, so this is the one place that sees every local
   // mutation across every route. The dependency array is only a change
   // detector — runSync() re-reads current data straight from IndexedDB,
