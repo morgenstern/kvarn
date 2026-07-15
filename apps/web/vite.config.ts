@@ -30,7 +30,7 @@ export default defineConfig({
       manifest: {
         name: "Kvarn — Dial it in.",
         short_name: "Kvarn",
-        description: "Kaffee-Companion: Setup, Bohnen, Wetter und jeder Bezug — Kvarn lernt daraus.",
+        description: "Kaffee-Companion: Ausrüstung, Bohnen, Wetter und jeder Bezug — Kvarn lernt daraus.",
         theme_color: "#c0754d",
         background_color: "#f7f4ef",
         display: "standalone",
