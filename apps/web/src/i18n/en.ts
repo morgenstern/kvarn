@@ -245,8 +245,6 @@ export const en: Dictionary = {
     welcomeFeatureWeather: "Weather-aware",
     welcomeFeatureCompass: "Compass suggestions",
     welcomeStart: "Let's go",
-    stepMethod: "Method",
-    methodQuestion: "How do you usually brew?",
     stepGrinder: "Grinder",
     stepMachine: "Machine (optional)",
     confirmGrindScaleTitle: "Grind range",

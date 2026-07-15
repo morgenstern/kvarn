@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { Button, Card, Chip, Logo, Modal, SectionLabel } from "@kvarn/ui";
-import type { Setup as SetupType } from "@kvarn/db";
 import { ChevronLeft, Coffee, Compass, Copy, Download, MapPin, Package, SlidersHorizontal, Sun, UserPlus } from "lucide-react";
 import { equipmentGrindScale, useKvarnStore, type GrindScaleValue } from "../state/store";
 import { EquipmentSearchSection } from "../components/EquipmentSearchSection";
@@ -20,7 +19,6 @@ function generateSecurePassword(): string {
   return Array.from(bytes, (b) => PASSWORD_CHARS[b % PASSWORD_CHARS.length]).join("");
 }
 
-const METHODS: SetupType["method"][] = ["espresso", "v60", "aeropress", "frenchpress", "moka", "auto"];
 const ONBOARDING_SEEN_KEY = "kvarn:onboardingSeen";
 
 export function markOnboardingSeen() {
@@ -49,11 +47,11 @@ function isStandaloneDisplay(): boolean {
   );
 }
 
-type Step = "welcome" | "method" | "grinder" | "machine" | "bean" | "location" | "account" | "install";
+type Step = "welcome" | "grinder" | "machine" | "bean" | "location" | "account" | "install";
 
 // Steps with a visual progress indicator — "welcome" is a splash screen, not
 // really a "step", so it's excluded from the dots.
-const STEP_ORDER: Step[] = ["method", "grinder", "machine", "bean", "location", "account", "install"];
+const STEP_ORDER: Step[] = ["grinder", "machine", "bean", "location", "account", "install"];
 
 function StepDots({ current }: { current: Step }) {
   const idx = STEP_ORDER.indexOf(current);
@@ -80,16 +78,15 @@ export function Onboarding() {
     equipment,
     beans,
     addCustomEquipment,
-    addSetup,
     addBean,
     captureWeatherSnapshot,
-    setActiveSetup,
+    setActiveGrinder,
+    setActiveMachine,
     setActiveBean,
     setEquipmentGrindScale,
   } = useKvarnStore();
 
   const [step, setStep] = useState<Step>("welcome");
-  const [method, setMethod] = useState<SetupType["method"] | null>(null);
   const [addedGrinderIds, setAddedGrinderIds] = useState<string[]>([]);
   const [addedMachineIds, setAddedMachineIds] = useState<string[]>([]);
   const [addedBeanIds, setAddedBeanIds] = useState<string[]>([]);
@@ -183,24 +180,19 @@ export function Onboarding() {
     setConfirmingGrinderId(null);
   }
 
-  // Bundles whatever was added along the way into the user's primary setup +
-  // active bean. Grinders/machines/beans without a sensible generic fallback
-  // (unlike equipment, which falls back to "custom gear") get one synthesized
-  // here so the app never re-opens onboarding right after finishing it.
-  async function buildInitialSetupAndBean() {
+  // Bundles whatever was added along the way into the user's active picks.
+  // Grinders/beans without a sensible generic fallback (unlike equipment,
+  // which falls back to "custom gear") get one synthesized here so the app
+  // never re-opens onboarding right after finishing it. Machine stays
+  // optional — no synthesized fallback needed.
+  async function finishOnboarding() {
     let grinderId = addedGrinderIds[0];
     if (!grinderId) {
       const generic = await addCustomEquipment(t("genericGrinderName"), "grinder");
       grinderId = generic.id;
     }
-    const resolvedMethod = method ?? "espresso";
-    const setup = await addSetup({
-      name: resolvedMethod,
-      method: resolvedMethod,
-      grinderEquipmentId: grinderId,
-      machineEquipmentId: addedMachineIds[0] ?? null,
-    });
-    setActiveSetup(setup.id);
+    setActiveGrinder(grinderId);
+    setActiveMachine(addedMachineIds[0] ?? null);
 
     let beanId = addedBeanIds[0];
     if (!beanId) {
@@ -208,10 +200,7 @@ export function Onboarding() {
       beanId = generic.id;
     }
     setActiveBean(beanId);
-  }
 
-  async function finishOnboarding() {
-    await buildInitialSetupAndBean();
     markOnboardingSeen();
     navigate({ to: "/bruehen" });
   }
@@ -249,7 +238,7 @@ export function Onboarding() {
               <span className="text-[12px] text-muted leading-tight">{t("welcomeFeatureCompass")}</span>
             </div>
           </div>
-          <Button className="w-full" onClick={() => setStep("method")}>
+          <Button className="w-full" onClick={() => setStep("grinder")}>
             {t("welcomeStart")}
           </Button>
         </div>
@@ -266,21 +255,6 @@ export function Onboarding() {
           <StepDots current={step} />
         </>
       )}
-
-      {step === "method" ? (
-        <Card>
-          <SectionLabel icon={Coffee}>{t("stepMethod")}</SectionLabel>
-          <p className="text-base mb-3">{t("methodQuestion")}</p>
-          <div className="flex flex-wrap gap-2">
-            {METHODS.map((m) => (
-              <Chip key={m} active={method === m} onClick={() => setMethod(m)}>
-                {m}
-              </Chip>
-            ))}
-          </div>
-          <Button onClick={() => setStep("grinder")}>{method ? t("next") : t("skip")}</Button>
-        </Card>
-      ) : null}
 
       {step === "grinder" ? (
         <>

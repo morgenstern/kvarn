@@ -244,8 +244,6 @@ export const de = {
     welcomeFeatureWeather: "Wetter im Blick",
     welcomeFeatureCompass: "Kompass-Vorschläge",
     welcomeStart: "Los geht's",
-    stepMethod: "Zubereitungsart",
-    methodQuestion: "Wie brühst du meistens?",
     stepGrinder: "Mühle",
     stepMachine: "Maschine (optional)",
     confirmGrindScaleTitle: "Mahlgrad-Bereich",
