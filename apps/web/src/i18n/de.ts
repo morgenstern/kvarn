@@ -173,7 +173,7 @@ export const de = {
     beanAgeRatingEmpty: "Noch keine Bezüge mit bekanntem Röstdatum.",
     logbook: "Logbuch",
     logbookEmpty: "Noch keine Bezüge getrackt. Starte deinen ersten Brew.",
-    deletedSetup: "Setup gelöscht",
+    deletedGrinder: "Mühle gelöscht",
     deletedBean: "Bohne gelöscht",
     logRowMeta: "Mahlgrad {grind} · {dose}g → {yield}g · {time}s",
   },

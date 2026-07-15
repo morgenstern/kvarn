@@ -174,7 +174,7 @@ export const en: Dictionary = {
     beanAgeRatingEmpty: "No brews with a known roast date yet.",
     logbook: "Logbook",
     logbookEmpty: "No brews tracked yet. Start your first one.",
-    deletedSetup: "Setup deleted",
+    deletedGrinder: "Grinder deleted",
     deletedBean: "Bean deleted",
     logRowMeta: "Grind {grind} · {dose}g → {yield}g · {time}s",
   },

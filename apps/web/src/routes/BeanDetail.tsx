@@ -100,7 +100,7 @@ export function BeanDetail() {
             const machine = equipment.find((e) => e.id === recipe.machineEquipmentId);
             const grinderLabel = grinder ? grinder.customName ?? equipmentProduct(state, grinder.id)?.model : undefined;
             const machineLabel = machine ? machine.customName ?? equipmentProduct(state, machine.id)?.model : undefined;
-            const comboLabel = [grinderLabel, machineLabel].filter((p): p is string => Boolean(p)).join(" · ") || tKompass("deletedSetup");
+            const comboLabel = [grinderLabel, machineLabel].filter((p): p is string => Boolean(p)).join(" · ") || tKompass("deletedGrinder");
             const params = recipe.params as { grindSetting?: number; doseG?: number; targetYieldG?: number } | null;
             return (
               <div key={recipe.id} className="flex justify-between text-base py-1.5 border-b border-linen last:border-b-0">

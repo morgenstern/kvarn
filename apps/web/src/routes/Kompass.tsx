@@ -1,13 +1,28 @@
 import { Card, Chart, SectionLabel } from "@kvarn/ui";
 import { BookOpen, Star, TrendingUp } from "lucide-react";
-import { formatGrindValue, useKvarnStore, weatherSnapshotFor } from "../state/store";
+import { equipmentProduct, formatGrindValue, useKvarnStore, weatherSnapshotFor } from "../state/store";
 import { localeCode, useLocale, useT } from "../i18n";
 
 export function Kompass() {
   const state = useKvarnStore();
-  const { brews, setups, beans, recipes } = state;
+  const { brews, equipment, beans, recipes } = state;
   const t = useT("kompass");
   const { locale } = useLocale();
+
+  function equipmentLabel(equipmentId: string | null): string | undefined {
+    const eq = equipment.find((e) => e.id === equipmentId);
+    if (!eq) return undefined;
+    return eq.customName ?? equipmentProduct(state, eq.id)?.model ?? undefined;
+  }
+
+  function comboLabel(grinderEquipmentId: string | null, machineEquipmentId: string | null, beanId: string | null): string {
+    const parts = [
+      equipmentLabel(grinderEquipmentId) ?? t("deletedGrinder"),
+      equipmentLabel(machineEquipmentId),
+      beans.find((b) => b.id === beanId)?.name ?? t("deletedBean"),
+    ].filter((p): p is string => Boolean(p));
+    return parts.join(" · ");
+  }
 
   const humidityTimePoints = brews
     .map((b) => {
@@ -29,14 +44,12 @@ export function Kompass() {
         <>
           <SectionLabel icon={Star} className="mt-5">{t("bestRecipes")}</SectionLabel>
           {recipes.map((recipe) => {
-            const setup = setups.find((s) => s.id === recipe.setupId);
-            const bean = beans.find((b) => b.id === recipe.beanId);
             const params = recipe.params as { grindSetting?: number; doseG?: number; targetYieldG?: number } | null;
             return (
               <Card key={recipe.id}>
                 <div className="flex items-center justify-between">
                   <div className="text-base font-medium">
-                    {setup?.name ?? t("deletedSetup")} · {bean?.name ?? t("deletedBean")}
+                    {comboLabel(recipe.grinderEquipmentId, recipe.machineEquipmentId, recipe.beanId)}
                   </div>
                   <div className="font-display text-xl num">{recipe.avgRating}</div>
                 </div>
@@ -44,7 +57,7 @@ export function Kompass() {
                   {t("recipeMeta", {
                     grind:
                       params?.grindSetting !== undefined
-                        ? formatGrindValue(state, setup?.grinderEquipmentId ?? null, params.grindSetting, locale)
+                        ? formatGrindValue(state, recipe.grinderEquipmentId, params.grindSetting, locale)
                         : "—",
                     dose: params?.doseG ?? "—",
                     yield: params?.targetYieldG ?? "—",
@@ -83,31 +96,27 @@ export function Kompass() {
         </Card>
       ) : (
         <Card className="!p-0">
-          {brews.map((b) => {
-            const setup = setups.find((s) => s.id === b.setupId);
-            const bean = beans.find((be) => be.id === b.beanId);
-            return (
-              <div key={b.id} className="flex items-center gap-3 px-4 py-3 border-b border-linen last:border-b-0">
-                <div className="w-9 h-9 rounded-xl bg-birch flex items-center justify-center font-display text-base">
-                  {b.ratingTotal}
+          {brews.map((b) => (
+            <div key={b.id} className="flex items-center gap-3 px-4 py-3 border-b border-linen last:border-b-0">
+              <div className="w-9 h-9 rounded-xl bg-birch flex items-center justify-center font-display text-base">
+                {b.ratingTotal}
+              </div>
+              <div className="flex-1">
+                <div className="text-base font-medium">
+                  {comboLabel(b.grinderEquipmentId, b.machineEquipmentId, b.beanId)}
                 </div>
-                <div className="flex-1">
-                  <div className="text-base font-medium">
-                    {setup?.name ?? t("deletedSetup")} · {bean?.name ?? t("deletedBean")}
-                  </div>
-                  <div className="text-sm text-muted">
-                    {new Date(b.brewedAt).toLocaleString(localeCode(locale))} ·{" "}
-                    {t("logRowMeta", {
-                      grind: formatGrindValue(state, setup?.grinderEquipmentId ?? null, b.grindSetting, locale),
-                      dose: b.doseG,
-                      yield: b.actualYieldG ?? b.targetYieldG,
-                      time: b.timeTotalS,
-                    })}
-                  </div>
+                <div className="text-sm text-muted">
+                  {new Date(b.brewedAt).toLocaleString(localeCode(locale))} ·{" "}
+                  {t("logRowMeta", {
+                    grind: formatGrindValue(state, b.grinderEquipmentId, b.grindSetting, locale),
+                    dose: b.doseG,
+                    yield: b.actualYieldG ?? b.targetYieldG,
+                    time: b.timeTotalS,
+                  })}
                 </div>
               </div>
-            );
-          })}
+            </div>
+          ))}
         </Card>
       )}
     </div>
