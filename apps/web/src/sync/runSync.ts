@@ -1,4 +1,4 @@
-import type { Bean, Brew, Equipment, Recipe, Setup, WeatherSnapshot } from "@kvarn/db";
+import type { Bean, Brew, Equipment, Recipe, WeatherSnapshot } from "@kvarn/db";
 import { db } from "../data/db";
 import { authClient } from "../auth/client";
 import { LAST_SYNCED_KEY } from "./constants";
@@ -10,7 +10,6 @@ export function getLastSyncedAt(): string | null {
 interface SyncResponseBody {
   syncedAt: string;
   equipment: Equipment[];
-  setups: Setup[];
   beans: Bean[];
   brews: Brew[];
   recipes: Recipe[];
@@ -33,9 +32,8 @@ async function doRunSync(): Promise<boolean> {
 
   try {
     const since = getLastSyncedAt();
-    const [equipment, setups, beans, brews, recipes, weatherSnapshots] = await Promise.all([
+    const [equipment, beans, brews, recipes, weatherSnapshots] = await Promise.all([
       db.equipment.toArray(),
-      db.setups.toArray(),
       db.beans.toArray(),
       db.brews.toArray(),
       db.recipes.toArray(),
@@ -49,7 +47,6 @@ async function doRunSync(): Promise<boolean> {
       body: JSON.stringify({
         since,
         equipment: equipment.filter(isChanged),
-        setups: setups.filter(isChanged),
         beans: beans.filter(isChanged),
         brews: brews.filter(isChanged),
         recipes: recipes.filter(isChanged),
@@ -64,7 +61,6 @@ async function doRunSync(): Promise<boolean> {
     // scratch (same `since`) if a write below throws partway through.
     await Promise.all([
       db.equipment.bulkPut(body.equipment),
-      db.setups.bulkPut(body.setups),
       db.beans.bulkPut(body.beans),
       db.brews.bulkPut(body.brews),
       db.recipes.bulkPut(body.recipes),
