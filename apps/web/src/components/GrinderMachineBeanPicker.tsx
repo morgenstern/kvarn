@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { EntityImage, ProductCard, SectionLabel } from "@kvarn/ui";
 import { Coffee, Package, SlidersHorizontal, X } from "lucide-react";
 import { equipmentProduct, sortedBeans, sortedGrinders, sortedMachines, useKvarnStore } from "../state/store";
@@ -29,27 +30,40 @@ export function GrinderMachineBeanPicker({
 }) {
   const state = useKvarnStore();
   const t = useT("bruehen");
-  const grinders = sortedGrinders(state);
-  const machines = sortedMachines(state);
-  const beans = sortedBeans(state);
+  // sortedGrinders/sortedMachines/sortedBeans are O(items × brews) — cheap at
+  // this app's scale, but state comes from an unfiltered useKvarnStore()
+  // subscription, so this component re-renders on any store change anywhere
+  // (e.g. typing in an unrelated field on the same screen). Memoize on the
+  // specific slices that actually affect sort order — `state` itself isn't a
+  // dep on purpose, since it gets a new reference on every store mutation
+  // (no selector), which would defeat the memoization entirely.
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const grinders = useMemo(() => sortedGrinders(state), [state.equipment, state.brews]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const machines = useMemo(() => sortedMachines(state), [state.equipment, state.brews]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const beans = useMemo(() => sortedBeans(state), [state.beans, state.brews]);
 
   return (
     <>
       <SectionLabel icon={SlidersHorizontal} className="mt-5">{t("pickGrinder")}</SectionLabel>
       <div className="flex gap-3 overflow-x-auto pb-1 -mx-5 px-5">
-        {grinders.map((eq) => (
-          <ProductCard
-            key={eq.id}
-            className="w-28 flex-none"
-            active={grinderEquipmentId === eq.id}
-            onClick={() => onGrinderChange(eq.id)}
-            image={<EntityImage src={equipmentProduct(state, eq.id)?.imageUrl} kind="grinder" className="w-full h-full" />}
-          >
-            <div className="text-[13px] font-medium leading-tight truncate">
-              {eq.customName ?? equipmentProduct(state, eq.id)?.model ?? "—"}
-            </div>
-          </ProductCard>
-        ))}
+        {grinders.map((eq) => {
+          const product = equipmentProduct(state, eq.id);
+          return (
+            <ProductCard
+              key={eq.id}
+              className="w-28 flex-none"
+              active={grinderEquipmentId === eq.id}
+              onClick={() => onGrinderChange(eq.id)}
+              image={<EntityImage src={product?.imageUrl} kind="grinder" className="w-full h-full" />}
+            >
+              <div className="text-[13px] font-medium leading-tight truncate">
+                {eq.customName ?? product?.model ?? "—"}
+              </div>
+            </ProductCard>
+          );
+        })}
       </div>
 
       <SectionLabel icon={Coffee} className="mt-5">{t("pickMachine")}</SectionLabel>
@@ -66,19 +80,22 @@ export function GrinderMachineBeanPicker({
         >
           <div className="text-[13px] font-medium leading-tight truncate">{t("noMachine")}</div>
         </ProductCard>
-        {machines.map((eq) => (
-          <ProductCard
-            key={eq.id}
-            className="w-28 flex-none"
-            active={machineEquipmentId === eq.id}
-            onClick={() => onMachineChange(eq.id)}
-            image={<EntityImage src={equipmentProduct(state, eq.id)?.imageUrl} kind="machine" className="w-full h-full" />}
-          >
-            <div className="text-[13px] font-medium leading-tight truncate">
-              {eq.customName ?? equipmentProduct(state, eq.id)?.model ?? "—"}
-            </div>
-          </ProductCard>
-        ))}
+        {machines.map((eq) => {
+          const product = equipmentProduct(state, eq.id);
+          return (
+            <ProductCard
+              key={eq.id}
+              className="w-28 flex-none"
+              active={machineEquipmentId === eq.id}
+              onClick={() => onMachineChange(eq.id)}
+              image={<EntityImage src={product?.imageUrl} kind="machine" className="w-full h-full" />}
+            >
+              <div className="text-[13px] font-medium leading-tight truncate">
+                {eq.customName ?? product?.model ?? "—"}
+              </div>
+            </ProductCard>
+          );
+        })}
       </div>
 
       <SectionLabel icon={Package} className="mt-5">{t("pickBean")}</SectionLabel>

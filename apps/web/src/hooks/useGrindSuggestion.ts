@@ -42,8 +42,11 @@ export function useGrindSuggestion(
     });
     // Only recompute when the underlying combination or the weather snapshot
     // changes, not on every render — this is a one-shot default, not live.
+    // bean?.beanType is included (not just bean?.id) because method depends
+    // on it directly via deriveBrewMethod above, and a bean's type can be
+    // edited without its id changing.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [grinderEquipmentId, machineEquipmentId, bean?.id, weatherSnapshot?.id]);
+  }, [grinderEquipmentId, machineEquipmentId, bean?.id, bean?.beanType, weatherSnapshot?.id]);
 
   return { grindScale, suggestion, method };
 }
