@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
-import { Button, Card, Chip, EntityImage, Hint, ParamStepper, ProductCard, RatingSlider, RatioViz, SectionLabel, TimerRing, WeatherStrip } from "@kvarn/ui";
+import { Button, Card, Chip, EntityImage, Hint, ParamStepper, RatingSlider, RatioViz, TimerRing, WeatherStrip } from "@kvarn/ui";
 import { computeRatio, weatherConditionKey } from "@kvarn/core";
-import type { Setup as SetupType, WeatherSnapshot } from "@kvarn/db";
-import { BarChart3, CheckCircle2, Coffee, Home, Package, SlidersHorizontal, X } from "lucide-react";
-import { activeBean, activeSetup, equipmentKind, equipmentProduct, formatGrindValue, useKvarnStore } from "../state/store";
+import type { WeatherSnapshot } from "@kvarn/db";
+import { BarChart3, CheckCircle2, Home } from "lucide-react";
+import { equipmentKind, equipmentProduct, formatGrindValue, useKvarnStore } from "../state/store";
 import { GrindStepper } from "../components/GrindStepper";
+import { GrinderMachineBeanPicker } from "../components/GrinderMachineBeanPicker";
 import { ManualBrewEntry } from "../components/ManualBrewEntry";
-import { SetupThumbnail } from "../components/SetupThumbnail";
 import { useGrindSuggestion } from "../hooks/useGrindSuggestion";
 import { useStopwatch } from "../hooks/useStopwatch";
 import { beanAgeDaysFor } from "../utils/beanAge";
@@ -15,15 +15,22 @@ import { CONDITION_I18N_KEY } from "../utils/weatherLabels";
 import { useLocale, useT, useTags } from "../i18n";
 
 type Step = "params" | "timer" | "rating";
-type PickMode = "setup" | "combo" | "manual";
-
-const METHODS: SetupType["method"][] = ["espresso", "v60", "aeropress", "frenchpress", "moka", "auto"];
+type PickMode = "live" | "manual";
 
 export function Bruehen() {
   const state = useKvarnStore();
-  const { setups, beans, equipment, activeSetupId, activeBeanId, setActiveSetup, setActiveBean, findOrCreateSetup } = state;
-  const setup = activeSetup(state);
-  const bean = activeBean(state);
+  const {
+    equipment,
+    beans,
+    activeGrinderEquipmentId,
+    activeMachineEquipmentId,
+    activeBeanId,
+    setActiveGrinder,
+    setActiveMachine,
+    setActiveBean,
+  } = state;
+  const grinder = equipment.find((e) => e.id === activeGrinderEquipmentId);
+  const bean = beans.find((b) => b.id === activeBeanId);
   const commitBrew = useKvarnStore((s) => s.commitBrew);
   const captureWeatherSnapshot = useKvarnStore((s) => s.captureWeatherSnapshot);
   const navigate = useNavigate();
@@ -34,39 +41,7 @@ export function Bruehen() {
   const visualTagOptions = useTags("bruehen", "visualTags");
   const flavorTagOptions = useTags("bruehen", "flavorTags");
 
-  const grinderEquipment = equipment.filter((eq) => equipmentKind(state, eq.id) === "grinder");
-  const machineEquipment = equipment.filter((eq) => equipmentKind(state, eq.id) === "machine");
-
-  // "Setup" mode picks a saved setup (which already bundles a mill+machine
-  // combo); "combo" mode assembles one from scratch. Assembling a combo
-  // doesn't touch global state until confirmed — see confirmCombo() — so
-  // just browsing options doesn't spam the setups list with unused rows.
-  const [pickMode, setPickMode] = useState<PickMode>("setup");
-  const [comboMethod, setComboMethod] = useState<SetupType["method"]>("espresso");
-  const [comboGrinderId, setComboGrinderId] = useState("");
-  const [comboMachineId, setComboMachineId] = useState("");
-  const [comboBeanId, setComboBeanId] = useState("");
-
-  function startCombo() {
-    setComboMethod(setup?.method ?? "espresso");
-    setComboGrinderId(setup?.grinderEquipmentId ?? grinderEquipment[0]?.id ?? "");
-    setComboMachineId(setup?.machineEquipmentId ?? "");
-    setComboBeanId(bean?.id ?? "");
-    setPickMode("combo");
-  }
-
-  async function confirmCombo() {
-    if (!comboGrinderId || !comboBeanId) return;
-    const resolved = await findOrCreateSetup({
-      method: comboMethod,
-      grinderEquipmentId: comboGrinderId,
-      machineEquipmentId: comboMachineId || null,
-      beanId: comboBeanId,
-    });
-    setActiveSetup(resolved.id);
-    setActiveBean(comboBeanId);
-    setPickMode("setup");
-  }
+  const [pickMode, setPickMode] = useState<PickMode>("live");
 
   const [weatherSnapshot, setWeatherSnapshot] = useState<WeatherSnapshot | null>(null);
 
@@ -76,20 +51,26 @@ export function Bruehen() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const { grindScale, suggestion } = useGrindSuggestion(state, setup, bean, weatherSnapshot);
+  const { grindScale, suggestion } = useGrindSuggestion(
+    state,
+    activeGrinderEquipmentId,
+    activeMachineEquipmentId,
+    bean,
+    weatherSnapshot,
+  );
 
   const [step, setStep] = useState<Step>("params");
   const [grindSetting, setGrindSetting] = useState(
     () => suggestion?.grindSetting ?? Math.round(((grindScale.min + grindScale.max) / 2) / grindScale.step) * grindScale.step,
   );
 
-  // Users can switch setup/bean via the pickers below while still on the
-  // params step — re-sync the grind default to match whatever is now active
-  // instead of leaving it stuck on the first pick's suggestion.
+  // Users can switch grinder/machine/bean via the picker below while still on
+  // the params step — re-sync the grind default to match whatever is now
+  // active instead of leaving it stuck on the first pick's suggestion.
   useEffect(() => {
     if (suggestion) setGrindSetting(suggestion.grindSetting);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [setup?.id, bean?.id]);
+  }, [activeGrinderEquipmentId, activeMachineEquipmentId, bean?.id]);
   const [doseG, setDoseG] = useState(18);
   const [targetYieldG, setTargetYieldG] = useState(36);
   const [preinfusion, setPreinfusion] = useState(false);
@@ -101,7 +82,7 @@ export function Bruehen() {
   const [flavorTags, setFlavorTags] = useState<string[]>([]);
   const [saved, setSaved] = useState(false);
 
-  if (!setup || !bean) {
+  if (!activeGrinderEquipmentId || !bean) {
     return (
       <div>
         <h1 className="font-display text-[32px] mt-3.5 mb-0.5">{t("title")}</h1>
@@ -118,7 +99,8 @@ export function Bruehen() {
 
   async function finish() {
     await commitBrew({
-      setupId: setup!.id,
+      grinderEquipmentId: activeGrinderEquipmentId!,
+      machineEquipmentId: activeMachineEquipmentId,
       beanId: bean!.id,
       weatherId: weatherSnapshot?.id ?? null,
       brewedAt: new Date().toISOString(),
@@ -175,7 +157,9 @@ export function Bruehen() {
   return (
     <div>
       <h1 className="font-display text-[32px] mt-3.5 mb-0.5">{t("title")}</h1>
-      <p className="text-base text-muted">{setup.name} · {bean.roaster} — {bean.name}</p>
+      <p className="text-base text-muted">
+        {grinder?.customName ?? equipmentProduct(state, grinder?.id ?? null)?.model ?? "—"} · {bean.roaster} — {bean.name}
+      </p>
       {weatherSnapshot ? (
         <WeatherStrip
           className="mt-3"
@@ -191,126 +175,23 @@ export function Bruehen() {
       {step === "params" ? (
         <>
           <div className="flex gap-2 mt-5">
-            <Chip active={pickMode === "setup"} onClick={() => setPickMode("setup")}>
-              {t("modeSetup")}
-            </Chip>
-            <Chip active={pickMode === "combo"} onClick={startCombo}>
-              {t("modeCombo")}
+            <Chip active={pickMode === "live"} onClick={() => setPickMode("live")}>
+              {t("modeLive")}
             </Chip>
             <Chip active={pickMode === "manual"} onClick={() => setPickMode("manual")}>
               {t("modeManual")}
             </Chip>
           </div>
 
-          {pickMode === "setup" ? (
-            <div className="flex gap-3 overflow-x-auto pb-1 -mx-5 px-5 mt-3">
-              {setups.map((s) => (
-                <ProductCard
-                  key={s.id}
-                  className="w-28 flex-none"
-                  active={activeSetupId === s.id}
-                  onClick={() => setActiveSetup(s.id)}
-                  image={<SetupThumbnail setup={s} />}
-                >
-                  <div className="text-[13px] font-medium leading-tight truncate">{s.name}</div>
-                </ProductCard>
-              ))}
-            </div>
-          ) : pickMode === "combo" ? (
-            <>
-              <SectionLabel className="mt-5">{t("pickMethod")}</SectionLabel>
-              <div className="flex flex-wrap gap-2">
-                {METHODS.map((m) => (
-                  <Chip key={m} active={comboMethod === m} onClick={() => setComboMethod(m)}>
-                    {m}
-                  </Chip>
-                ))}
-              </div>
-
-              <SectionLabel icon={SlidersHorizontal} className="mt-5">{t("pickGrinder")}</SectionLabel>
-              <div className="flex gap-3 overflow-x-auto pb-1 -mx-5 px-5">
-                {grinderEquipment.map((eq) => (
-                  <ProductCard
-                    key={eq.id}
-                    className="w-28 flex-none"
-                    active={comboGrinderId === eq.id}
-                    onClick={() => setComboGrinderId(eq.id)}
-                    image={<EntityImage src={equipmentProduct(state, eq.id)?.imageUrl} kind="grinder" className="w-full h-full" />}
-                  >
-                    <div className="text-[13px] font-medium leading-tight truncate">
-                      {eq.customName ?? equipmentProduct(state, eq.id)?.model ?? "—"}
-                    </div>
-                  </ProductCard>
-                ))}
-              </div>
-
-              <SectionLabel icon={Coffee} className="mt-5">{t("pickMachine")}</SectionLabel>
-              <div className="flex gap-3 overflow-x-auto pb-1 -mx-5 px-5">
-                <ProductCard
-                  className="w-28 flex-none"
-                  active={comboMachineId === ""}
-                  onClick={() => setComboMachineId("")}
-                  image={
-                    <div className="w-full h-full flex items-center justify-center text-muted">
-                      <X size={28} strokeWidth={1.5} />
-                    </div>
-                  }
-                >
-                  <div className="text-[13px] font-medium leading-tight truncate">{t("noMachine")}</div>
-                </ProductCard>
-                {machineEquipment.map((eq) => (
-                  <ProductCard
-                    key={eq.id}
-                    className="w-28 flex-none"
-                    active={comboMachineId === eq.id}
-                    onClick={() => setComboMachineId(eq.id)}
-                    image={<EntityImage src={equipmentProduct(state, eq.id)?.imageUrl} kind="machine" className="w-full h-full" />}
-                  >
-                    <div className="text-[13px] font-medium leading-tight truncate">
-                      {eq.customName ?? equipmentProduct(state, eq.id)?.model ?? "—"}
-                    </div>
-                  </ProductCard>
-                ))}
-              </div>
-
-              <SectionLabel icon={Package} className="mt-5">{t("pickBean")}</SectionLabel>
-              <div className="flex gap-3 overflow-x-auto pb-1 -mx-5 px-5">
-                {beans.map((b) => (
-                  <ProductCard
-                    key={b.id}
-                    className="w-28 flex-none"
-                    active={comboBeanId === b.id}
-                    onClick={() => setComboBeanId(b.id)}
-                    image={<EntityImage src={b.imageUrl ?? b.photoUrl} kind="bean" className="w-full h-full" />}
-                  >
-                    <div className="text-[13px] font-medium leading-tight truncate">{b.roaster}</div>
-                  </ProductCard>
-                ))}
-              </div>
-
-              <Button disabled={!comboGrinderId || !comboBeanId} onClick={confirmCombo}>
-                {t("comboConfirm")}
-              </Button>
-            </>
-          ) : null}
-
-          {pickMode === "setup" ? (
-            <>
-              <SectionLabel icon={Package} className="mt-5">{t("pickBean")}</SectionLabel>
-              <div className="flex gap-3 overflow-x-auto pb-1 -mx-5 px-5">
-                {beans.map((b) => (
-                  <ProductCard
-                    key={b.id}
-                    className="w-28 flex-none"
-                    active={activeBeanId === b.id}
-                    onClick={() => setActiveBean(b.id)}
-                    image={<EntityImage src={b.imageUrl ?? b.photoUrl} kind="bean" className="w-full h-full" />}
-                  >
-                    <div className="text-[13px] font-medium leading-tight truncate">{b.roaster}</div>
-                  </ProductCard>
-                ))}
-              </div>
-            </>
+          {pickMode === "live" ? (
+            <GrinderMachineBeanPicker
+              grinderEquipmentId={activeGrinderEquipmentId}
+              machineEquipmentId={activeMachineEquipmentId}
+              beanId={bean.id}
+              onGrinderChange={setActiveGrinder}
+              onMachineChange={setActiveMachine}
+              onBeanChange={setActiveBean}
+            />
           ) : null}
 
           {pickMode === "manual" ? <ManualBrewEntry /> : null}
@@ -374,7 +255,7 @@ export function Bruehen() {
             <Hint>
               <span>
                 {t("compassSuggestion", {
-                  grind: formatGrindValue(state, setup?.grinderEquipmentId ?? null, suggestion.grindSetting, locale),
+                  grind: formatGrindValue(state, activeGrinderEquipmentId, suggestion.grindSetting, locale),
                   unit: grindScale.unit,
                   reasons: suggestion.reasons.map((r) => r.effect).join(" "),
                 })}
@@ -397,16 +278,16 @@ export function Bruehen() {
           <div className="flex items-center gap-3 mb-6">
             <div className="flex flex-col items-center gap-1">
               <EntityImage
-                src={equipmentProduct(state, setup.grinderEquipmentId)?.imageUrl}
-                kind={equipmentKind(state, setup.grinderEquipmentId)}
+                src={equipmentProduct(state, activeGrinderEquipmentId)?.imageUrl}
+                kind={equipmentKind(state, activeGrinderEquipmentId)}
                 className="w-14 h-14 rounded-control"
               />
               <span className="text-[11px] text-muted">{t("pickGrinder")}</span>
             </div>
-            {setup.machineEquipmentId ? (
+            {activeMachineEquipmentId ? (
               <div className="flex flex-col items-center gap-1">
                 <EntityImage
-                  src={equipmentProduct(state, setup.machineEquipmentId)?.imageUrl}
+                  src={equipmentProduct(state, activeMachineEquipmentId)?.imageUrl}
                   kind="machine"
                   className="w-14 h-14 rounded-control"
                 />
