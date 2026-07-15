@@ -14,7 +14,7 @@ describe("POST /api/sync — auth", () => {
       "/api/sync",
       {
         method: "POST",
-        body: JSON.stringify({ since: null, equipment: [], setups: [], beans: [], brews: [], recipes: [], weatherSnapshots: [] }),
+        body: JSON.stringify({ since: null, equipment: [], beans: [], brews: [], recipes: [], weatherSnapshots: [] }),
         headers: { "content-type": "application/json" },
       },
       {} as Env,

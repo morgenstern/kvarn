@@ -2,13 +2,11 @@ import { Hono } from "hono";
 import { and, eq, gt, inArray } from "drizzle-orm";
 import {
   equipment,
-  setup,
   bean,
   brew,
   recipe,
   weatherSnapshot,
   type Equipment,
-  type Setup,
   type Bean,
   type Brew,
   type Recipe,
@@ -32,7 +30,6 @@ export const sync = new Hono<{ Bindings: Env }>();
 interface SyncPushBody {
   since: string | null;
   equipment: Equipment[];
-  setups: Setup[];
   beans: Bean[];
   brews: Brew[];
   recipes: Recipe[];
@@ -56,15 +53,6 @@ async function mergeEquipment(db: ReturnType<typeof getDb>, userId: string, rows
     if (existing && existing.updatedAt >= row.updatedAt) continue;
     if (existing) await db.update(equipment).set({ ...row, userId }).where(and(eq(equipment.userId, userId), eq(equipment.clientId, row.clientId)));
     else await db.insert(equipment).values({ ...row, userId });
-  }
-}
-
-async function mergeSetups(db: ReturnType<typeof getDb>, userId: string, rows: Setup[]) {
-  for (const row of rows) {
-    const existing = await db.select().from(setup).where(and(eq(setup.userId, userId), eq(setup.clientId, row.clientId))).get();
-    if (existing && existing.updatedAt >= row.updatedAt) continue;
-    if (existing) await db.update(setup).set({ ...row, userId }).where(and(eq(setup.userId, userId), eq(setup.clientId, row.clientId)));
-    else await db.insert(setup).values({ ...row, userId });
   }
 }
 
@@ -105,7 +93,6 @@ sync.post("/", async (c) => {
   const db = getDb(c.env);
 
   await mergeEquipment(db, userId, body.equipment);
-  await mergeSetups(db, userId, body.setups);
   await mergeBeans(db, userId, body.beans);
   await mergeBrews(db, userId, body.brews);
   await mergeRecipes(db, userId, body.recipes);
@@ -119,9 +106,8 @@ sync.post("/", async (c) => {
   }
 
   const since = body.since ?? EPOCH;
-  const [equipmentOut, setupsOut, beansOut, brewsOut, recipesOut] = await Promise.all([
+  const [equipmentOut, beansOut, brewsOut, recipesOut] = await Promise.all([
     db.select().from(equipment).where(and(eq(equipment.userId, userId), gt(equipment.updatedAt, since))),
-    db.select().from(setup).where(and(eq(setup.userId, userId), gt(setup.updatedAt, since))),
     db.select().from(bean).where(and(eq(bean.userId, userId), gt(bean.updatedAt, since))),
     db.select().from(brew).where(and(eq(brew.userId, userId), gt(brew.updatedAt, since))),
     db.select().from(recipe).where(and(eq(recipe.userId, userId), gt(recipe.updatedAt, since))),
@@ -136,7 +122,6 @@ sync.post("/", async (c) => {
   return c.json({
     syncedAt: new Date().toISOString(),
     equipment: equipmentOut,
-    setups: setupsOut,
     beans: beansOut,
     brews: brewsOut,
     recipes: recipesOut,
