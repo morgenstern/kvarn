@@ -43,8 +43,8 @@ const EPOCH = "1970-01-01T00:00:00.000Z";
 // authenticated session regardless of what the client sent.
 //
 // One concrete (non-generic) function per table: fighting Drizzle's
-// generic table typing to unify these isn't worth it for 5 tables, but
-// naming each one keeps the handler body a readable list of one-liners
+// generic table typing to unify these isn't worth it for this many tables,
+// but naming each one keeps the handler body a readable list of one-liners
 // and removes the copy-paste risk of forgetting the `userId` override.
 
 async function mergeEquipment(db: ReturnType<typeof getDb>, userId: string, rows: Equipment[]) {
