@@ -1,10 +1,19 @@
 import type { Bean, Brew, Equipment, Recipe, WeatherSnapshot } from "@kvarn/db";
 import { db } from "../data/db";
 import { authClient } from "../auth/client";
-import { LAST_SYNCED_KEY } from "./constants";
+import { LAST_SYNCED_KEY, SYNC_OPT_OUT_KEY } from "./constants";
 
 export function getLastSyncedAt(): string | null {
   return localStorage.getItem(LAST_SYNCED_KEY);
+}
+
+export function isSyncOptedOut(): boolean {
+  return localStorage.getItem(SYNC_OPT_OUT_KEY) === "1";
+}
+
+export function setSyncOptedOut(value: boolean): void {
+  if (value) localStorage.setItem(SYNC_OPT_OUT_KEY, "1");
+  else localStorage.removeItem(SYNC_OPT_OUT_KEY);
 }
 
 interface SyncResponseBody {
@@ -28,7 +37,7 @@ export function runSync(): Promise<boolean> {
 
 async function doRunSync(): Promise<boolean> {
   const session = await authClient.getSession();
-  if (!session.data?.user || session.data?.user.isAnonymous) return false;
+  if (!session.data?.user || isSyncOptedOut()) return false;
 
   try {
     const since = getLastSyncedAt();

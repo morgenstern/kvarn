@@ -4,3 +4,4 @@
 // constant — or it would transitively crash in the Node test environment
 // (apps/web/vitest.config.ts sets environment: "node", no `window` global).
 export const LAST_SYNCED_KEY = "kvarn:lastSyncedAt";
+export const SYNC_OPT_OUT_KEY = "kvarn:syncOptOut";
