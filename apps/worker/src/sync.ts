@@ -17,13 +17,16 @@ import { getDb } from "./db";
 import { createAuth } from "./auth";
 
 /**
- * Account data sync: a signed-in (non-anonymous) user's device pushes its
- * local Dexie changes since the last sync, and pulls back everything newer
- * server-side (including rows written by other devices). See
- * docs/03_TECH_KONZEPT.md and the account-data-sync plan, Task 2.
+ * Account data sync: any authenticated device — anonymous or a named
+ * account — pushes its local Dexie changes since the last sync, and pulls
+ * back everything newer server-side (including rows written by other
+ * devices). See docs/03_TECH_KONZEPT.md, the account-data-sync plan (Task
+ * 2), and docs/superpowers/specs/2026-07-15-anonymous-data-sync-design.md.
  *
- * Anonymous (device-local) sessions are rejected — sync is an account
- * feature, not something anonymous sessions get.
+ * An anonymous session is still a real session with a real user id — only
+ * a request with no session at all is rejected. The client-side opt-out
+ * (see apps/web/src/sync/runSync.ts) is what actually decides whether an
+ * anonymous device's data reaches this endpoint at all.
  */
 export const sync = new Hono<{ Bindings: Env }>();
 
@@ -85,8 +88,8 @@ async function mergeRecipes(db: ReturnType<typeof getDb>, userId: string, rows: 
 
 sync.post("/", async (c) => {
   const session = await createAuth(c.env).api.getSession({ headers: c.req.raw.headers });
-  if (!session || session.user.isAnonymous) {
-    return c.json({ error: "Sync requires a real account" }, 401);
+  if (!session) {
+    return c.json({ error: "Sync requires a session" }, 401);
   }
   const userId = session.user.id;
   const body = await c.req.json<SyncPushBody>();
