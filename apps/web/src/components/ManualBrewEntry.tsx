@@ -1,14 +1,15 @@
 import { useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { BarChart3, CheckCircle2, Home } from "lucide-react";
-import { Button, Card, Chip, ParamStepper, RatingSlider, SectionLabel, Select } from "@kvarn/ui";
-import { equipmentGrindScale, useKvarnStore } from "../state/store";
+import { Button, Card, Chip, ParamStepper, RatingSlider, SectionLabel } from "@kvarn/ui";
+import { equipmentGrindScale, sortedBeans, sortedGrinders, useKvarnStore } from "../state/store";
+import { GrinderMachineBeanPicker } from "./GrinderMachineBeanPicker";
 import { useGrindSuggestion } from "../hooks/useGrindSuggestion";
 import { useLocale, useT, useTags } from "../i18n";
 import { beanAgeDaysFor } from "../utils/beanAge";
 import { GrindStepper } from "./GrindStepper";
 
-type ManualStep = "setupBean" | "paramsTime" | "rating";
+type ManualStep = "pick" | "paramsTime" | "rating";
 
 function toDatetimeLocalValue(iso: string): string {
   const d = new Date(iso);
@@ -18,18 +19,23 @@ function toDatetimeLocalValue(iso: string): string {
 
 /** Third mode on the Brühen screen ("Nachtragen"/"Log past brew") — logs a
  * brew that already happened, instead of running the live timer. See
- * docs/superpowers/specs/2026-07-05-manual-brew-entry-design.md. */
+ * docs/superpowers/specs/2026-07-05-manual-brew-entry-design.md and
+ * docs/superpowers/specs/2026-07-14-remove-setup-concept-design.md. */
 export function ManualBrewEntry() {
   const state = useKvarnStore();
-  const { setups, beans, commitBrew } = state;
+  const { commitBrew } = state;
   const { locale } = useLocale();
   const t = useT("bruehen");
   const visualTagOptions = useTags("bruehen", "visualTags");
   const flavorTagOptions = useTags("bruehen", "flavorTags");
   const navigate = useNavigate();
 
-  const [manualStep, setManualStep] = useState<ManualStep>("setupBean");
-  const [setupId, setSetupId] = useState(setups[0]?.id ?? "");
+  const grinders = sortedGrinders(state);
+  const beans = sortedBeans(state);
+
+  const [manualStep, setManualStep] = useState<ManualStep>("pick");
+  const [grinderEquipmentId, setGrinderEquipmentId] = useState(grinders[0]?.id ?? "");
+  const [machineEquipmentId, setMachineEquipmentId] = useState<string | null>(null);
   const [beanId, setBeanId] = useState(beans[0]?.id ?? "");
   const [brewedAt, setBrewedAt] = useState(() => new Date().toISOString());
   const [doseG, setDoseG] = useState(18);
@@ -44,19 +50,19 @@ export function ManualBrewEntry() {
   const [flavorTags, setFlavorTags] = useState<string[]>([]);
   const [saved, setSaved] = useState(false);
 
-  const setup = setups.find((s) => s.id === setupId);
   const bean = beans.find((b) => b.id === beanId);
-  const { grindScale, suggestion } = useGrindSuggestion(state, setup, bean, null);
-  const [grindSetting, setGrindSetting] = useState(() => suggestion?.grindSetting ?? equipmentGrindScale(state, setup?.grinderEquipmentId ?? null).min);
+  const { grindScale, suggestion } = useGrindSuggestion(state, grinderEquipmentId || null, machineEquipmentId, bean, null);
+  const [grindSetting, setGrindSetting] = useState(() => suggestion?.grindSetting ?? equipmentGrindScale(state, grinderEquipmentId || null).min);
 
   function toggleTag(list: string[], setList: (v: string[]) => void, tag: string) {
     setList(list.includes(tag) ? list.filter((x) => x !== tag) : [...list, tag]);
   }
 
   async function finish() {
-    if (!setup || !bean) return;
+    if (!grinderEquipmentId || !bean) return;
     await commitBrew({
-      setupId: setup.id,
+      grinderEquipmentId,
+      machineEquipmentId,
       beanId: bean.id,
       weatherId: null,
       brewedAt,
@@ -110,18 +116,19 @@ export function ManualBrewEntry() {
     );
   }
 
-  if (manualStep === "setupBean") {
+  if (manualStep === "pick") {
     return (
       <Card>
-        <SectionLabel>{t("manualSetupBeanTitle")}</SectionLabel>
-        <Select value={setupId} onChange={setSetupId} placeholder={t("modeSetup")} options={setups.map((s) => ({ value: s.id, label: s.name }))} />
-        <Select
-          value={beanId}
-          onChange={setBeanId}
-          placeholder={t("pickBean")}
-          options={beans.map((b) => ({ value: b.id, label: `${b.roaster} — ${b.name}` }))}
+        <SectionLabel>{t("manualPickTitle")}</SectionLabel>
+        <GrinderMachineBeanPicker
+          grinderEquipmentId={grinderEquipmentId}
+          machineEquipmentId={machineEquipmentId}
+          beanId={beanId}
+          onGrinderChange={setGrinderEquipmentId}
+          onMachineChange={setMachineEquipmentId}
+          onBeanChange={setBeanId}
         />
-        <Button disabled={!setupId || !beanId} onClick={() => setManualStep("paramsTime")}>
+        <Button disabled={!grinderEquipmentId || !beanId} onClick={() => setManualStep("paramsTime")}>
           {t("next")}
         </Button>
       </Card>
