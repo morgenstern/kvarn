@@ -17,7 +17,7 @@ export const en: Dictionary = {
   },
   heute: {
     title: "Today",
-    emptyHint: "No setup or bean added yet.",
+    emptyHint: "No grinder or bean added yet.",
     emptyBefore: "Add a ",
     emptyMid: " and a ",
     emptyAfter: " first, then you're ready to go.",

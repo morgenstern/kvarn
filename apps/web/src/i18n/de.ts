@@ -15,7 +15,7 @@ export const de = {
   },
   heute: {
     title: "Heute",
-    emptyHint: "Noch kein Setup oder keine Bohne angelegt.",
+    emptyHint: "Noch keine Mühle oder keine Bohne angelegt.",
     emptyBefore: "Leg zuerst eine ",
     emptyMid: " und eine ",
     emptyAfter: " an, dann kann's losgehen.",

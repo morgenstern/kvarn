@@ -37,4 +37,5 @@ export const RELEASE_NOTES: ReleaseNote[] = [
   { version: 58, de: "Bei angemeldetem Konto zeigt der Header jetzt deinen Namen statt „Einstellungen“.", en: "When signed in, the header now shows your name instead of \"Settings\"." },
   { version: 65, de: "Vergangene Bezüge lassen sich jetzt nachtragen, ganz ohne Timer.", en: "You can now log a past brew without using the timer." },
   { version: 76, de: "Bei angemeldetem Konto werden alle Daten jetzt automatisch mit dem Server synchronisiert, mit manueller Sync-Option in den Einstellungen.", en: "When signed in, all your data now syncs automatically with the server, with a manual sync option in Settings." },
+  { version: 111, de: "Setups sind weg: Mühle, Maschine und Bohne wählst du jetzt für jeden Bezug einzeln — die Zubereitungsart wird automatisch erkannt.", en: "Setups are gone: pick grinder, machine, and bean individually for each brew — the brew method is now detected automatically." },
 ];
