@@ -4710,7 +4710,8 @@
       "preisEurCa": 449
     },
     "status": "seed",
-    "imageUrl": "/illustrations/machine-gaggia-classic-evo-pro.svg"
+    "imageUrl": "/illustrations/machine-gaggia-classic-evo-pro.svg",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-gaggia-carezza-deluxe",
@@ -4726,7 +4727,8 @@
       "segment": "entry",
       "preisEurCa": 250
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-gaggia-gran-gaggia-style",
@@ -4742,7 +4744,8 @@
       "segment": "entry",
       "preisEurCa": 150
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-gaggia-espresso-evolution",
@@ -4758,7 +4761,8 @@
       "segment": "entry",
       "preisEurCa": 170
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-sage-bambino",
@@ -4774,7 +4778,8 @@
       "segment": "entry",
       "preisEurCa": 330
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-sage-bambino-plus",
@@ -4791,7 +4796,8 @@
       "preisEurCa": 450
     },
     "status": "seed",
-    "imageUrl": "/illustrations/machine-sage-bambino-plus.svg"
+    "imageUrl": "/illustrations/machine-sage-bambino-plus.svg",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-sage-duo-temp-pro",
@@ -4807,7 +4813,8 @@
       "segment": "mid",
       "preisEurCa": 400
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-sage-barista-express",
@@ -4824,7 +4831,8 @@
       "preisEurCa": 600
     },
     "status": "seed",
-    "imageUrl": "/illustrations/machine-sage-barista-express.svg"
+    "imageUrl": "/illustrations/machine-sage-barista-express.svg",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-sage-barista-express-impress",
@@ -4840,7 +4848,8 @@
       "segment": "mid",
       "preisEurCa": 750
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-sage-barista-pro",
@@ -4856,7 +4865,8 @@
       "segment": "mid",
       "preisEurCa": 800
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-sage-barista-touch",
@@ -4872,7 +4882,8 @@
       "segment": "mid",
       "preisEurCa": 1000
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-sage-barista-touch-impress",
@@ -4888,7 +4899,8 @@
       "segment": "mid",
       "preisEurCa": 1400
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-sage-dual-boiler-bes920",
@@ -4904,7 +4916,8 @@
       "segment": "high",
       "preisEurCa": 1500
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-sage-oracle-bes980",
@@ -4920,7 +4933,8 @@
       "segment": "high",
       "preisEurCa": 2100
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-sage-oracle-touch-bes990",
@@ -4936,7 +4950,8 @@
       "segment": "high",
       "preisEurCa": 2600
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-sage-oracle-jet-bes985",
@@ -4952,7 +4967,8 @@
       "segment": "high",
       "preisEurCa": 1900
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-delonghi-stilosa-ec235",
@@ -4968,7 +4984,8 @@
       "segment": "entry",
       "preisEurCa": 100
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-delonghi-ecp-33-21",
@@ -4984,7 +5001,8 @@
       "segment": "entry",
       "preisEurCa": 110
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-delonghi-dedica-ec685",
@@ -5000,7 +5018,8 @@
       "segment": "entry",
       "preisEurCa": 180
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-delonghi-dedica-arte-ec885",
@@ -5016,7 +5035,8 @@
       "segment": "entry",
       "preisEurCa": 250
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-delonghi-la-specialista-arte-ec9155",
@@ -5032,7 +5052,8 @@
       "segment": "mid",
       "preisEurCa": 500
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-delonghi-la-specialista-arte-evo-ec9255",
@@ -5048,7 +5069,8 @@
       "segment": "mid",
       "preisEurCa": 430
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-delonghi-la-specialista-opera-ec9555",
@@ -5064,7 +5086,8 @@
       "segment": "mid",
       "preisEurCa": 700
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-delonghi-la-specialista-maestro-ec9665",
@@ -5080,7 +5103,8 @@
       "segment": "mid",
       "preisEurCa": 900
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-delonghi-la-specialista-prestigio-ec9355",
@@ -5096,7 +5120,8 @@
       "segment": "mid",
       "preisEurCa": 450
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-ecm-casa-v",
@@ -5112,7 +5137,8 @@
       "segment": "mid",
       "preisEurCa": 1050
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-ecm-classika-pid",
@@ -5128,7 +5154,8 @@
       "segment": "mid",
       "preisEurCa": 1350
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-ecm-puristika",
@@ -5144,7 +5171,8 @@
       "segment": "mid",
       "preisEurCa": 1300
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-ecm-mechanika-vi-slim",
@@ -5160,7 +5188,8 @@
       "segment": "high",
       "preisEurCa": 1750
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-ecm-mechanika-max",
@@ -5176,7 +5205,8 @@
       "segment": "high",
       "preisEurCa": 1950
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-ecm-technika-v-profi-pid",
@@ -5192,7 +5222,8 @@
       "segment": "high",
       "preisEurCa": 2250
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-ecm-barista",
@@ -5208,7 +5239,8 @@
       "segment": "high",
       "preisEurCa": 2500
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-ecm-elektronika-ii-profi",
@@ -5224,7 +5256,8 @@
       "segment": "high",
       "preisEurCa": 2700
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-ecm-synchronika",
@@ -5241,7 +5274,8 @@
       "preisEurCa": 3150
     },
     "status": "seed",
-    "imageUrl": "/illustrations/machine-ecm-synchronika.svg"
+    "imageUrl": "/illustrations/machine-ecm-synchronika.svg",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-ecm-controvento",
@@ -5257,7 +5291,8 @@
       "segment": "pro",
       "preisEurCa": 3700
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-ecm-estetika",
@@ -5273,7 +5308,8 @@
       "segment": "pro",
       "preisEurCa": 3900
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-profitec-go",
@@ -5290,7 +5326,8 @@
       "preisEurCa": 850
     },
     "status": "seed",
-    "imageUrl": "/illustrations/machine-profitec-go.svg"
+    "imageUrl": "/illustrations/machine-profitec-go.svg",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-profitec-move",
@@ -5306,7 +5343,8 @@
       "segment": "mid",
       "preisEurCa": 1500
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-profitec-pro-300",
@@ -5322,7 +5360,8 @@
       "segment": "mid",
       "preisEurCa": 1300
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-profitec-pro-400",
@@ -5338,7 +5377,8 @@
       "segment": "mid",
       "preisEurCa": 1400
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-profitec-pro-500-pid",
@@ -5354,7 +5394,8 @@
       "segment": "high",
       "preisEurCa": 1700
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-profitec-pro-600",
@@ -5370,7 +5411,8 @@
       "segment": "high",
       "preisEurCa": 2200
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-profitec-pro-700",
@@ -5386,7 +5428,8 @@
       "segment": "high",
       "preisEurCa": 2800
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-profitec-pro-800",
@@ -5402,7 +5445,8 @@
       "segment": "pro",
       "preisEurCa": 3300
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-profitec-drive",
@@ -5418,7 +5462,8 @@
       "segment": "high",
       "preisEurCa": 3200
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-rocket-appartamento",
@@ -5435,7 +5480,8 @@
       "preisEurCa": 1450
     },
     "status": "seed",
-    "imageUrl": "/illustrations/machine-rocket-appartamento.svg"
+    "imageUrl": "/illustrations/machine-rocket-appartamento.svg",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-rocket-appartamento-tca",
@@ -5451,7 +5497,8 @@
       "segment": "high",
       "preisEurCa": 1700
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-rocket-mozzafiato-cronometro-v",
@@ -5467,7 +5514,8 @@
       "segment": "high",
       "preisEurCa": 1900
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-rocket-mozzafiato-cronometro-r",
@@ -5483,7 +5531,8 @@
       "segment": "high",
       "preisEurCa": 2200
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-rocket-giotto-cronometro-r",
@@ -5499,7 +5548,8 @@
       "segment": "high",
       "preisEurCa": 2300
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-rocket-giotto-timer-evoluzione-v",
@@ -5515,7 +5565,8 @@
       "segment": "high",
       "preisEurCa": 2000
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-rocket-r58-cinquantotto",
@@ -5531,7 +5582,8 @@
       "segment": "pro",
       "preisEurCa": 3600
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-rocket-r60v",
@@ -5547,7 +5599,8 @@
       "segment": "pro",
       "preisEurCa": 4200
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-rocket-r-nine-one",
@@ -5563,7 +5616,8 @@
       "segment": "pro",
       "preisEurCa": 5900
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-rocket-porta-via",
@@ -5579,7 +5633,8 @@
       "segment": "high",
       "preisEurCa": 2100
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-lelit-glenda-pl41plust",
@@ -5595,7 +5650,8 @@
       "segment": "mid",
       "preisEurCa": 480
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-lelit-anna-pl41tem",
@@ -5611,7 +5667,8 @@
       "segment": "mid",
       "preisEurCa": 430
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-lelit-victoria-pl91t",
@@ -5627,7 +5684,8 @@
       "segment": "mid",
       "preisEurCa": 700
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-lelit-grace-pl81t",
@@ -5643,7 +5701,8 @@
       "segment": "mid",
       "preisEurCa": 650
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-lelit-kate-pl82t",
@@ -5659,7 +5718,8 @@
       "segment": "mid",
       "preisEurCa": 900
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-lelit-anita-pl042temd",
@@ -5675,7 +5735,8 @@
       "segment": "mid",
       "preisEurCa": 750
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-lelit-marax-pl62x",
@@ -5692,7 +5753,8 @@
       "preisEurCa": 1450
     },
     "status": "seed",
-    "imageUrl": "/illustrations/machine-lelit-marax-pl62x.svg"
+    "imageUrl": "/illustrations/machine-lelit-marax-pl62x.svg",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-lelit-elizabeth-pl92t",
@@ -5708,7 +5770,8 @@
       "segment": "high",
       "preisEurCa": 1600
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-lelit-bianca-pl162t-v3",
@@ -5725,7 +5788,8 @@
       "preisEurCa": 3100
     },
     "status": "seed",
-    "imageUrl": "/illustrations/machine-lelit-bianca-pl162t-v3.svg"
+    "imageUrl": "/illustrations/machine-lelit-bianca-pl162t-v3.svg",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-bezzera-hobby",
@@ -5741,7 +5805,8 @@
       "segment": "mid",
       "preisEurCa": 800
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-bezzera-unica-pid",
@@ -5757,7 +5822,8 @@
       "segment": "mid",
       "preisEurCa": 1100
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-bezzera-bz10-pid",
@@ -5773,7 +5839,8 @@
       "segment": "mid",
       "preisEurCa": 1350
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-bezzera-aria-top-pid",
@@ -5789,7 +5856,8 @@
       "segment": "high",
       "preisEurCa": 1550
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-bezzera-magica-s-pid",
@@ -5805,7 +5873,8 @@
       "segment": "high",
       "preisEurCa": 1600
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-bezzera-galatea-domus",
@@ -5821,7 +5890,8 @@
       "segment": "high",
       "preisEurCa": 1650
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-bezzera-mitica-top-pid",
@@ -5837,7 +5907,8 @@
       "segment": "high",
       "preisEurCa": 1850
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-bezzera-matrix-mn",
@@ -5853,7 +5924,8 @@
       "segment": "high",
       "preisEurCa": 2400
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-bezzera-duo-mn",
@@ -5869,7 +5941,8 @@
       "segment": "high",
       "preisEurCa": 2900
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-bezzera-strega",
@@ -5885,7 +5958,8 @@
       "segment": "high",
       "preisEurCa": 2300
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-rancilio-silvia-v6",
@@ -5902,7 +5976,8 @@
       "preisEurCa": 750
     },
     "status": "seed",
-    "imageUrl": "/illustrations/machine-rancilio-silvia-v6.svg"
+    "imageUrl": "/illustrations/machine-rancilio-silvia-v6.svg",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-rancilio-silvia-pro-x",
@@ -5918,7 +5993,8 @@
       "segment": "high",
       "preisEurCa": 1750
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-quick-mill-orione-3000",
@@ -5935,7 +6011,8 @@
       "preisEurCa": 600
     },
     "status": "seed",
-    "imageUrl": "/illustrations/machine-quick-mill-orione-3000.png"
+    "imageUrl": "/illustrations/machine-quick-mill-orione-3000.png",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-quick-mill-carola",
@@ -5951,7 +6028,8 @@
       "segment": "mid",
       "preisEurCa": 950
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-quick-mill-alexia-evo",
@@ -5967,7 +6045,8 @@
       "segment": "mid",
       "preisEurCa": 1100
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-quick-mill-rubino-0981",
@@ -5983,7 +6062,8 @@
       "segment": "mid",
       "preisEurCa": 1250
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-quick-mill-silvano-evo",
@@ -5999,7 +6079,8 @@
       "segment": "mid",
       "preisEurCa": 1150
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-quick-mill-andreja-premium-evo",
@@ -6015,7 +6096,8 @@
       "segment": "high",
       "preisEurCa": 1650
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-quick-mill-qm67",
@@ -6031,7 +6113,8 @@
       "segment": "high",
       "preisEurCa": 2100
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-quick-mill-vetrano-2b-evo",
@@ -6047,7 +6130,8 @@
       "segment": "high",
       "preisEurCa": 2500
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-quick-mill-achille",
@@ -6063,7 +6147,8 @@
       "segment": "high",
       "preisEurCa": 2000
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-vibiemme-domobar-junior-hx",
@@ -6079,7 +6164,8 @@
       "segment": "high",
       "preisEurCa": 1600
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-vibiemme-domobar-super-hx",
@@ -6095,7 +6181,8 @@
       "segment": "high",
       "preisEurCa": 2000
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-vibiemme-domobar-super-digitale",
@@ -6111,7 +6198,8 @@
       "segment": "high",
       "preisEurCa": 2700
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-nuova-simonelli-oscar-ii",
@@ -6127,7 +6215,8 @@
       "segment": "mid",
       "preisEurCa": 1150
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-nuova-simonelli-oscar-mood",
@@ -6143,7 +6232,8 @@
       "segment": "mid",
       "preisEurCa": 1400
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-nuova-simonelli-musica",
@@ -6159,7 +6249,8 @@
       "segment": "high",
       "preisEurCa": 2000
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-nuova-simonelli-appia-life-compact",
@@ -6175,7 +6266,8 @@
       "segment": "high",
       "preisEurCa": 2900
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-victoria-arduino-eagle-one-prima",
@@ -6191,7 +6283,8 @@
       "segment": "pro",
       "preisEurCa": 5500
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-victoria-arduino-eagle-one-prima-exp",
@@ -6207,7 +6300,8 @@
       "segment": "pro",
       "preisEurCa": 6900
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-la-marzocco-linea-micra",
@@ -6224,7 +6318,8 @@
       "preisEurCa": 3800
     },
     "status": "seed",
-    "imageUrl": "/illustrations/machine-la-marzocco-linea-micra.svg"
+    "imageUrl": "/illustrations/machine-la-marzocco-linea-micra.svg",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-la-marzocco-linea-mini",
@@ -6240,7 +6335,8 @@
       "segment": "pro",
       "preisEurCa": 5200
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-la-marzocco-linea-mini-r",
@@ -6256,7 +6352,8 @@
       "segment": "pro",
       "preisEurCa": 5800
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-la-marzocco-gs3-av",
@@ -6272,7 +6369,8 @@
       "segment": "pro",
       "preisEurCa": 7900
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-la-marzocco-gs3-mp",
@@ -6288,7 +6386,8 @@
       "segment": "pro",
       "preisEurCa": 8500
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-slayer-espresso-single-group",
@@ -6304,7 +6403,8 @@
       "segment": "pro",
       "preisEurCa": 9500
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-expobar-office-pulser",
@@ -6320,7 +6420,8 @@
       "segment": "mid",
       "preisEurCa": 1100
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-expobar-office-leva-dual-boiler",
@@ -6336,7 +6437,8 @@
       "segment": "mid",
       "preisEurCa": 1500
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-expobar-brewtus-iv",
@@ -6352,7 +6454,8 @@
       "segment": "high",
       "preisEurCa": 1700
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-crem-one-2b-dual-pid",
@@ -6368,7 +6471,8 @@
       "segment": "high",
       "preisEurCa": 2100
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-ascaso-dream-one",
@@ -6384,7 +6488,8 @@
       "segment": "mid",
       "preisEurCa": 800
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-ascaso-steel-uno-pid",
@@ -6400,7 +6505,8 @@
       "segment": "mid",
       "preisEurCa": 900
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-ascaso-steel-duo-pid",
@@ -6416,7 +6522,8 @@
       "segment": "mid",
       "preisEurCa": 1100
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-ascaso-baby-t-plus",
@@ -6432,7 +6539,8 @@
       "segment": "high",
       "preisEurCa": 2400
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-la-pavoni-europiccola-lusso",
@@ -6448,7 +6556,8 @@
       "segment": "mid",
       "preisEurCa": 850
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-la-pavoni-professional-lusso",
@@ -6464,7 +6573,8 @@
       "segment": "mid",
       "preisEurCa": 1050
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-la-pavoni-stradivari-professional",
@@ -6480,7 +6590,8 @@
       "segment": "mid",
       "preisEurCa": 1150
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-olympia-express-cremina-sl",
@@ -6496,7 +6607,8 @@
       "segment": "pro",
       "preisEurCa": 3500
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-olympia-express-maximatic",
@@ -6512,7 +6624,8 @@
       "segment": "pro",
       "preisEurCa": 4000
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-elektra-micro-casa-a-leva",
@@ -6528,7 +6641,8 @@
       "segment": "high",
       "preisEurCa": 1900
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-elektra-micro-casa-semiautomatica",
@@ -6544,7 +6658,8 @@
       "segment": "high",
       "preisEurCa": 1700
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-ponte-vecchio-lusso",
@@ -6560,7 +6675,8 @@
       "segment": "mid",
       "preisEurCa": 900
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-ponte-vecchio-export",
@@ -6576,7 +6692,8 @@
       "segment": "mid",
       "preisEurCa": 700
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-londinium-r24",
@@ -6592,7 +6709,8 @@
       "segment": "pro",
       "preisEurCa": 3100
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-londinium-vectis",
@@ -6608,7 +6726,8 @@
       "segment": "high",
       "preisEurCa": 2300
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-izzo-alex-duetto-iv",
@@ -6624,7 +6743,8 @@
       "segment": "high",
       "preisEurCa": 2300
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-izzo-vivi-pid",
@@ -6640,7 +6760,8 @@
       "segment": "mid",
       "preisEurCa": 1300
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-izzo-myway-pompei",
@@ -6656,7 +6777,8 @@
       "segment": "high",
       "preisEurCa": 1800
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-isomac-tea-due",
@@ -6672,7 +6794,8 @@
       "segment": "mid",
       "preisEurCa": 1400
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-wega-mininova-classic",
@@ -6688,7 +6811,8 @@
       "segment": "mid",
       "preisEurCa": 1300
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-la-cimbali-m21-junior",
@@ -6704,7 +6828,8 @@
       "segment": "high",
       "preisEurCa": 2600
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-astoria-greta",
@@ -6720,7 +6845,8 @@
       "segment": "high",
       "preisEurCa": 1900
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-bellezza-inizio-r",
@@ -6736,7 +6862,8 @@
       "segment": "mid",
       "preisEurCa": 1400
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-bellezza-chiara",
@@ -6752,7 +6879,8 @@
       "segment": "high",
       "preisEurCa": 1600
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-bellezza-valentina",
@@ -6768,7 +6896,8 @@
       "segment": "high",
       "preisEurCa": 1750
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-bellezza-bellona",
@@ -6784,7 +6913,8 @@
       "segment": "high",
       "preisEurCa": 2000
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-fracino-piccino",
@@ -6800,7 +6930,8 @@
       "segment": "mid",
       "preisEurCa": 650
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-fracino-cherub",
@@ -6816,7 +6947,8 @@
       "segment": "mid",
       "preisEurCa": 850
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-la-nuova-era-cuadra",
@@ -6832,7 +6964,8 @@
       "segment": "mid",
       "preisEurCa": 1000
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-xenia-xenia",
@@ -6848,7 +6981,8 @@
       "segment": "mid",
       "preisEurCa": 1500
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-acs-minima",
@@ -6864,7 +6998,8 @@
       "segment": "mid",
       "preisEurCa": 1500
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-acs-vesuvius",
@@ -6880,7 +7015,8 @@
       "segment": "high",
       "preisEurCa": 1900
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-acs-vesuvius-evo-leva",
@@ -6896,7 +7032,8 @@
       "segment": "pro",
       "preisEurCa": 3600
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-bosco-sorrento-leva",
@@ -6912,7 +7049,8 @@
       "segment": "high",
       "preisEurCa": 2800
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-nurri-leva-s-a",
@@ -6928,7 +7066,8 @@
       "segment": "pro",
       "preisEurCa": 4200
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-odyssey-argos",
@@ -6944,7 +7083,8 @@
       "segment": "mid",
       "preisEurCa": 1300
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-strietman-ct2",
@@ -6960,7 +7100,8 @@
       "segment": "high",
       "preisEurCa": 2500
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-flair-neo-flex",
@@ -6976,7 +7117,8 @@
       "segment": "entry",
       "preisEurCa": 99
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-flair-classic",
@@ -6992,7 +7134,8 @@
       "segment": "entry",
       "preisEurCa": 130
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-flair-signature",
@@ -7008,7 +7151,8 @@
       "segment": "entry",
       "preisEurCa": 250
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-flair-pro-2",
@@ -7024,7 +7168,8 @@
       "segment": "entry",
       "preisEurCa": 330
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-flair-58",
@@ -7040,7 +7185,8 @@
       "segment": "mid",
       "preisEurCa": 600
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-flair-58x",
@@ -7056,7 +7202,8 @@
       "segment": "mid",
       "preisEurCa": 500
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-cafelat-robot",
@@ -7073,7 +7220,8 @@
       "preisEurCa": 400
     },
     "status": "seed",
-    "imageUrl": "/illustrations/machine-cafelat-robot.png"
+    "imageUrl": "/illustrations/machine-cafelat-robot.png",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-9barista-espresso-machine",
@@ -7089,7 +7237,8 @@
       "segment": "mid",
       "preisEurCa": 450
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-rok-espressogc",
@@ -7105,7 +7254,8 @@
       "segment": "entry",
       "preisEurCa": 180
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-wacaco-minipresso-gr",
@@ -7121,7 +7271,8 @@
       "segment": "entry",
       "preisEurCa": 60
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-wacaco-nanopresso",
@@ -7137,7 +7288,8 @@
       "segment": "entry",
       "preisEurCa": 80
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-wacaco-picopresso",
@@ -7153,7 +7305,8 @@
       "segment": "entry",
       "preisEurCa": 130
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-outin-nano",
@@ -7169,7 +7322,8 @@
       "segment": "entry",
       "preisEurCa": 150
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-cafflano-kompresso",
@@ -7185,7 +7339,8 @@
       "segment": "entry",
       "preisEurCa": 90
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-handpresso-pump",
@@ -7201,7 +7356,8 @@
       "segment": "entry",
       "preisEurCa": 100
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-bellman-cx25p",
@@ -7217,7 +7373,8 @@
       "segment": "entry",
       "preisEurCa": 160
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-superkop-superkop",
@@ -7233,7 +7390,8 @@
       "segment": "mid",
       "preisEurCa": 700
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-decent-de1pro",
@@ -7249,7 +7407,8 @@
       "segment": "pro",
       "preisEurCa": 3900
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-decent-de1xl",
@@ -7265,7 +7424,8 @@
       "segment": "pro",
       "preisEurCa": 4400
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-meraki-espresso-machine",
@@ -7281,7 +7441,8 @@
       "segment": "high",
       "preisEurCa": 2900
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-sanremo-you",
@@ -7297,7 +7458,8 @@
       "segment": "pro",
       "preisEurCa": 4800
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-sanremo-cube-r",
@@ -7313,7 +7475,8 @@
       "segment": "pro",
       "preisEurCa": 3700
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-dalla-corte-mina",
@@ -7329,7 +7492,8 @@
       "segment": "pro",
       "preisEurCa": 5900
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-dalla-corte-studio",
@@ -7345,7 +7509,8 @@
       "segment": "pro",
       "preisEurCa": 4300
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-synesso-es-1",
@@ -7361,7 +7526,8 @@
       "segment": "pro",
       "preisEurCa": 8000
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-kees-van-der-westen-speedster",
@@ -7377,7 +7543,8 @@
       "segment": "pro",
       "preisEurCa": 11500
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-faema-faemina",
@@ -7393,7 +7560,8 @@
       "segment": "pro",
       "preisEurCa": 4900
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-smeg-ecf01",
@@ -7409,7 +7577,8 @@
       "segment": "entry",
       "preisEurCa": 350
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-smeg-egf03",
@@ -7425,7 +7594,8 @@
       "segment": "mid",
       "preisEurCa": 600
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-solis-barista-perfetta-plus",
@@ -7441,7 +7611,8 @@
       "segment": "entry",
       "preisEurCa": 350
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-solis-grind-infuse-perfetta",
@@ -7457,7 +7628,8 @@
       "segment": "mid",
       "preisEurCa": 500
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-solis-barista-gran-gusto",
@@ -7473,7 +7645,8 @@
       "segment": "mid",
       "preisEurCa": 400
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-graef-salita",
@@ -7489,7 +7662,8 @@
       "segment": "entry",
       "preisEurCa": 230
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-graef-pivalla",
@@ -7505,7 +7679,8 @@
       "segment": "entry",
       "preisEurCa": 300
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-graef-marchesa",
@@ -7521,7 +7696,8 @@
       "segment": "mid",
       "preisEurCa": 600
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-graef-baronessa",
@@ -7537,7 +7713,8 @@
       "segment": "mid",
       "preisEurCa": 800
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-graef-contessa",
@@ -7553,7 +7730,8 @@
       "segment": "mid",
       "preisEurCa": 1100
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-kitchenaid-artisan-kes6503",
@@ -7569,7 +7747,8 @@
       "segment": "mid",
       "preisEurCa": 500
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-philips-barista-brew",
@@ -7585,7 +7764,8 @@
       "segment": "mid",
       "preisEurCa": 450
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-krups-virtuoso-xp442",
@@ -7601,7 +7781,8 @@
       "segment": "entry",
       "preisEurCa": 120
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-cecotec-power-espresso-20-barista-pro",
@@ -7617,7 +7798,8 @@
       "segment": "entry",
       "preisEurCa": 90
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-wmf-lumero",
@@ -7633,7 +7815,8 @@
       "segment": "entry",
       "preisEurCa": 230
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-saeco-poemia",
@@ -7649,7 +7832,8 @@
       "segment": "entry",
       "preisEurCa": 110
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-ariete-moderna-1381",
@@ -7665,7 +7849,8 @@
       "segment": "entry",
       "preisEurCa": 140
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-beem-espresso-perfect",
@@ -7681,7 +7866,8 @@
       "segment": "entry",
       "preisEurCa": 170
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-klarstein-passionata-rossa",
@@ -7697,7 +7883,8 @@
       "segment": "entry",
       "preisEurCa": 100
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-hibrew-h10a",
@@ -7713,7 +7900,8 @@
       "segment": "entry",
       "preisEurCa": 180
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-casabrews-5700-pro",
@@ -7729,7 +7917,8 @@
       "segment": "entry",
       "preisEurCa": 200
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-la-spaziale-s1-mini-vivaldi-ii",
@@ -7745,7 +7934,8 @@
       "segment": "high",
       "preisEurCa": 2000
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "machine-la-spaziale-s1-dream-t",
@@ -7761,7 +7951,8 @@
       "segment": "high",
       "preisEurCa": 2400
     },
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "espresso"
   },
   {
     "id": "brewer-hario-v60-02-ceramic",
@@ -7770,7 +7961,8 @@
     "model": "V60 02 Ceramic",
     "grindScale": null,
     "specs": {},
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "v60"
   },
   {
     "id": "brewer-aeropress-original",
@@ -7779,7 +7971,8 @@
     "model": "Original",
     "grindScale": null,
     "specs": {},
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "aeropress"
   },
   {
     "id": "brewer-bodum-chambord-french-press",
@@ -7788,7 +7981,8 @@
     "model": "Chambord French Press",
     "grindScale": null,
     "specs": {},
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "frenchpress"
   },
   {
     "id": "brewer-bialetti-moka-express",
@@ -7797,7 +7991,8 @@
     "model": "Moka Express",
     "grindScale": null,
     "specs": {},
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "moka"
   },
   {
     "id": "brewer-origami-dripper-s",
@@ -7806,7 +8001,8 @@
     "model": "Dripper S",
     "grindScale": null,
     "specs": {},
-    "status": "seed"
+    "status": "seed",
+    "methodHint": "v60"
   },
   {
     "id": "brewer-fellow-stagg-x6",
