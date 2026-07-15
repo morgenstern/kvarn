@@ -96,7 +96,23 @@ export const useKvarnStore = create<KvarnState>((set, get) => ({
     // "active" picks so Bruehen/Heute default to "brew the same thing again"
     // without needing a saved Setup. See lastUsedCombo() below for the same
     // logic exposed as a selector (used after hydrate, e.g. post-sync).
+    //
+    // Falls back to the first grinder/machine-or-brewer/bean in the user's
+    // collection when there's no brew history yet (e.g. right after
+    // onboarding, before the very first brew is logged) — otherwise
+    // activeGrinderEquipmentId/activeMachineEquipmentId would stay null on
+    // every reload despite equipment existing, breaking Home's ready card.
     const latest = brews[0];
+    // Same resolution order as equipmentKind() below (own kind, then linked
+    // product's kind, then "grinder"), inlined because that helper needs a
+    // fully-built KvarnState, which doesn't exist yet at this point.
+    const resolveKind = (e: Equipment): Product["kind"] =>
+      e.kind ?? products.find((p) => p.id === e.productId)?.kind ?? "grinder";
+    const firstGrinder = equipment.find((e) => resolveKind(e) === "grinder");
+    const firstMachine = equipment.find((e) => {
+      const kind = resolveKind(e);
+      return kind === "machine" || kind === "brewer";
+    });
     set({
       hydrated: true,
       products,
@@ -105,8 +121,8 @@ export const useKvarnStore = create<KvarnState>((set, get) => ({
       brews,
       weatherSnapshots,
       recipes,
-      activeGrinderEquipmentId: latest?.grinderEquipmentId ?? null,
-      activeMachineEquipmentId: latest?.machineEquipmentId ?? null,
+      activeGrinderEquipmentId: latest?.grinderEquipmentId ?? firstGrinder?.id ?? null,
+      activeMachineEquipmentId: latest?.machineEquipmentId ?? firstMachine?.id ?? null,
       activeBeanId: latest?.beanId ?? beans[0]?.id ?? null,
     });
   },
@@ -430,8 +446,10 @@ export function recipeFor(
 
 /**
  * The grinder/machine/bean used in the single most recent brew, if any (all
- * fields null if there's no brew history yet) — powers Home's "ready for
- * your next brew" prefilled card, and hydrate()'s initial active picks.
+ * fields null if there's no brew history yet). hydrate() inlines the same
+ * "latest brew" lookup for its initial active-picks fallback; Home's "ready
+ * for your next brew" card reads the persisted active* fields directly
+ * instead (those already have a no-brew-history fallback, this doesn't).
  */
 export function lastUsedCombo(state: KvarnState): {
   grinderEquipmentId: string | null;

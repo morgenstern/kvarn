@@ -2,7 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { Button, Card, EntityImage, Hint, SectionLabel, WeatherStrip } from "@kvarn/ui";
 import { Clock } from "lucide-react";
 import { weatherConditionKey } from "@kvarn/core";
-import { equipmentProduct, formatGrindValue, lastUsedCombo, latestWeatherSnapshot, useKvarnStore } from "../state/store";
+import { equipmentProduct, formatGrindValue, latestWeatherSnapshot, useKvarnStore } from "../state/store";
 import { useGrindSuggestion } from "../hooks/useGrindSuggestion";
 import { useDisplayName } from "../hooks/useDisplayName";
 import { greetingWord } from "../utils/greeting";
@@ -11,25 +11,24 @@ import { localeCode, useLocale, useT } from "../i18n";
 
 export function Heute() {
   const state = useKvarnStore();
-  const { equipment, beans } = state;
-  const combo = lastUsedCombo(state);
-  const grinder = equipment.find((e) => e.id === combo.grinderEquipmentId);
-  const machine = equipment.find((e) => e.id === combo.machineEquipmentId);
-  const bean = beans.find((b) => b.id === combo.beanId);
+  const { equipment, beans, activeGrinderEquipmentId, activeMachineEquipmentId, activeBeanId } = state;
+  const grinder = equipment.find((e) => e.id === activeGrinderEquipmentId);
+  const machine = equipment.find((e) => e.id === activeMachineEquipmentId);
+  const bean = beans.find((b) => b.id === activeBeanId);
   const recentBrews = state.brews.slice(0, 3);
   const t = useT("heute");
   const { locale } = useLocale();
   const { displayName } = useDisplayName();
   const weatherSnapshot = latestWeatherSnapshot(state);
-  const { suggestion } = useGrindSuggestion(state, combo.grinderEquipmentId, combo.machineEquipmentId, bean, weatherSnapshot);
+  const { suggestion } = useGrindSuggestion(state, activeGrinderEquipmentId, activeMachineEquipmentId, bean, weatherSnapshot);
 
   const dateLabel = new Date().toLocaleDateString(localeCode(locale), { weekday: "long", day: "numeric", month: "long" });
   const greeting = `${greetingWord()}, ${displayName || t("greetingFallbackName")}`;
 
   // RootLayout guarantees at least one grinder and one bean exist before this
-  // screen is even reachable; this only covers the edge case where no brew
-  // has ever happened yet (nothing to build a "ready for your next brew"
-  // card from).
+  // screen is even reachable, and activeGrinderEquipmentId/activeBeanId are
+  // seeded with a fallback in hydrate() even with zero brew history — so this
+  // should only trip if the active grinder/bean was since soft-deleted.
   if (!grinder || !bean) {
     return (
       <div>
