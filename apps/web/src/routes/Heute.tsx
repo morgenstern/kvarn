@@ -71,22 +71,28 @@ export function Heute() {
       ) : null}
 
       <Card className="mt-3">
-        <div className="flex items-center gap-3">
-          <EntityImage src={equipmentProduct(state, grinder.id)?.imageUrl} kind="grinder" className="w-14 h-14 rounded-control flex-none" />
-          {machine ? (
-            <EntityImage src={equipmentProduct(state, machine.id)?.imageUrl} kind="machine" className="w-14 h-14 rounded-control flex-none" />
-          ) : null}
-          <EntityImage src={bean.imageUrl ?? bean.photoUrl} kind="bean" className="w-14 h-14 rounded-control flex-none" />
-          <div className="flex-1 min-w-0">
-            <div className="text-sm text-muted">{t("readyCard")}</div>
-            <div className="text-base font-medium truncate">
-              {grinder.customName ?? equipmentProduct(state, grinder.id)?.model ?? "—"}
-              {machine ? ` · ${machine.customName ?? equipmentProduct(state, machine.id)?.model ?? "—"}` : ""}
-              {" · "}
-              {bean.roaster}
+        {(() => {
+          const grinderProduct = equipmentProduct(state, grinder.id);
+          const machineProduct = machine ? equipmentProduct(state, machine.id) : undefined;
+          return (
+            <div className="flex items-center gap-3">
+              <EntityImage src={grinderProduct?.imageUrl} kind="grinder" className="w-14 h-14 rounded-control flex-none" />
+              {machine ? (
+                <EntityImage src={machineProduct?.imageUrl} kind="machine" className="w-14 h-14 rounded-control flex-none" />
+              ) : null}
+              <EntityImage src={bean.imageUrl ?? bean.photoUrl} kind="bean" className="w-14 h-14 rounded-control flex-none" />
+              <div className="flex-1 min-w-0">
+                <div className="text-sm text-muted">{t("readyCard")}</div>
+                <div className="text-base font-medium truncate">
+                  {grinder.customName ?? grinderProduct?.model ?? "—"}
+                  {machine ? ` · ${machine.customName ?? machineProduct?.model ?? "—"}` : ""}
+                  {" · "}
+                  {bean.roaster}
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
+          );
+        })()}
 
         {suggestion && suggestion.reasons.length > 0 ? (
           <Hint className="mt-3">
