@@ -7,6 +7,11 @@ import type { BrewMethod } from "./units";
 export type MachineMethodHint = Exclude<BrewMethod, "auto">;
 export type BeanType = "espresso" | "filter";
 
+// Runtime values for MachineMethodHint — types have no runtime
+// representation, so pickers/selects that need to enumerate the options
+// import this instead of hand-listing the literals a second time.
+export const MACHINE_METHOD_HINTS: MachineMethodHint[] = ["espresso", "v60", "aeropress", "frenchpress", "moka"];
+
 /**
  * Replaces the old explicit method dropdown (setup.method): the machine's
  * own methodHint wins if set (a Rancilio is always "espresso", an Aeropress

@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { Button, Card, EntityImage, ProductCard, SectionLabel, Select } from "@kvarn/ui";
 import { generateIllustrationFromPhoto, submitProduct, uploadPhoto } from "@kvarn/api-client";
+import { MACHINE_METHOD_HINTS } from "@kvarn/core";
 import type { Equipment } from "@kvarn/db";
 import type { LucideIcon } from "lucide-react";
 import { Camera, Users } from "lucide-react";
@@ -8,7 +9,6 @@ import { exampleEquipment } from "../utils/exampleEquipment";
 import { useKvarnStore } from "../state/store";
 import { useT } from "../i18n";
 
-const METHOD_HINTS: NonNullable<Equipment["methodHint"]>[] = ["espresso", "v60", "aeropress", "frenchpress", "moka"];
 const METHOD_HINT_LABEL_KEYS: Record<NonNullable<Equipment["methodHint"]>, string> = {
   espresso: "methodHintEspresso",
   v60: "methodHintV60",
@@ -138,7 +138,7 @@ export function EquipmentSearchSection({
               value={customMethodHint ?? ""}
               onChange={(v) => setCustomMethodHint((v || null) as Equipment["methodHint"])}
               placeholder={t("methodHintPlaceholder")}
-              options={METHOD_HINTS.map((m) => ({ value: m, label: t(METHOD_HINT_LABEL_KEYS[m]) }))}
+              options={MACHINE_METHOD_HINTS.map((m) => ({ value: m, label: t(METHOD_HINT_LABEL_KEYS[m]) }))}
             />
           ) : null}
           <label className="flex items-center gap-1.5 text-[13px] text-muted cursor-pointer py-2.5 -my-2.5">
