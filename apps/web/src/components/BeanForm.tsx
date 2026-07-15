@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { Button } from "@kvarn/ui";
+import { Button, Select } from "@kvarn/ui";
 import { generateIllustrationFromPhoto, uploadPhoto } from "@kvarn/api-client";
 import type { Bean } from "@kvarn/db";
 import { Camera, Search } from "lucide-react";
@@ -19,6 +19,7 @@ export function BeanForm({ onSaved, submitLabel }: { onSaved?: (bean: Bean) => v
   const [roaster, setRoaster] = useState("");
   const [name, setName] = useState("");
   const [origin, setOrigin] = useState("");
+  const [beanType, setBeanType] = useState<Bean["beanType"]>(null);
   const [roastDate, setRoastDate] = useState("");
   const [photoUrl, setPhotoUrl] = useState<string | undefined>();
   const [photoUploading, setPhotoUploading] = useState(false);
@@ -56,7 +57,7 @@ export function BeanForm({ onSaved, submitLabel }: { onSaved?: (bean: Bean) => v
   async function submit(e: React.FormEvent) {
     e.preventDefault();
     if (!roaster || !name) return;
-    const bean = await addBean({ roaster, name, origin: origin || undefined, roastDate: roastDate || undefined, photoUrl });
+    const bean = await addBean({ roaster, name, origin: origin || undefined, roastDate: roastDate || undefined, photoUrl, beanType });
     if (photoUrl) {
       // Best-effort: the raw photo already shows fine — the generated
       // illustration just swaps in once/if it's ready.
@@ -67,6 +68,7 @@ export function BeanForm({ onSaved, submitLabel }: { onSaved?: (bean: Bean) => v
     setRoaster("");
     setName("");
     setOrigin("");
+    setBeanType(null);
     setRoastDate("");
     setPhotoUrl(undefined);
     onSaved?.(bean);
@@ -118,6 +120,15 @@ export function BeanForm({ onSaved, submitLabel }: { onSaved?: (bean: Bean) => v
         placeholder={t("originPlaceholder")}
         value={origin}
         onChange={(e) => setOrigin(e.target.value)}
+      />
+      <Select
+        value={beanType ?? ""}
+        onChange={(v) => setBeanType((v || null) as Bean["beanType"])}
+        placeholder={t("beanTypePlaceholder")}
+        options={[
+          { value: "espresso", label: t("beanTypeEspresso") },
+          { value: "filter", label: t("beanTypeFilter") },
+        ]}
       />
       <label className="text-sm text-muted -mb-2">{t("roastDateLabel")}</label>
       <input
