@@ -115,12 +115,6 @@ export function BeanForm({ onSaved, submitLabel }: { onSaved?: (bean: Bean) => v
         onChange={(e) => setName(e.target.value)}
         required
       />
-      <input
-        className="border border-linen rounded-control px-3 py-2 text-base bg-birch"
-        placeholder={t("originPlaceholder")}
-        value={origin}
-        onChange={(e) => setOrigin(e.target.value)}
-      />
       <Select
         value={beanType ?? ""}
         onChange={(v) => setBeanType((v || null) as Bean["beanType"])}
@@ -129,6 +123,12 @@ export function BeanForm({ onSaved, submitLabel }: { onSaved?: (bean: Bean) => v
           { value: "espresso", label: t("beanTypeEspresso") },
           { value: "filter", label: t("beanTypeFilter") },
         ]}
+      />
+      <input
+        className="border border-linen rounded-control px-3 py-2 text-base bg-birch"
+        placeholder={t("originPlaceholder")}
+        value={origin}
+        onChange={(e) => setOrigin(e.target.value)}
       />
       <label className="text-sm text-muted -mb-2">{t("roastDateLabel")}</label>
       <input
